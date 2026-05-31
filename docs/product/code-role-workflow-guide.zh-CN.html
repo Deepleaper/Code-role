@@ -519,6 +519,9 @@ cd Code-role</code></pre>
         Code-role 把 Git 操作视为单独授权的动作。任何角色都不能自动执行 <code>git add</code>、<code>git commit</code> 或 <code>git push</code>。
       </p>
       <h3>8.1 推荐 Git 流程</h3>
+      <p>
+        初始化脚本会把这条规则写进目标项目的 <code>code-role/README.md</code> 和 <code>code-role/project-config.md</code>，因为 Git 操作边界必须在项目入口可见，不能只存在于模板文档里。
+      </p>
       <ol>
         <li>Orchestrator 或执行对话先给 staging plan。</li>
         <li>明确列出要 stage 的文件和要排除的 dirty files。</li>

@@ -4,6 +4,8 @@ Project bootstrap turns a target repository into a Code-role-controlled workspac
 
 Bootstrap creates configuration and navigation files only. It does not run any role, create execution packets, stage Git files, commit, push, or modify business source files.
 
+Generated project config files must carry the same Git operation rule as the workflow template: `git add`, `git commit`, and `git push` are separate approval gates and may not be combined into one automatic step.
+
 ## Inputs
 
 Required inputs:
@@ -75,6 +77,14 @@ code-role/
 ```
 
 It intentionally does not create execution-role packet reports. Those must be created by the corresponding role instance after user confirmation.
+
+The generated `code-role/README.md` and `code-role/project-config.md` include the project Git operation rule:
+
+- `git add` requires approval of the exact staging scope.
+- `git commit` requires approval after staged diff review.
+- `git push` requires approval after commit review.
+- no role or Codex conversation may combine all three into one automatic step.
+- before each gate, confirm included paths, excluded dirty files, and forbidden scope.
 
 ## After Bootstrap
 

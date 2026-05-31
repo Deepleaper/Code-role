@@ -33,6 +33,8 @@ Confirm each class of operation separately:
 
 Do not combine all three into one broad approval.
 
+Target-project bootstrap files must repeat this rule in `code-role/README.md` and `code-role/project-config.md`. The rule needs to be visible at the project entry point, not only in the upstream Code-role template documentation.
+
 ## Staging Plan Requirements
 
 Before `git add`, produce a staging plan that lists:

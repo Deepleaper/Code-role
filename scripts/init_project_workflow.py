@@ -86,7 +86,15 @@ Start each Codex role in its own conversation. Use the matching prompt in `role-
 
 ## Git Boundary
 
-No role may run `git add`, `git commit`, or `git push` without explicit user confirmation.
+Git operations must be split into separate approval gates:
+
+1. `git add` requires explicit user approval of the exact staging scope.
+2. `git commit` requires explicit user approval after staged diff review.
+3. `git push` requires explicit user approval after commit review.
+
+No role or Codex conversation may combine `git add`, `git commit`, and `git push` into one automatic step.
+
+Before each gate, confirm the exact command, included paths, excluded dirty files, and forbidden scope.
 """
 
 
@@ -105,8 +113,19 @@ external_research_allowed_default: {external}
 - `code-role/` is workflow governance infrastructure, not product runtime content.
 - `code-role/state-index/` is a non-authoritative navigation index.
 - Orchestrator state, packet manifests, and packet locks remain authoritative.
-- Git staging, commit, and push require separate user confirmation.
 - Product release artifacts must exclude `code-role/` unless explicitly approved.
+
+## Git Operation Rule
+
+Git operations must be split into separate approval gates:
+
+1. `git add` requires explicit user approval of the exact staging scope.
+2. `git commit` requires explicit user approval after staged diff review.
+3. `git push` requires explicit user approval after commit review.
+
+No role or Codex conversation may combine `git add`, `git commit`, and `git push` into one automatic step.
+
+Before each gate, confirm the exact command, included paths, excluded dirty files, and forbidden scope.
 
 ## Initial State
 

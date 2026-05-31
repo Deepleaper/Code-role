@@ -87,9 +87,16 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
         assert path.exists(), path
 
     project_config = read(target / "code-role" / "project-config.md")
+    project_readme = read(target / "code-role" / "README.md")
     reviewer_prompt = read(target / "code-role" / "role-instance-prompts" / "reviewer.md")
     reviewer_index = read(target / "code-role" / "state-index" / "roles" / "reviewer.md")
 
     assert "tracking_policy: repo-tracked" in project_config
+    for generated in [project_config, project_readme]:
+        assert "Git operations must be split into separate approval gates" in generated
+        assert "`git add` requires explicit user approval of the exact staging scope" in generated
+        assert "`git commit` requires explicit user approval after staged diff review" in generated
+        assert "`git push` requires explicit user approval after commit review" in generated
+        assert "may combine `git add`, `git commit`, and `git push` into one automatic step" in generated
     assert "Do not run `git add`, `git commit`, or `git push`" in reviewer_prompt
     assert "non-authoritative navigation index" in reviewer_index
