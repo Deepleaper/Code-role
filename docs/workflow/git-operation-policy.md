@@ -1,80 +1,47 @@
-# Git Operation Policy
+# Git Boundary Policy
 
-Git operations are not automatic workflow steps.
+Git operations are outside the Code-role role chain.
 
-The Code-role workflow may recommend staging, committing, or pushing, but it must not perform those operations without explicit user confirmation.
+Code-role controls role collaboration and delivery quality. It does not own the target project's Git workflow.
 
-## Decision Rights
+## Default Rule
 
-The project owner decides whether to run Git operations.
+Use the target project's normal Git process.
 
-The Orchestrator may:
+Roles may report Git-related facts, such as:
 
-- prepare a staging plan
-- identify exact paths to include and exclude
-- record user authorization
-- route to an approved Git operation step
+- changed files
+- untracked files
+- unrelated dirty files
+- whether generated local workflow files are present
 
-The Reviewer may:
+Roles must not require an Orchestrator or Reviewer gate for normal `git add`, `git commit`, or `git push`.
 
-- evaluate whether the packet chain supports moving to Git operations
-- record residual risks
-- recommend `approve`, `request_changes`, or `pass_with_residual_risk`
+## Local-Only Workflow Files
 
-The executor may run Git commands only after the user explicitly approves the exact operation.
+Target-project `code-role/` files are local workflow assistance by default. They are not product source, not product runtime content, and not delivery artifacts.
 
-## Separate Confirmation Gates
+Project bootstrap should add `code-role/` to the target repository's `.git/info/exclude` when that file exists.
 
-Confirm each class of operation separately:
+## Direct User Requests
 
-1. `git add`
-2. `git commit`
-3. `git push`
+If the user directly asks Codex to run a Git command, handle it as a normal project maintenance request:
 
-Do not combine all three into one broad approval.
+- inspect current status
+- avoid unrelated dirty files
+- stage only the requested scope
+- do not push unless the user asks for push
 
-Target-project bootstrap files must repeat this rule in `code-role/README.md` and `code-role/project-config.md`. The rule needs to be visible at the project entry point, not only in the upstream Code-role template documentation.
-
-## Staging Plan Requirements
-
-Before `git add`, produce a staging plan that lists:
-
-- exact paths to stage
-- exact dirty files to exclude
-- whether workflow packet history is included
-- whether generated files are included
-- whether release artifacts are affected
-- the command that would be run
-
-The staging plan should prefer explicit file and directory whitelists over broad commands such as `git add .`.
-
-## Release Boundary
-
-Workflow governance files may be committed as repository history when explicitly approved. That does not make them product release content.
-
-Unless explicitly approved, exclude workflow governance from:
-
-- generated template indexes
-- customer delivery bundles
-- CLI template payloads
-- runtime package artifacts
-- public release evidence
-
-Recommended policy text:
-
-```text
-code-role/ is repo-tracked governance infrastructure.
-It is not product runtime content.
-It must be excluded from generated template indexes, customer delivery bundles, CLI template payloads, and release artifacts unless explicitly approved.
-```
+This is not a Code-role packet transition and does not require a new role milestone.
 
 ## Forbidden Defaults
 
 Roles must not:
 
-- stage unrelated dirty files
-- stage broad repository state without a plan
-- run `git commit` before staged diff review
-- run `git push` before commit review
-- treat `pass_with_residual_risk` as final acceptance
-- treat `final_acceptance=false` as closed
+- treat uncommitted `code-role/` files as a blocker for business work
+- create a Git milestone just to run normal Git commands
+- require Reviewer approval for ordinary staging or pushing
+- include local `code-role/` files in product release artifacts
+- treat `pass_with_residual_risk` as final product acceptance
+
+`final_acceptance=false` means the role chain has not closed product acceptance. It does not mean Git is blocked.

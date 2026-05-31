@@ -40,17 +40,20 @@ def test_state_index_and_git_policy_define_boundaries() -> None:
     assert "handoff.manifest.json" in state_index
     assert "packet.lock.json" in state_index
 
-    assert "Git operations are not automatic workflow steps" in git_policy
-    assert "Confirm each class of operation separately" in git_policy
+    assert "Git operations are outside the Code-role role chain" in git_policy
+    assert "Use the target project's normal Git process" in git_policy
     assert "git add" in git_policy
     assert "git commit" in git_policy
     assert "git push" in git_policy
-    assert "generated template indexes" in git_policy
+    assert "code-role/` files are local workflow assistance" in git_policy
 
 
 def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
     target = tmp_path / "Target Project"
     target.mkdir()
+    exclude = target / ".git" / "info" / "exclude"
+    exclude.parent.mkdir(parents=True)
+    exclude.write_text("# local excludes\n", encoding="utf-8")
 
     result = subprocess.run(
         [
@@ -60,8 +63,6 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
             str(target),
             "--project-name",
             "Target Project",
-            "--tracking",
-            "repo-tracked",
             "--write",
         ],
         check=True,
@@ -91,12 +92,12 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
     reviewer_prompt = read(target / "code-role" / "role-instance-prompts" / "reviewer.md")
     reviewer_index = read(target / "code-role" / "state-index" / "roles" / "reviewer.md")
 
-    assert "tracking_policy: repo-tracked" in project_config
+    assert "tracking_policy: local-only" in project_config
     for generated in [project_config, project_readme]:
-        assert "Git operations must be split into separate approval gates" in generated
-        assert "`git add` requires explicit user approval of the exact staging scope" in generated
-        assert "`git commit` requires explicit user approval after staged diff review" in generated
-        assert "`git push` requires explicit user approval after commit review" in generated
-        assert "may combine `git add`, `git commit`, and `git push` into one automatic step" in generated
+        assert "local-only workflow assistance" in generated
+        assert "not product runtime content" in generated
+        assert "should not be committed or pushed" in generated
+        assert "Code-role does not own the target project's Git workflow" in generated
     assert "Do not run `git add`, `git commit`, or `git push`" in reviewer_prompt
     assert "non-authoritative navigation index" in reviewer_index
+    assert "code-role/" in read(exclude)

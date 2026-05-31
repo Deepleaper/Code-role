@@ -64,11 +64,10 @@ Fast target-project bootstrap:
 python scripts/init_project_workflow.py \
   --target "/path/to/Target Project" \
   --project-name "Target Project" \
-  --tracking repo-tracked \
   --write
 ```
 
-This creates `code-role/` project config, role-instance prompts, Orchestrator state, and a non-authoritative `state-index/`. It does not create execution packets or run Git operations.
+This creates local-only `code-role/` project config, role-instance prompts, Orchestrator state, and a non-authoritative `state-index/`. It does not create execution packets or run Git operations. When the target is a Git repository, the script adds `code-role/` to `.git/info/exclude`.
 
 See [`docs/workflow/project-bootstrap.md`](docs/workflow/project-bootstrap.md), [`docs/workflow/state-index.md`](docs/workflow/state-index.md), and [`docs/workflow/git-operation-policy.md`](docs/workflow/git-operation-policy.md).
 

@@ -59,16 +59,11 @@ def role_contract_path(config: BootstrapConfig, role_id: str) -> str:
 
 
 def render_project_readme(config: BootstrapConfig) -> str:
-    release_boundary = (
-        "repo-tracked governance infrastructure"
-        if config.tracking == "repo-tracked"
-        else "local-only workflow scratch space"
-    )
     return f"""# Code-role Project Configuration
 
 This directory configures Code-role for `{config.project_name}`.
 
-This folder is {release_boundary}. It is not product runtime content and must not be included in template indexes, customer delivery bundles, CLI payloads, or release artifacts unless the project owner explicitly approves that boundary.
+This folder is local-only workflow assistance. It is not product runtime content, is not part of the target project's delivery, and should not be committed or pushed with the target project.
 
 ## Authoritative Sources
 
@@ -86,15 +81,9 @@ Start each Codex role in its own conversation. Use the matching prompt in `role-
 
 ## Git Boundary
 
-Git operations must be split into separate approval gates:
+Code-role does not own the target project's Git workflow.
 
-1. `git add` requires explicit user approval of the exact staging scope.
-2. `git commit` requires explicit user approval after staged diff review.
-3. `git push` requires explicit user approval after commit review.
-
-No role or Codex conversation may combine `git add`, `git commit`, and `git push` into one automatic step.
-
-Before each gate, confirm the exact command, included paths, excluded dirty files, and forbidden scope.
+Use the project's normal Git process for product changes. Role conversations may report Git-related facts, but they must not create workflow gates for `git add`, `git commit`, or `git push`.
 """
 
 
@@ -110,22 +99,17 @@ external_research_allowed_default: {external}
 
 ## Boundary
 
-- `code-role/` is workflow governance infrastructure, not product runtime content.
+- `code-role/` is local-only workflow assistance, not product runtime content.
+- `code-role/` should not be committed or pushed with this target project.
 - `code-role/state-index/` is a non-authoritative navigation index.
 - Orchestrator state, packet manifests, and packet locks remain authoritative.
-- Product release artifacts must exclude `code-role/` unless explicitly approved.
+- Product release artifacts must exclude `code-role/`.
 
-## Git Operation Rule
+## Git Boundary
 
-Git operations must be split into separate approval gates:
+Code-role does not own the target project's Git workflow. Use the project's normal Git process for product changes.
 
-1. `git add` requires explicit user approval of the exact staging scope.
-2. `git commit` requires explicit user approval after staged diff review.
-3. `git push` requires explicit user approval after commit review.
-
-No role or Codex conversation may combine `git add`, `git commit`, and `git push` into one automatic step.
-
-Before each gate, confirm the exact command, included paths, excluded dirty files, and forbidden scope.
+Role conversations may report changed files or untracked workflow files, but they must not require Orchestrator or Reviewer gates for normal `git add`, `git commit`, or `git push`.
 
 ## Initial State
 
@@ -251,7 +235,7 @@ It does not replace:
 
 Use this directory to find the current role entry point faster. If any conflict exists, trust the authoritative packet chain and Orchestrator state, not this index.
 
-This index is not product runtime content and must be excluded from release artifacts unless explicitly approved.
+This index is not product runtime content and must be excluded from release artifacts.
 """
 
 
@@ -280,8 +264,7 @@ None yet.
 ## Residual Risks
 
 - No execution packet exists yet.
-- Git staging, commit, and push require separate user confirmation.
-- Product release artifacts must exclude `code-role/` unless explicitly approved.
+- `code-role/` is local-only and should remain outside the target project's Git history.
 
 ## Recommended Next Step
 
@@ -340,7 +323,7 @@ Do not infer role duties from this index alone.
 - Do not modify Orchestrator state unless this is the Orchestrator role.
 - Do not modify business files unless this is an approved Implementer step with exact writable scope.
 - Do not run `git add`, `git commit`, or `git push`.
-- Do not include `code-role/` in product release artifacts unless explicitly approved.
+- Do not include `code-role/` in target-project commits or product release artifacts.
 
 ## Current Gate / Status
 
@@ -394,15 +377,31 @@ def write_files(config: BootstrapConfig) -> list[Path]:
     return written
 
 
+def ensure_local_git_exclude(config: BootstrapConfig) -> bool:
+    exclude_path = config.target / ".git" / "info" / "exclude"
+    if not exclude_path.exists():
+        return False
+
+    text = exclude_path.read_text(encoding="utf-8")
+    patterns = [line.strip() for line in text.splitlines()]
+    if "code-role/" in patterns:
+        return False
+
+    suffix = "" if text.endswith("\n") or not text else "\n"
+    if config.write:
+        exclude_path.write_text(f"{text}{suffix}code-role/\n", encoding="utf-8")
+    return True
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--target", required=True, type=Path, help="Target project path.")
     parser.add_argument("--project-name", help="Project display name. Defaults to target folder name.")
     parser.add_argument(
         "--tracking",
-        required=True,
-        choices=["repo-tracked", "local-only"],
-        help="Explicitly choose whether generated code-role files are repo governance or local-only.",
+        default="local-only",
+        choices=["local-only"],
+        help="Generated code-role files are local-only target-project workflow assistance.",
     )
     parser.add_argument("--initial-milestone", default="workflow-bootstrap")
     parser.add_argument("--initial-chain", default="research-only")
@@ -429,9 +428,13 @@ def main() -> int:
     )
 
     files = write_files(config)
+    exclude_updated = ensure_local_git_exclude(config)
     action = "created/updated" if config.write else "would create/update"
     for path in files:
         print(f"{action}: {path}")
+    if exclude_updated:
+        exclude_action = "updated" if config.write else "would update"
+        print(f"{exclude_action}: {config.target / '.git' / 'info' / 'exclude'}")
     if not files:
         print("no files changed")
     if not config.write:

@@ -2,9 +2,9 @@
 
 Project bootstrap turns a target repository into a Code-role-controlled workspace without manually writing every role prompt and state file.
 
-Bootstrap creates configuration and navigation files only. It does not run any role, create execution packets, stage Git files, commit, push, or modify business source files.
+Bootstrap creates local configuration and navigation files only. It does not run any role, create execution packets, stage Git files, commit, push, or modify business source files.
 
-Generated project config files must carry the same Git operation rule as the workflow template: `git add`, `git commit`, and `git push` are separate approval gates and may not be combined into one automatic step.
+Generated `code-role/` files are local-only target-project assistance. They are not part of the target project's product delivery and should not be committed or pushed with that project.
 
 ## Inputs
 
@@ -12,17 +12,11 @@ Required inputs:
 
 - target project path
 - project name
-- tracking policy: `repo-tracked` or `local-only`
 - initial milestone
 - initial chain
 - external research default
 
-The tracking policy is required because workflow files have a release boundary:
-
-- `repo-tracked` means `code-role/` is repository governance infrastructure.
-- `local-only` means `code-role/` is local coordination scratch space.
-
-Both modes keep `code-role/` out of product runtime content and release artifacts unless explicitly approved.
+The tracking policy is fixed as `local-only`. If the target project is a Git repository, bootstrap adds `code-role/` to `.git/info/exclude` so the helper files remain available locally without entering the target project's Git history.
 
 ## Fast Path
 
@@ -32,7 +26,6 @@ From the Code-role repository:
 python scripts/init_project_workflow.py \
   --target "/path/to/Target Project" \
   --project-name "Target Project" \
-  --tracking repo-tracked \
   --initial-milestone workflow-bootstrap \
   --initial-chain research-only \
   --write
@@ -78,13 +71,13 @@ code-role/
 
 It intentionally does not create execution-role packet reports. Those must be created by the corresponding role instance after user confirmation.
 
-The generated `code-role/README.md` and `code-role/project-config.md` include the project Git operation rule:
+When `.git/info/exclude` exists, bootstrap appends:
 
-- `git add` requires approval of the exact staging scope.
-- `git commit` requires approval after staged diff review.
-- `git push` requires approval after commit review.
-- no role or Codex conversation may combine all three into one automatic step.
-- before each gate, confirm included paths, excluded dirty files, and forbidden scope.
+```text
+code-role/
+```
+
+This keeps Code-role state local to the operator's workspace.
 
 ## After Bootstrap
 
@@ -106,4 +99,4 @@ Bootstrap must not:
 - run Git staging, commit, or push
 - modify product source files
 
-If `code-role/` is later staged, committed, or pushed, that is a separate Git operation requiring explicit user confirmation.
+Git operations remain normal project maintenance outside the role chain. Code-role may report Git-related facts, but it does not own or gate the target project's Git workflow.

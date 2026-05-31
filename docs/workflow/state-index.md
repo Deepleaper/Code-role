@@ -87,4 +87,4 @@ Refreshing the index is a documentation operation. It must not modify upstream p
 
 `state-index/` is governance navigation. It is not product runtime content.
 
-Do not include it in template indexes, customer delivery bundles, CLI payloads, or release artifacts unless the project owner explicitly approves that release boundary.
+Do not include it in template indexes, customer delivery bundles, CLI payloads, or release artifacts.

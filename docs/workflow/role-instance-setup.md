@@ -83,11 +83,10 @@ Use the bootstrap script from the Code-role repository:
 python scripts/init_project_workflow.py \
   --target "/path/to/Target Project" \
   --project-name "Target Project" \
-  --tracking repo-tracked \
   --write
 ```
 
-Omit `--write` to preview the files. The script creates project config, role-instance prompts, Orchestrator state files, and a non-authoritative state index. It does not create execution packets, mark readiness, stage files, commit, or push.
+Omit `--write` to preview the files. The script creates local-only project config, role-instance prompts, Orchestrator state files, and a non-authoritative state index. It also adds `code-role/` to `.git/info/exclude` when that target file exists. It does not create execution packets, mark readiness, stage files, commit, or push.
 
 See `project-bootstrap.md`, `state-index.md`, and `git-operation-policy.md`.
 

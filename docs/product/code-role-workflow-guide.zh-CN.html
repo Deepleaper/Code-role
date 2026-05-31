@@ -422,37 +422,18 @@ cd Code-role</code></pre>
       <pre><code>python scripts/init_project_workflow.py \
   --target "/path/to/Target Project" \
   --project-name "Target Project" \
-  --tracking repo-tracked \
   --initial-milestone workflow-bootstrap \
   --initial-chain research-only \
   --write</code></pre>
       <p>
         如果只是预览会生成哪些文件，可以去掉 <code>--write</code>。
       </p>
-      <h3>6.3 tracking policy 怎么选</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>策略</th>
-            <th>含义</th>
-            <th>适用场景</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>repo-tracked</code></td>
-            <td><code>code-role/</code> 作为仓库治理基础设施，可以进入 Git 历史。</td>
-            <td>团队要共享审计链、角色配置和工作流记录。</td>
-          </tr>
-          <tr>
-            <td><code>local-only</code></td>
-            <td><code>code-role/</code> 只作为本地协作记录，不进入仓库。</td>
-            <td>个人临时使用，或不希望工作流文件进入项目历史。</td>
-          </tr>
-        </tbody>
-      </table>
+      <h3>6.3 local-only 边界</h3>
+      <p>
+        <code>code-role/</code> 是本地辅助层，不是业务项目交付内容。初始化脚本会在目标项目存在 <code>.git/info/exclude</code> 时加入 <code>code-role/</code>，避免它进入目标项目 Git 历史。
+      </p>
       <div class="note">
-        无论选择哪种策略，<code>code-role/</code> 都不是产品运行时内容，不应进入模板索引、客户交付包、CLI payload 或 release artifact，除非项目负责人明确批准。
+        <code>code-role/</code> 不应进入模板索引、客户交付包、CLI payload 或 release artifact。它服务于本地角色协作，不属于项目本身的交付。
       </div>
       <h3>6.4 初始化后会生成什么</h3>
       <pre><code>code-role/
@@ -516,27 +497,25 @@ cd Code-role</code></pre>
     <section id="git">
       <h2>8. Git 与发布边界</h2>
       <p>
-        Code-role 把 Git 操作视为单独授权的动作。任何角色都不能自动执行 <code>git add</code>、<code>git commit</code> 或 <code>git push</code>。
+        Code-role 不接管业务项目的 Git 工作流。Git 还是原来的 Git，按项目原本的工程习惯处理。
       </p>
       <h3>8.1 推荐 Git 流程</h3>
       <p>
-        初始化脚本会把这条规则写进目标项目的 <code>code-role/README.md</code> 和 <code>code-role/project-config.md</code>，因为 Git 操作边界必须在项目入口可见，不能只存在于模板文档里。
+        角色可以报告当前有哪些文件修改、哪些文件未跟踪、是否存在 unrelated dirty files。但它不应该为了普通 <code>git add</code>、<code>git commit</code> 或 <code>git push</code> 再开一条角色链。
       </p>
       <ol>
-        <li>Orchestrator 或执行对话先给 staging plan。</li>
-        <li>明确列出要 stage 的文件和要排除的 dirty files。</li>
-        <li>用户确认后才执行 <code>git add</code>。</li>
-        <li>查看 staged diff。</li>
-        <li>用户确认 commit message 后才执行 <code>git commit</code>。</li>
-        <li>用户确认后才执行 <code>git push</code>。</li>
+        <li>产品和代码变更按项目原有 Git 流程提交。</li>
+        <li><code>code-role/</code> 默认通过 <code>.git/info/exclude</code> 保持本地。</li>
+        <li>如果用户直接要求 Codex 执行 Git 命令，Codex 按普通工程任务处理，不需要 Orchestrator / Reviewer gate。</li>
       </ol>
       <h3>8.2 发布物边界</h3>
       <p>
-        <code>code-role/</code> 可以在明确批准后进入 Git 历史，作为仓库治理和审计记录。但它不等于产品发布内容。
+        <code>code-role/</code> 不属于产品发布物。
       </p>
-      <pre><code>code-role/ is repo-tracked governance infrastructure.
+      <pre><code>code-role/ is local-only workflow assistance.
 It is not product runtime content.
-It must be excluded from generated template indexes, customer delivery bundles, CLI template payloads, and release artifacts unless explicitly approved.</code></pre>
+It is not part of the target project's delivery.
+It should remain outside the target project's Git history.</code></pre>
     </section>
 
     <section id="faq">
