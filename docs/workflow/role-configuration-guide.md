@@ -28,6 +28,8 @@ Rules:
 - The Orchestrator selects the chain and next role but cannot approve state transitions for the user.
 - Downstream acceptance is recorded as `accepted_as_input`; downstream roles must not rewrite upstream packet manifests.
 
+Target projects should use generated role-instance prompts and a non-authoritative state index to reduce setup time. The prompts and state index are onboarding aids only; packet manifests, packet locks, and Orchestrator state remain authoritative.
+
 ## Folder Convention
 
 Each role should use this layout:
@@ -67,6 +69,8 @@ If another project team wants this workflow committed to its repository, make th
 Do not mix these workflow files with product release evidence unless the release intentionally includes the role workflow itself.
 
 See [Workflow Bootstrap](bootstrap.md) for the local setup boundary.
+
+See [Project Bootstrap](project-bootstrap.md), [State Index](state-index.md), and [Git Operation Policy](git-operation-policy.md) for the faster target-project setup path and Git boundary.
 
 ## Eight Configured Roles
 

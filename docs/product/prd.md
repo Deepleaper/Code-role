@@ -2,17 +2,21 @@
 
 ## 1. Product Summary
 
-Code-role is a local workflow product for controlling Codex so it can deliver higher-quality programming results.
+Code-role is a local role-configuration project for controlling Codex so it can deliver higher-quality programming results.
 
 It does this by separating one broad coding conversation into explicit roles, document packets, handoff manifests, status gates, and validation checks. The product treats chat as an interaction layer, not as the source of truth. Durable workflow state lives in local files.
 
 The current product form is a reusable template that can be copied into a target codebase. Its first job is to make AI-assisted engineering work more controlled, auditable, and repeatable.
 
+Code-role is discussion-first, not automation-first. Every role creates a documented artifact for user discussion before the workflow advances. Except for Implementer after explicit approval, roles produce documents rather than changing code.
+
+Code-role is used through separate configured role instances. The workflow should not be run by switching roles inside one conversation.
+
 ## 2. Positioning
 
 Code-role is not an IDE plugin, agent runtime, task tracker, or project management SaaS.
 
-It is a local coordination layer for AI engineering work. It defines how Codex should move from product understanding to implementation and review without losing context, skipping gates, or mixing incompatible responsibilities.
+It is a local coordination layer for AI engineering work. It defines how separate Codex role instances should move from product understanding to implementation and review without losing context, skipping gates, or mixing incompatible responsibilities.
 
 Core positioning:
 
@@ -20,6 +24,8 @@ Core positioning:
 - Document-first workflow for requirements, architecture, code context, implementation, testing, and review.
 - Local template that can be added to a target project without becoming product code by default.
 - Quality gate system that prevents implementation from starting from chat-only instructions.
+- Discussion-first handoff system where each role produces documents for the next role.
+- Separate role-instance setup where each role has its own configured conversation.
 
 ## 3. Problem Statement
 
@@ -124,6 +130,8 @@ The MVP should make Code-role usable as a local template that can be copied into
 MVP includes:
 
 - Complete eight-role workflow documentation.
+- Role-instance setup documentation.
+- Explicit prompt contracts for every role: purpose, inputs, outputs, boundaries, discussion gates, downstream handoff, and correction of unrelated requests.
 - Clear startup routine for Orchestrator.
 - Chain selection policy.
 - Packet schema and handoff manifest rules.
@@ -240,6 +248,8 @@ MVP non-goals:
 - Providing a hosted SaaS workflow system.
 - Replacing GitHub Issues, Linear, Jira, or code review tools.
 - Automating every role transition without user confirmation.
+- Automatically executing the coding workflow end to end.
+- Switching through multiple roles inside one conversation as the default workflow.
 - Making chat memory authoritative.
 - Allowing implementation from chat-only instruction.
 - Supporting third-party plugins or network APIs.

@@ -10,8 +10,10 @@ Every role may read:
 - [Handoff Protocol](handoff-protocol.md)
 - [Packet Schema](packet-schema.md)
 - [Workflow Chain Policy](workflow-chain-policy.md)
+- [State Index](state-index.md)
 - its own `ROLE.md`
 - upstream packet manifests explicitly provided by the user or by the previous role
+- target-project `code-role/state-index/roles/<role>.md` when present
 
 ## Orchestrator Read Scope
 
@@ -35,6 +37,8 @@ docs/workflow/orchestrator/decision-log.md
 ```
 
 The Orchestrator must not write role report packets, code, tests, product docs, architecture docs, or release docs.
+
+In an initialized target project, an explicitly authorized indexing step may write `code-role/state-index/`. That index remains non-authoritative navigation and must not replace Orchestrator state or packet manifests.
 
 ## Researcher Read Scope
 
