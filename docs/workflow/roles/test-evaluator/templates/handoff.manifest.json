@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1",
+  "role": "test-evaluator",
+  "milestone": "template",
+  "packet_version": "packet-v001",
+  "status": "draft",
+  "created_at": "YYYY-MM-DD",
+  "updated_at": "YYYY-MM-DD",
+  "summary": "Template manifest for a Test Evaluator packet.",
+  "documents": [
+    {"path": "test-plan.md", "type": "test_plan", "required": true, "description": "Test plan mapped to acceptance criteria."},
+    {"path": "test-results.md", "type": "test_results", "required": true, "description": "Test results."},
+    {"path": "regression-matrix.md", "type": "regression_matrix", "required": true, "description": "Regression coverage matrix."},
+    {"path": "failure-analysis.md", "type": "failure_analysis", "required": true, "description": "Failure analysis."},
+    {"path": "quality-gate.md", "type": "quality_gate", "required": true, "description": "Quality gate decision."}
+  ],
+  "input_packets": [
+    {
+      "role": "implementer",
+      "milestone": "template",
+      "packet_version": "packet-v001",
+      "manifest": "docs/workflow/roles/implementer/reports/<milestone>/packet-v001/handoff.manifest.json",
+      "status_at_consumption": "ready_for_next_role",
+      "consumption_status": "accepted_as_input"
+    }
+  ],
+  "source_scopes": ["docs/workflow/source-map.md", "upstream implementer packet"],
+  "handoff_to": ["reviewer"],
+  "open_questions": [],
+  "blocked": false,
+  "required_confirmations": []
+}

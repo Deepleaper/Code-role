@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1",
+  "role": "implementer",
+  "milestone": "template",
+  "packet_version": "packet-v001",
+  "status": "draft",
+  "created_at": "YYYY-MM-DD",
+  "updated_at": "YYYY-MM-DD",
+  "summary": "Template manifest for an Implementer packet.",
+  "documents": [
+    {"path": "implementation-summary.md", "type": "implementation_summary", "required": true, "description": "Summary of implemented changes."},
+    {"path": "changed-files.md", "type": "changed_files", "required": true, "description": "Files changed and reasons."},
+    {"path": "verification-log.md", "type": "verification_log", "required": true, "description": "Verification commands and outcomes."},
+    {"path": "risk-notes.md", "type": "risk_notes", "required": true, "description": "Residual implementation risks."}
+  ],
+  "input_packets": [
+    {
+      "role": "code-context",
+      "milestone": "template",
+      "packet_version": "packet-v001",
+      "manifest": "docs/workflow/roles/code-context/reports/<milestone>/packet-v001/handoff.manifest.json",
+      "status_at_consumption": "ready_for_next_role",
+      "consumption_status": "accepted_as_input"
+    }
+  ],
+  "source_scopes": ["docs/workflow/source-map.md", "upstream code-context packet"],
+  "handoff_to": ["test-evaluator"],
+  "open_questions": [],
+  "blocked": false,
+  "required_confirmations": []
+}

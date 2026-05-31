@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1",
+  "role": "reviewer",
+  "milestone": "template",
+  "packet_version": "packet-v001",
+  "status": "draft",
+  "created_at": "YYYY-MM-DD",
+  "updated_at": "YYYY-MM-DD",
+  "summary": "Template manifest for a Reviewer packet.",
+  "documents": [
+    {"path": "review-findings.md", "type": "review_findings", "required": true, "description": "Review findings."},
+    {"path": "risk-decision.md", "type": "risk_decision", "required": true, "description": "Risk decisions."},
+    {"path": "packet-chain-audit.md", "type": "packet_chain_audit", "required": true, "description": "Packet chain audit."},
+    {"path": "final-gate.md", "type": "final_gate", "required": true, "description": "Final gate decision."}
+  ],
+  "input_packets": [
+    {
+      "role": "test-evaluator",
+      "milestone": "template",
+      "packet_version": "packet-v001",
+      "manifest": "docs/workflow/roles/test-evaluator/reports/<milestone>/packet-v001/handoff.manifest.json",
+      "status_at_consumption": "ready_for_next_role",
+      "consumption_status": "accepted_as_input"
+    }
+  ],
+  "source_scopes": ["docs/workflow/source-map.md", "upstream test-evaluator packet"],
+  "handoff_to": ["orchestrator"],
+  "open_questions": [],
+  "blocked": false,
+  "required_confirmations": []
+}

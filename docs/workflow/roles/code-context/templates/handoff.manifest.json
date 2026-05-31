@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1",
+  "role": "code-context",
+  "milestone": "template",
+  "packet_version": "packet-v001",
+  "status": "draft",
+  "created_at": "YYYY-MM-DD",
+  "updated_at": "YYYY-MM-DD",
+  "summary": "Template manifest for a Code Context packet.",
+  "documents": [
+    {"path": "code-map.md", "type": "code_map", "required": true, "description": "Relevant code and file map."},
+    {"path": "dependency-map.md", "type": "dependency_map", "required": true, "description": "Dependency map."},
+    {"path": "impact-analysis.md", "type": "impact_analysis", "required": true, "description": "Blast radius and risk analysis."},
+    {"path": "test-map.md", "type": "test_map", "required": true, "description": "Existing and missing tests."},
+    {"path": "implementation-constraints.md", "type": "implementation_constraints", "required": true, "description": "Allowed implementation scope."}
+  ],
+  "input_packets": [
+    {
+      "role": "architect",
+      "milestone": "template",
+      "packet_version": "packet-v001",
+      "manifest": "docs/workflow/roles/architect/reports/<milestone>/packet-v001/handoff.manifest.json",
+      "status_at_consumption": "ready_for_next_role",
+      "consumption_status": "accepted_as_input"
+    }
+  ],
+  "source_scopes": ["docs/workflow/source-map.md", "upstream architect packet"],
+  "handoff_to": ["implementer"],
+  "open_questions": [],
+  "blocked": false,
+  "required_confirmations": []
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": "0.1",
+  "role": "researcher",
+  "milestone": "template",
+  "packet_version": "packet-v001",
+  "status": "draft",
+  "created_at": "YYYY-MM-DD",
+  "updated_at": "YYYY-MM-DD",
+  "summary": "Template manifest for a Researcher packet.",
+  "documents": [
+    {
+      "path": "research-brief.md",
+      "type": "research_brief",
+      "required": true,
+      "description": "Main research output."
+    },
+    {
+      "path": "evidence-map.md",
+      "type": "evidence_map",
+      "required": true,
+      "description": "Claim-to-source map."
+    },
+    {
+      "path": "risk-register.md",
+      "type": "risk_register",
+      "required": true,
+      "description": "Risks, uncertainty, and mitigations."
+    },
+    {
+      "path": "open-questions.md",
+      "type": "open_questions",
+      "required": true,
+      "description": "Questions that block or inform downstream work."
+    },
+    {
+      "path": "source-log.md",
+      "type": "source_log",
+      "required": true,
+      "description": "Sources read by the Researcher."
+    }
+  ],
+  "input_packets": [],
+  "source_scopes": [
+    "docs/workflow/source-map.md"
+  ],
+  "handoff_to": [
+    "product"
+  ],
+  "open_questions": [],
+  "blocked": false,
+  "required_confirmations": []
+}

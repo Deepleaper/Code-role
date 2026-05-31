@@ -1,0 +1,33 @@
+{
+  "schema_version": "0.1",
+  "role": "architect",
+  "milestone": "template",
+  "packet_version": "packet-v001",
+  "status": "draft",
+  "created_at": "YYYY-MM-DD",
+  "updated_at": "YYYY-MM-DD",
+  "summary": "Template manifest for an Architect packet.",
+  "documents": [
+    {"path": "architecture-plan.md", "type": "architecture_plan", "required": true, "description": "Architecture plan and implementation boundary."},
+    {"path": "boundary-map.md", "type": "boundary_map", "required": true, "description": "Module and ownership boundaries."},
+    {"path": "interface-contracts.md", "type": "interface_contracts", "required": true, "description": "Contracts to preserve or introduce."},
+    {"path": "data-flow.md", "type": "data_flow", "required": true, "description": "Data flow and sequence outline."},
+    {"path": "test-strategy.md", "type": "test_strategy", "required": true, "description": "Tests required downstream."},
+    {"path": "risk-register.md", "type": "risk_register", "required": true, "description": "Architecture risks."}
+  ],
+  "input_packets": [
+    {
+      "role": "product-prd",
+      "milestone": "template",
+      "packet_version": "packet-v001",
+      "manifest": "docs/workflow/roles/product-prd/reports/<milestone>/packet-v001/handoff.manifest.json",
+      "status_at_consumption": "ready_for_next_role",
+      "consumption_status": "accepted_as_input"
+    }
+  ],
+  "source_scopes": ["docs/workflow/source-map.md", "upstream product-prd packet"],
+  "handoff_to": ["code-context"],
+  "open_questions": [],
+  "blocked": false,
+  "required_confirmations": []
+}

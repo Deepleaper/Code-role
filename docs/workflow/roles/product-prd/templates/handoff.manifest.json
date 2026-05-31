@@ -1,0 +1,61 @@
+{
+  "schema_version": "0.1",
+  "role": "product-prd",
+  "milestone": "template",
+  "packet_version": "packet-v001",
+  "status": "draft",
+  "created_at": "YYYY-MM-DD",
+  "updated_at": "YYYY-MM-DD",
+  "summary": "Template manifest for a Product / PRD packet.",
+  "documents": [
+    {
+      "path": "product-brief.md",
+      "type": "product_brief",
+      "required": true,
+      "description": "Product problem, user, scope, and decision summary."
+    },
+    {
+      "path": "prd.md",
+      "type": "prd",
+      "required": true,
+      "description": "Buildable product requirements."
+    },
+    {
+      "path": "acceptance-criteria.md",
+      "type": "acceptance_criteria",
+      "required": true,
+      "description": "Criteria downstream tests and review should verify."
+    },
+    {
+      "path": "non-goals.md",
+      "type": "non_goals",
+      "required": true,
+      "description": "Explicitly rejected scope and boundaries."
+    },
+    {
+      "path": "decision-log.md",
+      "type": "decision_log",
+      "required": true,
+      "description": "Product decisions and evidence behind them."
+    }
+  ],
+  "input_packets": [
+    {
+      "role": "researcher",
+      "milestone": "template",
+      "packet_version": "packet-v001",
+      "manifest": "docs/workflow/roles/researcher/reports/<milestone>/packet-v001/handoff.manifest.json",
+      "status_at_consumption": "ready_for_next_role"
+    }
+  ],
+  "source_scopes": [
+    "docs/workflow/source-map.md",
+    "upstream researcher packet"
+  ],
+  "handoff_to": [
+    "architect"
+  ],
+  "open_questions": [],
+  "blocked": false,
+  "required_confirmations": []
+}
