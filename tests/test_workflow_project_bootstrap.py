@@ -99,5 +99,7 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
         assert "should not be committed or pushed" in generated
         assert "Code-role does not own the target project's Git workflow" in generated
     assert "Do not run `git add`, `git commit`, or `git push`" in reviewer_prompt
+    assert "Orchestrator consumption-check request block" in reviewer_prompt
+    assert "must not generate the authoritative next-role startup message" in reviewer_prompt
     assert "non-authoritative navigation index" in reviewer_index
     assert "code-role/" in read(exclude)

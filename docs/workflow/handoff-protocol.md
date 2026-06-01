@@ -77,6 +77,26 @@ When a downstream role consumes an upstream packet, it records:
 
 This prevents silent drift when upstream roles publish newer packets later.
 
+## Orchestrator Consumption Check Request
+
+Every execution role must include an Orchestrator consumption-check request block at the end of its completion response.
+
+The block must include:
+
+- current role
+- milestone
+- packet path
+- handoff manifest path
+- reported packet status
+- reported `ready_for_next_role`
+- concise role completion summary
+- request for Orchestrator to check manifest validity, documents, input packets, blocked state, external research state, lock presence, consumability, and next route
+- boundary reminder that Orchestrator must not modify the role packet, create downstream packets, run Git commands, or modify business files
+
+Use [Orchestrator Consumption Check Request Template](orchestrator/consumption-check-request-template.md).
+
+The current role may recommend a downstream role, but it must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.
+
 ## Status Transitions
 
 See [Status Transition Protocol](status-transition-protocol.md).

@@ -88,3 +88,9 @@ The Test Evaluator:
 ## Handoff Rule
 
 The downstream Reviewer reads the quality gate and regression matrix first.
+
+## Completion Response Rule
+
+When Test Evaluator finishes a draft or ready packet, the final response must end with an Orchestrator consumption-check request block using `docs/workflow/orchestrator/consumption-check-request-template.md`.
+
+Test Evaluator may recommend Reviewer as the downstream role, but must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.

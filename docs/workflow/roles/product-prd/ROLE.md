@@ -118,6 +118,12 @@ Ask for user confirmation before:
 
 The downstream Architect role reads `handoff.manifest.json` first. The manifest lists the authoritative documents in the packet and locks the Researcher packet consumed as input.
 
+## Completion Response Rule
+
+When Product / PRD finishes a draft or ready packet, the final response must end with an Orchestrator consumption-check request block using `docs/workflow/orchestrator/consumption-check-request-template.md`.
+
+Product / PRD may recommend a downstream role, but must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.
+
 ## Initialization Example
 
 ```text

@@ -106,3 +106,9 @@ If evidence is weak, the Researcher must say so in `risk-register.md` or `open-q
 ## Handoff Rule
 
 The downstream role reads `handoff.manifest.json` first. The manifest lists the authoritative documents in the packet.
+
+## Completion Response Rule
+
+When the Researcher finishes a draft or ready packet, the final response must end with an Orchestrator consumption-check request block using `docs/workflow/orchestrator/consumption-check-request-template.md`.
+
+The Researcher may recommend a downstream role, but must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.

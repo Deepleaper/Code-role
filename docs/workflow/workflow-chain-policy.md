@@ -14,6 +14,8 @@ This document defines when to use each workflow chain and which packet statuses 
 
 The Workflow Orchestrator selects a chain and records the decision. The Orchestrator cannot approve state transitions for the user.
 
+Architect must not hand off directly to Test Evaluator in implementation-bound work. Architecture packets first go to Code Context / Context Engineer so downstream roles receive a stable file, dependency, impact, test, and implementation-constraint map.
+
 ## Chain Details
 
 ### `full-chain`
@@ -32,6 +34,11 @@ Required for:
 - unclear user value
 - work with P0/P1 risk
 
+Architect handoff rule:
+
+- after `architect`, route to `code-context`
+- do not route directly to `test-evaluator`
+
 ### `mini-chain`
 
 Use for medium-impact work:
@@ -45,6 +52,11 @@ Allowed for:
 - bounded implementation with already accepted product scope
 - architecture-sensitive docs or examples
 - moderate refactor with clear scope
+
+Architect handoff rule:
+
+- after `architect`, route to `code-context`
+- do not route directly to `test-evaluator`
 
 ### `patch-chain`
 

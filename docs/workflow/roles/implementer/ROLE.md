@@ -101,3 +101,9 @@ Ask for user confirmation before:
 ## Handoff Rule
 
 The downstream Test Evaluator reads the implementation packet and verification log first.
+
+## Completion Response Rule
+
+When Implementer finishes a draft or ready packet, the final response must end with an Orchestrator consumption-check request block using `docs/workflow/orchestrator/consumption-check-request-template.md`.
+
+Implementer may recommend Test Evaluator as the downstream role, but must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.

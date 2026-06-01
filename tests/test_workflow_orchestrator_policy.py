@@ -18,6 +18,7 @@ def test_orchestrator_files_exist() -> None:
         ORCH / "milestone-registry.md",
         ORCH / "decision-log.md",
         WORKFLOW / "workflow-chain-policy.md",
+        WORKFLOW / "orchestrator" / "consumption-check-request-template.md",
     ]
     missing = [path for path in expected if not path.exists()]
     assert not missing
@@ -48,6 +49,8 @@ def test_chain_policy_defines_allowed_chains_and_gates() -> None:
     assert "`architect -> code-context -> implementer -> test-evaluator -> reviewer`" in policy
     assert "`code-context -> implementer -> test-evaluator -> reviewer`" in policy
     assert "`product-prd or architect -> reviewer`" in policy
+    assert "Architect must not hand off directly to Test Evaluator" in policy
+    assert "Architecture packets first go to Code Context / Context Engineer" in policy
     assert "Downstream roles consume only `ready_for_next_role` or `accepted` packets" in policy
     assert "Draft consumption must be recorded" in policy
     assert "consumable_check=fail" in policy
@@ -68,6 +71,16 @@ def test_workflow_docs_link_orchestrator_and_policy() -> None:
     assert "allowing a downstream role to consume a `draft` packet" in handoff
     assert "Role 1: Workflow Orchestrator" in guide
     assert "Orchestrator Write Scope" in source_map
+    assert "consumption-check-request-template.md" in readme
+
+
+def test_consumption_check_request_template_keeps_routing_with_orchestrator() -> None:
+    template = read(WORKFLOW / "orchestrator" / "consumption-check-request-template.md")
+    assert "当前完成角色" in template
+    assert "handoff manifest" in template
+    assert "当前 packet 是否可被下游正式消费" in template
+    assert "The current role may recommend a downstream role" in template
+    assert "must not generate the authoritative next-role startup message" in template
 
 
 def test_orchestrator_startup_routine_is_file_based() -> None:

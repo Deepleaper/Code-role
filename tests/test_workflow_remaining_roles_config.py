@@ -93,17 +93,29 @@ def test_remaining_role_manifests_are_valid_and_chain_locked() -> None:
 
 
 def test_high_risk_role_boundaries_are_explicit() -> None:
+    architect = read(ROLES / "architect" / "ROLE.md")
     implementer = read(ROLES / "implementer" / "ROLE.md")
     evaluator = read(ROLES / "test-evaluator" / "ROLE.md")
     reviewer = read(ROLES / "reviewer" / "ROLE.md")
     code_context = read(ROLES / "code-context" / "ROLE.md")
 
+    assert "Do not route directly from Architect to Test Evaluator" in architect
+    assert "Default downstream role: Code Context / Context Engineer" in architect
+    assert "Alias: Context Engineer" in code_context
     assert "must not begin from chat-only instruction" in implementer
     assert "must not expand scope" in implementer
     assert "does not change code unless explicitly reassigned as Implementer" in evaluator
     assert "does not implement fixes" in reviewer
     assert "does not rewrite upstream packets" in reviewer
     assert "does not modify code" in code_context
+
+
+def test_execution_roles_require_orchestrator_consumption_request() -> None:
+    for role_id in ROLE_EXPECTATIONS:
+        text = read(ROLES / role_id / "ROLE.md")
+        assert "Completion Response Rule" in text, role_id
+        assert "Orchestrator consumption-check request block" in text, role_id
+        assert "must not generate the authoritative next-role startup message" in text, role_id
 
 
 def test_roles_index_lists_all_execution_roles() -> None:
@@ -118,4 +130,3 @@ def test_roles_index_lists_all_execution_roles() -> None:
         "Reviewer",
     ]:
         assert label in index
-

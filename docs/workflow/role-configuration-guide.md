@@ -27,6 +27,7 @@ Rules:
 - `handoff.manifest.json` is the downstream contract.
 - The Orchestrator selects the chain and next role but cannot approve state transitions for the user.
 - Downstream acceptance is recorded as `accepted_as_input`; downstream roles must not rewrite upstream packet manifests.
+- Every execution role completion response must end with an Orchestrator consumption-check request block. The current role may recommend a downstream role, but Orchestrator owns consumable checks, routing, and the authoritative next-role startup message.
 
 Target projects should use generated role-instance prompts and a non-authoritative state index to reduce setup time. The prompts and state index are onboarding aids only; packet manifests, packet locks, and Orchestrator state remain authoritative.
 
@@ -388,6 +389,8 @@ Recommended documents:
 Default target: `code-context`
 
 ## Role 5: Code Context
+
+Alias: Context Engineer.
 
 ### Goal
 

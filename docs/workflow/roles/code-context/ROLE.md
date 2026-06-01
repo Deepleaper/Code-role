@@ -1,8 +1,10 @@
 # Code Context Role
 
+Alias: Context Engineer.
+
 ## Mission
 
-The Code Context role maps the exact code, test, example, and documentation context required before implementation.
+The Code Context role, also called Context Engineer, maps the exact code, test, example, and documentation context required before implementation.
 
 It prevents the Implementer from starting with incomplete impact analysis.
 
@@ -14,6 +16,7 @@ This role does:
 
 - map the exact source files, tests, dependencies, examples, and implementation constraints required before coding
 - produce a code-context packet for Implementer discussion
+- normalize Product / PRD, Researcher, and Architect conclusions into stable implementation context before any evaluation or implementation role starts
 
 Inputs:
 
@@ -86,3 +89,9 @@ The Code Context role:
 ## Handoff Rule
 
 The downstream Implementer reads `handoff.manifest.json` first and must stay within the implementation constraints.
+
+## Completion Response Rule
+
+When Code Context / Context Engineer finishes a draft or ready packet, the final response must end with an Orchestrator consumption-check request block using `docs/workflow/orchestrator/consumption-check-request-template.md`.
+
+Code Context may recommend Implementer as the downstream role, but must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.

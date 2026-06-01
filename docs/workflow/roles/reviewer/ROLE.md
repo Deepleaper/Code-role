@@ -87,3 +87,9 @@ The Reviewer:
 ## Handoff Rule
 
 If changes are required, hand back to Implementer through Orchestrator. If accepted, Orchestrator may close the milestone after user confirmation.
+
+## Completion Response Rule
+
+When Reviewer finishes a draft or ready packet, the final response must end with an Orchestrator consumption-check request block using `docs/workflow/orchestrator/consumption-check-request-template.md`.
+
+Reviewer may recommend closure, changes, or residual-risk acceptance, but must not close the milestone and must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, milestone closure routing, and next-role startup message generation.

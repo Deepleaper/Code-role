@@ -57,6 +57,7 @@ The [Role Configuration Guide](role-configuration-guide.md) defines the operatin
 - [Status Transition Protocol](status-transition-protocol.md)
 - [Workflow Validation](workflow-validation.md)
 - [Orchestrator Startup Routine](orchestrator/STARTUP.md)
+- [Orchestrator Consumption Check Request Template](orchestrator/consumption-check-request-template.md)
 - [Handoff Protocol](handoff-protocol.md)
 - [Packet Schema](packet-schema.md)
 - [Source Map](source-map.md)
