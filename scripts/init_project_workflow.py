@@ -211,7 +211,7 @@ Rules:
 - Do not modify upstream packets.
 - Do not run network calls unless explicitly allowed.
 - Do not run `git add`, `git commit`, or `git push`.
-- Do not mark a draft packet `ready_for_next_role` without user confirmation.
+- Do not mark a draft packet `ready_for_next_role` unless the user explicitly requests strict handoff.
 - When you finish a draft or ready packet, end your response with an Orchestrator consumption-check request block using the template at `{workflow_doc_path(config, "orchestrator/consumption-check-request-template.md")}`.
 - You may recommend a downstream role, but you must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.
 

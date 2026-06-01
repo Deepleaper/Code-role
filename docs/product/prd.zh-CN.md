@@ -313,7 +313,7 @@ Orchestrator 判断任务类型：
 - `decision-log.md`
 - `handoff.manifest.json`
 
-用户确认后，packet 才能进入 `ready_for_next_role`。
+默认轻量流程里，用户接受该角色产出后，Orchestrator 可以把当前 packet 交给下一角色，即使它仍是 `draft`。只有用户明确要求严格交接、审计、不可变证据或发布级留档时，packet 才需要进入 `ready_for_next_role`。
 
 ### 9.4 下游角色消费 packet
 

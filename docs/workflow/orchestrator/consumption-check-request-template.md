@@ -22,8 +22,8 @@ handoff manifest:
 packet status reported by role:
 {PACKET_STATUS}
 
-ready_for_next_role:
-{READY_FOR_NEXT_ROLE}
+handoff mode:
+lightweight
 
 角色完成汇报:
 {ROLE_COMPLETION_SUMMARY}
@@ -32,13 +32,16 @@ ready_for_next_role:
 1. manifest JSON 是否有效
 2. manifest documents 是否存在
 3. input_packets 是否正确记录上游输入
-4. packet status / ready_for_next_role
+4. packet status 是否已如实记录
 5. blocked / external_research.used
-6. 是否存在 packet.lock.json
-7. 当前 packet 是否可被下游正式消费
-8. 如果不可消费，下一步应回到哪个角色做 readiness 状态转换
-9. 如果可消费，当前 chain 的下一角色是谁
-10. 如果可以进入下一角色，请使用 Orchestrator next-role-message-template 生成下一角色完整首条消息
+6. 用户是否接受该角色产出进入下一角色
+7. 当前 chain 的下一角色是谁
+8. 如果可以进入下一角色，请生成下一角色完整首条消息
+
+严格交接只在用户明确要求时检查:
+- ready_for_next_role
+- packet.lock.json
+- sha256 覆盖
 
 边界:
 - 只更新 Orchestrator 状态文件

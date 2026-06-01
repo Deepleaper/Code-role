@@ -27,9 +27,16 @@ Valid packet statuses:
 
 `accepted` is not written back to upstream packet manifests. Downstream acceptance is recorded as `accepted_as_input` in the downstream packet and in Orchestrator state.
 
-Only packets with `ready_for_next_role` may be used as official downstream input.
+Default handoff is lightweight:
 
-A downstream role may consume `draft` only when the user explicitly approves draft consumption for exploration. Draft consumption must be recorded by the [Workflow Orchestrator](orchestrator/ROLE.md) and in the downstream packet `input_packets`.
+- The user may accept a role's completed output for the next role without forcing a `ready_for_next_role` status transition.
+- The Orchestrator records that acceptance and generates the next-role startup message.
+- The downstream packet records the upstream manifest path and the actual upstream status at consumption, even if that status is `draft`.
+
+Strict handoff is optional:
+
+- Use `ready_for_next_role` and `packet.lock.json` only when the user explicitly asks for strict handoff, auditability, immutability, or release-grade evidence.
+- Do not ask the owning role to do a readiness conversion by default.
 
 ## Versioning Rules
 
@@ -37,7 +44,8 @@ A downstream role may consume `draft` only when the user explicitly approves dra
 - Do not edit a packet after it is marked `ready_for_next_role`.
 - If content must change, create the next packet version.
 - `latest.json` may be updated to point to the newest packet.
-- Downstream roles must lock the exact packet version they read in their own `handoff.manifest.json`.
+- Downstream roles must record the exact upstream packet version they read in their own `handoff.manifest.json`.
+- Strict handoff may also lock packet hashes with `packet.lock.json`.
 - Downstream roles must not mutate upstream packet manifests.
 - `accepted_as_input` is a downstream consumption record, not an upstream packet status.
 
@@ -61,7 +69,7 @@ Ask for user confirmation before:
 - marking a packet `ready_for_next_role`
 - superseding a packet that was already accepted
 - changing this handoff protocol or the global source map
-- allowing a downstream role to consume a `draft` packet
+- advancing to the next role after accepting a completed role output
 - allowing Implementer to start work
 
 ## Downstream Input Lock
@@ -75,7 +83,7 @@ When a downstream role consumes an upstream packet, it records:
 - packet status at time of consumption
 - consumption status, normally `accepted_as_input`
 
-This prevents silent drift when upstream roles publish newer packets later.
+This prevents silent drift when upstream roles publish newer packets later. In lightweight mode, the record is a navigation and accountability link. In strict mode, `packet.lock.json` adds hash-level immutability.
 
 ## Orchestrator Consumption Check Request
 
@@ -88,9 +96,9 @@ The block must include:
 - packet path
 - handoff manifest path
 - reported packet status
-- reported `ready_for_next_role`
+- whether strict handoff was requested
 - concise role completion summary
-- request for Orchestrator to check manifest validity, documents, input packets, blocked state, external research state, lock presence, consumability, and next route
+- request for Orchestrator to check manifest validity, documents, input packets, blocked state, external research state, user acceptance, handoff mode, and next route
 - boundary reminder that Orchestrator must not modify the role packet, create downstream packets, run Git commands, or modify business files
 
 Use [Orchestrator Consumption Check Request Template](orchestrator/consumption-check-request-template.md).

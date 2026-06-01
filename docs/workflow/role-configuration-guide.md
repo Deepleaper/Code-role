@@ -29,7 +29,7 @@ Rules:
 - Downstream acceptance is recorded as `accepted_as_input`; downstream roles must not rewrite upstream packet manifests.
 - Every execution role completion response must end with an Orchestrator consumption-check request block. The current role may recommend a downstream role, but Orchestrator owns consumable checks, routing, and the authoritative next-role startup message.
 
-Target projects should use generated role-instance prompts and a non-authoritative state index to reduce setup time. The prompts and state index are onboarding aids only; packet manifests, packet locks, and Orchestrator state remain authoritative.
+Target projects should use generated role-instance prompts and a non-authoritative state index to reduce setup time. The prompts and state index are onboarding aids only; packet manifests and Orchestrator state remain authoritative. Packet locks are used only for strict handoff.
 
 ## Folder Convention
 
@@ -118,7 +118,7 @@ Use it to decide:
 
 - `full-chain`, `mini-chain`, `patch-chain`, or `docs-only-chain`
 - whether a packet can be consumed
-- whether draft consumption requires user approval
+- whether the user accepted the completed role output
 - which role acts next
 - whether Implementer is allowed to start
 - whether the packet chain is complete
@@ -231,7 +231,7 @@ Required documents:
 - Milestone name is ambiguous
 - External research is needed
 - Source-map scope is insufficient
-- Packet should be marked `ready_for_next_role`
+- Strict handoff is requested
 
 ### Downstream Handoff
 
@@ -637,12 +637,12 @@ Use these states consistently:
 
 - `draft`: role is still working
 - `blocked`: role cannot proceed without user input
-- `ready_for_next_role`: user approved the packet for downstream consumption
+- `ready_for_next_role`: user explicitly requested strict handoff and approved the packet for immutable downstream consumption
 - `superseded`: replaced by newer packet
 
 Downstream acceptance is not a packet manifest status. Record downstream acceptance as `accepted_as_input` in the downstream packet `input_packets` and Orchestrator state.
 
-Do not let a downstream role consume `draft` unless the user explicitly allows draft consumption for exploration.
+Default workflow may advance from a completed `draft` packet when the user accepts that role output and Orchestrator records the handoff. Do not force a readiness conversion unless strict handoff is requested.
 
 ## Minimum `handoff.manifest.json` Checklist
 
@@ -676,7 +676,7 @@ Configure roles in this order:
 
 Do not create all real milestone packets immediately. Create role folders and templates first. Create milestone packets only when a role is assigned real work.
 
-Create the Orchestrator before relying on downstream Product / PRD consumption. It is needed to decide whether Researcher draft packets can be consumed or must first become `ready_for_next_role`.
+Create the Orchestrator before relying on downstream Product / PRD consumption. It is needed to decide whether the user has accepted the Researcher output and which role should act next.
 
 ## What Requires User Confirmation
 
@@ -686,7 +686,7 @@ Always ask before:
 - using external research or network
 - changing packet protocol
 - changing source map
-- marking a packet `ready_for_next_role`
+- marking a packet `ready_for_next_role` for strict handoff
 - accepting unresolved P0/P1 risks
 - changing code outside the approved implementation scope
 - running destructive commands

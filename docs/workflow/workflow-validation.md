@@ -26,10 +26,11 @@ The tool is stored under `docs/workflow/`, so it is covered by the local workflo
 
 ### Consumption
 
-- official downstream consumption requires upstream status `ready_for_next_role`.
-- `draft` consumption requires explicit user approval.
-- draft-consumption approval must be recorded in Orchestrator `decision-log.md`.
-- downstream `input_packets` must lock exact upstream role, milestone, packet version, manifest path, and status at consumption.
+- lightweight downstream consumption requires user acceptance of the completed upstream role output.
+- upstream status may remain `draft` in lightweight mode.
+- Orchestrator should record the user acceptance and next-role route.
+- downstream `input_packets` must record exact upstream role, milestone, packet version, manifest path, and status at consumption.
+- strict downstream consumption requires `ready_for_next_role` and `packet.lock.json`.
 
 ### Status Transition
 
@@ -41,7 +42,7 @@ The tool is stored under `docs/workflow/`, so it is covered by the local workflo
 
 ### Packet Lock
 
-When a packet is marked `ready_for_next_role`, create:
+When strict handoff is requested and a packet is marked `ready_for_next_role`, create:
 
 ```text
 packet.lock.json
@@ -76,4 +77,3 @@ Validation must not:
 - write product code
 - write release docs
 - include local workflow files in GitHub commits by default
-

@@ -38,7 +38,7 @@ def test_packet_protocol_versions_and_handoff_are_explicit() -> None:
     assert "packet-vNNN" in protocol
     assert "latest.json" in protocol
     assert "handoff.manifest.json" in protocol
-    assert "Downstream roles must lock the exact packet version" in protocol
+    assert "Downstream roles must record the exact upstream packet version" in protocol
     assert "ready_for_next_role" in protocol
     assert "packet-v001" in schema
     assert "input_packets" in schema
@@ -72,4 +72,3 @@ def test_researcher_manifest_template_is_machine_readable() -> None:
         "open-questions.md",
         "source-log.md",
     }.issubset(document_paths)
-

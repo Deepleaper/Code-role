@@ -8,7 +8,7 @@ The workflow exists to make every major step explicit, discussable, and reviewab
 
 Every role conversation must point to that role's explicit output.
 
-The role's output is a documented artifact, usually a versioned packet. The next role consumes that artifact only after the user confirms the packet is ready, or explicitly approves draft consumption for exploration.
+The role's output is a documented artifact, usually a versioned packet. In the default lightweight flow, the next role consumes that artifact after the user accepts the completed role output through Orchestrator. Strict `ready_for_next_role` handoff is optional and only used when explicitly requested.
 
 Except for Implementer after explicit approval, roles produce documents and do not change project code.
 
@@ -39,7 +39,7 @@ For every non-Implementer execution role:
 2. Read only the documents and source scopes allowed by the manifest, role file, and source map.
 3. Produce a draft document packet under the role's own `reports/` folder.
 4. Stop for discussion when there are material decisions, open questions, or tradeoffs.
-5. Do not mark a packet `ready_for_next_role` without user confirmation.
+5. Do not mark a packet `ready_for_next_role` unless the user explicitly requests strict handoff.
 6. Do not modify product code, tests, runtime files, release docs, or upstream packets.
 
 ## Implementer Exception
@@ -50,7 +50,7 @@ Implementer may start only when:
 
 - Orchestrator confirms the selected chain allows implementation.
 - Required upstream packets exist.
-- Upstream packet status allows consumption, or draft consumption is explicitly approved.
+- The user accepted the upstream role output through Orchestrator.
 - Scope and acceptance criteria are clear.
 - User confirms implementation start.
 
@@ -81,4 +81,3 @@ A role must stop for discussion before handoff when:
 - the role would need to exceed its boundary
 
 Discussion happens before the workflow advances. The documented packet is the object being discussed.
-

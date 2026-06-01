@@ -117,14 +117,15 @@ If the workflow stops after Researcher, record the reason in the Orchestrator de
 
 Default rule:
 
-- Downstream roles consume only `ready_for_next_role` or `accepted` packets.
+- Downstream roles may consume the current role's completed output after the user accepts it and the Orchestrator records the handoff.
+- The upstream packet may still be `draft` in normal lightweight flow.
+- The downstream role records the exact upstream manifest and `status_at_consumption`.
 
-Exception:
+Strict handoff:
 
-- A downstream role may consume `draft` only when the user explicitly approves draft consumption for exploration.
-- Draft consumption must be recorded in `docs/workflow/orchestrator/decision-log.md`.
-- Draft consumption must be recorded in the downstream packet `input_packets`.
-- Orchestrator must output `consumable_check=fail` when a packet is `draft` and no explicit draft-consumption approval exists.
+- Use `ready_for_next_role` plus `packet.lock.json` only when the user explicitly asks for strict handoff, auditability, immutability, or release-grade evidence.
+- Do not route a role back for readiness conversion by default.
+- If strict handoff is requested and the packet remains `draft`, Orchestrator should hold the chain and ask the owning role to perform the strict transition.
 
 ## Implementer Gate
 
@@ -133,8 +134,8 @@ The Implementer must not begin work from chat-only instruction.
 Before implementation starts, the Orchestrator must confirm:
 
 - selected chain permits implementation
-- required upstream packets exist
-- upstream packet status is `ready_for_next_role` or `accepted`, unless draft consumption is explicitly approved
+- required upstream output exists and has been accepted by the user through Orchestrator
+- upstream packet status is recorded exactly, even when it remains `draft`
 - scope is clear
 - required acceptance criteria exist, unless the user explicitly chooses patch-chain for a narrow fix
 
@@ -147,8 +148,9 @@ The Reviewer must audit the packet chain, not only the code.
 Reviewer checks:
 
 - required upstream packets exist
-- packet versions are locked
-- draft consumption, if any, was explicitly approved
+- upstream packet versions are recorded
+- strict locks are present only when strict handoff was requested
+- lightweight handoffs were explicitly accepted by the user through Orchestrator
 - Implementer stayed within approved scope
 - Test Evaluator covered acceptance criteria when applicable
 - no unresolved P0
@@ -160,9 +162,9 @@ User confirmation is required for:
 
 - creating ambiguous milestone names
 - selecting or changing chain type
-- consuming draft as official input
 - marking packet `ready_for_next_role`
 - marking packet `accepted`
+- advancing from one role to the next after accepting completed output
 - allowing Implementer to start
 - skipping a role in a chain
 - accepting unresolved P1 risk

@@ -4,7 +4,7 @@ This folder defines the document-based role workflow for Code-role role instance
 
 The workflow separates responsibilities into roles. Each role reads approved document packets from upstream roles and writes a new versioned document packet for downstream roles. Roles do not pass state through chat memory as the source of truth.
 
-The workflow is discussion-first, not automation-first. Each role produces a documented output for user discussion. The workflow advances only after the user confirms readiness or explicitly approves draft consumption.
+The workflow is discussion-first, not automation-first. Each role produces a documented output for user discussion. The default flow is lightweight: after the user accepts a role's completed output, Orchestrator may route the next role even when the packet remains `draft`.
 
 The workflow has eight configured role slots. The [Workflow Orchestrator](orchestrator/ROLE.md) is the control role; the other seven roles are execution roles.
 
@@ -38,10 +38,11 @@ The [Role Configuration Guide](role-configuration-guide.md) defines the operatin
 - Packet content is immutable once marked `ready_for_next_role`.
 - `latest.json` is only a pointer to the latest packet.
 - Downstream roles must read `handoff.manifest.json`, not guess which files matter.
-- Downstream roles must lock the exact upstream packet version they consumed.
+- Downstream roles must record the exact upstream packet version they consumed.
+- Strict `ready_for_next_role` plus `packet.lock.json` handoff is optional and used only when the user explicitly asks for strict handoff, auditability, immutability, or release-grade evidence.
 - Implementer must not start from chat-only instruction.
 - Each role must stop for discussion when scope, tradeoffs, evidence, risks, or handoff readiness are not settled.
-- Draft packet consumption requires explicit user approval.
+- Advancing to the next role requires user acceptance of the completed role output.
 - Upstream packet manifests must be passed explicitly between role instances.
 
 ## Protocol Documents

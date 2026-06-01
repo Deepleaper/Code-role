@@ -14,7 +14,7 @@ Valid `handoff.manifest.json` packet statuses:
 
 - `draft`: owning role is still working.
 - `blocked`: owning role cannot proceed without user input.
-- `ready_for_next_role`: owning role has user approval to hand off this packet.
+- `ready_for_next_role`: owning role has user approval for strict immutable handoff.
 - `superseded`: this packet has been replaced by a newer packet version.
 
 `accepted` is not a valid upstream packet manifest status for new packets. Downstream acceptance is recorded as `accepted_as_input`.
@@ -31,7 +31,7 @@ Example:
   "milestone": "example-milestone",
   "packet_version": "packet-v001",
   "manifest": "docs/workflow/roles/researcher/reports/example-milestone/packet-v001/handoff.manifest.json",
-  "status_at_consumption": "ready_for_next_role",
+  "status_at_consumption": "draft",
   "consumption_status": "accepted_as_input"
 }
 ```
@@ -44,7 +44,7 @@ This avoids mutating the upstream packet after it becomes immutable.
 | --- | --- | --- | --- | --- |
 | `draft` | `blocked` | owning role when input is missing | owning role | Record blocker in manifest. |
 | `blocked` | `draft` | user provides missing input | owning role | Packet remains mutable. |
-| `draft` | `ready_for_next_role` | explicit user confirmation | owning role | Generate or update `packet.lock.json` before handoff. |
+| `draft` | `ready_for_next_role` | explicit strict-handoff confirmation | owning role | Generate or update `packet.lock.json` before handoff. |
 | `ready_for_next_role` | `superseded` | explicit user confirmation and new packet exists | owning role or Orchestrator record plus owning role update if needed | Do not edit content files. |
 | `ready_for_next_role` | `accepted_as_input` | downstream role consumes packet | downstream packet and Orchestrator state | Do not write this into upstream manifest. |
 
@@ -67,24 +67,29 @@ Before `draft -> ready_for_next_role`:
 - `packet.lock.json` records file hashes for the packet
 - Orchestrator records the transition decision
 
-Before downstream consumption:
+Before downstream consumption in lightweight mode:
 
-- upstream status is `ready_for_next_role`, or draft consumption is explicitly approved
+- user has accepted the completed upstream role output for the next role
 - downstream packet records `status_at_consumption`
 - downstream packet records `consumption_status`
-- downstream packet locks exact upstream manifest path and packet version
+- downstream packet records exact upstream manifest path and packet version
+
+Before downstream consumption in strict mode:
+
+- upstream status is `ready_for_next_role`
+- `packet.lock.json` exists and records packet file hashes
+- downstream packet records exact upstream manifest path and packet version
 
 ## User Confirmation Boundary
 
 The user confirms:
 
 - chain type
-- draft consumption exception
-- `draft -> ready_for_next_role`
+- advancing to the next role after accepting completed output
+- `draft -> ready_for_next_role` for strict handoff
 - role skip
 - Implementer start
 - P1 risk acceptance
 - milestone closeout
 
 The Orchestrator recommends and records. It does not approve.
-

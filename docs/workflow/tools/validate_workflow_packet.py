@@ -89,15 +89,19 @@ def validate_manifest(packet_dir: Path) -> dict[str, Any]:
     return manifest
 
 
-def validate_consumable(manifest: dict[str, Any], allow_draft: bool) -> None:
+def validate_consumable(manifest: dict[str, Any], strict: bool) -> None:
     status = manifest["status"]
     if status == "ready_for_next_role":
         return
-    if status == "draft" and allow_draft:
+    if status == "draft" and not strict:
         return
+    if status == "draft":
+        raise ValidationError(
+            "packet is not strictly consumable: status must be ready_for_next_role "
+            "when --strict is set"
+        )
     raise ValidationError(
-        "packet is not consumable: status must be ready_for_next_role "
-        "unless --allow-draft is explicitly set"
+        "packet is not consumable: status must be draft or ready_for_next_role"
     )
 
 
@@ -126,14 +130,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Validate a local workflow packet.")
     parser.add_argument("packet_dir", type=Path)
     parser.add_argument("--for-consumption", action="store_true")
-    parser.add_argument("--allow-draft", action="store_true")
+    parser.add_argument("--allow-draft", action="store_true", help="Deprecated; draft is allowed in lightweight mode.")
+    parser.add_argument("--strict", action="store_true", help="Require ready_for_next_role for strict handoff.")
     parser.add_argument("--print-lock", action="store_true")
     args = parser.parse_args()
 
     try:
         manifest = validate_manifest(args.packet_dir)
         if args.for_consumption:
-            validate_consumable(manifest, args.allow_draft)
+            validate_consumable(manifest, args.strict)
         if args.print_lock:
             print(json.dumps(build_lock(args.packet_dir), indent=2, sort_keys=True))
         else:

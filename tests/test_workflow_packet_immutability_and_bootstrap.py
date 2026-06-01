@@ -16,7 +16,7 @@ def test_packet_schema_defines_immutability_rules() -> None:
     assert "Once a packet status becomes `ready_for_next_role`, do not edit" in text
     assert "`accepted` is not a packet manifest status for new packets" in text
     assert "create the next version" in text
-    assert "Historical packets must remain immutable" in text
+    assert "Historical strict-handoff packets must remain immutable" in text
 
 
 def test_workflow_bootstrap_documents_local_boundary() -> None:

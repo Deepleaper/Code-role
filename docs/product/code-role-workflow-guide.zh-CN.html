@@ -366,7 +366,7 @@
         <code>handoff.manifest.json</code> 是下游角色的入口。它记录这个 packet 属于哪个角色、是什么状态、包含哪些文档、消费了哪些上游 packet、是否阻塞、是否允许下游消费。
       </p>
       <p>
-        packet 从 <code>draft</code> 开始。只有用户确认后，角色才能把它标记为 <code>ready_for_next_role</code>，并创建 <code>packet.lock.json</code> 记录 manifest 和正文文档的 hash。下游角色正式消费时，Orchestrator 要先校验这些 hash。
+        packet 从 <code>draft</code> 开始。默认轻量流程里，用户接受该角色产出后，Orchestrator 就可以把这个 draft packet 交给下一角色。只有当用户明确要求严格交接、审计、不可变证据或发布级留档时，才需要把 packet 标记为 <code>ready_for_next_role</code>，并创建 <code>packet.lock.json</code> 记录 hash。
       </p>
       <div class="warning">
         不允许下游角色扫描“最新文件”来猜输入。必须由 Orchestrator 或用户提供精确的 upstream manifest 路径。
@@ -481,16 +481,18 @@ cd Code-role</code></pre>
         <li>粘贴对应的 <code>code-role/role-instance-prompts/&lt;role&gt;.md</code>。</li>
         <li>角色先确认读取范围、写入范围和禁止范围。</li>
         <li>用户回复“开始”后，角色创建 draft packet。</li>
-        <li>Orchestrator 消费 draft，判断是否可进入 readiness。</li>
-        <li>用户确认后，角色标记 <code>ready_for_next_role</code> 并创建 <code>packet.lock.json</code>。</li>
-        <li>Orchestrator 校验 ready packet，再路由下一个角色。</li>
+        <li>角色完成后，在回复末尾给出 Orchestrator consumption-check request block。</li>
+        <li>用户把检查块发给 Orchestrator。</li>
+        <li>Orchestrator 检查 manifest、文档、阻塞项和用户是否接受该产出。</li>
+        <li>默认轻量流程下，Orchestrator 直接生成下一角色启动消息。</li>
+        <li>只有用户明确要求严格交接时，才进入 <code>ready_for_next_role</code> 和 <code>packet.lock.json</code>。</li>
       </ol>
       <h3>state-index 的作用</h3>
       <p>
         <code>code-role/state-index/</code> 是角色接入索引。它告诉新角色当前项目走到哪一步、该读什么、不能读什么、当前残余风险是什么。
       </p>
       <p>
-        它不是新的事实来源。如果 state-index 和 manifest、packet.lock 或 Orchestrator 状态冲突，必须以后者为准。
+        它不是新的事实来源。如果 state-index 和 manifest、严格模式下的 packet.lock 或 Orchestrator 状态冲突，必须以后者为准。
       </p>
     </section>
 
@@ -528,13 +530,13 @@ It should remain outside the target project's Git history.</code></pre>
       <p>
         不建议。Code-role 的目标不是自动化跑完，而是控制质量和边界。每个状态转换、实现开始、Git 操作都需要用户确认。
       </p>
-      <h3>packet 为什么要 lock？</h3>
+      <h3>packet 什么时候要 lock？</h3>
       <p>
-        因为下游角色需要知道自己消费的是哪个精确版本。<code>packet.lock.json</code> 记录 manifest 和正文文档的 hash，防止上游 packet 被悄悄改写。
+        只有严格交接、审计、不可变证据或发布级留档需要 lock。日常控制流程只需要记录精确 upstream manifest 和用户接受结果，不需要默认生成 <code>packet.lock.json</code>。
       </p>
       <h3>state-index 会不会变成新的事实源？</h3>
       <p>
-        不会。它只是导航索引。权威永远是 Orchestrator 状态文件、<code>handoff.manifest.json</code> 和 <code>packet.lock.json</code>。
+        不会。它只是导航索引。权威永远是 Orchestrator 状态文件、<code>handoff.manifest.json</code>，以及严格模式下的 <code>packet.lock.json</code>。
       </p>
       <h3>新项目最快怎么开始？</h3>
       <p>

@@ -29,6 +29,6 @@ def test_packet_schema_uses_accepted_as_input_not_manifest_accepted() -> None:
 def test_handoff_protocol_forbids_upstream_acceptance_rewrite() -> None:
     text = read(WORKFLOW / "handoff-protocol.md")
     assert "Downstream acceptance is recorded as `accepted_as_input`" in text
-    assert "Only packets with `ready_for_next_role` may be used as official downstream input" in text
+    assert "Default handoff is lightweight" in text
+    assert "Do not ask the owning role to do a readiness conversion by default" in text
     assert "Downstream roles must not mutate upstream packet manifests" in text
-

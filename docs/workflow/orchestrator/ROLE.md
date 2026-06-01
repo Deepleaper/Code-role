@@ -50,7 +50,7 @@ Conversation scope:
 
 Discussion gate:
 
-- Stop for user confirmation before chain selection, draft consumption, `ready_for_next_role`, `accepted_as_input`, implementation start, skipped roles, or unresolved P1 acceptance.
+- Stop for user confirmation before chain selection, advancing to the next role after accepting completed output, `ready_for_next_role`, implementation start, skipped roles, or unresolved P1 acceptance.
 
 ## Scope
 
@@ -61,7 +61,8 @@ The Orchestrator manages:
 - current authoritative packet
 - packet status transitions
 - next role recommendation
-- input packet locks
+- input packet records
+- strict packet locks only when strict handoff is requested
 - workflow blockers
 - required user confirmations
 - consumable checks: `pass` or `fail`
@@ -92,7 +93,7 @@ The Orchestrator does not create business packets and does not write into role `
 
 The Orchestrator does not produce `packet-vNNN` outputs. It updates process state only.
 
-The Orchestrator may recommend a state transition, but only the owning role writes its own draft packet. No packet may be mutated after `ready_for_next_role`.
+The Orchestrator may recommend a strict state transition only when the user requests strict handoff. Only the owning role writes its own packet. No packet may be mutated after `ready_for_next_role`.
 
 ## Must Not
 
@@ -107,7 +108,7 @@ The Orchestrator must not:
 - create execution role packets
 - mark a role packet `ready_for_next_role` without user confirmation
 - mark a packet `accepted` without user confirmation
-- allow Implementer to start from a `draft` packet without explicit user approval
+- allow Implementer to start without explicit user approval and exact writable scope
 - approve scope expansion by itself
 - call network or provider APIs
 
@@ -118,14 +119,14 @@ Before recommending the next role, the Orchestrator checks:
 - milestone is defined
 - chain type is selected
 - upstream packet exists
-- upstream packet status allows consumption
-- draft consumption is explicitly allowed if used
+- upstream output exists and the user has accepted it for the next role
+- upstream packet status is recorded exactly, including `draft` in lightweight flow
 - authoritative packet path is known
 - next role is allowed by the selected chain
 - user confirmations are listed
 - downstream acceptance will be recorded as `accepted_as_input`, not by rewriting the upstream packet
 
-The Orchestrator outputs `consumable_check=pass` only when the packet status and chain policy allow the next role to consume the packet. Otherwise it outputs `consumable_check=fail` and lists required confirmations.
+The Orchestrator outputs `consumable_check=pass` when the role output exists, required manifest/documents are present, the user accepts the output for handoff, and the selected chain allows the next role. A `draft` packet is acceptable in default lightweight flow. If strict handoff is explicitly requested, `ready_for_next_role` and `packet.lock.json` are required.
 
 ## Startup Routine
 

@@ -60,7 +60,7 @@ The Architect reads:
 - [Source Map](../../source-map.md)
 - existing architecture, runtime, project source, and test files only as allowed by source map
 
-The Architect must read upstream `handoff.manifest.json` first and lock exact upstream packet versions in its own manifest.
+The Architect must read upstream `handoff.manifest.json` first and record exact upstream packet versions in its own manifest.
 
 ## Outputs
 

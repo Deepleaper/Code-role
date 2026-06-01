@@ -19,7 +19,7 @@ def test_workflow_validation_doc_defines_required_checks() -> None:
     for phrase in [
         "manifest is valid JSON",
         "every document listed in `documents` exists",
-        "`draft` consumption requires explicit user approval",
+            "lightweight downstream consumption requires user acceptance",
         "downstream acceptance is recorded as `accepted_as_input`",
         "`ready_for_next_role` packets are immutable",
         "docs-only-chain",
@@ -43,9 +43,23 @@ def test_local_validator_script_exists_and_validates_template_packet() -> None:
     assert payload["status"] == "draft"
 
 
-def test_local_validator_rejects_draft_for_consumption_without_override() -> None:
+def test_local_validator_allows_draft_for_lightweight_consumption() -> None:
     result = subprocess.run(
         [sys.executable, str(VALIDATOR), str(DRAFT_TEMPLATE_PACKET), "--for-consumption"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0
+    payload = json.loads(result.stdout)
+    assert payload["ok"] is True
+    assert payload["status"] == "draft"
+
+
+def test_local_validator_rejects_draft_for_strict_consumption() -> None:
+    result = subprocess.run(
+        [sys.executable, str(VALIDATOR), str(DRAFT_TEMPLATE_PACKET), "--for-consumption", "--strict"],
         cwd=ROOT,
         check=False,
         capture_output=True,
@@ -54,4 +68,4 @@ def test_local_validator_rejects_draft_for_consumption_without_override() -> Non
     assert result.returncode == 1
     payload = json.loads(result.stdout)
     assert payload["ok"] is False
-    assert "not consumable" in payload["error"]
+    assert "not strictly consumable" in payload["error"]

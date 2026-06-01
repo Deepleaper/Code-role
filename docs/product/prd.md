@@ -121,7 +121,7 @@ Supported chains:
 
 ### Status Gate
 
-A rule that prevents unsafe progression. For example, downstream roles normally consume only `ready_for_next_role` packets, and Implementer must not begin from chat-only instruction.
+A rule that prevents unsafe progression. For example, Implementer must not begin from chat-only instruction, while strict packet readiness is used only when the user requests audit-grade handoff.
 
 ## 7. MVP Scope
 
@@ -190,7 +190,7 @@ Acceptance:
 - Packet directory follows `reports/<milestone>/packet-vNNN/`.
 - Manifest includes required schema fields.
 - Manifest document paths are packet-relative.
-- Downstream packets lock exact upstream packet versions in `input_packets`.
+- Downstream packets record exact upstream packet versions in `input_packets`.
 - Downstream acceptance is recorded as `accepted_as_input` without mutating upstream manifests.
 
 ### FR5. Packet Status And Immutability
@@ -264,7 +264,7 @@ Initial success metrics:
 - A role can consume an upstream packet using only the manifest and listed documents.
 - Implementer start is blocked unless upstream scope is explicit.
 - Reviewer can audit the packet chain, not only code changes.
-- Local validation catches malformed manifests and unsafe draft consumption.
+- Local validation catches malformed manifests and strict-handoff violations.
 - Existing tests pass in a documented local environment.
 
 ## 11. Product Quality Bar
@@ -307,6 +307,6 @@ Open product decisions:
 - Should Code-role remain a local template only, or also become a packaged initializer?
 - Should workflow files stay excluded from target product repos by default, or should teams be able to promote them into repo standards through a documented path?
 - Should chain validation remain a Python script, or should it become part of a CLI?
-- Should packet locks be generated manually by validator command, or automatically when a packet becomes `ready_for_next_role`?
+- Should strict-handoff packet locks be generated manually by validator command, or automatically when a packet becomes `ready_for_next_role`?
 - Should example milestones be synthetic demos or based on real coding tasks?
 - Should role conversations be run manually by the user, or should there eventually be a launcher that generates the correct initialization prompt?

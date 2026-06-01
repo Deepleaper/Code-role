@@ -59,7 +59,7 @@ Valid packet manifest statuses:
 
 ## `input_packets`
 
-Downstream packets must lock exact upstream packet versions.
+Downstream packets must record exact upstream packet versions. In lightweight flow the upstream packet may still be `draft`; strict handoff adds `ready_for_next_role` and `packet.lock.json`.
 
 ```json
 {
@@ -67,7 +67,7 @@ Downstream packets must lock exact upstream packet versions.
   "milestone": "example-milestone",
   "packet_version": "packet-v001",
   "manifest": "docs/workflow/roles/researcher/reports/example-milestone/packet-v001/handoff.manifest.json",
-  "status_at_consumption": "ready_for_next_role",
+  "status_at_consumption": "draft",
   "consumption_status": "accepted_as_input"
 }
 ```
@@ -80,7 +80,7 @@ Rules:
 
 ## `packet.lock.json`
 
-When a packet becomes `ready_for_next_role`, create a lock file:
+When strict handoff is requested and a packet becomes `ready_for_next_role`, create a lock file:
 
 ```json
 {
@@ -102,13 +102,13 @@ The lock detects drift after handoff.
 
 ## Packet Immutability Rules
 
-Packet immutability is required for reliable downstream audit.
+Packet immutability is required for strict downstream audit.
 
 - `packet-v001` may be edited only while its manifest status is `draft`.
 - Once a packet status becomes `ready_for_next_role`, do not edit files inside that packet.
 - If content must change after `ready_for_next_role`, create the next version, for example `packet-v002`.
 - `latest.json` may move to the newest packet.
-- Historical packets must remain immutable so downstream `input_packets` locks do not drift.
+- Historical strict-handoff packets must remain immutable so downstream `input_packets` records do not drift.
 
 ## Compatibility Rules
 
