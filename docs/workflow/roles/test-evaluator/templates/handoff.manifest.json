@@ -6,8 +6,9 @@
   "status": "draft",
   "created_at": "YYYY-MM-DD",
   "updated_at": "YYYY-MM-DD",
-  "summary": "Template manifest for a Test Evaluator packet.",
+  "summary": "Template manifest for a Test Evaluator packet. Test Evaluator confirms evaluation mechanism and baseline, then evaluates implementation evidence.",
   "documents": [
+    {"path": "evaluation-baseline.md", "type": "evaluation_baseline", "required": true, "description": "Evaluation mechanism, metrics, benchmark data, industry references, and baseline confirmation."},
     {"path": "test-plan.md", "type": "test_plan", "required": true, "description": "Test plan mapped to acceptance criteria."},
     {"path": "test-results.md", "type": "test_results", "required": true, "description": "Test results."},
     {"path": "regression-matrix.md", "type": "regression_matrix", "required": true, "description": "Regression coverage matrix."},
@@ -20,11 +21,22 @@
       "milestone": "template",
       "packet_version": "packet-v001",
       "manifest": "docs/workflow/roles/implementer/reports/<milestone>/packet-v001/handoff.manifest.json",
-      "status_at_consumption": "ready_for_next_role",
+      "status_at_consumption": "draft",
       "consumption_status": "accepted_as_input"
     }
   ],
-  "source_scopes": ["docs/workflow/source-map.md", "upstream implementer packet"],
+  "source_scopes": [
+    "docs/workflow/source-map.md",
+    "docs/workflow/roles/test-evaluator/test-evaluator-output-standard.md",
+    "user-confirmed evaluation mechanism and baseline",
+    "approved industry/common-consensus evaluation references when available",
+    "upstream implementer packet"
+  ],
+  "evaluation_baseline": {
+    "mechanism_confirmed": false,
+    "industry_reference_status": "unknown",
+    "benchmark_dataset_status": "unknown"
+  },
   "handoff_to": ["reviewer"],
   "open_questions": [],
   "blocked": false,

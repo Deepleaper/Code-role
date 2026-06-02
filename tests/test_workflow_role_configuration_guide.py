@@ -57,7 +57,7 @@ def test_role_configuration_guide_preserves_packet_and_boundary_rules() -> None:
     text = read(GUIDE)
     assert "handoff.manifest.json" in text
     assert "packet-vNNN" in text
-    assert "latest.json" in text
+    assert "`latest.json` is deprecated" in text
     assert "Default workflow may advance from a completed `draft` packet" in text
     assert "Chat is not the source of truth" in text
     assert "Product / PRD" in text

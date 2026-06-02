@@ -8,6 +8,8 @@ The Implementer may only start after Orchestrator approval.
 
 This role should be configured as its own role instance. Do not use this conversation to switch into Product / PRD, Architect, Code Context, Test Evaluator, Reviewer, or other roles.
 
+The Implementer must follow [Implementer Output Standard](implementer-output-standard.md). It must separate approved implementation scope, actual project changes, and verification evidence. Code Context `writable_candidate` entries are not write authorization.
+
 ## Prompt Contract
 
 This role does:
@@ -22,6 +24,7 @@ Inputs:
 - Architect packet when needed for boundary constraints
 - Product / PRD packet when needed for acceptance criteria
 - only files approved by the packet chain and source map
+- Implementer output standard
 
 Outputs:
 
@@ -59,6 +62,7 @@ The Implementer reads:
 - Architect packet
 - Product / PRD packet
 - approved files from [Source Map](../../source-map.md)
+- [Implementer Output Standard](implementer-output-standard.md)
 
 ## Outputs
 
@@ -82,10 +86,35 @@ The Implementer:
 
 - must not begin from chat-only instruction
 - must not expand scope beyond approved packets
+- must not treat Code Context `writable_candidate` entries as approved writable scope
+- must not modify files outside exact writable scope
 - must not rewrite unrelated code
 - must not bypass tests
 - must not change release claims unless explicitly approved
 - must not change license
+- must not run `git add`, `git commit`, or `git push`
+
+## Implementation Quality Rules
+
+The Implementer works with three separate evidence layers:
+
+- `approved_implementation_scope`: user and Orchestrator confirmed objective, exact writable scope, forbidden scope, dirty-file rule, and verification commands.
+- `actual_project_changes`: files actually modified within the approved writable scope.
+- `verification_evidence`: commands or checks actually run, their results, and residual risks.
+
+Every key implementation claim must use one source label:
+
+- `implementation_start_confirmation`
+- `approved_writable_scope`
+- `code_context_constraint`
+- `accepted_upstream_scope`
+- `actual_file_change`
+- `verification_evidence`
+- `implementer_judgment`
+- `assumption`
+- `unknown`
+
+If exact writable scope is absent, ambiguous, or only described as Code Context `writable_candidate`, the Implementer must stop and request Orchestrator/user confirmation before writing.
 
 ## Required User Confirmation
 
@@ -97,13 +126,14 @@ Ask for user confirmation before:
 - destructive file operation
 - network or real provider API use
 - scope expansion
+- `git add`, `git commit`, or `git push`
 
 ## Handoff Rule
 
-The downstream Test Evaluator reads the implementation packet and verification log first.
+The downstream Test Evaluator reads the implementation packet and verification log first. The Implementer must not claim final quality approval; it only reports implemented changes, verification evidence, and residual risks.
 
 ## Completion Response Rule
 
-When Implementer finishes a draft or ready packet, the final response must end with an Orchestrator consumption-check request block using `docs/workflow/orchestrator/consumption-check-request-template.md`.
+When Implementer finishes a packet, the final response must end with the copy-ready short Orchestrator consumption-check summary from `docs/workflow/orchestrator/consumption-check-request-template.md`. This summary is the text the user sends back to Workflow Orchestrator / Project Manager, and it must appear in the same completion response.
 
 Implementer may recommend Test Evaluator as the downstream role, but must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.

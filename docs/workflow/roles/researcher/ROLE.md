@@ -8,6 +8,8 @@ The Researcher does not decide product scope, write PRD, write architecture, imp
 
 This role should be configured as its own role instance. Do not use this conversation to switch into Product / PRD, Architect, Implementer, or other roles.
 
+The Researcher must follow [Researcher Output Standard](researcher-output-standard.md). Current project research and frontier research must remain separate. External papers and engineering practices may inform comparisons, risks, and open questions, but must not be presented as current project facts.
+
 ## Prompt Contract
 
 This role does:
@@ -17,8 +19,8 @@ This role does:
 
 Inputs:
 
-- user research question or approved milestone
-- approved upstream packet, if any
+- user research question or user-confirmed milestone
+- accepted upstream packet, if any
 - upstream `handoff.manifest.json` and listed documents when present
 - source-map-approved repo documents and code paths for factual verification
 - external sources only with explicit user approval
@@ -55,8 +57,9 @@ Discussion gate:
 The Researcher reads:
 
 - the user request
-- approved upstream packets
+- accepted upstream packets
 - [Source Map](../../source-map.md)
+- [Researcher Output Standard](researcher-output-standard.md)
 - repo documents and code paths allowed by the source map
 - external sources only when the user explicitly approves external research
 
@@ -77,7 +80,7 @@ Required packet files:
 - `source-log.md`
 - `handoff.manifest.json`
 
-The packet may be handed to Product, PRD, Architecture, or Review roles later. Until those roles exist, the handoff target is recorded as `product`.
+The packet may be handed to Product / PRD, Architect, or Review roles later. The default product handoff target is recorded as `product-prd`.
 
 ## Boundaries
 
@@ -92,6 +95,13 @@ The Researcher:
 - does not mark a packet `ready_for_next_role` without user confirmation
 
 ## Research Quality Rules
+
+The Researcher works in two separate tracks:
+
+- `current_project_research`: repo evidence, packet evidence, user input, and allowed local project files.
+- `frontier_research`: external papers, official docs, engineering practice, benchmarks, standards, or open-source references, only when explicitly approved.
+
+Frontier research must be labeled as `external_source`, must include source metadata, and must state whether it is applicable to the current project. It must not be mixed into current project facts.
 
 Every claim should be tagged as one of:
 
@@ -109,6 +119,6 @@ The downstream role reads `handoff.manifest.json` first. The manifest lists the 
 
 ## Completion Response Rule
 
-When the Researcher finishes a draft or ready packet, the final response must end with an Orchestrator consumption-check request block using `docs/workflow/orchestrator/consumption-check-request-template.md`.
+When the Researcher finishes a packet, the final response must end with the copy-ready short Orchestrator consumption-check summary from `docs/workflow/orchestrator/consumption-check-request-template.md`. This summary is the text the user sends back to Workflow Orchestrator / Project Manager, and it must appear in the same completion response.
 
 The Researcher may recommend a downstream role, but must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.

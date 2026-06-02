@@ -28,7 +28,7 @@ def test_project_bootstrap_docs_are_linked() -> None:
 
     assert "scripts/init_project_workflow.py" in setup
     assert "generated role-instance prompts" in guide
-    assert "non-authoritative state index" in guide
+    assert "state index can be generated only when useful for onboarding" in guide
 
 
 def test_state_index_and_git_policy_define_boundaries() -> None:
@@ -38,7 +38,7 @@ def test_state_index_and_git_policy_define_boundaries() -> None:
     assert "It is not authoritative" in state_index
     assert "ROLE.md" in state_index
     assert "handoff.manifest.json" in state_index
-    assert "packet.lock.json" in state_index
+    assert "strict handoff `packet.lock.json`" in state_index
 
     assert "Git operations are outside the Code-role role chain" in git_policy
     assert "Use the target project's normal Git process" in git_policy
@@ -78,10 +78,11 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
         target / "code-role" / "workflow" / "orchestrator" / "workflow-state.md",
         target / "code-role" / "workflow" / "orchestrator" / "milestone-registry.md",
         target / "code-role" / "workflow" / "orchestrator" / "decision-log.md",
-        target / "code-role" / "state-index" / "README.md",
-        target / "code-role" / "state-index" / "current-workflow-index.md",
+        target / "code-role" / "workflow" / "orchestrator" / "final-packet-index.md",
+        target / "code-role" / "role-instance-prompts" / "workflow-orchestrator.md",
+        target / "code-role" / "role-instance-prompts" / "researcher.md",
+        target / "code-role" / "role-instance-prompts" / "product-prd.md",
         target / "code-role" / "role-instance-prompts" / "reviewer.md",
-        target / "code-role" / "state-index" / "roles" / "reviewer.md",
     ]
 
     for path in expected:
@@ -89,9 +90,11 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
 
     project_config = read(target / "code-role" / "project-config.md")
     project_readme = read(target / "code-role" / "README.md")
+    orchestrator_prompt = read(target / "code-role" / "role-instance-prompts" / "workflow-orchestrator.md")
+    final_packet_index = read(target / "code-role" / "workflow" / "orchestrator" / "final-packet-index.md")
+    researcher_prompt = read(target / "code-role" / "role-instance-prompts" / "researcher.md")
+    product_prompt = read(target / "code-role" / "role-instance-prompts" / "product-prd.md")
     reviewer_prompt = read(target / "code-role" / "role-instance-prompts" / "reviewer.md")
-    reviewer_index = read(target / "code-role" / "state-index" / "roles" / "reviewer.md")
-
     assert "tracking_policy: local-only" in project_config
     for generated in [project_config, project_readme]:
         assert "local-only workflow assistance" in generated
@@ -99,7 +102,56 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
         assert "should not be committed or pushed" in generated
         assert "Code-role does not own the target project's Git workflow" in generated
     assert "Do not run `git add`, `git commit`, or `git push`" in reviewer_prompt
-    assert "Orchestrator consumption-check request block" in reviewer_prompt
+    assert "orchestrator/project-manager-output-standard.md" in orchestrator_prompt
+    assert "orchestrator/next-role-message-template.md" in orchestrator_prompt
+    assert "final-packet-index.md" in orchestrator_prompt
+    assert "Final Packet Index" in final_packet_index
+    assert "Reviewer uses it as the authoritative index" in final_packet_index
+    assert "workflow-orchestrator" in final_packet_index
+    assert "roles/researcher/researcher-output-standard.md" in researcher_prompt
+    assert "roles/product-prd/product-prd-output-standard.md" in product_prompt
+    assert "roles/architect/architect-output-standard.md" in read(target / "code-role" / "role-instance-prompts" / "architect.md")
+    assert "roles/code-context/code-context-output-standard.md" in read(target / "code-role" / "role-instance-prompts" / "code-context.md")
+    assert "roles/implementer/implementer-output-standard.md" in read(target / "code-role" / "role-instance-prompts" / "implementer.md")
+    assert "roles/test-evaluator/test-evaluator-output-standard.md" in read(target / "code-role" / "role-instance-prompts" / "test-evaluator.md")
+    assert "roles/reviewer/reviewer-output-standard.md" in reviewer_prompt
+    assert "copy-ready short Orchestrator consumption-check summary" in reviewer_prompt
     assert "must not generate the authoritative next-role startup message" in reviewer_prompt
-    assert "non-authoritative navigation index" in reviewer_index
+    assert not (target / "code-role" / "state-index").exists()
     assert "code-role/" in read(exclude)
+
+
+def test_init_project_workflow_can_optionally_create_state_index(tmp_path: Path) -> None:
+    target = tmp_path / "Target Project"
+    target.mkdir()
+
+    subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT),
+            "--target",
+            str(target),
+            "--project-name",
+            "Target Project",
+            "--write",
+            "--with-state-index",
+        ],
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+
+    expected = [
+        target / "code-role" / "state-index" / "README.md",
+        target / "code-role" / "state-index" / "current-workflow-index.md",
+        target / "code-role" / "state-index" / "roles" / "researcher.md",
+        target / "code-role" / "state-index" / "roles" / "product-prd.md",
+        target / "code-role" / "state-index" / "roles" / "reviewer.md",
+    ]
+
+    for path in expected:
+        assert path.exists(), path
+
+    reviewer_index = read(target / "code-role" / "state-index" / "roles" / "reviewer.md")
+    assert "roles/reviewer/reviewer-output-standard.md" in reviewer_index
+    assert "non-authoritative navigation index" in reviewer_index

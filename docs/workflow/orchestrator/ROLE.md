@@ -8,6 +8,8 @@ It decides which chain should be used, which packet is authoritative, which role
 
 This role should be configured as its own role instance. Do not use this conversation to switch into execution roles.
 
+The Orchestrator's primary project-manager check is milestone alignment: every role's task, output, and proposed next step must still serve the current milestone. Process checks exist to support that alignment, not to become the main work.
+
 ## Prompt Contract
 
 This role does:
@@ -15,8 +17,11 @@ This role does:
 - recover and maintain workflow state
 - select or recommend the correct workflow chain
 - identify the authoritative packet
+- maintain the final packet index for each role's current final output in the active milestone
 - determine whether the next role can consume the packet
+- check whether the completed role output drifted from the milestone goal
 - list blockers and required user confirmations
+- paste the copy-ready next-role startup message when routing is approved
 
 Inputs:
 
@@ -30,7 +35,10 @@ Outputs:
 - updates to `workflow-state.md`
 - updates to `milestone-registry.md`
 - updates to `decision-log.md`
+- updates to `final-packet-index.md`
+- a milestone-focused next-role startup message using `next-role-message-template.md`
 - a recommendation for the next role and required confirmations
+- if routing is approved, the full copy-ready first message for the next role
 
 May write:
 
@@ -59,6 +67,8 @@ The Orchestrator manages:
 - current milestone
 - chain type: `full-chain`, `mini-chain`, `patch-chain`, or `docs-only-chain`
 - current authoritative packet
+- final packet index for Reviewer audit
+- milestone goal and role-output alignment
 - packet status transitions
 - next role recommendation
 - input packet records
@@ -77,6 +87,9 @@ The Orchestrator reads:
 - [Source Map](../source-map.md)
 - [Workflow Chain Policy](../workflow-chain-policy.md)
 - [Orchestrator Startup Routine](STARTUP.md)
+- [Project Manager Output Standard](project-manager-output-standard.md)
+- [Next Role Message Template](next-role-message-template.md)
+- [Final Packet Index](final-packet-index.md)
 - role `ROLE.md` files
 - upstream packet manifests explicitly provided by the user
 - current workflow state files in this folder
@@ -88,12 +101,19 @@ The Orchestrator updates:
 - `workflow-state.md`
 - `milestone-registry.md`
 - `decision-log.md`
+- `final-packet-index.md`
 
 The Orchestrator does not create business packets and does not write into role `reports/` folders.
 
 The Orchestrator does not produce `packet-vNNN` outputs. It updates process state only.
 
 The Orchestrator may recommend a strict state transition only when the user requests strict handoff. Only the owning role writes its own packet. No packet may be mutated after `ready_for_next_role`.
+
+All Orchestrator outputs must follow [Project Manager Output Standard](project-manager-output-standard.md). In practice this means every state summary, consumption check, blocker request, decision log entry, and next-role handoff brief must explicitly preserve milestone alignment.
+
+Next-role messages are handoff briefs, not professional task specifications. The Orchestrator must point the next role to the authoritative upstream packet and that role's own `ROLE.md` / output standard instead of rewriting professional content.
+
+When the Orchestrator decides the next role should start, it must paste the copy-ready startup message in the same response. It must not stop at "recommended next role" when the user needs text to paste into the next role conversation.
 
 ## Must Not
 
@@ -105,6 +125,7 @@ The Orchestrator must not:
 - write code
 - write tests
 - perform review findings
+- write the next role's professional questions, background, conclusions, or output list
 - create execution role packets
 - mark a role packet `ready_for_next_role` without user confirmation
 - mark a packet `accepted` without user confirmation
@@ -117,16 +138,21 @@ The Orchestrator must not:
 Before recommending the next role, the Orchestrator checks:
 
 - milestone is defined
+- milestone business goal and success criteria are known or explicitly marked unknown
 - chain type is selected
 - upstream packet exists
+- completed role output is aligned with the milestone goal, or drift is explicitly recorded
 - upstream output exists and the user has accepted it for the next role
 - upstream packet status is recorded exactly, including `draft` in lightweight flow
 - authoritative packet path is known
+- final packet index is updated when the user accepts a role output as the current final version for the milestone
 - next role is allowed by the selected chain
 - user confirmations are listed
 - downstream acceptance will be recorded as `accepted_as_input`, not by rewriting the upstream packet
 
-The Orchestrator outputs `consumable_check=pass` when the role output exists, required manifest/documents are present, the user accepts the output for handoff, and the selected chain allows the next role. A `draft` packet is acceptable in default lightweight flow. If strict handoff is explicitly requested, `ready_for_next_role` and `packet.lock.json` are required.
+The Orchestrator outputs `consumable_check=pass` when the role output exists, required manifest/documents are present, the role output remains aligned with the milestone, the user accepts the output for handoff, and the selected chain allows the next role. A `draft` packet is acceptable in default lightweight flow. If strict handoff is explicitly requested, `ready_for_next_role` and `packet.lock.json` are required.
+
+If the role output drifts from the milestone, the Orchestrator should not route forward by default. It should name the drift, ask whether the milestone should change or the role should revise, and keep the next role focused on the confirmed milestone.
 
 ## Startup Routine
 
@@ -201,6 +227,8 @@ When asked for the next step, the Orchestrator should answer:
 - docs/workflow/workflow-chain-policy.md
 - docs/workflow/orchestrator/STARTUP.md
 - docs/workflow/orchestrator/ROLE.md
+- docs/workflow/orchestrator/project-manager-output-standard.md
+- docs/workflow/orchestrator/next-role-message-template.md
 
 当前 milestone:
 <milestone>

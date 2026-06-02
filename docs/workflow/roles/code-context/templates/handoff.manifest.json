@@ -20,11 +20,15 @@
       "milestone": "template",
       "packet_version": "packet-v001",
       "manifest": "docs/workflow/roles/architect/reports/<milestone>/packet-v001/handoff.manifest.json",
-      "status_at_consumption": "ready_for_next_role",
+      "status_at_consumption": "draft",
       "consumption_status": "accepted_as_input"
     }
   ],
-  "source_scopes": ["docs/workflow/source-map.md", "upstream architect packet"],
+  "source_scopes": [
+    "docs/workflow/source-map.md",
+    "docs/workflow/roles/code-context/code-context-output-standard.md",
+    "upstream architect packet"
+  ],
   "handoff_to": ["implementer"],
   "open_questions": [],
   "blocked": false,

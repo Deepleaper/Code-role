@@ -1,8 +1,0 @@
-{
-  "role": "researcher",
-  "milestone": "template",
-  "latest_packet": "packet-v001",
-  "status": "draft",
-  "manifest": "packet-v001/handoff.manifest.json",
-  "updated_at": "YYYY-MM-DD"
-}

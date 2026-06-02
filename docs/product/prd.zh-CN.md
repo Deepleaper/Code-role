@@ -376,7 +376,7 @@ Reviewer 要检查：
 - 做一个初始化脚本，把 workflow 模板复制到目标项目。
 - 做一个 CLI，例如 `code-role init`、`code-role validate`、`code-role new-packet`。
 - 自动生成角色启动 prompt。
-- 自动生成 packet lock。
+- 按需生成 strict packet lock。
 - 自动检查 chain 是否完整。
 - 支持把 workflow 从本地模板升级为团队 repo 标准。
 

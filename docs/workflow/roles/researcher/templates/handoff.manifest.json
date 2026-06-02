@@ -41,10 +41,11 @@
   ],
   "input_packets": [],
   "source_scopes": [
-    "docs/workflow/source-map.md"
+    "docs/workflow/source-map.md",
+    "docs/workflow/roles/researcher/researcher-output-standard.md"
   ],
   "handoff_to": [
-    "product"
+    "product-prd"
   ],
   "open_questions": [],
   "blocked": false,

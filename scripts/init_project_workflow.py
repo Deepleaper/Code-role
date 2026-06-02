@@ -36,6 +36,7 @@ class BootstrapConfig:
     initial_milestone: str
     initial_chain: str
     external_research_allowed: bool
+    with_state_index: bool
     force: bool
     write: bool
 
@@ -58,6 +59,24 @@ def role_contract_path(config: BootstrapConfig, role_id: str) -> str:
     return workflow_doc_path(config, f"roles/{role_id}/ROLE.md")
 
 
+def role_extra_read_paths(config: BootstrapConfig, role_id: str) -> list[str]:
+    if role_id == "researcher":
+        return [workflow_doc_path(config, "roles/researcher/researcher-output-standard.md")]
+    if role_id == "product-prd":
+        return [workflow_doc_path(config, "roles/product-prd/product-prd-output-standard.md")]
+    if role_id == "architect":
+        return [workflow_doc_path(config, "roles/architect/architect-output-standard.md")]
+    if role_id == "code-context":
+        return [workflow_doc_path(config, "roles/code-context/code-context-output-standard.md")]
+    if role_id == "implementer":
+        return [workflow_doc_path(config, "roles/implementer/implementer-output-standard.md")]
+    if role_id == "test-evaluator":
+        return [workflow_doc_path(config, "roles/test-evaluator/test-evaluator-output-standard.md")]
+    if role_id == "reviewer":
+        return [workflow_doc_path(config, "roles/reviewer/reviewer-output-standard.md")]
+    return []
+
+
 def render_project_readme(config: BootstrapConfig) -> str:
     return f"""# Code-role Project Configuration
 
@@ -70,10 +89,11 @@ This folder is local-only workflow assistance. It is not product runtime content
 - `workflow/orchestrator/workflow-state.md`
 - `workflow/orchestrator/milestone-registry.md`
 - `workflow/orchestrator/decision-log.md`
+- `workflow/orchestrator/final-packet-index.md`
 - role packet `handoff.manifest.json` files
-- ready packet `packet.lock.json` files
+- strict handoff `packet.lock.json` files, only when explicitly requested
 
-`state-index/` is only a non-authoritative navigation index for role onboarding.
+`state-index/` is optional non-authoritative navigation. It is generated only with `--with-state-index`.
 
 ## Role Instances
 
@@ -101,8 +121,8 @@ external_research_allowed_default: {external}
 
 - `code-role/` is local-only workflow assistance, not product runtime content.
 - `code-role/` should not be committed or pushed with this target project.
-- `code-role/state-index/` is a non-authoritative navigation index.
-- Orchestrator state, packet manifests, and packet locks remain authoritative.
+- `code-role/state-index/` is optional non-authoritative navigation when generated.
+- Orchestrator state and packet manifests remain authoritative. Packet locks are authoritative only in strict handoff mode.
 - Product release artifacts must exclude `code-role/`.
 
 ## Git Boundary
@@ -165,22 +185,74 @@ def render_decision_log(config: BootstrapConfig) -> str:
 """
 
 
+def render_final_packet_index(config: BootstrapConfig) -> str:
+    return f"""# Final Packet Index
+
+This file records the current final packet for each role in `{config.project_name}`.
+
+The Orchestrator owns this file. Reviewer uses it as the authoritative index for final-version milestone drift audit.
+
+It is not a history log.
+
+## Current Milestone Anchor
+
+| Field | Value |
+| --- | --- |
+| Milestone | {config.initial_milestone} |
+| Original business goal | unknown |
+| Original delivery goal | unknown |
+| Success criteria | unknown |
+| Non-goals | unknown |
+| Anchor source | unknown |
+
+## Final Role Outputs
+
+| Role | Current final output | Status | Accepted for milestone audit | Notes |
+| --- | --- | --- | --- | --- |
+| workflow-orchestrator | workflow-state.md, milestone-registry.md, decision-log.md, final-packet-index.md | initialized | yes | Orchestrator output is audited by Reviewer for milestone drift. |
+| researcher | none | not_started | no | Update after user accepts Researcher final packet. |
+| product-prd | none | not_started | no | Update after user accepts Product / PRD final packet. |
+| architect | none | not_started | no | Update after user accepts Architect final packet. |
+| code-context | none | not_started | no | Update after user accepts Code Context final packet. |
+| implementer | none | not_started | no | Update after user accepts Implementer final packet. |
+| test-evaluator | none | not_started | no | Update after user accepts Test Evaluator final packet. |
+| reviewer | none | not_started | no | Reviewer fills current packet during final audit. |
+
+## Update Rule
+
+- Update this file only after the user accepts a role output as the current final version for this milestone.
+- Do not list every historical packet version here.
+- Do not scan for newest files to infer final versions.
+- If a role output is revised, point the role row to the new accepted packet.
+- If a role is skipped by chain type, set status to `not_applicable` and explain why in Notes.
+"""
+
+
 def render_role_prompt(config: BootstrapConfig, role_id: str) -> str:
     index_path = config.project_config_root / "state-index" / "roles" / f"{role_id}.md"
+    state_index_read = f"- {index_path}\n" if config.with_state_index else ""
     if role_id == "workflow-orchestrator":
         role_name = "workflow-orchestrator"
-        output_boundary = "Only update Orchestrator state files after user-confirmed routing decisions."
+        output_boundary = "Only update Orchestrator state files after user-confirmed routing decisions. / 只在用户确认路由决策后更新 Orchestrator 状态文件。"
         upstream = "none unless explicitly provided"
+        orchestrator_reads = (
+            f"- {workflow_doc_path(config, 'orchestrator/project-manager-output-standard.md')}\n"
+            f"- {workflow_doc_path(config, 'orchestrator/next-role-message-template.md')}\n"
+            f"- {config.workflow_root / 'orchestrator' / 'final-packet-index.md'}\n"
+        )
     else:
         role_name = role_id
-        output_boundary = f"Only write this role's packet under `code-role/workflow/roles/{role_id}/reports/<milestone>/packet-vNNN/`."
+        output_boundary = f"Only write this role's packet under `code-role/workflow/roles/{role_id}/reports/<milestone>/packet-vNNN/`. / 只把本角色 packet 写入该路径。"
         upstream = "<paste exact upstream handoff.manifest.json path>"
+        orchestrator_reads = ""
+    extra_reads = "\n".join(f"- {path}" for path in role_extra_read_paths(config, role_id))
 
-    return f"""# Start {role_name}
+    return f"""# Start {role_name} / 启动 {role_name}
 
 You are the `{role_name}` role for `{config.project_name}`.
+你是 `{config.project_name}` 项目的 `{role_name}` 角色。
 
-Read first:
+Read first / 请先读取:
 
 - {workflow_doc_path(config, "README.md")}
 - {workflow_doc_path(config, "discussion-first-protocol.md")}
@@ -189,38 +261,45 @@ Read first:
 - {workflow_doc_path(config, "packet-schema.md")}
 - {workflow_doc_path(config, "source-map.md")}
 - {role_contract_path(config, role_id)}
-- {index_path}
+{orchestrator_reads.rstrip()}
+{extra_reads}
+{state_index_read.rstrip()}
 
-Target project:
+Target project / 目标项目:
 
 ```text
 {config.target}
 ```
 
-Current upstream input:
+Current upstream input / 当前上游输入:
 
 ```text
 {upstream}
 ```
 
-Rules:
+Rules / 规则:
 
-- Do not switch roles inside this conversation.
-- Confirm read and write boundaries before creating output.
+- Do not switch roles inside this conversation. / 不要在本对话中切换角色。
+- Confirm read and write boundaries before creating output. / 创建产出前先确认读取和写入边界。
 - {output_boundary}
-- Do not modify upstream packets.
-- Do not run network calls unless explicitly allowed.
-- Do not run `git add`, `git commit`, or `git push`.
-- Do not mark a draft packet `ready_for_next_role` unless the user explicitly requests strict handoff.
-- When you finish a draft or ready packet, end your response with an Orchestrator consumption-check request block using the template at `{workflow_doc_path(config, "orchestrator/consumption-check-request-template.md")}`.
-- You may recommend a downstream role, but you must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.
+- Do not modify upstream packets. / 不修改上游 packets。
+- Do not run network calls unless explicitly allowed. / 除非明确批准，不调用网络。
+- Do not run `git add`, `git commit`, or `git push`. / 不执行 `git add`、`git commit` 或 `git push`。
+- Do not mark a draft packet `ready_for_next_role` unless the user explicitly requests strict handoff. / 除非用户明确要求严格交接，不把 draft packet 标记为 `ready_for_next_role`。
+- When you finish a packet, end the same completion response with the copy-ready short Orchestrator consumption-check summary from `{workflow_doc_path(config, "orchestrator/consumption-check-request-template.md")}`. / 完成 packet 后，在同一条完成回复末尾追加该模板中的可复制短版 Orchestrator 消费检查摘要，供用户发回项目经理。
+- You may recommend a downstream role, but you must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation. / 你可以建议下游角色，但不能生成权威的下一角色启动消息；Orchestrator 负责消费检查、链路路由和下一角色启动消息。
 
-First response:
+Milestone alignment rule / 里程碑对齐规则:
 
-1. State which files you will read.
-2. State what you will write, if anything.
-3. State forbidden scope.
-4. Wait for user confirmation before writing.
+- Keep this role focused on the current milestone output. / 保持本角色聚焦当前 milestone 产出。
+- Completion reports must state how the output serves the current milestone and whether there is task-goal drift. / 完成汇报必须说明产出如何服务当前 milestone，以及是否存在任务目标漂移。
+
+First response / 首次回复:
+
+1. State which files you will read. / 说明你会读取哪些文件。
+2. State what you will write, if anything. / 说明你会写入什么，如有。
+3. State forbidden scope. / 说明禁止范围。
+4. Wait for user confirmation before writing. / 等用户确认后再写入。
 """
 
 
@@ -277,9 +356,10 @@ Start Orchestrator, confirm the first real milestone and selected chain, then ro
 def render_role_index(config: BootstrapConfig, role_id: str) -> str:
     upstream = "none" if role_id in {"workflow-orchestrator", "researcher"} else "pending Orchestrator routing"
     status = "current-authoritative" if role_id == "workflow-orchestrator" else "not-started"
+    extra_reads = "\n".join(f"- `{path}`" for path in role_extra_read_paths(config, role_id))
     return f"""# Role State Index: {role_id}
 
-This file is a non-authoritative navigation index. It helps this role start faster, but it does not replace ROLE.md, Orchestrator state, handoff manifests, or packet locks.
+This optional file is a non-authoritative navigation index. It helps this role start faster, but it does not replace ROLE.md, Orchestrator state, or handoff manifests.
 
 ## Role Responsibility
 
@@ -308,9 +388,11 @@ Do not infer role duties from this index alone.
 - `{workflow_doc_path(config, "packet-schema.md")}`
 - `{workflow_doc_path(config, "source-map.md")}`
 - `{role_contract_path(config, role_id)}`
+{extra_reads}
 - `{config.workflow_root / "orchestrator" / "workflow-state.md"}`
 - `{config.workflow_root / "orchestrator" / "milestone-registry.md"}`
 - `{config.workflow_root / "orchestrator" / "decision-log.md"}`
+- `{config.workflow_root / "orchestrator" / "final-packet-index.md"}`
 
 ## Allowed Read Scope
 
@@ -346,6 +428,7 @@ Orchestrator and user must confirm whether this role should start and which exac
 
 - ROLE contract above
 - Orchestrator state files under `{config.workflow_root / "orchestrator"}`
+- Final packet index under `{config.workflow_root / "orchestrator" / "final-packet-index.md"}`
 - Any exact upstream manifest later provided by Orchestrator
 """
 
@@ -358,12 +441,15 @@ def planned_files(config: BootstrapConfig) -> dict[Path, str]:
         config.workflow_root / "orchestrator" / "workflow-state.md": render_orchestrator_state(config),
         config.workflow_root / "orchestrator" / "milestone-registry.md": render_milestone_registry(config),
         config.workflow_root / "orchestrator" / "decision-log.md": render_decision_log(config),
-        root / "state-index" / "README.md": render_state_index_readme(config),
-        root / "state-index" / "current-workflow-index.md": render_current_workflow_index(config),
+        config.workflow_root / "orchestrator" / "final-packet-index.md": render_final_packet_index(config),
     }
     for role_id in ROLE_IDS:
         files[root / "role-instance-prompts" / f"{role_id}.md"] = render_role_prompt(config, role_id)
-        files[root / "state-index" / "roles" / f"{role_id}.md"] = render_role_index(config, role_id)
+    if config.with_state_index:
+        files[root / "state-index" / "README.md"] = render_state_index_readme(config)
+        files[root / "state-index" / "current-workflow-index.md"] = render_current_workflow_index(config)
+        for role_id in ROLE_IDS:
+            files[root / "state-index" / "roles" / f"{role_id}.md"] = render_role_index(config, role_id)
     return files
 
 
@@ -408,6 +494,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--initial-milestone", default="workflow-bootstrap")
     parser.add_argument("--initial-chain", default="research-only")
     parser.add_argument("--external-research-allowed", action="store_true")
+    parser.add_argument("--with-state-index", action="store_true", help="Also generate optional non-authoritative state-index navigation files.")
     parser.add_argument("--force", action="store_true", help="Overwrite existing scaffold files.")
     parser.add_argument("--write", action="store_true", help="Write files. Omit for dry-run.")
     return parser.parse_args()
@@ -425,6 +512,7 @@ def main() -> int:
         initial_milestone=args.initial_milestone,
         initial_chain=args.initial_chain,
         external_research_allowed=args.external_research_allowed,
+        with_state_index=args.with_state_index,
         force=args.force,
         write=args.write,
     )

@@ -11,5 +11,6 @@ This file tracks workflow milestones and their packet-chain state.
 - `not_started`
 - `in_progress`
 - `blocked`
-- `ready_for_next_role`
+- `accepted_for_handoff`
+- `strict_ready_for_next_role`
 - `closed`

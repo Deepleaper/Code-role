@@ -10,7 +10,7 @@ Every role may read:
 - [Handoff Protocol](handoff-protocol.md)
 - [Packet Schema](packet-schema.md)
 - [Workflow Chain Policy](workflow-chain-policy.md)
-- [State Index](state-index.md)
+- [State Index](state-index.md), only when optional state-index files are generated
 - its own `ROLE.md`
 - upstream packet manifests explicitly provided by the user or by the previous role
 - target-project `code-role/state-index/roles/<role>.md` when present
@@ -34,11 +34,12 @@ The Orchestrator writes only:
 docs/workflow/orchestrator/workflow-state.md
 docs/workflow/orchestrator/milestone-registry.md
 docs/workflow/orchestrator/decision-log.md
+docs/workflow/orchestrator/final-packet-index.md
 ```
 
 The Orchestrator must not write role report packets, code, tests, product docs, architecture docs, or release docs.
 
-In an initialized target project, an explicitly authorized indexing step may write `code-role/state-index/`. That index remains non-authoritative navigation and must not replace Orchestrator state or packet manifests.
+In an initialized target project, an explicitly authorized optional indexing step may write `code-role/state-index/`. That index remains non-authoritative navigation and must not replace Orchestrator state or packet manifests.
 
 ## Researcher Read Scope
 
@@ -64,12 +65,6 @@ The Researcher writes only under:
 docs/workflow/roles/researcher/reports/<milestone>/packet-vNNN/
 ```
 
-The Researcher may also update:
-
-```text
-docs/workflow/roles/researcher/reports/<milestone>/latest.json
-```
-
 The Researcher must not write outside its reports folder without explicit user confirmation.
 
 ## Product / PRD Read Scope
@@ -90,12 +85,6 @@ The Product / PRD role writes only under:
 
 ```text
 docs/workflow/roles/product-prd/reports/<milestone>/packet-vNNN/
-```
-
-The Product / PRD role may also update:
-
-```text
-docs/workflow/roles/product-prd/reports/<milestone>/latest.json
 ```
 
 The Product / PRD role must not write product source docs, architecture docs, release docs, code, or tests without explicit user confirmation.

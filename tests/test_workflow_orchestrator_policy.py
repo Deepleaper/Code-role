@@ -17,8 +17,11 @@ def test_orchestrator_files_exist() -> None:
         ORCH / "workflow-state.md",
         ORCH / "milestone-registry.md",
         ORCH / "decision-log.md",
+        ORCH / "final-packet-index.md",
         WORKFLOW / "workflow-chain-policy.md",
         WORKFLOW / "orchestrator" / "consumption-check-request-template.md",
+        WORKFLOW / "orchestrator" / "project-manager-output-standard.md",
+        WORKFLOW / "orchestrator" / "next-role-message-template.md",
     ]
     missing = [path for path in expected if not path.exists()]
     assert not missing
@@ -39,6 +42,10 @@ def test_orchestrator_is_process_control_not_execution_role() -> None:
     assert "must not infer the current packet by scanning for the newest file" in role
     assert "mark a role packet `ready_for_next_role` without user confirmation" in role
     assert "allow Implementer to start without explicit user approval and exact writable scope" in role
+    assert "primary project-manager check is milestone alignment" in role
+    assert "role output drifts from the milestone" in role
+    assert "Project Manager Output Standard" in role
+    assert "final packet index" in role
 
 
 def test_chain_policy_defines_allowed_chains_and_gates() -> None:
@@ -55,7 +62,9 @@ def test_chain_policy_defines_allowed_chains_and_gates() -> None:
     assert "Do not route a role back for readiness conversion by default" in policy
     assert "Strict handoff" in policy
     assert "Implementer must not begin work from chat-only instruction" in policy
-    assert "Reviewer must audit the packet chain" in policy
+    assert "Reviewer must audit the full workflow against the original milestone" in policy
+    assert "Orchestrator `final-packet-index.md` exists" in policy
+    assert "Reviewer identifies `correction_owner`" in policy
 
 
 def test_workflow_docs_link_orchestrator_and_policy() -> None:
@@ -76,12 +85,66 @@ def test_workflow_docs_link_orchestrator_and_policy() -> None:
 
 def test_consumption_check_request_template_keeps_routing_with_orchestrator() -> None:
     template = read(WORKFLOW / "orchestrator" / "consumption-check-request-template.md")
-    assert "当前完成角色" in template
+    assert "轻量消费检查摘要" in template
+    assert "lightweight consumption check" in template
+    assert "completed_role" in template
     assert "handoff manifest" in template
-    assert "用户是否接受该角色产出进入下一角色" in template
-    assert "严格交接只在用户明确要求时检查" in template
+    assert "milestone_alignment" in template
+    assert "possible_drift" in template
+    assert "recommended_routing" in template
+    assert "same completion response" in template
+    assert "copy-ready next-role startup message" in template
+    assert "该产出是否仍服务当前 milestone" in template
+    assert "不检查 ready_for_next_role / packet.lock.json / sha256" in template
     assert "The current role may recommend a downstream role" in template
     assert "must not generate the authoritative next-role startup message" in template
+
+
+def test_next_role_message_template_focuses_on_milestone_not_process() -> None:
+    template = read(WORKFLOW / "orchestrator" / "next-role-message-template.md")
+    assert "下一角色交接模板" in template
+    assert "This message is a milestone handoff brief, not a workflow tutorial" in template
+    assert "Professional content comes from the upstream packet" in template
+    assert "本 milestone 的业务目标" in template
+    assert "Milestone business goal" in template
+    assert "项目经理审阅结论" in template
+    assert "Project Manager Review Result" in template
+    assert "你需要自己从上游 packet 中提取本角色应回答的专业问题" in template
+    assert "milestone 对齐要求" in template
+    assert "Milestone Alignment Requirement" in template
+    assert "是否存在目标漂移" in template
+    assert "Keep the role focused on milestone output, not process control" in template
+    assert "Do not let Orchestrator write professional questions" in template
+    assert "Do not include readiness conversion instructions unless the user requested strict handoff" in template
+    assert "paste this copy-ready message directly" in template
+    assert "Do not only write \"recommended next role\"" in template
+
+
+def test_project_manager_output_standard_defines_professional_outputs() -> None:
+    standard = read(WORKFLOW / "orchestrator" / "project-manager-output-standard.md")
+    assert "项目经理输出规范" in standard
+    assert "Core Quality Bar" in standard
+    assert "核心质量标准" in standard
+    assert "Workflow State Summary" in standard
+    assert "流程状态摘要" in standard
+    assert "Consumption Check Result" in standard
+    assert "消费检查结果" in standard
+    assert "Next Role Handoff Brief" in standard
+    assert "下一角色交接 brief" in standard
+    assert "Blocker / Confirmation Request" in standard
+    assert "阻塞或确认请求" in standard
+    assert "Decision Log Entry" in standard
+    assert "决策日志条目" in standard
+    assert "Final Packet Index" in standard
+    assert "final-packet-index.md" in standard
+    assert "Drift Review Standard" in standard
+    assert "目标漂移审查标准" in standard
+    assert "milestone_drift: detected" in standard
+    assert "The handoff brief is not a workflow tutorial" in standard
+    assert "交接 brief 不是 workflow 教程" in standard
+    assert "The Orchestrator does not redefine the next role's professional questions" in standard
+    assert "include the copy-ready next-role startup message directly" in standard
+    assert "Do not only output a next-role recommendation without copy-ready text" in standard
 
 
 def test_orchestrator_startup_routine_is_file_based() -> None:
@@ -90,5 +153,6 @@ def test_orchestrator_startup_routine_is_file_based() -> None:
     assert "workflow-state.md" in startup
     assert "milestone-registry.md" in startup
     assert "decision-log.md" in startup
+    assert "final-packet-index.md" in startup
     assert "Authoritative packet" in startup
     assert "Do not infer the current packet by scanning for the newest file" in startup

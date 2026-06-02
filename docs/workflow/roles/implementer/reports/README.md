@@ -7,7 +7,6 @@ Expected layout:
 ```text
 reports/
   <milestone>/
-    latest.json
     packet-v001/
       handoff.manifest.json
       implementation-summary.md
@@ -15,4 +14,3 @@ reports/
       verification-log.md
       risk-notes.md
 ```
-

@@ -15,7 +15,8 @@ Read these files in order:
 1. `docs/workflow/orchestrator/workflow-state.md`
 2. `docs/workflow/orchestrator/milestone-registry.md`
 3. `docs/workflow/orchestrator/decision-log.md`
-4. the `Authoritative packet` path recorded in `workflow-state.md`
+4. `docs/workflow/orchestrator/final-packet-index.md`
+5. the `Authoritative packet` path recorded in `workflow-state.md`
 
 If `workflow-state.md` has no authoritative packet, ask the user for:
 
@@ -33,12 +34,13 @@ After reading the required files, answer with:
 1. current milestone
 2. selected chain
 3. current authoritative packet
-4. packet status
-5. `consumable_check=pass` or `consumable_check=fail`
-6. current blocker
-7. recommended next role
-8. required user confirmations
-9. workflow state files that need updates, if any
+4. current final packet index status
+5. packet status
+6. `consumable_check=pass` or `consumable_check=fail`
+7. current blocker
+8. recommended next role
+9. required user confirmations
+10. workflow state files that need updates, if any
 
 ## Boundaries
 
@@ -55,4 +57,3 @@ The startup routine must not:
 - call network or provider APIs
 
 The startup routine is a recovery step, not an execution step.
-

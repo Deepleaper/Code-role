@@ -143,16 +143,22 @@ If any check fails, Implementer remains blocked.
 
 ## Reviewer Gate
 
-The Reviewer must audit the packet chain, not only the code.
+The Reviewer must audit the full workflow against the original milestone, not only the code or packet chain.
 
 Reviewer checks:
 
-- required upstream packets exist
-- upstream packet versions are recorded
+- Orchestrator `final-packet-index.md` exists and identifies current final outputs
+- original milestone anchor, success criteria, and non-goals are clear
+- Workflow Orchestrator state, decisions, consumption checks, and next-role handoff briefs did not drift from the original milestone
+- each execution role's current final packet serves the original milestone
+- required upstream packets exist for the selected chain
+- upstream packet versions are recorded through the final packet index
 - strict locks are present only when strict handoff was requested
 - lightweight handoffs were explicitly accepted by the user through Orchestrator
 - Implementer stayed within approved scope
+- Test Evaluator confirmed evaluation baseline, metric definitions, and benchmark or baseline data when applicable
 - Test Evaluator covered acceptance criteria when applicable
+- Reviewer identifies `correction_owner` when role output drift exists
 - no unresolved P0
 - P1 risks are explicitly accepted or sent back
 

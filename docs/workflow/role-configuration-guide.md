@@ -23,13 +23,14 @@ Rules:
 - A role reads upstream packet manifests first.
 - A role writes only to its own report packet unless its role explicitly permits code changes.
 - A packet contains multiple files but versions as one unit.
-- `latest.json` is a pointer only.
+- Daily workflow uses Orchestrator state and `final-packet-index.md` as current-output pointers. `latest.json` is deprecated and not required for new packets.
 - `handoff.manifest.json` is the downstream contract.
 - The Orchestrator selects the chain and next role but cannot approve state transitions for the user.
 - Downstream acceptance is recorded as `accepted_as_input`; downstream roles must not rewrite upstream packet manifests.
-- Every execution role completion response must end with an Orchestrator consumption-check request block. The current role may recommend a downstream role, but Orchestrator owns consumable checks, routing, and the authoritative next-role startup message.
+- Every execution role completion response must end with a copy-ready short Orchestrator consumption-check summary for Workflow Orchestrator / Project Manager. The current role may recommend a downstream role, but Orchestrator owns consumable checks, routing, and the authoritative next-role startup message.
+- When Orchestrator routes to the next role, it must paste the copy-ready next-role startup message directly instead of only naming the next role.
 
-Target projects should use generated role-instance prompts and a non-authoritative state index to reduce setup time. The prompts and state index are onboarding aids only; packet manifests and Orchestrator state remain authoritative. Packet locks are used only for strict handoff.
+Target projects should use generated role-instance prompts to reduce setup time. A non-authoritative state index can be generated only when useful for onboarding. Packet manifests and Orchestrator state remain authoritative. Packet locks are used only for strict handoff.
 
 ## Folder Convention
 
@@ -41,7 +42,7 @@ docs/workflow/roles/<role-id>/
   templates/
   reports/
     <milestone>/
-      latest.json
+    handoff.manifest.json
       packet-v001/
         handoff.manifest.json
         ...
@@ -71,7 +72,7 @@ Do not mix these workflow files with product release evidence unless the release
 
 See [Workflow Bootstrap](bootstrap.md) for the local setup boundary.
 
-See [Project Bootstrap](project-bootstrap.md), [State Index](state-index.md), and [Git Operation Policy](git-operation-policy.md) for the faster target-project setup path and Git boundary.
+See [Project Bootstrap](project-bootstrap.md), optional [State Index](state-index.md), and [Git Operation Policy](git-operation-policy.md) for the faster target-project setup path and Git boundary.
 
 ## Eight Configured Roles
 
@@ -167,14 +168,22 @@ Use this at the start of every new role conversation:
 上游输入 packet:
 <upstream manifest path, or "none">
 
-本轮目标:
-<goal>
+Orchestrator 审阅结论:
+<upstream output review result and handoff decision>
+
+本轮目标锚点:
+<milestone business goal and success criteria>
+
+权威规则:
+- 专业内容以上游 packet 为准，不以本启动消息为准
+- 你需要按自己的 ROLE.md 和 output standard 从上游 packet 中提取本角色应回答的问题
+- 如果上游输入不足，只记录缺口并请求确认，不要替其他角色补写内容
 
 限制:
 - 不越过本角色边界
 - 不写本角色未授权的文件
 - 不调用 network，除非我明确允许
-- 不把 draft packet 标记为 ready_for_next_role，除非我确认
+- 不把 draft packet 标记为 ready_for_next_role，除非我明确要求 strict handoff
 
 请先确认你将读取哪些文件、写入哪个 packet 路径，然后再执行。
 ```
@@ -245,7 +254,7 @@ Default target: `product-prd`
 milestone: example-milestone
 
 research_question:
-当前项目里的某个能力是否真的有用户价值？它应该解决什么问题？它和现有模块、权限边界、运行时能力的关系是什么？
+<user-confirmed research question for this milestone>
 
 allowed_sources:
 - repo docs
@@ -309,7 +318,7 @@ Recommended documents:
 - User-facing claim changes
 - New product surface
 - Any decision that contradicts previous release boundaries
-- Marking packet `ready_for_next_role`
+- Requesting strict handoff or marking packet `ready_for_next_role`
 
 ### Downstream Handoff
 
@@ -323,8 +332,16 @@ Default target: `architect`
 请读取 Researcher packet:
 docs/workflow/roles/researcher/reports/<milestone>/packet-v001/handoff.manifest.json
 
-目标:
-把研究结论转换成可构建 PRD，明确 scope、non-goals、acceptance criteria。
+Orchestrator 审阅结论:
+<Researcher packet was accepted for this Product / PRD handoff, with any residual risk>
+
+目标锚点:
+<milestone business goal and success criteria>
+
+权威规则:
+- 专业内容以 Researcher packet 为准
+- Product / PRD 自己从 Researcher packet 中提取产品问题、范围、non-goals 和 acceptance criteria
+- 不使用本启动消息替代 Researcher 的专业结论
 
 输出 draft packet:
 docs/workflow/roles/product-prd/reports/<milestone>/packet-v001/
@@ -382,7 +399,7 @@ Recommended documents:
 - Runtime boundary change
 - Permission model change
 - Memory scope change
-- Marking packet `ready_for_next_role`
+- Requesting strict handoff or marking packet `ready_for_next_role`
 
 ### Downstream Handoff
 
@@ -438,7 +455,7 @@ Recommended documents:
 
 - Reading outside source-map or Architect-approved scope
 - Discovering a P0/P1 mismatch between PRD and code
-- Marking packet `ready_for_next_role`
+- Requesting strict handoff or marking packet `ready_for_next_role`
 
 ### Downstream Handoff
 
@@ -507,10 +524,12 @@ Default target: `test-evaluator`
 
 ### Goal
 
-Evaluate whether the implementation satisfies acceptance criteria and does not regress core boundaries.
+Confirm the evaluation mechanism and baseline, then evaluate whether the implementation satisfies acceptance criteria and does not regress core boundaries.
 
 This role answers:
 
+- What evaluation mechanism, metrics, and baseline are being used?
+- Are industry/common-consensus templates, benchmark datasets, or metric conventions allowed and sourced?
 - Which tests passed?
 - Which tests failed?
 - Are acceptance criteria covered?
@@ -522,6 +541,8 @@ This role answers:
 - Implementer packet
 - Product/PRD packet
 - Architect packet
+- User-confirmed evaluation mechanism and baseline
+- Approved industry/common-consensus evaluation references when available
 - Relevant tests and code
 - Test output
 
@@ -533,6 +554,7 @@ docs/workflow/roles/test-evaluator/reports/<milestone>/packet-vNNN/
 
 Recommended documents:
 
+- `evaluation-baseline.md`
 - `test-plan.md`
 - `test-results.md`
 - `regression-matrix.md`
@@ -544,6 +566,8 @@ Recommended documents:
 
 - Hide failing tests
 - Treat missing tests as passed
+- Claim industry consensus or benchmark data without approved sources
+- Give `pass` when evaluation mechanism or baseline is unconfirmed
 - Change code unless explicitly assigned a fix role
 - Broaden product claims
 
@@ -552,7 +576,7 @@ Recommended documents:
 - Running expensive or long test suites
 - Running network-dependent tests
 - Marking known failures as accepted
-- Marking packet `ready_for_next_role`
+- Requesting strict handoff or marking packet `ready_for_next_role`
 
 ### Downstream Handoff
 
@@ -562,10 +586,14 @@ Default target: `reviewer`
 
 ### Goal
 
-Make the final gate decision for the milestone.
+Audit the final workflow outputs against the original milestone and make the final gate decision.
 
 This role answers:
 
+- Did Workflow Orchestrator preserve the original milestone in chain selection, consumption checks, and next-role handoff briefs?
+- Does each role's current final packet still serve the original milestone?
+- Which specific role should revise if milestone drift exists?
+- Is Test Evaluator's evaluation baseline valid?
 - Is the change acceptable?
 - Are there unresolved P0/P1 risks?
 - Are boundaries still intact?
@@ -575,6 +603,9 @@ This role answers:
 ### Reads
 
 - All upstream packet manifests
+- Orchestrator final-packet-index.md
+- Orchestrator workflow-state, milestone-registry, decision-log, and relevant next-role handoff briefs
+- Each role's current final packet listed in final-packet-index.md
 - Test Evaluator packet
 - Implementer packet
 - Relevant diffs and test output
@@ -588,6 +619,7 @@ docs/workflow/roles/reviewer/reports/<milestone>/packet-vNNN/
 
 Recommended documents:
 
+- `milestone-drift-audit.md`
 - `review-findings.md`
 - `risk-decision.md`
 - `packet-chain-audit.md`
@@ -599,6 +631,8 @@ Recommended documents:
 - Implement fixes while reviewing
 - Approve unresolved P0
 - Ignore packet drift
+- Audit historical packet versions unless explicitly asked
+- Treat Test Evaluator pass as final acceptance without checking milestone drift and evaluation baseline
 - Convert Developer Preview evidence into production-ready claims
 
 ### Confirmation Required
@@ -612,7 +646,7 @@ Recommended documents:
 
 Default target:
 
-- back to `implementer` if changes are required
+- back to the specific `correction_owner` if changes are required
 - milestone closeout if accepted
 
 ## Packet Chain Example

@@ -21,11 +21,15 @@
       "milestone": "template",
       "packet_version": "packet-v001",
       "manifest": "docs/workflow/roles/product-prd/reports/<milestone>/packet-v001/handoff.manifest.json",
-      "status_at_consumption": "ready_for_next_role",
+      "status_at_consumption": "draft",
       "consumption_status": "accepted_as_input"
     }
   ],
-  "source_scopes": ["docs/workflow/source-map.md", "upstream product-prd packet"],
+  "source_scopes": [
+    "docs/workflow/source-map.md",
+    "docs/workflow/roles/architect/architect-output-standard.md",
+    "upstream product-prd packet"
+  ],
   "handoff_to": ["code-context"],
   "open_questions": [],
   "blocked": false,

@@ -35,11 +35,11 @@ The [Role Configuration Guide](role-configuration-guide.md) defines the operatin
 - Every non-Implementer role produces documents only and does not change code.
 - Implementer is the only role that may change approved project files, and only after user-confirmed implementation start.
 - Every milestone output is a versioned packet: `packet-v001`, `packet-v002`, and so on.
-- Packet content is immutable once marked `ready_for_next_role`.
-- `latest.json` is only a pointer to the latest packet.
+- Packet content is immutable only in strict handoff mode after it is marked `ready_for_next_role`.
+- `latest.json` is deprecated for daily workflow. Use Orchestrator state and `final-packet-index.md` to identify current outputs.
 - Downstream roles must read `handoff.manifest.json`, not guess which files matter.
 - Downstream roles must record the exact upstream packet version they consumed.
-- Strict `ready_for_next_role` plus `packet.lock.json` handoff is optional and used only when the user explicitly asks for strict handoff, auditability, immutability, or release-grade evidence.
+- Strict `ready_for_next_role` plus `packet.lock.json` handoff is advanced optional mode. Daily lightweight workflow should not require it.
 - Implementer must not start from chat-only instruction.
 - Each role must stop for discussion when scope, tradeoffs, evidence, risks, or handoff readiness are not settled.
 - Advancing to the next role requires user acceptance of the completed role output.
@@ -51,7 +51,7 @@ The [Role Configuration Guide](role-configuration-guide.md) defines the operatin
 - [Workflow Bootstrap](bootstrap.md)
 - [Project Bootstrap](project-bootstrap.md)
 - [Role Instance Setup](role-instance-setup.md)
-- [State Index](state-index.md)
+- [State Index](state-index.md) optional navigation
 - [Git Operation Policy](git-operation-policy.md)
 - [Workflow Chain Policy](workflow-chain-policy.md)
 - [Discussion-First Protocol](discussion-first-protocol.md)

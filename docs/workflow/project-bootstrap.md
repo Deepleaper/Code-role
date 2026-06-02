@@ -50,24 +50,15 @@ code-role/
     implementer.md
     test-evaluator.md
     reviewer.md
-  state-index/
-    README.md
-    current-workflow-index.md
-    roles/
-      workflow-orchestrator.md
-      researcher.md
-      product-prd.md
-      architect.md
-      code-context.md
-      implementer.md
-      test-evaluator.md
-      reviewer.md
   workflow/
     orchestrator/
       workflow-state.md
       milestone-registry.md
       decision-log.md
+      final-packet-index.md
 ```
+
+If `--with-state-index` is provided, bootstrap also creates optional non-authoritative navigation files under `code-role/state-index/`.
 
 It intentionally does not create execution-role packet reports. Those must be created by the corresponding role instance after user confirmation.
 

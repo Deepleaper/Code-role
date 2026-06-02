@@ -448,25 +448,17 @@ cd Code-role</code></pre>
     implementer.md
     test-evaluator.md
     reviewer.md
-  state-index/
-    README.md
-    current-workflow-index.md
-    roles/
-      workflow-orchestrator.md
-      researcher.md
-      product-prd.md
-      architect.md
-      code-context.md
-      implementer.md
-      test-evaluator.md
-      reviewer.md
   workflow/
     orchestrator/
       workflow-state.md
       milestone-registry.md
-      decision-log.md</code></pre>
+      decision-log.md
+      final-packet-index.md</code></pre>
       <p>
         初始化脚本不会创建 Researcher、PRD、Architect、Implementer 等执行角色 packet。执行角色 packet 必须由对应角色在用户确认后创建。
+      </p>
+      <p>
+        如确实需要给新角色提供额外导航，可以在初始化时加 <code>--with-state-index</code>，生成可选的 <code>code-role/state-index/</code>。默认流程不生成它。
       </p>
     </section>
 
@@ -481,18 +473,18 @@ cd Code-role</code></pre>
         <li>粘贴对应的 <code>code-role/role-instance-prompts/&lt;role&gt;.md</code>。</li>
         <li>角色先确认读取范围、写入范围和禁止范围。</li>
         <li>用户回复“开始”后，角色创建 draft packet。</li>
-        <li>角色完成后，在回复末尾给出 Orchestrator consumption-check request block。</li>
-        <li>用户把检查块发给 Orchestrator。</li>
-        <li>Orchestrator 检查 manifest、文档、阻塞项和用户是否接受该产出。</li>
-        <li>默认轻量流程下，Orchestrator 直接生成下一角色启动消息。</li>
+        <li>角色完成后，在同一条完成回复末尾给出可复制的 Orchestrator consumption-check summary。</li>
+        <li>用户把这段摘要直接发给 Orchestrator / 项目经理。</li>
+        <li>Orchestrator 优先检查产出是否仍对齐 milestone，再检查 manifest、文档、阻塞项和用户是否接受该产出。</li>
+        <li>默认轻量流程下，如果 Orchestrator 明确允许进入下一角色，必须直接贴出可复制的下一角色启动消息。</li>
         <li>只有用户明确要求严格交接时，才进入 <code>ready_for_next_role</code> 和 <code>packet.lock.json</code>。</li>
       </ol>
       <h3>state-index 的作用</h3>
       <p>
-        <code>code-role/state-index/</code> 是角色接入索引。它告诉新角色当前项目走到哪一步、该读什么、不能读什么、当前残余风险是什么。
+        <code>code-role/state-index/</code> 是可选角色接入索引。它告诉新角色当前项目走到哪一步、该读什么、不能读什么、当前残余风险是什么。
       </p>
       <p>
-        它不是新的事实来源。如果 state-index 和 manifest、严格模式下的 packet.lock 或 Orchestrator 状态冲突，必须以后者为准。
+        它不是默认必需文件，也不是新的事实来源。如果 state-index 和 manifest、严格模式下的 packet.lock 或 Orchestrator 状态冲突，必须以后者为准。
       </p>
     </section>
 
@@ -536,7 +528,7 @@ It should remain outside the target project's Git history.</code></pre>
       </p>
       <h3>state-index 会不会变成新的事实源？</h3>
       <p>
-        不会。它只是导航索引。权威永远是 Orchestrator 状态文件、<code>handoff.manifest.json</code>，以及严格模式下的 <code>packet.lock.json</code>。
+        不会。它只是可选导航索引。权威永远是 Orchestrator 状态文件、<code>final-packet-index.md</code>、<code>handoff.manifest.json</code>，以及严格模式下的 <code>packet.lock.json</code>。
       </p>
       <h3>新项目最快怎么开始？</h3>
       <p>

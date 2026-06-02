@@ -1,6 +1,6 @@
 # State Index
 
-The state index is a role onboarding shortcut. It helps a new role conversation find the current project state without relying on chat memory.
+The state index is an optional role onboarding shortcut. It helps a new role conversation find the current project state without relying on chat memory.
 
 It is not authoritative.
 
@@ -8,12 +8,12 @@ Authoritative sources remain:
 
 - Orchestrator state files
 - role `handoff.manifest.json` files
-- ready packet `packet.lock.json` files
+- strict handoff `packet.lock.json` files, only when strict handoff was requested
 - packet documents listed by manifests
 
-If the state index conflicts with a manifest, lock, or Orchestrator state file, the authoritative source wins.
+If the state index conflicts with a manifest, strict lock, or Orchestrator state file, the authoritative source wins.
 
-## Standard Location
+## Optional Location
 
 In a target project:
 
@@ -74,12 +74,11 @@ It should not introduce new conclusions. Every status, risk, or next step must b
 
 ## Refresh Rule
 
-Refresh the state index after:
+If generated, refresh the state index after:
 
 - Orchestrator changes the active milestone or authoritative packet
-- a packet becomes `ready_for_next_role`
+- a role output is accepted as the current final version
 - Reviewer produces a final gate
-- a Git staging / commit / push decision changes repository state
 
 Refreshing the index is a documentation operation. It must not modify upstream packets or Orchestrator state.
 

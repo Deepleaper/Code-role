@@ -45,11 +45,13 @@
       "milestone": "template",
       "packet_version": "packet-v001",
       "manifest": "docs/workflow/roles/researcher/reports/<milestone>/packet-v001/handoff.manifest.json",
-      "status_at_consumption": "ready_for_next_role"
+      "status_at_consumption": "draft",
+      "consumption_status": "accepted_as_input"
     }
   ],
   "source_scopes": [
     "docs/workflow/source-map.md",
+    "docs/workflow/roles/product-prd/product-prd-output-standard.md",
     "upstream researcher packet"
   ],
   "handoff_to": [

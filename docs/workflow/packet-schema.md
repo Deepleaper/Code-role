@@ -2,20 +2,13 @@
 
 This document defines the stable fields for workflow packet pointers and handoff manifests.
 
-## `latest.json`
+## Current Output Pointer
 
-`latest.json` is a pointer, not a report.
+Daily workflow does not require `latest.json`.
 
-```json
-{
-  "role": "researcher",
-  "milestone": "example-milestone",
-  "latest_packet": "packet-v001",
-  "status": "draft",
-  "manifest": "reports/example-milestone/packet-v001/handoff.manifest.json",
-  "updated_at": "YYYY-MM-DD"
-}
-```
+Use Orchestrator `workflow-state.md` for the current authoritative packet and `final-packet-index.md` for each role's current final output in a milestone.
+
+Legacy projects may still contain `latest.json`, but downstream roles must not treat it as authoritative when Orchestrator state or `final-packet-index.md` exists.
 
 ## `handoff.manifest.json`
 
@@ -59,7 +52,7 @@ Valid packet manifest statuses:
 
 ## `input_packets`
 
-Downstream packets must record exact upstream packet versions. In lightweight flow the upstream packet may still be `draft`; strict handoff adds `ready_for_next_role` and `packet.lock.json`.
+Downstream packets must record exact upstream packet versions. In lightweight flow the upstream packet may still be `draft`; strict handoff may add `ready_for_next_role` and `packet.lock.json`.
 
 ```json
 {
@@ -78,7 +71,7 @@ Rules:
 - `consumption_status` records the downstream role's action.
 - downstream acceptance must not mutate the upstream manifest.
 
-## `packet.lock.json`
+## `packet.lock.json` Advanced Optional Mode
 
 When strict handoff is requested and a packet becomes `ready_for_next_role`, create a lock file:
 
@@ -102,12 +95,12 @@ The lock detects drift after handoff.
 
 ## Packet Immutability Rules
 
-Packet immutability is required for strict downstream audit.
+Packet immutability is required only for strict downstream audit.
 
 - `packet-v001` may be edited only while its manifest status is `draft`.
 - Once a packet status becomes `ready_for_next_role`, do not edit files inside that packet.
 - If content must change after `ready_for_next_role`, create the next version, for example `packet-v002`.
-- `latest.json` may move to the newest packet.
+- Orchestrator state and `final-packet-index.md` should move to the accepted current output.
 - Historical strict-handoff packets must remain immutable so downstream `input_packets` records do not drift.
 
 ## Compatibility Rules

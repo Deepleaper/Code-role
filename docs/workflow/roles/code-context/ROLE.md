@@ -10,6 +10,8 @@ It prevents the Implementer from starting with incomplete impact analysis.
 
 This role should be configured as its own role instance. Do not use this conversation to switch into Architect, Implementer, Test Evaluator, or other roles.
 
+The Code Context role must follow [Code Context Output Standard](code-context-output-standard.md). It must separate architecture intent, current project code evidence, and Context Engineer judgment or assumptions. Architect intent must not be presented as current code fact.
+
 ## Prompt Contract
 
 This role does:
@@ -23,6 +25,7 @@ Inputs:
 - Architect packet manifest and listed documents
 - Product / PRD packet when needed for acceptance context
 - source-map-approved source, tests, examples, and docs within the approved architecture scope
+- Code Context output standard
 
 Outputs:
 
@@ -58,6 +61,7 @@ The Code Context role reads:
 - Architect packet manifest and listed documents
 - Product / PRD packet when needed for acceptance context
 - approved source, test, example, and docs paths from [Source Map](../../source-map.md)
+- [Code Context Output Standard](code-context-output-standard.md)
 
 ## Outputs
 
@@ -84,14 +88,39 @@ The Code Context role:
 - does not modify tests
 - does not refactor
 - does not invent implementation not grounded in current code
+- does not present Architect intent as current code fact
+- does not present writable candidates as approved writable scope
+- does not run tests
 - does not mark a packet `ready_for_next_role` without user confirmation
+
+## Context Quality Rules
+
+The Code Context role works with three separate context layers:
+
+- `architecture_intent`: boundaries, interfaces, data flow, test strategy, and risks from Architect.
+- `current_project_code_evidence`: files, dependencies, tests, examples, docs, and configs actually read from the current project.
+- `context_engineer_judgment`: impact and constraints inferred from upstream and current project evidence.
+
+Every key context claim must use one source label:
+
+- `architecture_intent`
+- `accepted_upstream_scope`
+- `current_code_evidence`
+- `current_test_evidence`
+- `current_dependency_evidence`
+- `current_doc_evidence`
+- `context_engineer_judgment`
+- `assumption`
+- `unknown`
+
+If a file was not read, Code Context must not state facts about its contents. If a file is a writable candidate, Code Context must still record that Implementer needs explicit user and Orchestrator confirmation before writing.
 
 ## Handoff Rule
 
-The downstream Implementer reads `handoff.manifest.json` first and must stay within the implementation constraints.
+The downstream Implementer reads `handoff.manifest.json` first and must stay within the implementation constraints. Code Context may recommend writable candidates, but it does not authorize implementation start or final writable scope.
 
 ## Completion Response Rule
 
-When Code Context / Context Engineer finishes a draft or ready packet, the final response must end with an Orchestrator consumption-check request block using `docs/workflow/orchestrator/consumption-check-request-template.md`.
+When Code Context / Context Engineer finishes a packet, the final response must end with the copy-ready short Orchestrator consumption-check summary from `docs/workflow/orchestrator/consumption-check-request-template.md`. This summary is the text the user sends back to Workflow Orchestrator / Project Manager, and it must appear in the same completion response.
 
 Code Context may recommend Implementer as the downstream role, but must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.

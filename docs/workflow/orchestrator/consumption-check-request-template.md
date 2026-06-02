@@ -1,13 +1,18 @@
-# Orchestrator Consumption Check Request Template
+# Orchestrator 轻量消费检查摘要 / Lightweight Consumption Check Summary
 
-Execution roles must include this block at the end of their completion response.
+执行角色完成 packet 后，必须在同一条完成回复的末尾追加这个短摘要，供用户直接复制给 Workflow Orchestrator / 项目经理。
 
-The block is for the user to copy into the Workflow Orchestrator role instance. It does not authorize the Orchestrator to modify the role packet, create downstream packets, run Git commands, or change business files.
+After an execution role finishes a packet, it must append this short summary at the end of the same completion response so the user can copy it to Workflow Orchestrator / Project Manager.
+
+这个摘要不授权 Orchestrator 修改角色 packet、创建下游 packet、执行 Git 命令或修改业务文件。
+
+This summary does not authorize the Orchestrator to modify the role packet, create downstream packets, run Git commands, or change business files.
 
 ```text
-请执行 Orchestrator 消费检查。
+请执行 Orchestrator 轻量消费检查。
+Please run the Orchestrator lightweight consumption check.
 
-当前完成角色:
+completed_role:
 {CURRENT_ROLE}
 
 milestone:
@@ -16,41 +21,47 @@ milestone:
 packet:
 {CURRENT_PACKET_PATH}
 
-handoff manifest:
+handoff_manifest:
 {CURRENT_MANIFEST_PATH}
 
-packet status reported by role:
+handoff manifest path:
+same as handoff_manifest above
+
+packet_status:
 {PACKET_STATUS}
 
-handoff mode:
-lightweight
-
-角色完成汇报:
+role_completion_summary:
 {ROLE_COMPLETION_SUMMARY}
 
-请检查:
-1. manifest JSON 是否有效
-2. manifest documents 是否存在
-3. input_packets 是否正确记录上游输入
-4. packet status 是否已如实记录
-5. blocked / external_research.used
-6. 用户是否接受该角色产出进入下一角色
-7. 当前 chain 的下一角色是谁
-8. 如果可以进入下一角色，请生成下一角色完整首条消息
+milestone_alignment:
+{HOW_THIS_OUTPUT_SERVES_THE_MILESTONE}
 
-严格交接只在用户明确要求时检查:
-- ready_for_next_role
-- packet.lock.json
-- sha256 覆盖
+possible_drift:
+{ANY_TASK_GOAL_DRIFT_OR_NONE}
 
-边界:
-- 只更新 Orchestrator 状态文件
-- 不修改当前角色 packet
-- 不创建下游 packet
-- 不执行 git add / git commit / git push
-- 不修改业务文件
+recommended_routing:
+{RECOMMENDED_NEXT_ROLE_OR_NONE}
+
+请优先检查：
+1. 该产出是否仍服务当前 milestone。
+2. 如有漂移，是打回当前角色，还是需要用户调整 milestone。
+3. manifest 是否可读，documents 是否存在。
+4. 用户是否接受该产出作为本角色当前最终版本，并允许进入下一角色。
+5. 如果允许进入下一角色，请更新 final-packet-index，并生成只做审阅和路由的 next-role handoff brief。
+
+边界：
+- 只更新 Orchestrator 状态文件。
+- 不修改当前角色 packet。
+- 不创建下游 packet。
+- 不执行 git add / git commit / git push。
+- 不修改业务文件。
+- 不检查 ready_for_next_role / packet.lock.json / sha256，除非用户明确要求 strict handoff。
 ```
 
 ## Role Boundary
 
-The current role may recommend a downstream role in its packet or summary, but it must not generate the authoritative next-role startup message. The Orchestrator owns chain position, consumable checks, routing, and the final next-role startup message.
+The current role may recommend a downstream role in its packet or summary, but it must not generate the authoritative next-role startup message.
+
+Orchestrator owns milestone alignment check, consumable check, final-packet-index updates, routing, and next-role handoff brief generation.
+
+When Orchestrator routes forward, it must paste the copy-ready next-role startup message in its response.

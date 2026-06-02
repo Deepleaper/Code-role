@@ -69,7 +69,7 @@ If the conversation moves away from that output, the role must correct it:
 4. Paste `code-role/role-instance-prompts/workflow-orchestrator.md` into that instance.
 5. Create each execution role instance only when Orchestrator routes to it.
 6. Paste that role's generated prompt from `code-role/role-instance-prompts/`.
-7. Let the role read its `code-role/state-index/roles/<role>.md` entry and the explicit upstream manifest.
+7. Let the role read the explicit upstream manifest. If optional `code-role/state-index/roles/<role>.md` exists, it may use that file only as navigation.
 8. Let each role write only its own packet output.
 9. Let Implementer write target project files only after the packet chain and user confirmation allow implementation.
 
@@ -86,7 +86,7 @@ python scripts/init_project_workflow.py \
   --write
 ```
 
-Omit `--write` to preview the files. The script creates local-only project config, role-instance prompts, Orchestrator state files, and a non-authoritative state index. It also adds `code-role/` to `.git/info/exclude` when that target file exists. It does not create execution packets, mark readiness, stage files, commit, or push.
+Omit `--write` to preview the files. The script creates local-only project config, role-instance prompts, and Orchestrator state files. Add `--with-state-index` only when you want optional navigation files. The script also adds `code-role/` to `.git/info/exclude` when that target file exists. It does not create execution packets, mark readiness, stage files, commit, or push.
 
 See `project-bootstrap.md`, `state-index.md`, and `git-operation-policy.md`.
 

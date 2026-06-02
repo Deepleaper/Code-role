@@ -21,7 +21,7 @@ docs/workflow/roles/researcher/reports/mvp-scope/packet-v001/
 Valid packet statuses:
 
 - `draft`: work in progress.
-- `ready_for_next_role`: approved for downstream consumption.
+- `ready_for_next_role`: approved for strict immutable downstream consumption.
 - `blocked`: missing required input or decision.
 - `superseded`: replaced by a newer packet.
 
@@ -43,7 +43,7 @@ Strict handoff is optional:
 - Packet versions are append-only.
 - Do not edit a packet after it is marked `ready_for_next_role`.
 - If content must change, create the next packet version.
-- `latest.json` may be updated to point to the newest packet.
+- Orchestrator state records the current authoritative packet. `final-packet-index.md` records each role's accepted current final output.
 - Downstream roles must record the exact upstream packet version they read in their own `handoff.manifest.json`.
 - Strict handoff may also lock packet hashes with `packet.lock.json`.
 - Downstream roles must not mutate upstream packet manifests.
@@ -85,25 +85,31 @@ When a downstream role consumes an upstream packet, it records:
 
 This prevents silent drift when upstream roles publish newer packets later. In lightweight mode, the record is a navigation and accountability link. In strict mode, `packet.lock.json` adds hash-level immutability.
 
-## Orchestrator Consumption Check Request
+## Orchestrator Consumption Check Summary
 
-Every execution role must include an Orchestrator consumption-check request block at the end of its completion response.
+Every execution role must include a short Orchestrator consumption-check summary at the end of its completion response.
 
-The block must include:
+This summary is the copy-ready message the user sends back to Workflow Orchestrator / Project Manager. It must appear in the same conversation response as the role's completion report, not in a separate hidden file.
+
+The summary must include:
 
 - current role
 - milestone
 - packet path
 - handoff manifest path
 - reported packet status
-- whether strict handoff was requested
 - concise role completion summary
-- request for Orchestrator to check manifest validity, documents, input packets, blocked state, external research state, user acceptance, handoff mode, and next route
+- milestone alignment
+- possible drift
+- recommended routing, if any
+- request for Orchestrator to check milestone alignment, manifest readability, user acceptance, and next route
 - boundary reminder that Orchestrator must not modify the role packet, create downstream packets, run Git commands, or modify business files
 
 Use [Orchestrator Consumption Check Request Template](orchestrator/consumption-check-request-template.md).
 
 The current role may recommend a downstream role, but it must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.
+
+When Orchestrator accepts the output and decides to start the next role, it must paste a copy-ready next-role startup message in its response. It should not only say "start the next role" or only list the role name.
 
 ## Status Transitions
 

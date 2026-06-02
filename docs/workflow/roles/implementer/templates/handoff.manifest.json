@@ -19,11 +19,16 @@
       "milestone": "template",
       "packet_version": "packet-v001",
       "manifest": "docs/workflow/roles/code-context/reports/<milestone>/packet-v001/handoff.manifest.json",
-      "status_at_consumption": "ready_for_next_role",
+      "status_at_consumption": "draft",
       "consumption_status": "accepted_as_input"
     }
   ],
-  "source_scopes": ["docs/workflow/source-map.md", "upstream code-context packet"],
+  "source_scopes": [
+    "docs/workflow/source-map.md",
+    "docs/workflow/roles/implementer/implementer-output-standard.md",
+    "upstream code-context packet",
+    "approved writable scope"
+  ],
   "handoff_to": ["test-evaluator"],
   "open_questions": [],
   "blocked": false,

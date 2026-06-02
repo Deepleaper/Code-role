@@ -4,14 +4,16 @@
   "milestone": "template",
   "packet_version": "packet-v001",
   "status": "draft",
+  "ready_for_next_role": false,
   "created_at": "YYYY-MM-DD",
   "updated_at": "YYYY-MM-DD",
-  "summary": "Template manifest for a Reviewer packet.",
+  "summary": "Template manifest for a Reviewer packet. Reviewer reads Orchestrator final-packet-index, audits Workflow Orchestrator outputs and every execution-role final output against the original milestone, then checks evaluation baseline validity, acceptance gaps, packet-chain evidence, risk decision, and final gate judgment.",
   "documents": [
-    {"path": "review-findings.md", "type": "review_findings", "required": true, "description": "Review findings."},
-    {"path": "risk-decision.md", "type": "risk_decision", "required": true, "description": "Risk decisions."},
-    {"path": "packet-chain-audit.md", "type": "packet_chain_audit", "required": true, "description": "Packet chain audit."},
-    {"path": "final-gate.md", "type": "final_gate", "required": true, "description": "Final gate decision."}
+    {"path": "milestone-drift-audit.md", "type": "milestone_drift_audit", "required": true, "description": "Audit of Workflow Orchestrator outputs and execution-role outputs against the original milestone."},
+    {"path": "review-findings.md", "type": "review_findings", "required": true, "description": "Findings covering milestone alignment, evaluation baseline audit, and acceptance gaps."},
+    {"path": "risk-decision.md", "type": "risk_decision", "required": true, "description": "Risk acceptance, return, and blocker decisions."},
+    {"path": "packet-chain-audit.md", "type": "packet_chain_audit", "required": true, "description": "Packet consumption, source scope, strict handoff, and drift audit."},
+    {"path": "final-gate.md", "type": "final_gate", "required": true, "description": "Reviewer final gate recommendation."}
   ],
   "input_packets": [
     {
@@ -19,12 +21,35 @@
       "milestone": "template",
       "packet_version": "packet-v001",
       "manifest": "docs/workflow/roles/test-evaluator/reports/<milestone>/packet-v001/handoff.manifest.json",
-      "status_at_consumption": "ready_for_next_role",
+      "status_at_consumption": "draft",
       "consumption_status": "accepted_as_input"
     }
   ],
-  "source_scopes": ["docs/workflow/source-map.md", "upstream test-evaluator packet"],
+  "final_packet_index": "docs/workflow/orchestrator/final-packet-index.md",
+  "audit_scope": "current_final_versions_only",
+  "source_scopes": [
+    "docs/workflow/source-map.md",
+    "docs/workflow/roles/reviewer/reviewer-output-standard.md",
+    "docs/workflow/orchestrator/final-packet-index.md",
+    "original milestone anchor from Orchestrator or user input",
+    "Orchestrator workflow-state, milestone-registry, decision-log, consumption-check outputs, and next-role handoff briefs",
+    "all upstream role packets in selected chain",
+    "upstream test-evaluator packet",
+    "upstream test-evaluator evaluation-baseline.md",
+    "upstream implementer packet when provided for traceability",
+    "Product / PRD acceptance criteria when provided in upstream packet chain"
+  ],
+  "evaluation_baseline_audit": {
+    "mechanism_required": true,
+    "benchmark_or_baseline_required": true,
+    "unsupported_industry_claims_block_final_acceptance": true
+  },
   "handoff_to": ["orchestrator"],
+  "quality_gate": {
+    "status": "blocked",
+    "final_acceptance": false,
+    "allowed_statuses": ["approve", "pass_with_residual_risk", "request_changes", "blocked"]
+  },
   "open_questions": [],
   "blocked": false,
   "required_confirmations": []

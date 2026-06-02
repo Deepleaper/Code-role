@@ -7,7 +7,6 @@ Expected layout:
 ```text
 reports/
   <milestone>/
-    latest.json
     packet-v001/
       handoff.manifest.json
       code-map.md
@@ -16,4 +15,3 @@ reports/
       test-map.md
       implementation-constraints.md
 ```
-
