@@ -64,7 +64,7 @@ The manifest is the contract. Downstream roles read the manifest first and then 
 Ask for user confirmation before:
 
 - creating a new milestone name when the requested milestone is ambiguous
-- using external research or network access
+- using provider APIs, authenticated/private network resources, downloads, remote execution, or sending secrets/project-private data externally
 - reading code paths outside the approved source map
 - marking a packet `ready_for_next_role`
 - superseding a packet that was already accepted

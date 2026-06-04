@@ -104,7 +104,7 @@ The Architect works with three separate evidence tracks:
 
 - `current_delivery_project_practice`: accepted Product / PRD, accepted upstream packets, user input, and explicitly allowed target-project files.
 - `industry_practice`: mature domain or platform patterns used as reference, not as current project fact.
-- `paper_frontier_practice`: papers, benchmarks, open-source implementations, official engineering docs, or emerging practices, only when explicitly approved.
+- `paper_frontier_practice`: public papers, benchmarks, open-source implementations, official engineering docs, or emerging practices, allowed by default when relevant to the milestone.
 
 Every key architecture claim must use one source label:
 

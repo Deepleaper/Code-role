@@ -54,6 +54,7 @@ The startup routine must not:
 - rewrite upstream packet manifests
 - approve state transitions for the user
 - start Implementer
-- call network or provider APIs
+- call provider APIs, authenticated/private resources, or external services that mutate state
+- use network research without declaring purpose and source types first
 
 The startup routine is a recovery step, not an execution step.

@@ -48,6 +48,7 @@ The [Role Configuration Guide](role-configuration-guide.md) defines the operatin
 ## Protocol Documents
 
 - [Role Configuration Guide](role-configuration-guide.md)
+- [Project Practices](project-practices.md)
 - [Workflow Bootstrap](bootstrap.md)
 - [Project Bootstrap](project-bootstrap.md)
 - [Role Instance Setup](role-instance-setup.md)

@@ -64,9 +64,9 @@ Use this track for common architecture patterns in mature industries, domains, o
 
 Use this track for what papers, benchmarks, open-source implementations, official engineering docs, or emerging practices can teach the architecture.
 
-只有用户明确批准 external research / network 后才能使用。
+默认允许在当前 milestone 相关范围内使用公开来源联网研究。
 
-This track is allowed only after the user explicitly approves external research or network access.
+Public-source network research is allowed by default when relevant to the current milestone.
 
 输出要求 / Output requirements:
 

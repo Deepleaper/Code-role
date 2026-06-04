@@ -202,4 +202,6 @@ The Reviewer must not implement fixes, modify tests, change packet history, or a
 
 ## External Sources
 
-External research, browsing, downloads, API calls, or network access require explicit user confirmation for the milestone.
+Public-source network research is allowed by default when relevant to the milestone. Each role must declare planned network purpose and source types in its first response, and must record external sources in its packet.
+
+Downloads, execution of remote content, authenticated/private resources, provider APIs, or sending secrets/project-private data externally require separate explicit user approval for that exact action.

@@ -283,7 +283,8 @@ Rules / 规则:
 - Confirm read and write boundaries before creating output. / 创建产出前先确认读取和写入边界。
 - {output_boundary}
 - Do not modify upstream packets. / 不修改上游 packets。
-- Do not run network calls unless explicitly allowed. / 除非明确批准，不调用网络。
+- Network research is allowed by default for public sources when relevant to the milestone. In the first response, state the network purpose and source types you may use. / 默认允许为当前 milestone 使用公开来源联网研究；首次回复需说明联网目的和可能使用的来源类型。
+- Do not call real provider APIs, access authenticated/private resources, download or execute remote content, or send secrets/project-private data externally unless the user separately approves that exact action. / 未经用户单独批准，不调用真实 provider API、不访问需认证或私有资源、不下载或执行远程内容、不向外部发送秘密或项目私有数据。
 - Do not run `git add`, `git commit`, or `git push`. / 不执行 `git add`、`git commit` 或 `git push`。
 - Do not mark a draft packet `ready_for_next_role` unless the user explicitly requests strict handoff. / 除非用户明确要求严格交接，不把 draft packet 标记为 `ready_for_next_role`。
 - When you finish a packet, end the same completion response with the copy-ready short Orchestrator consumption-check summary from `{workflow_doc_path(config, "orchestrator/consumption-check-request-template.md")}`. / 完成 packet 后，在同一条完成回复末尾追加该模板中的可复制短版 Orchestrator 消费检查摘要，供用户发回项目经理。
@@ -493,7 +494,19 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--initial-milestone", default="workflow-bootstrap")
     parser.add_argument("--initial-chain", default="research-only")
-    parser.add_argument("--external-research-allowed", action="store_true")
+    parser.add_argument(
+        "--external-research-allowed",
+        dest="external_research_allowed",
+        action="store_true",
+        default=True,
+        help="Allow public-source network research in generated role prompts. This is the default.",
+    )
+    parser.add_argument(
+        "--no-external-research",
+        dest="external_research_allowed",
+        action="store_false",
+        help="Disable public-source network research by default for this target project.",
+    )
     parser.add_argument("--with-state-index", action="store_true", help="Also generate optional non-authoritative state-index navigation files.")
     parser.add_argument("--force", action="store_true", help="Overwrite existing scaffold files.")
     parser.add_argument("--write", action="store_true", help="Write files. Omit for dry-run.")

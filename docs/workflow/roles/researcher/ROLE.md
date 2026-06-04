@@ -50,7 +50,7 @@ Conversation scope:
 
 Discussion gate:
 
-- Stop for discussion when evidence is weak, source scope is insufficient, external research is needed, or downstream decisions would require product judgment.
+- Stop for discussion when evidence is weak, source scope is insufficient, network action exceeds public-source research, or downstream decisions would require product judgment.
 
 ## Inputs
 
@@ -61,7 +61,7 @@ The Researcher reads:
 - [Source Map](../../source-map.md)
 - [Researcher Output Standard](researcher-output-standard.md)
 - repo documents and code paths allowed by the source map
-- external sources only when the user explicitly approves external research
+- public external sources when relevant to the milestone
 
 ## Outputs
 
@@ -91,7 +91,8 @@ The Researcher:
 - does not write code
 - does not change tests
 - does not change release docs
-- does not use external research unless explicitly approved
+- may use public-source network research by default when relevant to the milestone, and must record sources
+- does not use authenticated/private resources, provider APIs, downloads, remote execution, or external transmission of project-private data without separate explicit approval
 - does not mark a packet `ready_for_next_role` without user confirmation
 
 ## Research Quality Rules
@@ -99,7 +100,7 @@ The Researcher:
 The Researcher works in two separate tracks:
 
 - `current_project_research`: repo evidence, packet evidence, user input, and allowed local project files.
-- `frontier_research`: external papers, official docs, engineering practice, benchmarks, standards, or open-source references, only when explicitly approved.
+- `frontier_research`: public papers, official docs, engineering practice, benchmarks, standards, or open-source references, allowed by default when relevant to the milestone.
 
 Frontier research must be labeled as `external_source`, must include source metadata, and must state whether it is applicable to the current project. It must not be mixed into current project facts.
 

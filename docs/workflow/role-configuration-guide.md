@@ -182,7 +182,8 @@ Orchestrator 审阅结论:
 限制:
 - 不越过本角色边界
 - 不写本角色未授权的文件
-- 不调用 network，除非我明确允许
+- 默认允许为当前 milestone 使用公开来源联网研究；首次回复说明联网目的和来源类型
+- 未经我单独批准，不调用真实 provider API、不访问需认证或私有资源、不下载或执行远程内容、不向外部发送秘密或项目私有数据
 - 不把 draft packet 标记为 ready_for_next_role，除非我明确要求 strict handoff
 
 请先确认你将读取哪些文件、写入哪个 packet 路径，然后再执行。
@@ -717,7 +718,7 @@ Create the Orchestrator before relying on downstream Product / PRD consumption. 
 Always ask before:
 
 - naming an ambiguous milestone
-- using external research or network
+- using provider APIs, authenticated/private network resources, downloads, remote execution, or sending secrets/project-private data externally
 - changing packet protocol
 - changing source map
 - marking a packet `ready_for_next_role` for strict handoff

@@ -40,6 +40,8 @@ Each execution role writes a versioned document packet. The next role consumes t
 - Orchestrator checks milestone alignment before routing to the next role.
 - Every role completion response includes a copy-ready summary for Orchestrator / Project Manager.
 - When Orchestrator routes forward, it must paste a copy-ready startup message for the next role.
+- Public-source network research is allowed by default for every role when relevant to the milestone.
+- Real provider APIs, authenticated/private resources, downloads, remote execution, or sending secrets/project-private data externally require separate explicit approval.
 - Daily workflow is lightweight: user acceptance plus Orchestrator routing is enough.
 - Strict `ready_for_next_role`, `packet.lock.json`, and `sha256` locking are optional advanced mode only.
 - Target-project `code-role/` folders are local assistance, not product runtime or release artifacts.
@@ -53,6 +55,8 @@ Each execution role writes a versioned document packet. The next role consumes t
 - Orchestrator / 项目经理先检查 milestone 是否漂移，再决定是否路由下一角色。
 - 每个角色完成后，必须在同一条回复末尾附上给 Orchestrator 的可复制摘要。
 - Orchestrator 如果允许进入下一角色，必须直接贴出可复制的下一角色启动消息。
+- 每个角色默认都可以在当前 milestone 相关范围内使用公开来源联网研究。
+- 调用真实 provider API、访问私有认证资源、下载或执行远程内容、向外部发送秘密或项目私有数据，都需要单独明确批准。
 - 日常流程保持轻量：用户接受产出 + Orchestrator 路由即可。
 - 严格 `ready_for_next_role`、`packet.lock.json`、`sha256` 只作为高级 strict handoff 模式。
 - 目标项目里的 `code-role/` 是本地辅助，不是产品运行时内容，也不进入发布交付。
@@ -91,6 +95,7 @@ Key documents / 关键文档：
 - [English PRD](docs/product/prd.md)
 - [Workflow guide](docs/workflow/README.md)
 - [Role configuration guide](docs/workflow/role-configuration-guide.md)
+- [Project practices](docs/workflow/project-practices.md)
 - [Role instance setup](docs/workflow/role-instance-setup.md)
 - [Target project bootstrap](docs/workflow/project-bootstrap.md)
 - [Optional state index](docs/workflow/state-index.md)

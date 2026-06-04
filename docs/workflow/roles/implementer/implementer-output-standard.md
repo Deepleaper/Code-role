@@ -144,7 +144,7 @@ The Implementer must not:
 - 修改未批准文件 / modify unapproved files
 - 扩展产品范围或架构边界 / expand product scope or architecture boundary
 - 修改上游 packet / modify upstream packets
-- 运行未批准的网络或真实 provider API / run unapproved network or real provider APIs
+- 未经单独批准运行真实 provider API、访问私有认证资源、下载执行远程内容或外传项目私有数据 / run real provider APIs, access authenticated/private resources, download/execute remote content, or externally transmit project-private data without separate approval
 - 执行 `git add`、`git commit` 或 `git push` / run `git add`, `git commit`, or `git push`
 - 把未运行的测试写成通过 / present unrun tests as passed
 

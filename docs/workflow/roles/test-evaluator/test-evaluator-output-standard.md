@@ -55,7 +55,7 @@ Use this layer for industry-validated, common, or consensus evaluation templates
 允许来源 / Allowed sources:
 
 - user-provided industry references / 用户提供的行业参考
-- approved external research / 用户批准的外部研究
+- public-source network research / 公开来源联网研究
 - current project documentation that explicitly names an evaluation standard / 当前项目文档中明确命名的评估标准
 
 输出要求 / Output requirements:
@@ -157,7 +157,7 @@ It must record:
 - benchmark or evaluation dataset baseline / benchmark 或评估数据基线
 - metric definitions and thresholds / 指标定义与阈值
 - project-specific acceptance mapping / 项目验收映射
-- external research permission and source boundary / 外部研究权限与来源边界
+- network research purpose and source boundary / 联网研究目的与来源边界
 - unresolved baseline questions / 未解决的基线问题
 
 如果用户尚未确认评估机制，`quality-gate.md` 不得写成 `pass`。

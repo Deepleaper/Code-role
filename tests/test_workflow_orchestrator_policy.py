@@ -69,6 +69,7 @@ def test_chain_policy_defines_allowed_chains_and_gates() -> None:
 
 def test_workflow_docs_link_orchestrator_and_policy() -> None:
     readme = read(WORKFLOW / "README.md")
+    root_readme = read(ROOT / "README.md")
     handoff = read(WORKFLOW / "handoff-protocol.md")
     guide = read(WORKFLOW / "role-configuration-guide.md")
     source_map = read(WORKFLOW / "source-map.md")
@@ -81,6 +82,27 @@ def test_workflow_docs_link_orchestrator_and_policy() -> None:
     assert "Role 1: Workflow Orchestrator" in guide
     assert "Orchestrator Write Scope" in source_map
     assert "consumption-check-request-template.md" in readme
+    assert "project-practices.md" in readme
+    assert "docs/workflow/project-practices.md" in root_readme
+
+
+def test_project_practices_document_defines_adopted_practices() -> None:
+    practices = read(WORKFLOW / "project-practices.md")
+    for required in [
+        "ADR / RFC Style Decisions",
+        "Definition Of Done",
+        "Claim Ledger",
+        "Golden Path Example",
+        "Migration / Upgrade Policy",
+        "Policy As Tests",
+        "Release Boundary",
+        "Network Research Boundary",
+        "Practices Not Adopted",
+        "Every role may use public-source network research",
+        "Do not overwrite by default",
+        "code-role/",
+    ]:
+        assert required in practices
 
 
 def test_consumption_check_request_template_keeps_routing_with_orchestrator() -> None:

@@ -37,10 +37,18 @@ For every non-Implementer execution role:
 
 1. Read the upstream `handoff.manifest.json` first.
 2. Read only the documents and source scopes allowed by the manifest, role file, and source map.
-3. Produce a draft document packet under the role's own `reports/` folder.
-4. Stop for discussion when there are material decisions, open questions, or tradeoffs.
-5. Do not mark a packet `ready_for_next_role` unless the user explicitly requests strict handoff.
-6. Do not modify product code, tests, runtime files, release docs, or upstream packets.
+3. Public-source network research is allowed by default when relevant to the milestone.
+4. In the first response, state whether network research will be used, for what purpose, and which source types may be used.
+5. Record external sources in the packet when network research is used.
+6. Produce a draft document packet under the role's own `reports/` folder.
+7. Stop for discussion when there are material decisions, open questions, or tradeoffs.
+8. Do not mark a packet `ready_for_next_role` unless the user explicitly requests strict handoff.
+9. Do not modify product code, tests, runtime files, release docs, or upstream packets.
+
+Network boundary:
+
+- allowed by default: public web search, official documentation, standards, public papers, public benchmark descriptions, public open-source references
+- requires separate explicit approval: authenticated/private resources, provider APIs, downloads, execution of remote content, or sending secrets/project-private data externally
 
 ## Implementer Exception
 
@@ -79,5 +87,6 @@ A role must stop for discussion before handoff when:
 - evidence is weak
 - a P0/P1 risk exists
 - the role would need to exceed its boundary
+- the role needs a network action outside public-source research
 
 Discussion happens before the workflow advances. The documented packet is the object being discussed.

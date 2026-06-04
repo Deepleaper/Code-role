@@ -4,7 +4,7 @@
 
 - evaluation_mechanism_status / 评估机制状态: confirmed / pending / blocked [user_approved_eval_mechanism]
 - benchmark_status / benchmark 状态: confirmed / pending / not_applicable / unknown [evaluation_baseline]
-- industry_reference_status / 行业参考状态: user_provided / external_research_approved / not_approved / unknown [industry_evaluation_reference / unknown]
+- industry_reference_status / 行业参考状态: user_provided / public_network_research / not_found / unknown [industry_evaluation_reference / unknown]
 
 ## Planned Checks / 计划检查
 

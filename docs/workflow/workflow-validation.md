@@ -71,9 +71,10 @@ Before implementation:
 
 Validation must not:
 
-- call network
 - call provider APIs
 - mutate runtime
 - write product code
 - write release docs
 - include local workflow files in GitHub commits by default
+
+Public-source network research is allowed for role work when relevant to the milestone, but validation itself remains local by default unless a specific network-dependent validator is explicitly introduced.

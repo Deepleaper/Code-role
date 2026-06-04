@@ -131,7 +131,8 @@ The Orchestrator must not:
 - mark a packet `accepted` without user confirmation
 - allow Implementer to start without explicit user approval and exact writable scope
 - approve scope expansion by itself
-- call network or provider APIs
+- call provider APIs, authenticated/private resources, or external services that mutate state
+- use network research without declaring purpose and source types first
 
 ## Required Checks
 

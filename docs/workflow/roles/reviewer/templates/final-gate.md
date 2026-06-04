@@ -12,7 +12,7 @@
 - flow_wide_milestone_drift / 全链路 milestone 漂移: aligned | minor_drift | major_drift | blocked_missing_milestone_anchor [drift_audit]
 - correction_owner / 修正角色: none | workflow-orchestrator | researcher | product-prd | architect | code-context | implementer | test-evaluator | reviewer | user [drift_audit]
 - evaluation_baseline_status / 评估基线状态: confirmed | partial | missing | unsupported | unknown [reviewer_judgment]
-- industry_reference_status / 行业参考状态: sourced | user_provided | not_approved | unsupported | unknown [reviewer_judgment]
+- industry_reference_status / 行业参考状态: sourced | user_provided | not_found | unsupported | unknown [reviewer_judgment]
 - benchmark_dataset_status / benchmark 数据状态: confirmed | partial | missing | not_applicable | unknown [reviewer_judgment]
 - acceptance_gap_status / 验收差距状态: covered | partial | missing | unknown [reviewer_judgment]
 - implementation_scope_status / 实现范围状态: within_scope | scope_risk | scope_violation | unknown [reviewer_judgment]

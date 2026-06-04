@@ -22,9 +22,9 @@
 
 | Reference / 参考 | Type / 类型 | Why Relevant / 相关性 | Source Label / 来源标签 | Permission Status / 权限状态 |
 | --- | --- | --- | --- | --- |
-| <template, benchmark, dataset, metric convention, or unknown> | evaluation_template / benchmark_dataset / metric_convention / engineering_practice / unknown | <reason> | industry_evaluation_reference / benchmark_dataset_reference / metric_definition / unknown | user_provided / external_research_approved / not_approved / unknown |
+| <template, benchmark, dataset, metric convention, or unknown> | evaluation_template / benchmark_dataset / metric_convention / engineering_practice / unknown | <reason> | industry_evaluation_reference / benchmark_dataset_reference / metric_definition / unknown | user_provided / public_network_research / not_found / unknown |
 
-If external research is not approved, do not claim an industry consensus source was found. Mark it as `unknown` or request user approval.
+Public-source network research is allowed by default when relevant to the evaluation baseline. If no industry consensus source was found, mark it as `unknown` or `not_found`.
 
 如未批准外部研究，不得声称已找到行业共识来源；应标记为 `unknown` 或请求用户批准。
 

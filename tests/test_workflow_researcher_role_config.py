@@ -51,7 +51,8 @@ def test_researcher_read_write_boundaries_are_documented() -> None:
     assert "does not write PRD" in role
     assert "does not write code" in role
     assert "does not change tests" in role
-    assert "does not use external research unless explicitly approved" in role
+    assert "may use public-source network research by default" in role
+    assert "does not use authenticated/private resources" in role
     assert "Researcher Output Standard" in role
     assert "Current project research and frontier research must remain separate" in role
     assert "must not be presented as current project facts" in role

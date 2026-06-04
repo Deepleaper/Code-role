@@ -148,7 +148,8 @@ If the task starts drifting away from the milestone, stop expanding scope and st
 - 不修改上游 packet / Do not modify upstream packets.
 - 不修改业务文件，除非你是 Implementer 且用户明确批准 / Do not modify business files unless you are Implementer and the user explicitly approved it.
 - 不执行 git add / git commit / git push / Do not run git add, git commit, or git push.
-- 不联网，除非用户明确批准 / Do not use network access unless the user explicitly approved it.
+- 默认允许为当前 milestone 使用公开来源联网研究，但首次回复必须说明联网目的和来源类型 / Public-source network research is allowed by default when relevant to the milestone, but the first response must state the network purpose and source types.
+- 未经用户单独批准，不调用真实 provider API、不访问需认证或私有资源、不下载或执行远程内容、不向外部发送秘密或项目私有数据 / Do not call real provider APIs, access authenticated/private resources, download or execute remote content, or send secrets/project-private data externally unless separately approved.
 - 不做 strict handoff，除非用户明确要求 / Do not perform strict handoff unless the user explicitly requests it.
 
 八、开始方式 / Start Protocol

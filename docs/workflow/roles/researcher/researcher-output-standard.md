@@ -54,9 +54,9 @@ Use this track to answer what exists, what is missing, and where risks are in th
 
 Use this track to answer what frontier papers, industry practices, or engineering implementations can teach the project.
 
-只有用户明确批准 external research / network 后才能做。
+默认允许在当前 milestone 相关范围内做公开来源联网研究。
 
-This track is allowed only after the user explicitly approves external research or network access.
+Public-source network research is allowed by default when relevant to the current milestone.
 
 允许来源 / Allowed sources:
 
@@ -197,7 +197,8 @@ The Researcher must not:
 - 写实现计划作为承诺 / write implementation plans as commitments
 - 修改代码或测试 / modify code or tests
 - 把外部论文或工程实践写成当前项目事实 / present external papers or engineering practices as current project facts
-- 未经批准联网或使用外部研究 / use network or external research without approval
+- 未记录联网研究来源 / fail to record network research sources
+- 未经单独批准使用私有认证资源、provider API、下载执行远程内容或外传项目私有数据 / use authenticated/private resources, provider APIs, remote downloads/execution, or external transmission of project-private data without separate approval
 - 为了显得完整而补写没有证据的结论 / invent unsupported conclusions for completeness
 
 Researcher 可以提出下游建议，但不能生成权威下一角色启动消息。

@@ -33,7 +33,7 @@ Use this section for mature domain or platform practices. Do not present them as
 
 ## Paper And Frontier Engineering Practice / 论文与前沿工程实践
 
-Use this section only when external research is explicitly approved.
+Use this section when public-source network research is relevant to the milestone. Public-source network research is allowed by default, but sources must be recorded.
 
 仅在用户明确批准外部研究时使用本节。
 

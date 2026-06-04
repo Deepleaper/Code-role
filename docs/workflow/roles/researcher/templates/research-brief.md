@@ -24,7 +24,7 @@ Use this section for repo evidence, packet evidence, user input, and allowed loc
 
 ## Frontier Research / 前沿研究与工程实践
 
-Use this section only when external research is explicitly approved.
+Use this section when public-source network research is relevant to the milestone. Public-source network research is allowed by default, but sources must be recorded.
 
 仅在用户明确批准外部研究时使用本节。
 

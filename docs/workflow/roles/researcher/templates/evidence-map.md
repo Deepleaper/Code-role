@@ -8,7 +8,7 @@
 
 ## Frontier Evidence / 前沿研究证据
 
-Only use this section when external research is explicitly approved.
+Use this section when public-source network research is relevant to the milestone. Public-source network research is allowed by default, but every source must be recorded.
 
 仅在用户明确批准外部研究时使用本节。
 

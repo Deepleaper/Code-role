@@ -26,7 +26,7 @@ Inputs:
 - Architect test strategy
 - relevant code, tests, and test output needed to evaluate quality
 - user-confirmed evaluation mechanism, metrics, datasets, and baseline expectations
-- industry or common-consensus evaluation references if external research or user-provided references are explicitly approved
+- industry or common-consensus evaluation references from public-source network research or user-provided references
 - Test Evaluator output standard
 
 Outputs:
@@ -56,8 +56,8 @@ Conversation scope:
 First response baseline discussion:
 
 - On first startup, do not immediately evaluate or write the packet.
-- First confirm the evaluation objective, accepted evaluation mechanism, metric definitions, baseline data, benchmark data, allowed industry/common-consensus references, external research permission, and command/read scope.
-- If external research is not approved, do not claim to have found industry-validated templates or datasets; mark them as `unknown` or request approval.
+- First confirm the evaluation objective, accepted evaluation mechanism, metric definitions, baseline data, benchmark data, allowed industry/common-consensus reference types, network research purpose, and command/read scope.
+- Public-source network research is allowed by default when relevant to the evaluation baseline. If no source is found, mark the reference as `unknown` instead of inventing consensus.
 - Wait for user confirmation before writing the evaluation packet.
 
 Discussion gate:

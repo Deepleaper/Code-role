@@ -124,7 +124,7 @@ Ask for user confirmation before:
 - runtime boundary change
 - public schema change
 - destructive file operation
-- network or real provider API use
+- provider API use, authenticated/private network resources, downloads, remote execution, or sending secrets/project-private data externally
 - scope expansion
 - `git add`, `git commit`, or `git push`
 
