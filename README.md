@@ -101,6 +101,12 @@ Key documents / 关键文档：
 - [Optional state index](docs/workflow/state-index.md)
 - [Git operation policy](docs/workflow/git-operation-policy.md)
 
+Open source documents / 开源文档：
+
+- [Contributing guide](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
+- [MIT License](LICENSE)
+
 ## Fast Start In A Target Project / 在目标项目中快速启动
 
 Run from this Code-role repository:
@@ -255,6 +261,6 @@ Current template status:
 
 ## License / 许可
 
-No license has been declared yet. Treat this repository as private unless the owner states otherwise.
+Code-role is released under the [MIT License](LICENSE).
 
-当前尚未声明开源许可。除非所有者另行说明，请按私有仓库处理。
+Code-role 使用 [MIT License](LICENSE) 开源。
