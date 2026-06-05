@@ -25,6 +25,20 @@ def test_open_source_supporting_files_exist() -> None:
         ROOT / "CONTRIBUTING.md",
         ROOT / "SECURITY.md",
         ROOT / ".github" / "workflows" / "tests.yml",
+        ROOT / "examples" / "README.md",
+        ROOT / "examples" / "minimal-target" / "README.md",
     ]
     missing = [path for path in expected if not path.exists()]
     assert not missing
+
+
+def test_readme_exposes_workflow_diagram_and_example() -> None:
+    readme = read(ROOT / "README.md")
+    example = read(ROOT / "examples" / "minimal-target" / "README.md")
+
+    assert "```mermaid" in readme
+    assert "Workflow Orchestrator / 项目经理" in readme
+    assert "Minimal target example" in readme
+    assert "examples/minimal-target/README.md" in readme
+    assert "Do not commit target-project `code-role/` output by default." in example
+    assert "项目经理，执行 startup routine，恢复当前状态" in example

@@ -84,6 +84,9 @@ docs/workflow/
 scripts/
   init_project_workflow.py
 
+examples/
+  minimal-target/
+
 tests/
   test_workflow_*.py
 ```
@@ -100,6 +103,7 @@ Key documents / 关键文档：
 - [Target project bootstrap](docs/workflow/project-bootstrap.md)
 - [Optional state index](docs/workflow/state-index.md)
 - [Git operation policy](docs/workflow/git-operation-policy.md)
+- [Minimal target example](examples/minimal-target/README.md)
 
 Open source documents / 开源文档：
 
@@ -184,6 +188,26 @@ Create one configured Codex role instance per role. Do not run the whole workflo
 8. 角色先确认范围。
 9. 范围正确后，回复 `开始`。
 10. 角色完成后，把它末尾的 Orchestrator 摘要复制回项目经理对话。
+
+## Workflow Diagram / 流程图
+
+```mermaid
+flowchart LR
+  O["Workflow Orchestrator / 项目经理"]
+  R["Researcher / 研究员"]
+  P["Product / PRD / 产品经理"]
+  A["Architect / 架构师"]
+  C["Code Context / 上下文工程师"]
+  I["Implementer / 实现工程师"]
+  T["Test Evaluator / 测试评估师"]
+  V["Reviewer / 审计评审"]
+
+  O --> R --> P --> A --> C --> I --> T --> V --> O
+```
+
+The Orchestrator controls milestone alignment and routing. Professional conclusions come from role packets, not from Orchestrator speculation.
+
+项目经理负责里程碑对齐和路由。专业结论来自各角色 packet，不来自项目经理自行推断。
 
 ## Role Chain / 角色链路
 
