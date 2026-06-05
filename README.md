@@ -202,12 +202,25 @@ flowchart LR
   T["Test Evaluator / 测试评估师"]
   V["Reviewer / 审计评审"]
 
-  O --> R --> P --> A --> C --> I --> T --> V --> O
+  O --> R
+  R --> O
+  O --> P
+  P --> O
+  O --> A
+  A --> O
+  O --> C
+  C --> O
+  O --> I
+  I --> O
+  O --> T
+  T --> O
+  O --> V
+  V --> O
 ```
 
-The Orchestrator controls milestone alignment and routing. Professional conclusions come from role packets, not from Orchestrator speculation.
+Every professional role returns its completion summary and packet to the Orchestrator. The Orchestrator checks milestone alignment, decides whether the output needs correction, and only then routes to the next role. Professional conclusions come from role packets, not from Orchestrator speculation.
 
-项目经理负责里程碑对齐和路由。专业结论来自各角色 packet，不来自项目经理自行推断。
+每个专业角色完成后都回到项目经理。项目经理检查是否偏离 milestone，判断是否需要打回修正，然后再路由下一角色。专业结论来自各角色 packet，不来自项目经理自行推断。
 
 ## Role Chain / 角色链路
 
@@ -217,13 +230,13 @@ Typical full chain:
 
 ```text
 Workflow Orchestrator
-  -> Researcher
-  -> Product / PRD
-  -> Architect
-  -> Code Context
-  -> Implementer
-  -> Test Evaluator
-  -> Reviewer
+  -> Researcher -> Workflow Orchestrator review
+  -> Product / PRD -> Workflow Orchestrator review
+  -> Architect -> Workflow Orchestrator review
+  -> Code Context -> Workflow Orchestrator review
+  -> Implementer -> Workflow Orchestrator review
+  -> Test Evaluator -> Workflow Orchestrator review
+  -> Reviewer -> Workflow Orchestrator review
   -> Workflow Orchestrator closeout
 ```
 

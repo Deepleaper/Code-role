@@ -38,6 +38,16 @@ def test_readme_exposes_workflow_diagram_and_example() -> None:
 
     assert "```mermaid" in readme
     assert "Workflow Orchestrator / 项目经理" in readme
+    assert "R --> O" in readme
+    assert "P --> O" in readme
+    assert "A --> O" in readme
+    assert "C --> O" in readme
+    assert "I --> O" in readme
+    assert "T --> O" in readme
+    assert "V --> O" in readme
+    assert "O --> R --> P --> A --> C --> I --> T --> V --> O" not in readme
+    assert "Every professional role returns its completion summary and packet to the Orchestrator." in readme
+    assert "Researcher -> Workflow Orchestrator review" in readme
     assert "Minimal target example" in readme
     assert "examples/minimal-target/README.md" in readme
     assert "Do not commit target-project `code-role/` output by default." in example
