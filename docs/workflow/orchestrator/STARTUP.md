@@ -16,16 +16,20 @@ Read these files in order:
 2. `docs/workflow/orchestrator/milestone-registry.md`
 3. `docs/workflow/orchestrator/decision-log.md`
 4. `docs/workflow/orchestrator/final-packet-index.md`
-5. the `Authoritative packet` path recorded in `workflow-state.md`
+5. `docs/workflow/milestone-contract.md`
+6. the `Authoritative packet` path recorded in `workflow-state.md`
 
 If `workflow-state.md` has no authoritative packet, ask the user for:
 
 - milestone
+- milestone contract confirmation status
 - chain type, if known
 - current role
 - packet manifest path
 
 Do not infer the current packet by scanning for the newest file.
+
+If `milestone-contract.md` is missing, draft, or incomplete, report `milestone_contract_check=fail` and ask the user to confirm business goal, delivery goal, success criteria, non-goals, scope, hard prohibitions, evidence requirements, correction policy, and closure rule before routing the first execution role.
 
 ## Recovery Output
 
@@ -33,14 +37,15 @@ After reading the required files, answer with:
 
 1. current milestone
 2. selected chain
-3. current authoritative packet
-4. current final packet index status
-5. packet status
-6. `consumable_check=pass` or `consumable_check=fail`
-7. current blocker
-8. recommended next role
-9. required user confirmations
-10. workflow state files that need updates, if any
+3. milestone contract status
+4. current authoritative packet
+5. current final packet index status
+6. packet status
+7. `consumable_check=pass` or `consumable_check=fail`
+8. current blocker
+9. recommended next role
+10. required user confirmations
+11. workflow state files that need updates, if any
 
 ## Boundaries
 

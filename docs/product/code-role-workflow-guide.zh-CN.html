@@ -453,9 +453,15 @@ cd Code-role</code></pre>
       workflow-state.md
       milestone-registry.md
       decision-log.md
-      final-packet-index.md</code></pre>
+      final-packet-index.md
+      milestone-contract.md
+    evaluation/
+      evaluation-sop.md</code></pre>
       <p>
         初始化脚本不会创建 Researcher、PRD、Architect、Implementer 等执行角色 packet。执行角色 packet 必须由对应角色在用户确认后创建。
+      </p>
+      <p>
+        <code>workflow/orchestrator/milestone-contract.md</code> 是当前 milestone 的硬目标锚点；第一个执行角色启动前应由 Orchestrator 和用户确认。<code>workflow/evaluation/evaluation-sop.md</code> 是评估师和 Reviewer 使用的硬评估锚点；评估师不能每次临时换口径。
       </p>
       <p>
         如确实需要给新角色提供额外导航，可以在初始化时加 <code>--with-state-index</code>，生成可选的 <code>code-role/state-index/</code>。默认流程不生成它。
@@ -467,7 +473,7 @@ cd Code-role</code></pre>
       <ol>
         <li>打开 Workflow Orchestrator 的 Codex 对话。</li>
         <li>粘贴目标项目里的 <code>code-role/role-instance-prompts/workflow-orchestrator.md</code>。</li>
-        <li>让 Orchestrator 恢复状态，确认第一个真实 milestone 和 chain。</li>
+        <li>让 Orchestrator 恢复状态，确认第一个真实 milestone、chain 和 <code>milestone-contract.md</code>。</li>
         <li>Orchestrator 输出下一个角色和精确 upstream manifest。</li>
         <li>为下一个角色打开新的 Codex 对话。</li>
         <li>粘贴对应的 <code>code-role/role-instance-prompts/&lt;role&gt;.md</code>。</li>
@@ -475,7 +481,8 @@ cd Code-role</code></pre>
         <li>用户回复“开始”后，角色创建 draft packet。</li>
         <li>角色完成后，在同一条完成回复末尾给出可复制的 Orchestrator consumption-check summary。</li>
         <li>用户把这段摘要直接发给 Orchestrator / 项目经理。</li>
-        <li>Orchestrator 优先检查产出是否仍对齐 milestone，再检查 manifest、文档、阻塞项和用户是否接受该产出。</li>
+        <li>Orchestrator 优先检查产出是否仍对齐 <code>milestone-contract.md</code>，再检查 manifest、文档、阻塞项和用户是否接受该产出。</li>
+        <li>进入 Test Evaluator 前，确认 <code>evaluation-sop.md</code> 是否适用于本 milestone；Reviewer 最终审计该 SOP 是否被遵守。</li>
         <li>默认轻量流程下，如果 Orchestrator 明确允许进入下一角色，必须直接贴出可复制的下一角色启动消息。</li>
         <li>只有用户明确要求严格交接时，才进入 <code>ready_for_next_role</code> 和 <code>packet.lock.json</code>。</li>
       </ol>

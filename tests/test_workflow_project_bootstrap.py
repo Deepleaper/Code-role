@@ -22,6 +22,8 @@ def test_project_bootstrap_docs_are_linked() -> None:
         "project-bootstrap.md",
         "state-index.md",
         "git-operation-policy.md",
+        "milestone-contract.md",
+        "evaluation-sop.md",
     ]:
         assert filename in readme
         assert filename in workflow_readme
@@ -79,6 +81,8 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
         target / "code-role" / "workflow" / "orchestrator" / "milestone-registry.md",
         target / "code-role" / "workflow" / "orchestrator" / "decision-log.md",
         target / "code-role" / "workflow" / "orchestrator" / "final-packet-index.md",
+        target / "code-role" / "workflow" / "orchestrator" / "milestone-contract.md",
+        target / "code-role" / "workflow" / "evaluation" / "evaluation-sop.md",
         target / "code-role" / "role-instance-prompts" / "workflow-orchestrator.md",
         target / "code-role" / "role-instance-prompts" / "researcher.md",
         target / "code-role" / "role-instance-prompts" / "product-prd.md",
@@ -95,12 +99,24 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
     researcher_prompt = read(target / "code-role" / "role-instance-prompts" / "researcher.md")
     product_prompt = read(target / "code-role" / "role-instance-prompts" / "product-prd.md")
     reviewer_prompt = read(target / "code-role" / "role-instance-prompts" / "reviewer.md")
+    milestone_contract = read(target / "code-role" / "workflow" / "orchestrator" / "milestone-contract.md")
+    evaluation_sop = read(target / "code-role" / "workflow" / "evaluation" / "evaluation-sop.md")
     assert "tracking_policy: local-only" in project_config
     for generated in [project_config, project_readme]:
         assert "local-only workflow assistance" in generated
         assert "not product runtime content" in generated
         assert "should not be committed or pushed" in generated
         assert "Code-role does not own the target project's Git workflow" in generated
+        assert "milestone-contract.md" in generated
+        assert "evaluation-sop.md" in generated
+    assert "status: draft" in milestone_contract
+    assert "business_goal:" in milestone_contract
+    assert "success_criteria:" in milestone_contract
+    assert "No execution role may start until this contract is confirmed" in milestone_contract
+    assert "status: draft" in evaluation_sop
+    assert "required_layers:" in evaluation_sop
+    assert "not_run" in evaluation_sop
+    assert "sop_calibration" in evaluation_sop
     assert "Do not run `git add`, `git commit`, or `git push`" in reviewer_prompt
     assert "orchestrator/project-manager-output-standard.md" in orchestrator_prompt
     assert "orchestrator/next-role-message-template.md" in orchestrator_prompt
@@ -114,7 +130,11 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
     assert "roles/code-context/code-context-output-standard.md" in read(target / "code-role" / "role-instance-prompts" / "code-context.md")
     assert "roles/implementer/implementer-output-standard.md" in read(target / "code-role" / "role-instance-prompts" / "implementer.md")
     assert "roles/test-evaluator/test-evaluator-output-standard.md" in read(target / "code-role" / "role-instance-prompts" / "test-evaluator.md")
+    assert "workflow/orchestrator/milestone-contract.md" in read(target / "code-role" / "role-instance-prompts" / "test-evaluator.md")
+    assert "workflow/evaluation/evaluation-sop.md" in read(target / "code-role" / "role-instance-prompts" / "test-evaluator.md")
     assert "roles/reviewer/reviewer-output-standard.md" in reviewer_prompt
+    assert "workflow/orchestrator/milestone-contract.md" in reviewer_prompt
+    assert "workflow/evaluation/evaluation-sop.md" in reviewer_prompt
     assert "copy-ready short Orchestrator consumption-check summary" in reviewer_prompt
     assert "must not generate the authoritative next-role startup message" in reviewer_prompt
     assert not (target / "code-role" / "state-index").exists()

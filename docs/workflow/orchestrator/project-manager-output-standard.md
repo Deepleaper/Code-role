@@ -19,6 +19,7 @@ Every Orchestrator output must make these four points clear:
 3. 现在必须处理什么决策或阻塞 / what decision or blocker must be handled now
 4. 当前角色是否应更新为该 milestone 的最终版本 / whether the current role output should become that role's final version for the milestone
 5. 下一个应该由哪个角色行动，以及为什么 / which role should act next, and why
+6. 当前 `milestone-contract.md` 是否仍然是确认状态 / whether the active `milestone-contract.md` is still confirmed
 
 如果 Orchestrator 输出没有回答这些问题，就是不完整输出。
 
@@ -37,6 +38,7 @@ Use when recovering or reporting current workflow state.
 - 项目名称 / project name
 - 当前 milestone / current milestone
 - milestone 业务目标，未知则写 `unknown` / milestone business goal, or `unknown`
+- milestone contract 状态：`confirmed`、`draft`、`missing` 或 `superseded` / milestone contract status: `confirmed`, `draft`, `missing`, or `superseded`
 - 已选 chain / selected chain
 - 当前权威 packet / current authoritative packet
 - final packet index 状态 / final packet index status
@@ -50,6 +52,7 @@ Use when recovering or reporting current workflow state.
 - 不从“最新文件”推断状态 / Do not infer state from the newest file.
 - 先读取 Orchestrator 状态文件 / Read Orchestrator state first.
 - 如果 milestone 目标缺失，标记为 blocker 或 required confirmation / If milestone goal is missing, mark it as a blocker or required confirmation.
+- 如果 milestone contract 缺失或未确认，标记为 blocker，不路由第一个执行角色 / If milestone contract is missing or unconfirmed, mark it as a blocker and do not route the first execution role.
 - 不要把状态缺失变成其他角色任务 / Do not turn missing state into a role task.
 
 ### 2. 消费检查结果 / Consumption Check Result
@@ -67,6 +70,7 @@ Use after a role completes an output and asks Orchestrator to inspect it.
 - 用户是否接受该产出进入下一角色 / user-accepted handoff status
 - 是否更新 final packet index / whether to update final packet index
 - milestone 对齐结果：`aligned`、`drift_detected` 或 `unclear` / milestone alignment result: `aligned`, `drift_detected`, or `unclear`
+- milestone contract 覆盖结果：covered / partial / missing / drift_detected / milestone contract coverage result
 - 漂移摘要，没有则写 `none` / drift summary, or `none`
 - 阻塞摘要 / blocker summary
 - 下一角色建议 / next role recommendation
@@ -75,7 +79,7 @@ Use after a role completes an output and asks Orchestrator to inspect it.
 
 主检查 / Primary check:
 
-- 这个角色产出是否帮助当前 milestone 往前推进？ / Does this role output help the milestone move forward?
+- 这个角色产出是否帮助当前 milestone contract 往前推进？ / Does this role output move the milestone contract forward?
 
 辅助检查 / Secondary checks:
 
@@ -89,7 +93,7 @@ Use after a role completes an output and asks Orchestrator to inspect it.
 
 - 除非用户明确要求严格交接，不要求 `ready_for_next_role`、`packet.lock.json` 或 `sha256` / Do not require `ready_for_next_role`, `packet.lock.json`, or `sha256` unless the user explicitly requested strict handoff.
 - 如果产出偏离 milestone，不默认继续路由 / If output drifts from the milestone, do not route forward by default.
-- 如果发现漂移，先问是修正当前角色产出，还是调整 milestone / If drift exists, ask whether to revise the current role output or change the milestone.
+- 如果发现漂移，先问是修正当前角色产出，还是调整 milestone contract / If drift exists, ask whether to revise the current role output or change the milestone contract.
 - 用户接受某角色产出作为当前最终版本后，更新 `final-packet-index.md` 对应角色行 / After the user accepts a role output as current final version, update that role row in `final-packet-index.md`.
 - `final-packet-index.md` 只记录每个角色当前最终版本，不记录历史版本 / `final-packet-index.md` records only each role's current final version, not historical versions.
 - 如果 Orchestrator 明确执行下一角色路由，必须在同一回复中贴出完整下一角色启动消息 / If Orchestrator explicitly routes to the next role, it must paste the full next-role startup message in the same response.
@@ -116,8 +120,10 @@ The next role's professional input comes from the accepted upstream packet. Its 
 - milestone / milestone
 - chain / chain
 - milestone 业务目标 / milestone business goal
+- milestone delivery goal / milestone 交付目标
 - milestone 成功标准 / milestone success criteria
 - milestone non-goals，如有 / milestone non-goals, if any
+- hard prohibitions from milestone contract / milestone contract 中的硬禁止项
 - 上游角色 / upstream role
 - 项目经理对上游产出的审阅结论 / project-manager review result for the upstream output
 - milestone 对齐结果 / milestone alignment result
@@ -193,11 +199,12 @@ The Orchestrator must check for drift at every role handoff.
 
 目标漂移包括 / Drift means:
 
-- 角色回答了与 milestone 不同的问题 / the role answered a different problem than the milestone asks
+- 角色回答了与 milestone contract 不同的问题 / the role answered a different problem than the milestone contract asks
 - 角色未经用户批准扩展范围 / the role expanded scope without user approval
 - 角色优化了流程完成度，而不是 milestone 价值 / the role optimized for process completion instead of milestone value
 - 建议的下一角色会把工作带离 milestone 目标 / the proposed next role would move work away from the milestone goal
 - 重要 milestone 成功标准没有继续被覆盖 / important milestone success criteria are no longer addressed
+- 角色触碰了 milestone contract 的 non-goals 或 hard prohibitions / the role touched milestone contract non-goals or hard prohibitions
 
 如果发现漂移，Orchestrator 应输出：
 
@@ -209,6 +216,10 @@ drift_point: <what changed / 变化点>
 impact: <why this matters / 为什么重要>
 recommended_action: revise_current_role_output | adjust_milestone | ask_user
 ```
+
+If the contract itself is wrong or outdated, Orchestrator must ask the user to update `milestone-contract.md` before routing downstream.
+
+如果 contract 本身错误或过期，项目经理必须先要求用户更新 `milestone-contract.md`，再继续下游路由。
 
 ## 证据标准 / Evidence Standard
 

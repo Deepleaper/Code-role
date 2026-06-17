@@ -207,6 +207,30 @@ Acceptance:
 - `latest.json` is deprecated; Orchestrator state and `final-packet-index.md` identify current outputs.
 - Lock generation is available through local validation tooling for strict handoff.
 
+### FR5A. Milestone Contract
+
+The workflow must keep every role anchored to the same milestone goal.
+
+Acceptance:
+
+- Each target project can generate `code-role/workflow/orchestrator/milestone-contract.md`.
+- Orchestrator checks the contract before routing convenience, packet shape, or downstream speed.
+- Execution-role completion summaries must state which success criteria they served.
+- Outputs touching non-goals or hard prohibitions must be routed back or held.
+- Reviewer audits the full final packet chain against the confirmed contract.
+
+### FR5B. Evaluation SOP
+
+The workflow must keep evaluation standards stable across Test Evaluator packets.
+
+Acceptance:
+
+- Each target project can generate `code-role/workflow/evaluation/evaluation-sop.md`.
+- Test Evaluator must consume the active SOP before final evaluation.
+- Test Evaluator packets record SOP consumption and SOP calibration.
+- `not_run` required layers cannot be rewritten as pass.
+- Reviewer audits whether Test Evaluator followed the SOP before recommending final acceptance.
+
 ### FR6. Chain Selection
 
 The workflow must define when to use each chain.

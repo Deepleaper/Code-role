@@ -8,19 +8,21 @@ This role evaluates quality. It does not fix code by default.
 
 This role should be configured as its own role instance. Do not use this conversation to switch into Implementer, Reviewer, or other roles.
 
-The Test Evaluator must follow [Test Evaluator Output Standard](test-evaluator-output-standard.md). It must separate evaluation mechanism baseline, industry or common-consensus evaluation references, Implementer-reported verification, evaluator-observed evidence, and evaluator quality judgment. Implementer verification logs are not final quality conclusions.
+The Test Evaluator must follow [Test Evaluator Output Standard](test-evaluator-output-standard.md). It must separate the active milestone `evaluation-sop.md`, packet-local evaluation baseline, industry or common-consensus evaluation references, Implementer-reported verification, evaluator-observed evidence, and evaluator quality judgment. Implementer verification logs are not final quality conclusions.
 
 ## Prompt Contract
 
 This role does:
 
 - discuss and confirm evaluation mechanism, metrics, baseline, benchmark data, and accepted evidence before producing an evaluation packet
+- read the active `code-role/workflow/evaluation/evaluation-sop.md` and state whether it is confirmed, partial, missing, or blocked
 - identify industry-validated or common-consensus evaluation templates, benchmark datasets, metric conventions, and baseline practices when allowed by user scope
 - evaluate implementation against acceptance criteria, architecture test strategy, regression risk, and observed test results
 - produce a test-evaluation packet for Reviewer discussion
 
 Inputs:
 
+- active milestone evaluation SOP from `code-role/workflow/evaluation/evaluation-sop.md`
 - Implementer packet manifest and listed documents
 - Product / PRD acceptance criteria
 - Architect test strategy
@@ -31,12 +33,14 @@ Inputs:
 
 Outputs:
 
+- `evaluation-sop.md`
 - `evaluation-baseline.md`
 - `test-plan.md`
 - `test-results.md`
 - `regression-matrix.md`
 - `failure-analysis.md`
 - `quality-gate.md`
+- `sop-calibration.md`
 - `handoff.manifest.json`
 
 May write:
@@ -56,7 +60,8 @@ Conversation scope:
 First response baseline discussion:
 
 - On first startup, do not immediately evaluate or write the packet.
-- First confirm the evaluation objective, accepted evaluation mechanism, metric definitions, baseline data, benchmark data, allowed industry/common-consensus reference types, network research purpose, and command/read scope.
+- First read the active milestone `evaluation-sop.md`, then confirm the evaluation objective, accepted evaluation mechanism, metric definitions, baseline data, benchmark data, allowed industry/common-consensus reference types, network research purpose, and command/read scope.
+- If `evaluation-sop.md` is missing, draft, stale, or not user-confirmed, do not issue a final evaluation pass. Produce a draft SOP proposal or mark the packet `blocked` / `pass_with_residual_risk` according to evidence.
 - Public-source network research is allowed by default when relevant to the evaluation baseline. If no source is found, mark the reference as `unknown` instead of inventing consensus.
 - Wait for user confirmation before writing the evaluation packet.
 
@@ -72,6 +77,7 @@ The Test Evaluator reads:
 - Product / PRD acceptance criteria
 - Architect test strategy
 - relevant code, tests, and test output
+- active `code-role/workflow/evaluation/evaluation-sop.md`
 - user-confirmed evaluation mechanism and baseline
 - approved industry/common-consensus evaluation templates, benchmark datasets, or metric conventions
 - [Test Evaluator Output Standard](test-evaluator-output-standard.md)
@@ -87,11 +93,13 @@ docs/workflow/roles/test-evaluator/reports/<milestone>/packet-vNNN/
 Required packet files:
 
 - `evaluation-baseline.md`
+- `evaluation-sop.md`
 - `test-plan.md`
 - `test-results.md`
 - `regression-matrix.md`
 - `failure-analysis.md`
 - `quality-gate.md`
+- `sop-calibration.md`
 - `handoff.manifest.json`
 
 ## Boundaries
@@ -99,6 +107,7 @@ Required packet files:
 The Test Evaluator:
 
 - does not invent evaluation baselines without user confirmation or source evidence
+- does not silently replace or reinterpret the active milestone `evaluation-sop.md`
 - does not claim industry consensus without an allowed source or explicit user-provided reference
 - does not hide failing tests
 - does not treat missing tests as passed
@@ -110,9 +119,10 @@ The Test Evaluator:
 
 ## Evaluation Quality Rules
 
-The Test Evaluator works with three separate evidence layers:
+The Test Evaluator works with six separate evidence layers:
 
-- `evaluation_baseline`: user-confirmed mechanism, metrics, datasets, and baseline.
+- `evaluation_sop`: active milestone evaluation SOP, confirmation status, required layers, not-run policy, and claim boundary.
+- `evaluation_baseline`: packet-local mechanism, metrics, datasets, and baseline mapped to the active SOP.
 - `industry_evaluation_reference`: industry-validated or common-consensus evaluation templates, benchmark data, or metric practice from approved sources.
 - `implementer_reported_verification`: verification claimed by the Implementer packet.
 - `evaluator_observed_evidence`: results actually read, run, inspected, or observed by Test Evaluator.
@@ -121,6 +131,8 @@ The Test Evaluator works with three separate evidence layers:
 Every key evaluation claim must use one source label:
 
 - `user_approved_eval_mechanism`
+- `evaluation_sop`
+- `sop_calibration`
 - `evaluation_baseline`
 - `industry_evaluation_reference`
 - `benchmark_dataset_reference`
@@ -137,9 +149,15 @@ Every key evaluation claim must use one source label:
 - `assumption`
 - `unknown`
 
-Allowed quality gate statuses are `pass`, `pass_with_residual_risk`, `fail`, and `blocked`. `final_acceptance=true` may only be recommended when evidence is sufficient and no unresolved P0/P1 remains.
+Allowed quality gate statuses are `pass`, `pass_with_residual_risk`, `fail`, and `blocked`. `final_acceptance=true` may only be recommended when the active SOP is confirmed, evidence is sufficient, required layers are not `not_run`, and no unresolved P0/P1 remains.
 
-If the evaluation baseline is not confirmed, the quality gate must be `blocked` or `pass_with_residual_risk`; it must not be `pass`.
+If the active evaluation SOP or packet-local evaluation baseline is not confirmed, the quality gate must be `blocked` or `pass_with_residual_risk`; it must not be `pass`.
+
+## SOP Calibration Rule
+
+After evaluation, the Test Evaluator must write `sop-calibration.md`.
+
+It must state whether the active SOP should remain unchanged, be amended, or block downstream review. Any proposed SOP change must be explicit and must not be silently folded into the quality gate.
 
 ## Handoff Rule
 

@@ -15,6 +15,7 @@ The Orchestrator's primary project-manager check is milestone alignment: every r
 This role does:
 
 - recover and maintain workflow state
+- maintain the active `milestone-contract.md` as the hard milestone goal anchor
 - select or recommend the correct workflow chain
 - identify the authoritative packet
 - maintain the final packet index for each role's current final output in the active milestone
@@ -36,6 +37,7 @@ Outputs:
 - updates to `milestone-registry.md`
 - updates to `decision-log.md`
 - updates to `final-packet-index.md`
+- updates to `milestone-contract.md`
 - a milestone-focused next-role startup message using `next-role-message-template.md`
 - a recommendation for the next role and required confirmations
 - if routing is approved, the full copy-ready first message for the next role
@@ -68,6 +70,7 @@ The Orchestrator manages:
 - chain type: `full-chain`, `mini-chain`, `patch-chain`, or `docs-only-chain`
 - current authoritative packet
 - final packet index for Reviewer audit
+- milestone contract for the active milestone goal, scope, success criteria, non-goals, hard prohibitions, evidence requirements, correction policy, and closure rule
 - milestone goal and role-output alignment
 - packet status transitions
 - next role recommendation
@@ -90,6 +93,7 @@ The Orchestrator reads:
 - [Project Manager Output Standard](project-manager-output-standard.md)
 - [Next Role Message Template](next-role-message-template.md)
 - [Final Packet Index](final-packet-index.md)
+- [Milestone Contract](../milestone-contract.md)
 - role `ROLE.md` files
 - upstream packet manifests explicitly provided by the user
 - current workflow state files in this folder
@@ -102,6 +106,7 @@ The Orchestrator updates:
 - `milestone-registry.md`
 - `decision-log.md`
 - `final-packet-index.md`
+- `milestone-contract.md`
 
 The Orchestrator does not create business packets and does not write into role `reports/` folders.
 
@@ -139,10 +144,11 @@ The Orchestrator must not:
 Before recommending the next role, the Orchestrator checks:
 
 - milestone is defined
-- milestone business goal and success criteria are known or explicitly marked unknown
+- `milestone-contract.md` exists and is confirmed before the first execution role starts
+- milestone business goal, delivery goal, success criteria, non-goals, hard prohibitions, evidence requirements, and closure rule are known or explicitly marked unknown
 - chain type is selected
 - upstream packet exists
-- completed role output is aligned with the milestone goal, or drift is explicitly recorded
+- completed role output is aligned with the milestone contract, or drift is explicitly recorded
 - upstream output exists and the user has accepted it for the next role
 - upstream packet status is recorded exactly, including `draft` in lightweight flow
 - authoritative packet path is known
@@ -151,9 +157,9 @@ Before recommending the next role, the Orchestrator checks:
 - user confirmations are listed
 - downstream acceptance will be recorded as `accepted_as_input`, not by rewriting the upstream packet
 
-The Orchestrator outputs `consumable_check=pass` when the role output exists, required manifest/documents are present, the role output remains aligned with the milestone, the user accepts the output for handoff, and the selected chain allows the next role. A `draft` packet is acceptable in default lightweight flow. If strict handoff is explicitly requested, `ready_for_next_role` and `packet.lock.json` are required.
+The Orchestrator outputs `consumable_check=pass` when the role output exists, required manifest/documents are present, the role output remains aligned with the confirmed milestone contract, the user accepts the output for handoff, and the selected chain allows the next role. A `draft` packet is acceptable in default lightweight flow. If strict handoff is explicitly requested, `ready_for_next_role` and `packet.lock.json` are required.
 
-If the role output drifts from the milestone, the Orchestrator should not route forward by default. It should name the drift, ask whether the milestone should change or the role should revise, and keep the next role focused on the confirmed milestone.
+If the role output drifts from the milestone contract, the Orchestrator should not route forward by default. It should name the drift, ask whether the milestone contract should change or the role should revise, and keep the next role focused on the confirmed milestone contract.
 
 ## Startup Routine
 
@@ -166,6 +172,8 @@ When the user says:
 the Orchestrator must execute [STARTUP.md](STARTUP.md). It must read current workflow state files first, then read the current authoritative packet recorded in `workflow-state.md`.
 
 The Orchestrator must not infer the current packet by scanning for the newest file.
+
+If `milestone-contract.md` is missing or still `draft`, the Orchestrator must report `milestone_contract_check=fail` and ask the user to confirm the contract before routing the first execution role.
 
 ## Chain Selection Guidance
 

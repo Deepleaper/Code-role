@@ -11,12 +11,14 @@ Reviewer must use the originally confirmed milestone goal as the anchor and audi
 - original_delivery_goal / 原始交付目标: {{delivery_goal}} [original_milestone_anchor]
 - success_criteria / 成功标准: {{success_criteria}} [original_milestone_anchor]
 - non_goals / 明确不做: {{non_goals}} [original_milestone_anchor]
+- milestone_contract_path / milestone 合约路径: code-role/workflow/orchestrator/milestone-contract.md [milestone_contract]
+- milestone_contract_status / milestone 合约状态: confirmed | draft | missing | blocked [milestone_contract]
 - anchor_source / 锚点来源: user_input / orchestrator_state / packet_chain_evidence / unknown [original_milestone_anchor]
 - possible_drift_summary / 可能的目标漂移摘要: none / minor / major / blocked_missing_milestone_anchor [drift_audit]
 
-If the original milestone anchor is missing or unclear, Reviewer must mark final gate as `blocked` or `request_changes`.
+If the original milestone anchor or active milestone contract is missing or unclear, Reviewer must mark final gate as `blocked` or `request_changes`.
 
-如果原始 milestone 锚点缺失或不清晰，Reviewer 必须把最终 gate 标为 `blocked` 或 `request_changes`。
+如果原始 milestone 锚点或当前 milestone contract 缺失或不清晰，Reviewer 必须把最终 gate 标为 `blocked` 或 `request_changes`。
 
 ## Final Packet Index / 最终版本索引
 

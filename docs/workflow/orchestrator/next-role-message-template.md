@@ -44,11 +44,20 @@ chain:
 本 milestone 的业务目标 / Milestone business goal:
 {MILESTONE_BUSINESS_GOAL}
 
+本 milestone 的交付目标 / Milestone delivery goal:
+{MILESTONE_DELIVERY_GOAL}
+
 本 milestone 的成功标准 / Milestone success criteria:
 {MILESTONE_SUCCESS_CRITERIA}
 
 明确不做 / Non-goals:
 {MILESTONE_NON_GOALS}
+
+硬禁止项 / Hard prohibitions:
+{MILESTONE_HARD_PROHIBITIONS}
+
+milestone contract / 里程碑契约:
+{MILESTONE_CONTRACT_PATH}
 
 二、项目经理审阅结论 / Project Manager Review Result
 
@@ -128,12 +137,19 @@ All your conclusions must answer:
 这个产出如何帮助当前 milestone 达成业务目标？
 How does this output help the current milestone achieve its business goal?
 
+这个产出覆盖了 milestone contract 中哪些 success criteria？
+Which success criteria in the milestone contract does this output cover?
+
+这个产出是否触碰 non-goals 或 hard prohibitions？
+Does this output touch any non-goal or hard prohibition?
+
 如果发现任务目标开始偏离 milestone，请停止扩展，明确写出：
 If the task starts drifting away from the milestone, stop expanding scope and state:
 
 - 偏离点是什么 / what the drift point is
 - 是否需要 Orchestrator 调整 milestone / whether Orchestrator should adjust the milestone
 - 是否需要当前角色修正输出 / whether this role should revise its output
+- 是否需要先更新 milestone contract / whether the milestone contract must be updated first
 
 七、边界 / Boundaries
 

@@ -29,6 +29,7 @@ def test_source_map_hardens_high_risk_roles() -> None:
     assert "The Implementer must not begin from chat-only instruction" in text
     assert "Orchestrator must approve Implementer start" in text
     assert "The Test Evaluator must not modify code or tests" in text
+    assert "code-role/workflow/evaluation/evaluation-sop.md" in text
     assert "The Reviewer must not implement fixes" in text
+    assert "code-role/workflow/orchestrator/milestone-contract.md" in text
     assert "The Code Context role must not modify code, tests" in text
-

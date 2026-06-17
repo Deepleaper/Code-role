@@ -29,6 +29,8 @@ Rules:
 - Downstream acceptance is recorded as `accepted_as_input`; downstream roles must not rewrite upstream packet manifests.
 - Every execution role completion response must end with a copy-ready short Orchestrator consumption-check summary for Workflow Orchestrator / Project Manager. The current role may recommend a downstream role, but Orchestrator owns consumable checks, routing, and the authoritative next-role startup message.
 - When Orchestrator routes to the next role, it must paste the copy-ready next-role startup message directly instead of only naming the next role.
+- The active `code-role/workflow/orchestrator/milestone-contract.md` is the hard milestone anchor. Orchestrator checks it before routing convenience or packet shape.
+- The active `code-role/workflow/evaluation/evaluation-sop.md` is the hard evaluation anchor. Test Evaluator consumes it; Reviewer audits whether it was followed.
 
 Target projects should use generated role-instance prompts to reduce setup time. A non-authoritative state index can be generated only when useful for onboarding. Packet manifests and Orchestrator state remain authoritative. Packet locks are used only for strict handoff.
 

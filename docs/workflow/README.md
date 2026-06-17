@@ -35,6 +35,8 @@ The [Role Configuration Guide](role-configuration-guide.md) defines the operatin
 - Every non-Implementer role produces documents only and does not change code.
 - Implementer is the only role that may change approved project files, and only after user-confirmed implementation start.
 - Every milestone output is a versioned packet: `packet-v001`, `packet-v002`, and so on.
+- Every milestone must have a confirmed `milestone-contract.md` before the first execution role starts.
+- Test Evaluator must use `evaluation-sop.md` as the stable evaluation anchor for the milestone.
 - Packet content is immutable only in strict handoff mode after it is marked `ready_for_next_role`.
 - `latest.json` is deprecated for daily workflow. Use Orchestrator state and `final-packet-index.md` to identify current outputs.
 - Downstream roles must read `handoff.manifest.json`, not guess which files matter.
@@ -51,6 +53,8 @@ The [Role Configuration Guide](role-configuration-guide.md) defines the operatin
 - [Project Practices](project-practices.md)
 - [Workflow Bootstrap](bootstrap.md)
 - [Project Bootstrap](project-bootstrap.md)
+- [Milestone Contract](milestone-contract.md)
+- [Evaluation SOP](evaluation-sop.md)
 - [Role Instance Setup](role-instance-setup.md)
 - [State Index](state-index.md) optional navigation
 - [Git Operation Policy](git-operation-policy.md)

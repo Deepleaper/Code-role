@@ -12,6 +12,13 @@
 - possible drift / 可能的目标漂移: none / minor / major / unknown [evaluator_judgment]
 - user_confirmation_status / 用户确认状态: confirmed / pending / blocked [user_approved_eval_mechanism]
 
+## Active SOP Mapping / 当前 SOP 映射
+
+- active_sop_path / 当前 SOP 路径: code-role/workflow/evaluation/evaluation-sop.md [evaluation_sop]
+- active_sop_status / 当前 SOP 状态: confirmed | draft | partial | missing | blocked [evaluation_sop]
+- baseline_extends_sop / 本基线是否扩展 SOP: false | true [sop_calibration]
+- if_extends_sop / 如扩展 SOP: record proposed changes in sop-calibration.md before Reviewer handoff [sop_calibration]
+
 ## Evaluation Mechanism / 评估机制
 
 | Mechanism / 机制 | Purpose / 用途 | Source Label / 来源标签 | Confirmation Status / 确认状态 |

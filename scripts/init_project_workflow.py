@@ -60,21 +60,31 @@ def role_contract_path(config: BootstrapConfig, role_id: str) -> str:
 
 
 def role_extra_read_paths(config: BootstrapConfig, role_id: str) -> list[str]:
+    common = [
+        str(config.workflow_root / "orchestrator" / "milestone-contract.md"),
+    ]
     if role_id == "researcher":
-        return [workflow_doc_path(config, "roles/researcher/researcher-output-standard.md")]
+        return common + [workflow_doc_path(config, "roles/researcher/researcher-output-standard.md")]
     if role_id == "product-prd":
-        return [workflow_doc_path(config, "roles/product-prd/product-prd-output-standard.md")]
+        return common + [workflow_doc_path(config, "roles/product-prd/product-prd-output-standard.md")]
     if role_id == "architect":
-        return [workflow_doc_path(config, "roles/architect/architect-output-standard.md")]
+        return common + [workflow_doc_path(config, "roles/architect/architect-output-standard.md")]
     if role_id == "code-context":
-        return [workflow_doc_path(config, "roles/code-context/code-context-output-standard.md")]
+        return common + [workflow_doc_path(config, "roles/code-context/code-context-output-standard.md")]
     if role_id == "implementer":
-        return [workflow_doc_path(config, "roles/implementer/implementer-output-standard.md")]
+        return common + [workflow_doc_path(config, "roles/implementer/implementer-output-standard.md")]
     if role_id == "test-evaluator":
-        return [workflow_doc_path(config, "roles/test-evaluator/test-evaluator-output-standard.md")]
+        return common + [
+            str(config.workflow_root / "evaluation" / "evaluation-sop.md"),
+            workflow_doc_path(config, "evaluation-sop.md"),
+            workflow_doc_path(config, "roles/test-evaluator/test-evaluator-output-standard.md"),
+        ]
     if role_id == "reviewer":
-        return [workflow_doc_path(config, "roles/reviewer/reviewer-output-standard.md")]
-    return []
+        return common + [
+            str(config.workflow_root / "evaluation" / "evaluation-sop.md"),
+            workflow_doc_path(config, "roles/reviewer/reviewer-output-standard.md"),
+        ]
+    return common
 
 
 def render_project_readme(config: BootstrapConfig) -> str:
@@ -90,6 +100,8 @@ This folder is local-only workflow assistance. It is not product runtime content
 - `workflow/orchestrator/milestone-registry.md`
 - `workflow/orchestrator/decision-log.md`
 - `workflow/orchestrator/final-packet-index.md`
+- `workflow/orchestrator/milestone-contract.md`
+- `workflow/evaluation/evaluation-sop.md`
 - role packet `handoff.manifest.json` files
 - strict handoff `packet.lock.json` files, only when explicitly requested
 
@@ -123,6 +135,8 @@ external_research_allowed_default: {external}
 - `code-role/` should not be committed or pushed with this target project.
 - `code-role/state-index/` is optional non-authoritative navigation when generated.
 - Orchestrator state and packet manifests remain authoritative. Packet locks are authoritative only in strict handoff mode.
+- `workflow/orchestrator/milestone-contract.md` is the hard goal anchor for the active milestone.
+- `workflow/evaluation/evaluation-sop.md` is the hard evaluation anchor for Test Evaluator and Reviewer.
 - Product release artifacts must exclude `code-role/`.
 
 ## Git Boundary
@@ -156,6 +170,145 @@ current_blocker: First real milestone and next role require user confirmation.
 recommended_next_role: workflow-orchestrator
 
 authoritative_note: This file is Orchestrator state. Role state indexes are non-authoritative navigation only.
+"""
+
+
+def render_milestone_contract(config: BootstrapConfig) -> str:
+    return f"""# Milestone Contract
+
+status: draft
+confirmed_by: unknown
+confirmed_at: unknown
+
+milestone_name:
+{config.initial_milestone}
+
+business_goal:
+unknown
+
+delivery_goal:
+unknown
+
+success_criteria:
+- unknown
+
+non_goals:
+- unknown
+
+in_scope:
+- unknown
+
+out_of_scope:
+- unknown
+
+hard_prohibitions:
+- No execution role may start until this contract is confirmed by the user.
+- Do not change the milestone goal silently.
+- Do not route forward when role output drifts from this contract.
+
+required_roles:
+- workflow-orchestrator
+- researcher: unknown
+- product-prd: unknown
+- architect: unknown
+- code-context: unknown
+- implementer: unknown
+- test-evaluator: unknown
+- reviewer: unknown
+
+allowed_chain:
+{config.initial_chain}
+
+evidence_requirements:
+- Each role completion summary must state which success criteria it served.
+- Each role completion summary must state whether it touched non-goals or hard prohibitions.
+- Orchestrator must check this contract before packet structure or routing convenience.
+
+drift_detection_questions:
+- Does this output answer the milestone business goal?
+- Does this output move the delivery goal closer to completion?
+- Which success criteria did it cover?
+- Did it introduce any out-of-scope claim?
+- Did it touch any hard prohibition?
+- Does the proposed next role reduce milestone uncertainty?
+
+correction_policy:
+- If role output drifts: return to the same role for revision.
+- If the milestone itself should change: ask the user to revise this contract first.
+- If evidence is missing: return to the role responsible for that evidence.
+- If scope is unclear: hold routing.
+
+closure_rule:
+Reviewer may recommend closure only after final role outputs align with this contract, required evidence is present, and the user accepts residual risk or confirms final acceptance.
+"""
+
+
+def render_evaluation_sop(config: BootstrapConfig) -> str:
+    return f"""# Evaluation SOP
+
+status: draft
+confirmed_by: unknown
+confirmed_at: unknown
+milestone: {config.initial_milestone}
+
+evaluation_subject:
+unknown
+
+evaluation_objective:
+unknown
+
+required_layers:
+- evaluation_baseline
+- evidence_integrity
+- acceptance_mapping
+- independent_evaluation
+- regression_and_risk
+- claim_boundary
+- final_quality_gate
+- sop_calibration
+
+baseline_sources:
+- user_confirmed_baseline: unknown
+- product_acceptance: unknown
+- architecture_test_strategy: unknown
+- code_context_test_map: unknown
+- industry_or_benchmark_reference: unknown
+
+metrics:
+- unknown: unknown
+
+thresholds:
+- unknown: unknown
+
+commands_or_checks:
+- unknown: blocked
+
+artifact_requirements:
+- unknown
+
+not_run_policy:
+- Required checks marked `not_run` block unconditional pass.
+- Optional checks marked `not_run` must be listed as residual risk or not applicable.
+- Implementer-reported verification is input only; it is not final evaluation evidence.
+
+claim_boundary:
+- allowed_claims:
+  - unknown
+- forbidden_claims:
+  - production-ready unless explicitly proven and approved
+  - release-ready unless explicitly proven and approved
+  - benchmark-leading unless benchmark evidence exists
+  - business-complete unless business acceptance evidence exists
+- unknown_claims:
+  - unknown
+
+final_acceptance_rule:
+`final_acceptance=true` may be recommended only when the SOP is confirmed, required evidence is sufficient, required checks are not `not_run`, no unresolved P0/P1 remains, and claim boundaries are respected.
+
+sop_calibration_rule:
+- After evaluation, state whether this SOP remains valid.
+- Record every SOP change in the Test Evaluator packet.
+- Do not silently change evaluation standards between packets.
 """
 
 
@@ -443,6 +596,8 @@ def planned_files(config: BootstrapConfig) -> dict[Path, str]:
         config.workflow_root / "orchestrator" / "milestone-registry.md": render_milestone_registry(config),
         config.workflow_root / "orchestrator" / "decision-log.md": render_decision_log(config),
         config.workflow_root / "orchestrator" / "final-packet-index.md": render_final_packet_index(config),
+        config.workflow_root / "orchestrator" / "milestone-contract.md": render_milestone_contract(config),
+        config.workflow_root / "evaluation" / "evaluation-sop.md": render_evaluation_sop(config),
     }
     for role_id in ROLE_IDS:
         files[root / "role-instance-prompts" / f"{role_id}.md"] = render_role_prompt(config, role_id)

@@ -8,12 +8,14 @@
   "updated_at": "YYYY-MM-DD",
   "summary": "Template manifest for a Test Evaluator packet. Test Evaluator confirms evaluation mechanism and baseline, then evaluates implementation evidence.",
   "documents": [
+    {"path": "evaluation-sop.md", "type": "evaluation_sop", "required": true, "description": "Consumption record for the active milestone evaluation SOP."},
     {"path": "evaluation-baseline.md", "type": "evaluation_baseline", "required": true, "description": "Evaluation mechanism, metrics, benchmark data, industry references, and baseline confirmation."},
     {"path": "test-plan.md", "type": "test_plan", "required": true, "description": "Test plan mapped to acceptance criteria."},
     {"path": "test-results.md", "type": "test_results", "required": true, "description": "Test results."},
     {"path": "regression-matrix.md", "type": "regression_matrix", "required": true, "description": "Regression coverage matrix."},
     {"path": "failure-analysis.md", "type": "failure_analysis", "required": true, "description": "Failure analysis."},
-    {"path": "quality-gate.md", "type": "quality_gate", "required": true, "description": "Quality gate decision."}
+    {"path": "quality-gate.md", "type": "quality_gate", "required": true, "description": "Quality gate decision."},
+    {"path": "sop-calibration.md", "type": "sop_calibration", "required": true, "description": "Post-evaluation SOP adherence and calibration record."}
   ],
   "input_packets": [
     {
@@ -27,12 +29,15 @@
   ],
   "source_scopes": [
     "docs/workflow/source-map.md",
+    "docs/workflow/evaluation-sop.md",
     "docs/workflow/roles/test-evaluator/test-evaluator-output-standard.md",
+    "code-role/workflow/evaluation/evaluation-sop.md",
     "user-confirmed evaluation mechanism and baseline",
     "approved industry/common-consensus evaluation references when available",
     "upstream implementer packet"
   ],
   "evaluation_baseline": {
+    "sop_status": "draft",
     "mechanism_confirmed": false,
     "industry_reference_status": "unknown",
     "benchmark_dataset_status": "unknown"

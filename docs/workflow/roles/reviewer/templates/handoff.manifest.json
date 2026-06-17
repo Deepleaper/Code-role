@@ -7,7 +7,7 @@
   "ready_for_next_role": false,
   "created_at": "YYYY-MM-DD",
   "updated_at": "YYYY-MM-DD",
-  "summary": "Template manifest for a Reviewer packet. Reviewer reads Orchestrator final-packet-index, audits Workflow Orchestrator outputs and every execution-role final output against the original milestone, then checks evaluation baseline validity, acceptance gaps, packet-chain evidence, risk decision, and final gate judgment.",
+  "summary": "Template manifest for a Reviewer packet. Reviewer reads milestone-contract, evaluation-sop, and Orchestrator final-packet-index, audits Workflow Orchestrator outputs and every execution-role final output against the original milestone, then checks SOP adherence, evaluation baseline validity, acceptance gaps, packet-chain evidence, risk decision, and final gate judgment.",
   "documents": [
     {"path": "milestone-drift-audit.md", "type": "milestone_drift_audit", "required": true, "description": "Audit of Workflow Orchestrator outputs and execution-role outputs against the original milestone."},
     {"path": "review-findings.md", "type": "review_findings", "required": true, "description": "Findings covering milestone alignment, evaluation baseline audit, and acceptance gaps."},
@@ -29,17 +29,25 @@
   "audit_scope": "current_final_versions_only",
   "source_scopes": [
     "docs/workflow/source-map.md",
+    "docs/workflow/milestone-contract.md",
+    "docs/workflow/evaluation-sop.md",
     "docs/workflow/roles/reviewer/reviewer-output-standard.md",
+    "code-role/workflow/orchestrator/milestone-contract.md",
+    "code-role/workflow/evaluation/evaluation-sop.md",
     "docs/workflow/orchestrator/final-packet-index.md",
     "original milestone anchor from Orchestrator or user input",
     "Orchestrator workflow-state, milestone-registry, decision-log, consumption-check outputs, and next-role handoff briefs",
     "all upstream role packets in selected chain",
     "upstream test-evaluator packet",
+    "upstream test-evaluator evaluation-sop.md",
     "upstream test-evaluator evaluation-baseline.md",
+    "upstream test-evaluator sop-calibration.md",
     "upstream implementer packet when provided for traceability",
     "Product / PRD acceptance criteria when provided in upstream packet chain"
   ],
   "evaluation_baseline_audit": {
+    "sop_required": true,
+    "sop_calibration_required": true,
     "mechanism_required": true,
     "benchmark_or_baseline_required": true,
     "unsupported_industry_claims_block_final_acceptance": true

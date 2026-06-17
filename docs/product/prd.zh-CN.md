@@ -329,6 +329,8 @@ Reviewer 不只看代码 diff。
 
 Reviewer 要检查：
 
+- `milestone-contract.md` 是否是已确认的原始目标锚点。
+- Test Evaluator 是否遵守 `evaluation-sop.md`。
 - packet 链路是否完整。
 - Implementer 是否越权。
 - 测试是否覆盖验收标准。

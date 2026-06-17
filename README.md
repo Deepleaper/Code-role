@@ -38,6 +38,8 @@ Each execution role writes a versioned document packet. The next role consumes t
 - Non-Implementer roles produce documents only.
 - Implementer can modify project files only after explicit user approval and exact writable scope confirmation.
 - Orchestrator checks milestone alignment before routing to the next role.
+- Orchestrator uses `milestone-contract.md` as the hard goal anchor for the active milestone.
+- Test Evaluator uses `evaluation-sop.md` as the hard evaluation anchor for the active milestone.
 - Every role completion response includes a copy-ready summary for Orchestrator / Project Manager.
 - When Orchestrator routes forward, it must paste a copy-ready startup message for the next role.
 - Public-source network research is allowed by default for every role when relevant to the milestone.
@@ -53,6 +55,8 @@ Each execution role writes a versioned document packet. The next role consumes t
 - 非 Implementer 角色只产出文档。
 - Implementer 只有在用户明确批准并确认精确可写范围后，才能修改项目文件。
 - Orchestrator / 项目经理先检查 milestone 是否漂移，再决定是否路由下一角色。
+- Orchestrator 使用 `milestone-contract.md` 作为当前 milestone 的硬目标锚点。
+- Test Evaluator 使用 `evaluation-sop.md` 作为当前 milestone 的硬评估锚点。
 - 每个角色完成后，必须在同一条回复末尾附上给 Orchestrator 的可复制摘要。
 - Orchestrator 如果允许进入下一角色，必须直接贴出可复制的下一角色启动消息。
 - 每个角色默认都可以在当前 milestone 相关范围内使用公开来源联网研究。
@@ -98,6 +102,8 @@ Key documents / 关键文档：
 - [English PRD](docs/product/prd.md)
 - [Workflow guide](docs/workflow/README.md)
 - [Role configuration guide](docs/workflow/role-configuration-guide.md)
+- [Milestone contract](docs/workflow/milestone-contract.md)
+- [Evaluation SOP](docs/workflow/evaluation-sop.md)
 - [Project practices](docs/workflow/project-practices.md)
 - [Role instance setup](docs/workflow/role-instance-setup.md)
 - [Target project bootstrap](docs/workflow/project-bootstrap.md)
@@ -137,10 +143,13 @@ code-role/
   role-instance-prompts/
   workflow/
     orchestrator/
+      milestone-contract.md
       workflow-state.md
       milestone-registry.md
       decision-log.md
       final-packet-index.md
+    evaluation/
+      evaluation-sop.md
 ```
 
 By default, it does not generate `state-index/`. Add `--with-state-index` only when optional navigation files are useful.

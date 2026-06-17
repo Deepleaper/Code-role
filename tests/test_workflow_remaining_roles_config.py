@@ -47,12 +47,14 @@ ROLE_EXPECTATIONS = {
         "handoff_to": ["reviewer"],
         "status_at_consumption": "draft",
         "documents": {
+            "evaluation-sop.md",
             "evaluation-baseline.md",
             "test-plan.md",
             "test-results.md",
             "regression-matrix.md",
             "failure-analysis.md",
             "quality-gate.md",
+            "sop-calibration.md",
         },
         "input_role": "implementer",
     },
@@ -124,7 +126,10 @@ def test_high_risk_role_boundaries_are_explicit() -> None:
     assert "must not run `git add`, `git commit`, or `git push`" in implementer
     assert "does not change code unless explicitly reassigned as Implementer" in evaluator
     assert "Test Evaluator Output Standard" in evaluator
-    assert "evaluation mechanism baseline, industry or common-consensus evaluation references" in evaluator
+    assert "active milestone `evaluation-sop.md`" in evaluator
+    assert "code-role/workflow/evaluation/evaluation-sop.md" in evaluator
+    assert "SOP Calibration Rule" in evaluator
+    assert "packet-local evaluation baseline, industry or common-consensus evaluation references" in evaluator
     assert "First response baseline discussion" in evaluator
     assert "does not invent evaluation baselines without user confirmation or source evidence" in evaluator
     assert "Implementer-reported verification, evaluator-observed evidence, and evaluator quality judgment" in evaluator
@@ -134,7 +139,10 @@ def test_high_risk_role_boundaries_are_explicit() -> None:
     assert "does not rewrite upstream packets" in reviewer
     assert "Reviewer Output Standard" in reviewer
     assert "audit Workflow Orchestrator state, decisions, and next-role handoff briefs against the original milestone anchor" in reviewer
+    assert "code-role/workflow/orchestrator/milestone-contract.md" in reviewer
+    assert "code-role/workflow/evaluation/evaluation-sop.md" in reviewer
     assert "audit each execution role's output against the original milestone anchor" in reviewer
+    assert "audit whether Test Evaluator followed `code-role/workflow/evaluation/evaluation-sop.md`" in reviewer
     assert "which specific role must revise if drift exists" in reviewer
     assert "flow-wide milestone drift, evaluation baseline validity, acceptance gaps, packet-chain evidence, and final gate judgment" in reviewer
     assert "does not treat an unconfirmed evaluation mechanism or benchmark baseline as sufficient evidence" in reviewer
@@ -234,12 +242,14 @@ def test_test_evaluator_output_standard_and_templates_separate_reported_and_obse
     standard = read(ROLES / "test-evaluator" / "test-evaluator-output-standard.md")
     manifest = json.loads((ROLES / "test-evaluator" / "templates" / "handoff.manifest.json").read_text())
     template_paths = [
+        ROLES / "test-evaluator" / "templates" / "evaluation-sop.md",
         ROLES / "test-evaluator" / "templates" / "evaluation-baseline.md",
         ROLES / "test-evaluator" / "templates" / "test-plan.md",
         ROLES / "test-evaluator" / "templates" / "test-results.md",
         ROLES / "test-evaluator" / "templates" / "regression-matrix.md",
         ROLES / "test-evaluator" / "templates" / "failure-analysis.md",
         ROLES / "test-evaluator" / "templates" / "quality-gate.md",
+        ROLES / "test-evaluator" / "templates" / "sop-calibration.md",
     ]
     combined = "\n".join(read(path) for path in template_paths)
 
@@ -250,9 +260,15 @@ def test_test_evaluator_output_standard_and_templates_separate_reported_and_obse
     assert "Industry Or Common-Consensus Evaluation References" in standard
     assert "Evaluator-Observed Evidence" in standard
     assert "Evaluator Quality Judgment" in standard
+    assert "Active Milestone Evaluation SOP" in standard
+    assert "SOP Calibration Standard" in standard
     assert "evaluation-baseline.md" in standard
+    assert "evaluation-sop.md" in standard
+    assert "sop-calibration.md" in standard
     assert "original business goal" in combined
     assert "possible drift" in combined
+    assert "evaluation_sop" in combined
+    assert "sop_calibration" in combined
     assert "user_approved_eval_mechanism" in combined
     assert "industry_evaluation_reference" in combined
     assert "benchmark_dataset_reference" in combined
@@ -265,6 +281,11 @@ def test_test_evaluator_output_standard_and_templates_separate_reported_and_obse
     assert "TODO" not in combined
     assert manifest["input_packets"][0]["status_at_consumption"] == "draft"
     assert "docs/workflow/roles/test-evaluator/test-evaluator-output-standard.md" in manifest["source_scopes"]
+    assert "docs/workflow/evaluation-sop.md" in manifest["source_scopes"]
+    assert "code-role/workflow/evaluation/evaluation-sop.md" in manifest["source_scopes"]
+    assert "evaluation-sop.md" in {doc["path"] for doc in manifest["documents"]}
+    assert "sop-calibration.md" in {doc["path"] for doc in manifest["documents"]}
+    assert manifest["evaluation_baseline"]["sop_status"] == "draft"
     assert manifest["evaluation_baseline"]["mechanism_confirmed"] is False
 
 
@@ -285,11 +306,16 @@ def test_reviewer_output_standard_and_templates_enforce_final_gate_gap_review() 
     assert "Flow-Wide Milestone Drift Audit" in standard
     assert "Milestone Drift Audit Standard" in standard
     assert "final-packet-index.md" in standard
-    assert "Evaluation Baseline Audit" in standard
+    assert "Evaluation SOP And Baseline Audit" in standard
+    assert "milestone-contract.md" in standard
+    assert "evaluation-sop.md" in standard
     assert "Acceptance Gap Check" in standard
     assert "Packet Chain Audit" in standard
     assert "Final Gate Judgment" in standard
     assert "original_milestone_anchor" in combined
+    assert "milestone_contract" in combined
+    assert "evaluation_sop" in combined
+    assert "sop_calibration" in combined
     assert "final_packet_index" in combined
     assert "possible_drift_summary" in combined
     assert "current_final_versions_only" in combined
@@ -300,7 +326,7 @@ def test_reviewer_output_standard_and_templates_enforce_final_gate_gap_review() 
     assert "correction_owner" in combined
     assert "drift_audit" in combined
     assert "milestone_goal" in combined
-    assert "Evaluation Baseline Audit" in combined
+    assert "Evaluation SOP And Baseline Audit" in combined
     assert "evaluation_baseline_evidence" in combined
     assert "benchmark_dataset_reference" in combined
     assert "metric_definition" in combined
@@ -312,12 +338,20 @@ def test_reviewer_output_standard_and_templates_enforce_final_gate_gap_review() 
     assert "TODO" not in combined
     assert manifest["input_packets"][0]["status_at_consumption"] == "draft"
     assert "docs/workflow/roles/reviewer/reviewer-output-standard.md" in manifest["source_scopes"]
+    assert "docs/workflow/milestone-contract.md" in manifest["source_scopes"]
+    assert "docs/workflow/evaluation-sop.md" in manifest["source_scopes"]
+    assert "code-role/workflow/orchestrator/milestone-contract.md" in manifest["source_scopes"]
+    assert "code-role/workflow/evaluation/evaluation-sop.md" in manifest["source_scopes"]
     assert manifest["final_packet_index"] == "docs/workflow/orchestrator/final-packet-index.md"
     assert manifest["audit_scope"] == "current_final_versions_only"
     assert "docs/workflow/orchestrator/final-packet-index.md" in manifest["source_scopes"]
     assert "original milestone anchor from Orchestrator or user input" in manifest["source_scopes"]
     assert "Orchestrator workflow-state, milestone-registry, decision-log, consumption-check outputs, and next-role handoff briefs" in manifest["source_scopes"]
     assert "all upstream role packets in selected chain" in manifest["source_scopes"]
+    assert "upstream test-evaluator evaluation-sop.md" in manifest["source_scopes"]
+    assert "upstream test-evaluator sop-calibration.md" in manifest["source_scopes"]
+    assert manifest["evaluation_baseline_audit"]["sop_required"] is True
+    assert manifest["evaluation_baseline_audit"]["sop_calibration_required"] is True
     assert manifest["evaluation_baseline_audit"]["mechanism_required"] is True
     assert manifest["evaluation_baseline_audit"]["unsupported_industry_claims_block_final_acceptance"] is True
     assert manifest["quality_gate"]["final_acceptance"] is False

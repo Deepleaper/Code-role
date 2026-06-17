@@ -18,6 +18,8 @@ def test_orchestrator_files_exist() -> None:
         ORCH / "milestone-registry.md",
         ORCH / "decision-log.md",
         ORCH / "final-packet-index.md",
+        WORKFLOW / "evaluation-sop.md",
+        WORKFLOW / "milestone-contract.md",
         WORKFLOW / "workflow-chain-policy.md",
         WORKFLOW / "orchestrator" / "consumption-check-request-template.md",
         WORKFLOW / "orchestrator" / "project-manager-output-standard.md",
@@ -46,6 +48,8 @@ def test_orchestrator_is_process_control_not_execution_role() -> None:
     assert "role output drifts from the milestone" in role
     assert "Project Manager Output Standard" in role
     assert "final packet index" in role
+    assert "milestone-contract.md" in role
+    assert "milestone_contract_check=fail" in role
 
 
 def test_chain_policy_defines_allowed_chains_and_gates() -> None:
@@ -78,12 +82,16 @@ def test_workflow_docs_link_orchestrator_and_policy() -> None:
     assert "orchestrator/STARTUP.md" in readme
     assert "bootstrap.md" in readme
     assert "workflow-chain-policy.md" in readme
+    assert "milestone-contract.md" in readme
+    assert "evaluation-sop.md" in readme
     assert "The user may accept a role's completed output for the next role" in handoff
     assert "Role 1: Workflow Orchestrator" in guide
     assert "Orchestrator Write Scope" in source_map
     assert "consumption-check-request-template.md" in readme
     assert "project-practices.md" in readme
     assert "docs/workflow/project-practices.md" in root_readme
+    assert "docs/workflow/milestone-contract.md" in root_readme
+    assert "docs/workflow/evaluation-sop.md" in root_readme
 
 
 def test_project_practices_document_defines_adopted_practices() -> None:
@@ -120,6 +128,9 @@ def test_consumption_check_request_template_keeps_routing_with_orchestrator() ->
     assert "不检查 ready_for_next_role / packet.lock.json / sha256" in template
     assert "The current role may recommend a downstream role" in template
     assert "must not generate the authoritative next-role startup message" in template
+    assert "milestone-contract.md" in template
+    assert "success_criteria_covered" in template
+    assert "non_goals_or_hard_prohibitions_touched" in template
 
 
 def test_next_role_message_template_focuses_on_milestone_not_process() -> None:
@@ -129,6 +140,8 @@ def test_next_role_message_template_focuses_on_milestone_not_process() -> None:
     assert "Professional content comes from the upstream packet" in template
     assert "本 milestone 的业务目标" in template
     assert "Milestone business goal" in template
+    assert "milestone contract" in template
+    assert "Hard prohibitions" in template
     assert "项目经理审阅结论" in template
     assert "Project Manager Review Result" in template
     assert "你需要自己从上游 packet 中提取本角色应回答的专业问题" in template
@@ -159,6 +172,7 @@ def test_project_manager_output_standard_defines_professional_outputs() -> None:
     assert "决策日志条目" in standard
     assert "Final Packet Index" in standard
     assert "final-packet-index.md" in standard
+    assert "milestone-contract.md" in standard
     assert "Drift Review Standard" in standard
     assert "目标漂移审查标准" in standard
     assert "milestone_drift: detected" in standard

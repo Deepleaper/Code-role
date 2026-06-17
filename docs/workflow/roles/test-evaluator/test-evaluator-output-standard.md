@@ -6,27 +6,51 @@ The Test Evaluator first confirms evaluation mechanism and baseline, then evalua
 
 ## 核心质量标准 / Core Quality Bar
 
-每个 Test Evaluator packet 必须区分五类证据：
+每个 Test Evaluator packet 必须先消费当前 milestone 的 `evaluation-sop.md`，再区分六类证据：
 
-Every Test Evaluator packet must separate five evidence layers:
+Every Test Evaluator packet must first consume the active milestone `evaluation-sop.md`, then separate six evidence layers:
 
-1. 用户确认的评估机制与基线 / user-confirmed evaluation mechanism and baseline
-2. 行业内得到验证或通用共识的评估模板、评估数据和指标口径 / industry-validated or common-consensus evaluation templates, evaluation data, and metric conventions
-3. Implementer 已报告验证 / implementer-reported verification
-4. Test Evaluator 实际评估证据 / evaluator-observed evidence
-5. Test Evaluator 质量判断 / evaluator quality judgment
+1. 当前 milestone 评估 SOP / active milestone evaluation SOP
+2. 用户确认的评估机制与 packet-local 基线 / user-confirmed evaluation mechanism and packet-local baseline
+3. 行业内得到验证或通用共识的评估模板、评估数据和指标口径 / industry-validated or common-consensus evaluation templates, evaluation data, and metric conventions
+4. Implementer 已报告验证 / implementer-reported verification
+5. Test Evaluator 实际评估证据 / evaluator-observed evidence
+6. Test Evaluator 质量判断与 SOP 校准 / evaluator quality judgment and SOP calibration
 
 如果把 Implementer 的验证日志直接当成最终质量结论，packet 不合格。
 
 If Implementer verification logs are treated as final quality conclusions, the packet is not acceptable.
 
-如果没有确认评估机制与基线，packet 不得给出无条件通过结论。
+如果没有确认当前 `evaluation-sop.md`、评估机制与基线，packet 不得给出无条件通过结论。
 
-If evaluation mechanism and baseline are not confirmed, the packet must not give an unconditional pass.
+If the active `evaluation-sop.md`, evaluation mechanism, and baseline are not confirmed, the packet must not give an unconditional pass.
 
-## 五类评估依据 / Five Evaluation Evidence Layers
+## 六类评估依据 / Six Evaluation Evidence Layers
 
-### 1. 用户确认的评估机制与基线 / User-Confirmed Evaluation Mechanism And Baseline
+### 1. 当前 Milestone Evaluation SOP / Active Milestone Evaluation SOP
+
+用于固定本 milestone 的评估机制，防止评估师每轮临时换口径。
+
+Use this layer to fix the milestone-level evaluation mechanism and prevent the Test Evaluator from changing standards ad hoc in each packet.
+
+必须读取 / Must read:
+
+- `code-role/workflow/evaluation/evaluation-sop.md`
+
+必须记录 / Must record:
+
+- SOP status: `confirmed`、`draft`、`partial`、`missing`、`blocked`
+- required layers / 必需评估层
+- not-run policy / 未运行项处理规则
+- claim boundary / 允许和禁止的质量结论
+- final acceptance rule / 最终验收规则
+- whether this packet follows or proposes changes to the SOP / 本 packet 是遵守还是建议修改 SOP
+
+如果 SOP 缺失、草稿、过期或未确认，`quality-gate.md` 不得写成 `pass`。
+
+If the SOP is missing, draft, stale, or unconfirmed, `quality-gate.md` must not be `pass`.
+
+### 2. 用户确认的评估机制与基线 / User-Confirmed Evaluation Mechanism And Baseline
 
 用于记录本轮评估采用什么机制、什么指标、什么数据、什么通过线。
 
@@ -46,7 +70,7 @@ Use this layer to record the mechanism, metrics, data, and pass threshold used f
 
 On first startup, Test Evaluator must confirm these items with the user before evaluation.
 
-### 2. 行业共识评估参考 / Industry Or Common-Consensus Evaluation References
+### 3. 行业共识评估参考 / Industry Or Common-Consensus Evaluation References
 
 用于记录行业内得到验证、常用或有共识的评估模板、评估数据、benchmark、指标口径和工程实践。
 
@@ -64,7 +88,7 @@ Use this layer for industry-validated, common, or consensus evaluation templates
 - 区分 industry/common-consensus reference 与当前项目已确认 baseline
 - 未获准外部研究时，不得声称“已找到行业共识”；只能记录 `unknown` 或请求确认
 
-### 3. Implementer 已报告验证 / Implementer-Reported Verification
+### 4. Implementer 已报告验证 / Implementer-Reported Verification
 
 用于记录 Implementer packet 中声称执行过的验证、改动和风险。
 
@@ -76,7 +100,7 @@ Use this layer for verification, changes, and risks reported by the Implementer 
 - 不能把 reported result 写成 evaluator-observed result
 - 如果 Implementer 未运行某项验证，必须保持 `not_run` 或 `unknown`
 
-### 4. Test Evaluator 实际评估证据 / Evaluator-Observed Evidence
+### 5. Test Evaluator 实际评估证据 / Evaluator-Observed Evidence
 
 用于记录 Test Evaluator 实际读取、运行、检查或观察到的结果。
 
@@ -100,7 +124,7 @@ Use this layer for results actually read, run, inspected, or observed by Test Ev
 - 未运行的测试不得标记为 pass
 - Test Evaluator 不修改代码或测试
 
-### 5. Test Evaluator 质量判断 / Evaluator Quality Judgment
+### 6. Test Evaluator 质量判断与 SOP 校准 / Evaluator Quality Judgment And SOP Calibration
 
 用于给出质量门结论、回归风险和是否建议进入 Reviewer。
 
@@ -113,6 +137,7 @@ Use this layer for quality gate decision, regression risk, and reviewer handoff 
 - `final_acceptance` 默认不是 true；只有证据充分且无未解决 P0/P1 时才可建议 true
 - 如果评估基线未确认，不能给 `pass`
 - 如果证据不足，必须说明缺口和下一步
+- 必须说明 SOP 是否继续有效、是否需要修订、是否阻断 Reviewer
 
 ## 来源标签 / Source Labels
 
@@ -122,6 +147,8 @@ Every key claim must use one source label:
 
 - `implementer_reported_verification`: 来自 Implementer verification-log / from Implementer verification log
 - `implementer_reported_change`: 来自 Implementer changed-files 或 summary / from Implementer changed files or summary
+- `evaluation_sop`: 当前 milestone evaluation SOP / active milestone evaluation SOP
+- `sop_calibration`: Test Evaluator 对 SOP 是否继续有效的校准判断 / Test Evaluator calibration judgment on SOP validity
 - `user_approved_eval_mechanism`: 用户确认的评估机制 / user-approved evaluation mechanism
 - `evaluation_baseline`: 用户确认的评估基线 / confirmed evaluation baseline
 - `industry_evaluation_reference`: 行业验证或通用共识评估模板 / industry-validated or common-consensus evaluation template
@@ -143,7 +170,24 @@ Unlabeled key conclusions are forbidden.
 
 ## Evaluation Baseline 标准 / Evaluation Baseline Standard
 
-`evaluation-baseline.md` 应该先定义本轮怎么评估。
+`evaluation-sop.md` 应该记录本 packet 对当前 milestone SOP 的消费状态。
+
+`evaluation-sop.md` should record how this packet consumed the active milestone SOP.
+
+必须记录：
+
+It must record:
+
+- active SOP path / 当前 SOP 路径
+- SOP status / SOP 状态
+- required layers / 必需评估层
+- not-run policy / 未运行项处理规则
+- claim boundary / 结论边界
+- whether the packet follows, narrows, or proposes changes to the SOP / 是否遵守、收窄或建议修改 SOP
+
+`evaluation-baseline.md` 应该基于 SOP 定义本轮怎么评估，而不是重新发明评估机制。
+
+`evaluation-baseline.md` should define this packet's evaluation baseline based on the SOP, not reinvent the evaluation mechanism.
 
 `evaluation-baseline.md` should define how this round will be evaluated.
 
@@ -158,11 +202,12 @@ It must record:
 - metric definitions and thresholds / 指标定义与阈值
 - project-specific acceptance mapping / 项目验收映射
 - network research purpose and source boundary / 联网研究目的与来源边界
+- mapping to active SOP required layers / 到当前 SOP 必需评估层的映射
 - unresolved baseline questions / 未解决的基线问题
 
-如果用户尚未确认评估机制，`quality-gate.md` 不得写成 `pass`。
+如果用户尚未确认 SOP 或评估机制，`quality-gate.md` 不得写成 `pass`。
 
-If the user has not confirmed the evaluation mechanism, `quality-gate.md` must not be `pass`.
+If the user has not confirmed the SOP or evaluation mechanism, `quality-gate.md` must not be `pass`.
 
 ## Test Plan 标准 / Test Plan Standard
 
@@ -233,16 +278,37 @@ It must record:
 - final_acceptance: true / false
 - open P0 / open P1 / open P2
 - evidence basis / 证据基础
+- evaluation SOP status / 评估 SOP 状态
 - evaluation baseline status / 评估基线状态
 - Reviewer handoff recommendation / Reviewer 交接建议
 
-`final_acceptance=true` 只能在证据充分且无未解决 P0/P1 时建议。
+`final_acceptance=true` 只能在 SOP 已确认、必需层没有 `not_run`、证据充分且无未解决 P0/P1 时建议。
 
-`final_acceptance=true` may only be recommended when evidence is sufficient and no unresolved P0/P1 remains.
+`final_acceptance=true` may only be recommended when the SOP is confirmed, required layers are not `not_run`, evidence is sufficient, and no unresolved P0/P1 remains.
 
-如果评估机制或 baseline 仍未确认，gate 必须是 `blocked` 或 `pass_with_residual_risk`。
+如果 SOP、评估机制或 baseline 仍未确认，gate 必须是 `blocked` 或 `pass_with_residual_risk`。
 
-If evaluation mechanism or baseline remains unconfirmed, the gate must be `blocked` or `pass_with_residual_risk`.
+If SOP, evaluation mechanism, or baseline remains unconfirmed, the gate must be `blocked` or `pass_with_residual_risk`.
+
+## SOP Calibration 标准 / SOP Calibration Standard
+
+`sop-calibration.md` 必须在评估结束后回答：当前 SOP 是否仍然适合这个 milestone。
+
+`sop-calibration.md` must answer whether the active SOP remains suitable for this milestone after evaluation.
+
+必须记录：
+
+It must record:
+
+- SOP adherence status / SOP 遵守状态: followed / narrowed / changed / blocked
+- required layer coverage / 必需层覆盖情况
+- not-run items and final gate impact / 未运行项及其门禁影响
+- proposed SOP amendments, if any / 如有，建议修订项
+- whether Reviewer can audit using this SOP / Reviewer 是否可基于该 SOP 审计
+
+SOP 不得在 packet 内静默变化。任何变更都必须写入 `sop-calibration.md` 并交给用户或 Reviewer 判断。
+
+The SOP must not drift silently inside a packet. Any change must be recorded in `sop-calibration.md` and handed to the user or Reviewer.
 
 ## 禁止输出 / Forbidden Output
 
@@ -253,6 +319,7 @@ Test Evaluator must not:
 - 修改代码或测试 / modify code or tests
 - 实现修复 / implement fixes
 - 未经用户确认直接选定评估机制 / select an evaluation mechanism without user confirmation
+- 静默替换或绕过 `evaluation-sop.md` / silently replace or bypass `evaluation-sop.md`
 - 未经批准声称行业共识或 benchmark 数据 / claim industry consensus or benchmark data without approved sources
 - 把 Implementer 的 reported verification 当作 evaluator-observed result / treat Implementer reported verification as evaluator-observed result
 - 把未运行测试写成通过 / present unrun tests as passed

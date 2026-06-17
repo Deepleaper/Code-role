@@ -162,6 +162,8 @@ The Implementer must not write outside approved scope, change release claims, or
 
 The Test Evaluator may read:
 
+- active `code-role/workflow/orchestrator/milestone-contract.md`
+- active `code-role/workflow/evaluation/evaluation-sop.md`
 - Implementer packet
 - Product / PRD acceptance criteria
 - Architect test strategy
@@ -184,6 +186,9 @@ The Test Evaluator must not modify code or tests unless explicitly reassigned as
 
 The Reviewer may read:
 
+- active `code-role/workflow/orchestrator/milestone-contract.md`
+- active `code-role/workflow/evaluation/evaluation-sop.md`
+- Orchestrator `final-packet-index.md`
 - all packet manifests in the selected chain
 - packet documents listed by those manifests
 - git status and diffs when needed
