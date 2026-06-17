@@ -117,7 +117,7 @@ If the workflow stops after Researcher, record the reason in the Orchestrator de
 
 Default rule:
 
-- Downstream roles may consume the current role's completed output after the user accepts it and the Orchestrator records the handoff.
+- Downstream roles may consume the current role's output only after `role_completion_status=1`, the user accepts it, and the Orchestrator records the handoff.
 - The upstream packet may still be `draft` in normal lightweight flow.
 - The downstream role records the exact upstream manifest and `status_at_consumption`.
 
@@ -170,7 +170,7 @@ User confirmation is required for:
 - selecting or changing chain type
 - marking packet `ready_for_next_role`
 - marking packet `accepted`
-- advancing from one role to the next after accepting completed output
+- advancing from one role to the next after accepting an output with `role_completion_status=1`
 - allowing Implementer to start
 - skipping a role in a chain
 - accepting unresolved P1 risk

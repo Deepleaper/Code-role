@@ -46,7 +46,8 @@ def test_readme_exposes_workflow_diagram_and_example() -> None:
     assert "T --> O" in readme
     assert "V --> O" in readme
     assert "O --> R --> P --> A --> C --> I --> T --> V --> O" not in readme
-    assert "Every professional role returns its completion summary and packet to the Orchestrator." in readme
+    assert "Every professional role returns its binary completion block and packet to the Orchestrator." in readme
+    assert "role_completion_status" in readme
     assert "Researcher -> Workflow Orchestrator review" in readme
     assert "Minimal target example" in readme
     assert "examples/minimal-target/README.md" in readme

@@ -40,6 +40,7 @@ Each execution role writes a versioned document packet. The next role consumes t
 - Orchestrator checks milestone alignment before routing to the next role.
 - Orchestrator uses `milestone-contract.md` as the hard goal anchor for the active milestone.
 - Test Evaluator uses `evaluation-sop.md` as the hard evaluation anchor for the active milestone.
+- Every role completion status is binary: `role_completion_status=1` only when every assigned completion condition has concrete evidence; otherwise it is `0`.
 - Every role completion response includes a copy-ready summary for Orchestrator / Project Manager.
 - When Orchestrator routes forward, it must paste a copy-ready startup message for the next role.
 - Public-source network research is allowed by default for every role when relevant to the milestone.
@@ -57,6 +58,7 @@ Each execution role writes a versioned document packet. The next role consumes t
 - Orchestrator / 项目经理先检查 milestone 是否漂移，再决定是否路由下一角色。
 - Orchestrator 使用 `milestone-contract.md` 作为当前 milestone 的硬目标锚点。
 - Test Evaluator 使用 `evaluation-sop.md` 作为当前 milestone 的硬评估锚点。
+- 每个角色完成状态只有二值：只有所有指定完成条件都有具体证据满足时，`role_completion_status=1`；否则为 `0`。
 - 每个角色完成后，必须在同一条回复末尾附上给 Orchestrator 的可复制摘要。
 - Orchestrator 如果允许进入下一角色，必须直接贴出可复制的下一角色启动消息。
 - 每个角色默认都可以在当前 milestone 相关范围内使用公开来源联网研究。
@@ -103,6 +105,7 @@ Key documents / 关键文档：
 - [Workflow guide](docs/workflow/README.md)
 - [Role configuration guide](docs/workflow/role-configuration-guide.md)
 - [Milestone contract](docs/workflow/milestone-contract.md)
+- [Role completion contract](docs/workflow/role-completion-contract.md)
 - [Evaluation SOP](docs/workflow/evaluation-sop.md)
 - [Project practices](docs/workflow/project-practices.md)
 - [Role instance setup](docs/workflow/role-instance-setup.md)
@@ -227,9 +230,9 @@ flowchart LR
   V --> O
 ```
 
-Every professional role returns its completion summary and packet to the Orchestrator. The Orchestrator checks milestone alignment, decides whether the output needs correction, and only then routes to the next role. Professional conclusions come from role packets, not from Orchestrator speculation.
+Every professional role returns its binary completion block and packet to the Orchestrator. The Orchestrator checks `role_completion_status`, objective evidence, and milestone alignment before routing. Professional conclusions come from role packets, not from Orchestrator speculation.
 
-每个专业角色完成后都回到项目经理。项目经理检查是否偏离 milestone，判断是否需要打回修正，然后再路由下一角色。专业结论来自各角色 packet，不来自项目经理自行推断。
+每个专业角色完成后都把二值完成块和 packet 回传项目经理。项目经理先检查 `role_completion_status`、客观证据和 milestone 对齐，再决定是否路由下一角色。专业结论来自各角色 packet，不来自项目经理自行推断。
 
 ## Role Chain / 角色链路
 

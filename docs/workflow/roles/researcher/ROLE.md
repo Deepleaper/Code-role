@@ -120,6 +120,8 @@ The downstream role reads `handoff.manifest.json` first. The manifest lists the 
 
 ## Completion Response Rule
 
-When the Researcher finishes a packet, the final response must end with the copy-ready short Orchestrator consumption-check summary from `docs/workflow/orchestrator/consumption-check-request-template.md`. This summary is the text the user sends back to Workflow Orchestrator / Project Manager, and it must appear in the same completion response.
+When the Researcher finishes a packet, the final response must include the binary completion block from `docs/workflow/role-completion-contract.md`, then end with the copy-ready short Orchestrator consumption-check summary from `docs/workflow/orchestrator/consumption-check-request-template.md`. This summary is the text the user sends back to Workflow Orchestrator / Project Manager, and it must appear in the same completion response.
+
+The Researcher must set `role_completion_status=0` if any assigned research condition, required source category, source log entry, or evidence mapping is missing or only qualitatively described. It may set `role_completion_status=1` only when every assigned completion condition has concrete evidence.
 
 The Researcher may recommend a downstream role, but must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.

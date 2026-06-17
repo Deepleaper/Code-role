@@ -20,6 +20,7 @@ def test_orchestrator_files_exist() -> None:
         ORCH / "final-packet-index.md",
         WORKFLOW / "evaluation-sop.md",
         WORKFLOW / "milestone-contract.md",
+        WORKFLOW / "role-completion-contract.md",
         WORKFLOW / "workflow-chain-policy.md",
         WORKFLOW / "orchestrator" / "consumption-check-request-template.md",
         WORKFLOW / "orchestrator" / "project-manager-output-standard.md",
@@ -44,12 +45,15 @@ def test_orchestrator_is_process_control_not_execution_role() -> None:
     assert "must not infer the current packet by scanning for the newest file" in role
     assert "mark a role packet `ready_for_next_role` without user confirmation" in role
     assert "allow Implementer to start without explicit user approval and exact writable scope" in role
-    assert "primary project-manager check is milestone alignment" in role
+    assert "primary project-manager check is binary milestone completion control" in role
     assert "role output drifts from the milestone" in role
     assert "Project Manager Output Standard" in role
     assert "final packet index" in role
     assert "milestone-contract.md" in role
+    assert "Role Completion Contract" in role
     assert "milestone_contract_check=fail" in role
+    assert "role_completion_status=1" in role
+    assert "role_completion_status=0" in role
 
 
 def test_chain_policy_defines_allowed_chains_and_gates() -> None:
@@ -62,7 +66,7 @@ def test_chain_policy_defines_allowed_chains_and_gates() -> None:
     assert "`product-prd or architect -> reviewer`" in policy
     assert "Architect must not hand off directly to Test Evaluator" in policy
     assert "Architecture packets first go to Code Context / Context Engineer" in policy
-    assert "Downstream roles may consume the current role's completed output after the user accepts it" in policy
+    assert "role_completion_status=1" in policy
     assert "Do not route a role back for readiness conversion by default" in policy
     assert "Strict handoff" in policy
     assert "Implementer must not begin work from chat-only instruction" in policy
@@ -83,15 +87,31 @@ def test_workflow_docs_link_orchestrator_and_policy() -> None:
     assert "bootstrap.md" in readme
     assert "workflow-chain-policy.md" in readme
     assert "milestone-contract.md" in readme
+    assert "role-completion-contract.md" in readme
     assert "evaluation-sop.md" in readme
-    assert "The user may accept a role's completed output for the next role" in handoff
+    assert "role_completion_status=1" in handoff
     assert "Role 1: Workflow Orchestrator" in guide
     assert "Orchestrator Write Scope" in source_map
     assert "consumption-check-request-template.md" in readme
     assert "project-practices.md" in readme
     assert "docs/workflow/project-practices.md" in root_readme
     assert "docs/workflow/milestone-contract.md" in root_readme
+    assert "docs/workflow/role-completion-contract.md" in root_readme
     assert "docs/workflow/evaluation-sop.md" in root_readme
+
+
+def test_role_completion_contract_defines_binary_gate() -> None:
+    contract = read(WORKFLOW / "role-completion-contract.md")
+    assert "role_completion_status" in contract
+    assert "1 = all assigned completion conditions are met with concrete evidence" in contract
+    assert "0 = one or more assigned completion conditions are unmet" in contract
+    assert "There is no intermediate completion state" in contract
+    assert "assigned_completion_conditions_total" in contract
+    assert "assigned_completion_conditions_met" in contract
+    assert "unmet_completion_conditions" in contract
+    assert "forbidden_completion_claim_used" in contract
+    assert "next_role_start_allowed = false" in contract
+    assert "Code changes do not equal role completion" in contract
 
 
 def test_project_practices_document_defines_adopted_practices() -> None:
@@ -119,12 +139,17 @@ def test_consumption_check_request_template_keeps_routing_with_orchestrator() ->
     assert "lightweight consumption check" in template
     assert "completed_role" in template
     assert "handoff manifest" in template
+    assert "role_completion_status" in template
+    assert "assigned_completion_conditions_total" in template
+    assert "assigned_completion_conditions_met" in template
+    assert "unmet_completion_conditions" in template
+    assert "forbidden_completion_claim_used" in template
     assert "milestone_alignment" in template
     assert "possible_drift" in template
     assert "recommended_routing" in template
     assert "same completion response" in template
     assert "copy-ready next-role startup message" in template
-    assert "该产出是否仍服务当前 milestone" in template
+    assert "`role_completion_status` 是否等于 `1`" in template
     assert "不检查 ready_for_next_role / packet.lock.json / sha256" in template
     assert "The current role may recommend a downstream role" in template
     assert "must not generate the authoritative next-role startup message" in template
@@ -144,6 +169,9 @@ def test_next_role_message_template_focuses_on_milestone_not_process() -> None:
     assert "Hard prohibitions" in template
     assert "项目经理审阅结论" in template
     assert "Project Manager Review Result" in template
+    assert "Upstream role completion status" in template
+    assert "role_completion_status=1" in template
+    assert "role_completion_status=0" in template
     assert "你需要自己从上游 packet 中提取本角色应回答的专业问题" in template
     assert "milestone 对齐要求" in template
     assert "Milestone Alignment Requirement" in template
@@ -173,6 +201,10 @@ def test_project_manager_output_standard_defines_professional_outputs() -> None:
     assert "Final Packet Index" in standard
     assert "final-packet-index.md" in standard
     assert "milestone-contract.md" in standard
+    assert "Binary Completion Check" in standard
+    assert "binary_completion_check=pass" in standard
+    assert "role_completion_status = 1" in standard
+    assert "role_completion_status=0" in standard
     assert "Drift Review Standard" in standard
     assert "目标漂移审查标准" in standard
     assert "milestone_drift: detected" in standard

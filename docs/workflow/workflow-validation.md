@@ -26,7 +26,7 @@ The tool is stored under `docs/workflow/`, so it is covered by the local workflo
 
 ### Consumption
 
-- lightweight downstream consumption requires user acceptance of the completed upstream role output.
+- lightweight downstream consumption requires `role_completion_status=1` and user acceptance of the upstream role output.
 - upstream status may remain `draft` in lightweight mode.
 - Orchestrator should record the user acceptance and next-role route.
 - downstream `input_packets` must record exact upstream role, milestone, packet version, manifest path, and status at consumption.

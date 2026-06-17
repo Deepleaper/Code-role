@@ -20,6 +20,7 @@ Every Orchestrator output must make these four points clear:
 4. 当前角色是否应更新为该 milestone 的最终版本 / whether the current role output should become that role's final version for the milestone
 5. 下一个应该由哪个角色行动，以及为什么 / which role should act next, and why
 6. 当前 `milestone-contract.md` 是否仍然是确认状态 / whether the active `milestone-contract.md` is still confirmed
+7. 当前角色的 `role_completion_status` 是否为 `1` / whether the current role's `role_completion_status` is `1`
 
 如果 Orchestrator 输出没有回答这些问题，就是不完整输出。
 
@@ -68,9 +69,15 @@ Use after a role completes an output and asks Orchestrator to inspect it.
 - packet 或产出路径 / packet or output path
 - manifest 路径，如有 / manifest path when available
 - 用户是否接受该产出进入下一角色 / user-accepted handoff status
+- 角色完成状态：`role_completion_status=1` 或 `role_completion_status=0` / role completion status: `role_completion_status=1` or `role_completion_status=0`
+- 指定完成条件总数 / assigned completion conditions total
+- 已满足完成条件数 / assigned completion conditions met
+- 未满足完成条件清单；没有则写 `none` / unmet completion conditions, or `none`
+- 完成证据清单 / completion evidence list
+- 是否使用禁用完成表述 / whether forbidden completion language was used
 - 是否更新 final packet index / whether to update final packet index
 - milestone 对齐结果：`aligned`、`drift_detected` 或 `unclear` / milestone alignment result: `aligned`, `drift_detected`, or `unclear`
-- milestone contract 覆盖结果：covered / partial / missing / drift_detected / milestone contract coverage result
+- milestone contract 覆盖结果：`covered`、`missing` 或 `drift_detected` / milestone contract coverage result: `covered`, `missing`, or `drift_detected`
 - 漂移摘要，没有则写 `none` / drift summary, or `none`
 - 阻塞摘要 / blocker summary
 - 下一角色建议 / next role recommendation
@@ -79,7 +86,11 @@ Use after a role completes an output and asks Orchestrator to inspect it.
 
 主检查 / Primary check:
 
-- 这个角色产出是否帮助当前 milestone contract 往前推进？ / Does this role output move the milestone contract forward?
+- 这个角色产出的 `role_completion_status` 是否等于 `1`？ / Is this role output's `role_completion_status` equal to `1`?
+- 已满足完成条件数是否等于指定完成条件总数？ / Does the number of met completion conditions equal the total assigned completion conditions?
+- 未满足完成条件是否为 `none`？ / Is `unmet_completion_conditions` equal to `none`?
+- 每个完成条件是否都有具体证据？ / Does every completion condition have concrete evidence?
+- 是否没有使用禁用完成表述？ / Is forbidden completion language absent?
 
 辅助检查 / Secondary checks:
 
@@ -91,6 +102,10 @@ Use after a role completes an output and asks Orchestrator to inspect it.
 
 质量规则 / Quality rules:
 
+- 如果 `role_completion_status=0`，不允许路由到下一角色 / If `role_completion_status=0`, do not route to the next role.
+- 如果完成条件计数不匹配，不允许路由到下一角色 / If completion condition counts do not match, do not route to the next role.
+- 如果存在未满足完成条件，不允许路由到下一角色 / If any completion condition is unmet, do not route to the next role.
+- 用户接受未完成 packet 只能把它记录为草稿讨论材料，不能启动下一角色 / User acceptance of an incomplete packet may record it as a draft discussion artifact only; it must not start the next role.
 - 除非用户明确要求严格交接，不要求 `ready_for_next_role`、`packet.lock.json` 或 `sha256` / Do not require `ready_for_next_role`, `packet.lock.json`, or `sha256` unless the user explicitly requested strict handoff.
 - 如果产出偏离 milestone，不默认继续路由 / If output drifts from the milestone, do not route forward by default.
 - 如果发现漂移，先问是修正当前角色产出，还是调整 milestone contract / If drift exists, ask whether to revise the current role output or change the milestone contract.
@@ -98,6 +113,37 @@ Use after a role completes an output and asks Orchestrator to inspect it.
 - `final-packet-index.md` 只记录每个角色当前最终版本，不记录历史版本 / `final-packet-index.md` records only each role's current final version, not historical versions.
 - 如果 Orchestrator 明确执行下一角色路由，必须在同一回复中贴出完整下一角色启动消息 / If Orchestrator explicitly routes to the next role, it must paste the full next-role startup message in the same response.
 - 不要只输出“推荐下一角色”而不给用户可复制文本 / Do not only output a next-role recommendation without copy-ready text.
+
+## 二值完成检查 / Binary Completion Check
+
+Orchestrator must calculate completion mechanically from the role completion block.
+
+项目经理必须从角色完成块机械计算完成状态。
+
+```text
+binary_completion_check=pass only if:
+- role_completion_status = 1
+- assigned_completion_conditions_met = assigned_completion_conditions_total
+- unmet_completion_conditions = none
+- every required condition has concrete evidence
+- forbidden_completion_claim_used = false
+
+binary_completion_check=fail otherwise
+```
+
+The following are not valid completion states:
+
+以下不是合法完成状态：
+
+- partial
+- pass_with_residual_risk
+- mostly complete
+- directionally correct
+- closer to completion
+
+These words may appear only as evidence diagnostics, never as role completion status.
+
+这些词只能作为证据诊断，不能作为角色完成状态。
 
 ### 3. 下一角色交接 brief / Next Role Handoff Brief
 

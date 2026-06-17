@@ -4,7 +4,7 @@ This folder defines the document-based role workflow for Code-role role instance
 
 The workflow separates responsibilities into roles. Each role reads approved document packets from upstream roles and writes a new versioned document packet for downstream roles. Roles do not pass state through chat memory as the source of truth.
 
-The workflow is discussion-first, not automation-first. Each role produces a documented output for user discussion. The default flow is lightweight: after the user accepts a role's completed output, Orchestrator may route the next role even when the packet remains `draft`.
+The workflow is discussion-first, not automation-first. Each role produces a documented output for user discussion. The default flow is lightweight about packet locking, but not about completion: Orchestrator may route the next role from a `draft` packet only when `role_completion_status=1`.
 
 The workflow has eight configured role slots. The [Workflow Orchestrator](orchestrator/ROLE.md) is the control role; the other seven roles are execution roles.
 
@@ -36,6 +36,7 @@ The [Role Configuration Guide](role-configuration-guide.md) defines the operatin
 - Implementer is the only role that may change approved project files, and only after user-confirmed implementation start.
 - Every milestone output is a versioned packet: `packet-v001`, `packet-v002`, and so on.
 - Every milestone must have a confirmed `milestone-contract.md` before the first execution role starts.
+- Every role completion status is binary. `role_completion_status=1` requires all assigned completion conditions to be met with concrete evidence; any missing condition means `role_completion_status=0`.
 - Test Evaluator must use `evaluation-sop.md` as the stable evaluation anchor for the milestone.
 - Packet content is immutable only in strict handoff mode after it is marked `ready_for_next_role`.
 - `latest.json` is deprecated for daily workflow. Use Orchestrator state and `final-packet-index.md` to identify current outputs.
@@ -44,7 +45,7 @@ The [Role Configuration Guide](role-configuration-guide.md) defines the operatin
 - Strict `ready_for_next_role` plus `packet.lock.json` handoff is advanced optional mode. Daily lightweight workflow should not require it.
 - Implementer must not start from chat-only instruction.
 - Each role must stop for discussion when scope, tradeoffs, evidence, risks, or handoff readiness are not settled.
-- Advancing to the next role requires user acceptance of the completed role output.
+- Advancing to the next role requires `role_completion_status=1` and user acceptance of that role output.
 - Upstream packet manifests must be passed explicitly between role instances.
 
 ## Protocol Documents
@@ -54,6 +55,7 @@ The [Role Configuration Guide](role-configuration-guide.md) defines the operatin
 - [Workflow Bootstrap](bootstrap.md)
 - [Project Bootstrap](project-bootstrap.md)
 - [Milestone Contract](milestone-contract.md)
+- [Role Completion Contract](role-completion-contract.md)
 - [Evaluation SOP](evaluation-sop.md)
 - [Role Instance Setup](role-instance-setup.md)
 - [State Index](state-index.md) optional navigation

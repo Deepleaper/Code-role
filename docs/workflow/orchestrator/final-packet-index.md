@@ -4,7 +4,7 @@ This file records the current final packet for each role in the active milestone
 
 The Orchestrator owns this file. Reviewer uses it as the authoritative index for final-version milestone drift audit.
 
-It is not a history log. If a role produces `packet-v002` and the user accepts it as the current final output for the milestone, update that role row to `packet-v002`.
+It is not a history log. If a role produces `packet-v002`, reports `role_completion_status=1`, and the user accepts it as the current final output for the milestone, update that role row to `packet-v002`.
 
 ## Current Milestone Anchor
 
@@ -32,7 +32,7 @@ It is not a history log. If a role produces `packet-v002` and the user accepts i
 
 ## Update Rule
 
-- Update this file only after the user accepts a role output as the current final version for this milestone.
+- Update this file only after `role_completion_status=1` and the user accepts a role output as the current final version for this milestone.
 - Do not list every historical packet version here.
 - Do not scan for newest files to infer final versions.
 - If a role output is revised, point the role row to the new accepted packet.

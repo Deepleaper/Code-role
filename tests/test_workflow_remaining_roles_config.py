@@ -361,9 +361,18 @@ def test_execution_roles_require_orchestrator_consumption_request() -> None:
     for role_id in ROLE_EXPECTATIONS:
         text = read(ROLES / role_id / "ROLE.md")
         assert "Completion Response Rule" in text, role_id
+        assert "role-completion-contract.md" in text, role_id
+        assert "role_completion_status=1" in text, role_id
+        assert "role_completion_status=0" in text, role_id
         assert "copy-ready short Orchestrator consumption-check summary" in text, role_id
         assert "same completion response" in text, role_id
         assert "must not generate the authoritative next-role startup message" in text, role_id
+    implementer = read(ROLES / "implementer" / "ROLE.md")
+    assert "implementation_action_status" in implementer
+    assert "Code changed, docs changed, or tests run does not equal completion" in implementer
+    evaluator = read(ROLES / "test-evaluator" / "ROLE.md")
+    assert "quality_gate.status" in evaluator
+    assert "not role completion states" in evaluator
 
 
 def test_roles_index_lists_all_execution_roles() -> None:

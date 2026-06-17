@@ -461,7 +461,7 @@ cd Code-role</code></pre>
         初始化脚本不会创建 Researcher、PRD、Architect、Implementer 等执行角色 packet。执行角色 packet 必须由对应角色在用户确认后创建。
       </p>
       <p>
-        <code>workflow/orchestrator/milestone-contract.md</code> 是当前 milestone 的硬目标锚点；第一个执行角色启动前应由 Orchestrator 和用户确认。<code>workflow/evaluation/evaluation-sop.md</code> 是评估师和 Reviewer 使用的硬评估锚点；评估师不能每次临时换口径。
+        <code>workflow/orchestrator/milestone-contract.md</code> 是当前 milestone 的硬目标锚点；第一个执行角色启动前应由 Orchestrator 和用户确认。<code>docs/workflow/role-completion-contract.md</code> 定义二值完成门禁：只有每个指定完成条件都有具体证据时，角色才能写 <code>role_completion_status=1</code>；否则必须写 <code>role_completion_status=0</code>，流程停在当前角色。<code>workflow/evaluation/evaluation-sop.md</code> 是评估师和 Reviewer 使用的硬评估锚点；评估师不能每次临时换口径。
       </p>
       <p>
         如确实需要给新角色提供额外导航，可以在初始化时加 <code>--with-state-index</code>，生成可选的 <code>code-role/state-index/</code>。默认流程不生成它。
@@ -479,9 +479,9 @@ cd Code-role</code></pre>
         <li>粘贴对应的 <code>code-role/role-instance-prompts/&lt;role&gt;.md</code>。</li>
         <li>角色先确认读取范围、写入范围和禁止范围。</li>
         <li>用户回复“开始”后，角色创建 draft packet。</li>
-        <li>角色完成后，在同一条完成回复末尾给出可复制的 Orchestrator consumption-check summary。</li>
+        <li>角色完成后，先输出二值完成块：<code>role_completion_status</code>、条件总数、满足数、未满足清单和具体证据；再在同一条完成回复末尾给出可复制的 Orchestrator consumption-check summary。</li>
         <li>用户把这段摘要直接发给 Orchestrator / 项目经理。</li>
-        <li>Orchestrator 优先检查产出是否仍对齐 <code>milestone-contract.md</code>，再检查 manifest、文档、阻塞项和用户是否接受该产出。</li>
+        <li>Orchestrator 优先检查 <code>role_completion_status=1</code>、条件计数相等、未满足条件为 <code>none</code>、证据具体；再检查产出是否仍对齐 <code>milestone-contract.md</code>、manifest、文档、阻塞项和用户是否接受该产出。</li>
         <li>进入 Test Evaluator 前，确认 <code>evaluation-sop.md</code> 是否适用于本 milestone；Reviewer 最终审计该 SOP 是否被遵守。</li>
         <li>默认轻量流程下，如果 Orchestrator 明确允许进入下一角色，必须直接贴出可复制的下一角色启动消息。</li>
         <li>只有用户明确要求严格交接时，才进入 <code>ready_for_next_role</code> 和 <code>packet.lock.json</code>。</li>

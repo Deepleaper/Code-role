@@ -165,6 +165,8 @@ The downstream Reviewer reads the quality gate and regression matrix first.
 
 ## Completion Response Rule
 
-When Test Evaluator finishes a packet, the final response must end with the copy-ready short Orchestrator consumption-check summary from `docs/workflow/orchestrator/consumption-check-request-template.md`. This summary is the text the user sends back to Workflow Orchestrator / Project Manager, and it must appear in the same completion response.
+When Test Evaluator finishes a packet, the final response must include the binary completion block from `docs/workflow/role-completion-contract.md`, then end with the copy-ready short Orchestrator consumption-check summary from `docs/workflow/orchestrator/consumption-check-request-template.md`. This summary is the text the user sends back to Workflow Orchestrator / Project Manager, and it must appear in the same completion response.
+
+Test Evaluator must keep `quality_gate.status` separate from `role_completion_status`. `pass_with_residual_risk`, `partial`, and `blocked` are evaluation diagnostics, not role completion states. Test Evaluator must set `role_completion_status=0` if any assigned SOP layer, baseline, command result, acceptance mapping, regression check, or claim-boundary condition is missing or only qualitatively described. It may set `role_completion_status=1` only when every assigned completion condition has concrete evidence.
 
 Test Evaluator may recommend Reviewer as the downstream role, but must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.

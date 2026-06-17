@@ -28,8 +28,10 @@ Rules:
 - The Orchestrator selects the chain and next role but cannot approve state transitions for the user.
 - Downstream acceptance is recorded as `accepted_as_input`; downstream roles must not rewrite upstream packet manifests.
 - Every execution role completion response must end with a copy-ready short Orchestrator consumption-check summary for Workflow Orchestrator / Project Manager. The current role may recommend a downstream role, but Orchestrator owns consumable checks, routing, and the authoritative next-role startup message.
+- Every execution role completion response must include the binary completion block from `role-completion-contract.md`. `role_completion_status=1` is allowed only when every assigned completion condition has concrete evidence; otherwise it must be `0`.
 - When Orchestrator routes to the next role, it must paste the copy-ready next-role startup message directly instead of only naming the next role.
 - The active `code-role/workflow/orchestrator/milestone-contract.md` is the hard milestone anchor. Orchestrator checks it before routing convenience or packet shape.
+- The active role output is not complete unless its binary completion block says `role_completion_status=1`.
 - The active `code-role/workflow/evaluation/evaluation-sop.md` is the hard evaluation anchor. Test Evaluator consumes it; Reviewer audits whether it was followed.
 
 Target projects should use generated role-instance prompts to reduce setup time. A non-authoritative state index can be generated only when useful for onboarding. Packet manifests and Orchestrator state remain authoritative. Packet locks are used only for strict handoff.
@@ -121,7 +123,7 @@ Use it to decide:
 
 - `full-chain`, `mini-chain`, `patch-chain`, or `docs-only-chain`
 - whether a packet can be consumed
-- whether the user accepted the completed role output
+- whether the user accepted the role output with `role_completion_status=1`
 - which role acts next
 - whether Implementer is allowed to start
 - whether the packet chain is complete
@@ -679,7 +681,7 @@ Use these states consistently:
 
 Downstream acceptance is not a packet manifest status. Record downstream acceptance as `accepted_as_input` in the downstream packet `input_packets` and Orchestrator state.
 
-Default workflow may advance from a completed `draft` packet when the user accepts that role output and Orchestrator records the handoff. Do not force a readiness conversion unless strict handoff is requested.
+Default workflow may advance from a `draft` packet only when its completion block reports `role_completion_status=1`, the user accepts that role output, and Orchestrator records the handoff. If the completion block reports `role_completion_status=0`, the workflow stays at the current role. Do not force a readiness conversion unless strict handoff is requested.
 
 ## Minimum `handoff.manifest.json` Checklist
 

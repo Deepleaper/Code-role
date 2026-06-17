@@ -19,7 +19,7 @@ def test_workflow_validation_doc_defines_required_checks() -> None:
     for phrase in [
         "manifest is valid JSON",
         "every document listed in `documents` exists",
-            "lightweight downstream consumption requires user acceptance",
+            "lightweight downstream consumption requires `role_completion_status=1` and user acceptance",
         "downstream acceptance is recorded as `accepted_as_input`",
         "`ready_for_next_role` packets are immutable",
         "docs-only-chain",

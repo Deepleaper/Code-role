@@ -132,7 +132,9 @@ The downstream Architect role reads `handoff.manifest.json` first. The manifest 
 
 ## Completion Response Rule
 
-When Product / PRD finishes a packet, the final response must end with the copy-ready short Orchestrator consumption-check summary from `docs/workflow/orchestrator/consumption-check-request-template.md`. This summary is the text the user sends back to Workflow Orchestrator / Project Manager, and it must appear in the same completion response.
+When Product / PRD finishes a packet, the final response must include the binary completion block from `docs/workflow/role-completion-contract.md`, then end with the copy-ready short Orchestrator consumption-check summary from `docs/workflow/orchestrator/consumption-check-request-template.md`. This summary is the text the user sends back to Workflow Orchestrator / Project Manager, and it must appear in the same completion response.
+
+Product / PRD must set `role_completion_status=0` if any assigned product condition, acceptance criterion, non-goal, decision, or downstream requirement is missing or only qualitatively described. It may set `role_completion_status=1` only when every assigned completion condition has concrete evidence.
 
 Product / PRD may recommend a downstream role, but must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.
 

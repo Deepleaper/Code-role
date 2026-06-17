@@ -33,14 +33,31 @@ same as handoff_manifest above
 packet_status:
 {PACKET_STATUS}
 
-role_completion_summary:
-{ROLE_COMPLETION_SUMMARY}
+role_completion_status:
+1 | 0
+
+assigned_completion_conditions_total:
+{TOTAL_REQUIRED_CONDITIONS_INTEGER}
+
+assigned_completion_conditions_met:
+{MET_REQUIRED_CONDITIONS_INTEGER}
+
+unmet_completion_conditions:
+none | {UNMET_CONDITION_IDS}
+
+completion_evidence:
+- condition_id: {CONDITION_ID}
+  met: 1 | 0
+  evidence: {PACKET_FILE_OR_REPO_FILE_OR_COMMAND_OR_USER_CONFIRMATION}
+
+forbidden_completion_claim_used:
+true | false
 
 milestone_alignment:
-{HOW_THIS_OUTPUT_SERVES_THE_MILESTONE}
+aligned | drift_detected | unclear
 
 success_criteria_covered:
-{SUCCESS_CRITERIA_COVERED_OR_UNKNOWN}
+{SUCCESS_CRITERIA_IDS_OR_NONE}
 
 non_goals_or_hard_prohibitions_touched:
 {NON_GOALS_OR_HARD_PROHIBITIONS_TOUCHED_OR_NONE}
@@ -53,13 +70,15 @@ recommended_routing:
 
 请优先检查：
 1. `milestone-contract.md` 是否存在且已确认。
-2. 该产出是否仍服务当前 milestone contract。
-3. 该产出覆盖了哪些 success criteria。
-4. 是否触碰 non-goals 或 hard prohibitions。
-5. 如有漂移，是打回当前角色，还是需要用户调整 milestone contract。
-6. manifest 是否可读，documents 是否存在。
-7. 用户是否接受该产出作为本角色当前最终版本，并允许进入下一角色。
-8. 如果允许进入下一角色，请更新 final-packet-index，并生成只做审阅和路由的 next-role handoff brief。
+2. `role_completion_status` 是否等于 `1`。
+3. `assigned_completion_conditions_met` 是否等于 `assigned_completion_conditions_total`。
+4. `unmet_completion_conditions` 是否为 `none`。
+5. 每个完成条件是否有具体证据；缺失、unknown、inference-only 或定性描述一律计为未完成。
+6. `forbidden_completion_claim_used` 是否为 `false`。
+7. 该产出是否仍服务当前 milestone contract。
+8. 是否触碰 non-goals 或 hard prohibitions。
+9. manifest 是否可读，documents 是否存在。
+10. 如果且仅如果二值完成检查通过、milestone 对齐、用户接受该产出，才更新 final-packet-index 并生成下一角色启动消息。
 
 边界：
 - 只更新 Orchestrator 状态文件。
@@ -68,6 +87,7 @@ recommended_routing:
 - 不执行 git add / git commit / git push。
 - 不修改业务文件。
 - 不检查 ready_for_next_role / packet.lock.json / sha256，除非用户明确要求 strict handoff。
+- 不允许用 `pass_with_residual_risk`、`partial`、`closer to completion` 或类似定性词作为完成状态。
 ```
 
 ## Role Boundary

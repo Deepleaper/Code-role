@@ -29,7 +29,7 @@ Valid packet statuses:
 
 Default handoff is lightweight:
 
-- The user may accept a role's completed output for the next role without forcing a `ready_for_next_role` status transition.
+- The user may accept a role output for the next role without forcing a `ready_for_next_role` status transition only when `role_completion_status=1`.
 - The Orchestrator records that acceptance and generates the next-role startup message.
 - The downstream packet records the upstream manifest path and the actual upstream status at consumption, even if that status is `draft`.
 
@@ -69,7 +69,7 @@ Ask for user confirmation before:
 - marking a packet `ready_for_next_role`
 - superseding a packet that was already accepted
 - changing this handoff protocol or the global source map
-- advancing to the next role after accepting a completed role output
+- advancing to the next role after accepting a role output with `role_completion_status=1`
 - allowing Implementer to start work
 
 ## Downstream Input Lock
@@ -98,18 +98,22 @@ The summary must include:
 - packet path
 - handoff manifest path
 - reported packet status
-- concise role completion summary
+- binary `role_completion_status`
+- assigned completion condition counts
+- unmet completion condition list
+- completion evidence list
+- forbidden completion claim flag
 - milestone alignment
 - possible drift
 - recommended routing, if any
-- request for Orchestrator to check milestone alignment, manifest readability, user acceptance, and next route
+- request for Orchestrator to check binary role completion, milestone alignment, manifest readability, user acceptance, and next route
 - boundary reminder that Orchestrator must not modify the role packet, create downstream packets, run Git commands, or modify business files
 
 Use [Orchestrator Consumption Check Request Template](orchestrator/consumption-check-request-template.md).
 
-The current role may recommend a downstream role, but it must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation.
+The current role may recommend a downstream role, but it must not generate the authoritative next-role startup message. Orchestrator owns binary completion checks, consumable checks, chain routing, and next-role startup message generation.
 
-When Orchestrator accepts the output and decides to start the next role, it must paste a copy-ready next-role startup message in its response. It should not only say "start the next role" or only list the role name.
+When Orchestrator accepts an output with `role_completion_status=1` and decides to start the next role, it must paste a copy-ready next-role startup message in its response. It should not only say "start the next role" or only list the role name.
 
 ## Status Transitions
 

@@ -8,7 +8,7 @@ The workflow exists to make every major step explicit, discussable, and reviewab
 
 Every role conversation must point to that role's explicit output.
 
-The role's output is a documented artifact, usually a versioned packet. In the default lightweight flow, the next role consumes that artifact after the user accepts the completed role output through Orchestrator. Strict `ready_for_next_role` handoff is optional and only used when explicitly requested.
+The role's output is a documented artifact, usually a versioned packet. In the default lightweight flow, the next role may consume that artifact only after Orchestrator verifies `role_completion_status=1` and the user accepts the output. Strict `ready_for_next_role` handoff is optional and only used when explicitly requested.
 
 Except for Implementer after explicit approval, roles produce documents and do not change project code.
 

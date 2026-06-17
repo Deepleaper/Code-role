@@ -124,7 +124,9 @@ If changes are required, name the specific correction owner and hand back throug
 
 ## Completion Response Rule
 
-When Reviewer finishes a packet, the final response must end with the copy-ready short Orchestrator consumption-check summary from `docs/workflow/orchestrator/consumption-check-request-template.md`. This summary is the text the user sends back to Workflow Orchestrator / Project Manager, and it must appear in the same completion response.
+When Reviewer finishes a packet, the final response must include the binary completion block from `docs/workflow/role-completion-contract.md`, then end with the copy-ready short Orchestrator consumption-check summary from `docs/workflow/orchestrator/consumption-check-request-template.md`. This summary is the text the user sends back to Workflow Orchestrator / Project Manager, and it must appear in the same completion response.
+
+Reviewer must keep review judgment separate from `role_completion_status`. Reviewer must set `role_completion_status=0` if any assigned milestone-drift audit, upstream-role audit, packet-chain audit, PRD/evaluation gap check, correction-owner decision, or final gate condition is missing or only qualitatively described. It may set `role_completion_status=1` only when every assigned completion condition has concrete evidence.
 
 Reviewer may recommend closure, changes, or residual-risk acceptance, but must not close the milestone and must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, milestone closure routing, and next-role startup message generation.
 

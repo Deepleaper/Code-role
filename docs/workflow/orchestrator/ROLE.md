@@ -8,7 +8,7 @@ It decides which chain should be used, which packet is authoritative, which role
 
 This role should be configured as its own role instance. Do not use this conversation to switch into execution roles.
 
-The Orchestrator's primary project-manager check is milestone alignment: every role's task, output, and proposed next step must still serve the current milestone. Process checks exist to support that alignment, not to become the main work.
+The Orchestrator's primary project-manager check is binary milestone completion control: every role's output must report `role_completion_status=1` before it can route forward. Milestone alignment is required, but it does not replace the binary completion gate.
 
 ## Prompt Contract
 
@@ -20,7 +20,8 @@ This role does:
 - identify the authoritative packet
 - maintain the final packet index for each role's current final output in the active milestone
 - determine whether the next role can consume the packet
-- check whether the completed role output drifted from the milestone goal
+- enforce `role_completion_status=1` before routing to the next role
+- check whether the role output with `role_completion_status=1` drifted from the milestone goal
 - list blockers and required user confirmations
 - paste the copy-ready next-role startup message when routing is approved
 
@@ -60,7 +61,7 @@ Conversation scope:
 
 Discussion gate:
 
-- Stop for user confirmation before chain selection, advancing to the next role after accepting completed output, `ready_for_next_role`, implementation start, skipped roles, or unresolved P1 acceptance.
+- Stop for user confirmation before chain selection, advancing to the next role after `role_completion_status=1`, `ready_for_next_role`, implementation start, skipped roles, or unresolved P1 acceptance.
 
 ## Scope
 
@@ -94,6 +95,7 @@ The Orchestrator reads:
 - [Next Role Message Template](next-role-message-template.md)
 - [Final Packet Index](final-packet-index.md)
 - [Milestone Contract](../milestone-contract.md)
+- [Role Completion Contract](../role-completion-contract.md)
 - role `ROLE.md` files
 - upstream packet manifests explicitly provided by the user
 - current workflow state files in this folder
@@ -134,6 +136,8 @@ The Orchestrator must not:
 - create execution role packets
 - mark a role packet `ready_for_next_role` without user confirmation
 - mark a packet `accepted` without user confirmation
+- route to the next role when the current role has `role_completion_status=0`
+- treat user acceptance of a draft discussion artifact as completion
 - allow Implementer to start without explicit user approval and exact writable scope
 - approve scope expansion by itself
 - call provider APIs, authenticated/private resources, or external services that mutate state
@@ -148,7 +152,13 @@ Before recommending the next role, the Orchestrator checks:
 - milestone business goal, delivery goal, success criteria, non-goals, hard prohibitions, evidence requirements, and closure rule are known or explicitly marked unknown
 - chain type is selected
 - upstream packet exists
-- completed role output is aligned with the milestone contract, or drift is explicitly recorded
+- role output includes `role_completion_status`
+- `role_completion_status=1`
+- `assigned_completion_conditions_met` equals `assigned_completion_conditions_total`
+- `unmet_completion_conditions` is `none`
+- every assigned completion condition has concrete evidence
+- `forbidden_completion_claim_used=false`
+- role output is aligned with the milestone contract, or drift is explicitly recorded
 - upstream output exists and the user has accepted it for the next role
 - upstream packet status is recorded exactly, including `draft` in lightweight flow
 - authoritative packet path is known
@@ -157,7 +167,9 @@ Before recommending the next role, the Orchestrator checks:
 - user confirmations are listed
 - downstream acceptance will be recorded as `accepted_as_input`, not by rewriting the upstream packet
 
-The Orchestrator outputs `consumable_check=pass` when the role output exists, required manifest/documents are present, the role output remains aligned with the confirmed milestone contract, the user accepts the output for handoff, and the selected chain allows the next role. A `draft` packet is acceptable in default lightweight flow. If strict handoff is explicitly requested, `ready_for_next_role` and `packet.lock.json` are required.
+The Orchestrator outputs `consumable_check=pass` only when the role output exists, the binary completion gate passes, required manifest/documents are present, the role output remains aligned with the confirmed milestone contract, the user accepts the output for handoff, and the selected chain allows the next role. A `draft` packet is acceptable in default lightweight flow only when `role_completion_status=1`. If strict handoff is explicitly requested, `ready_for_next_role` and `packet.lock.json` are also required.
+
+The Orchestrator must output `consumable_check=fail` when `role_completion_status=0`, when completion condition counts do not match, when unmet conditions are not `none`, or when completion evidence is missing. In that case, the workflow remains at the current role. User acceptance may record the output as a draft discussion artifact, but it must not start the next role.
 
 If the role output drifts from the milestone contract, the Orchestrator should not route forward by default. It should name the drift, ask whether the milestone contract should change or the role should revise, and keep the next role focused on the confirmed milestone contract.
 

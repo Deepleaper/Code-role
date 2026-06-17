@@ -23,6 +23,7 @@ def test_project_bootstrap_docs_are_linked() -> None:
         "state-index.md",
         "git-operation-policy.md",
         "milestone-contract.md",
+        "role-completion-contract.md",
         "evaluation-sop.md",
     ]:
         assert filename in readme
@@ -108,10 +109,14 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
         assert "should not be committed or pushed" in generated
         assert "Code-role does not own the target project's Git workflow" in generated
         assert "milestone-contract.md" in generated
+        assert "role-completion-contract.md" in generated
         assert "evaluation-sop.md" in generated
     assert "status: draft" in milestone_contract
     assert "business_goal:" in milestone_contract
     assert "success_criteria:" in milestone_contract
+    assert "role_completion_conditions:" in milestone_contract
+    assert "role_completion_status=1" in milestone_contract
+    assert "role_completion_status` must be `0" in milestone_contract
     assert "No execution role may start until this contract is confirmed" in milestone_contract
     assert "status: draft" in evaluation_sop
     assert "required_layers:" in evaluation_sop
@@ -131,11 +136,15 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
     assert "roles/implementer/implementer-output-standard.md" in read(target / "code-role" / "role-instance-prompts" / "implementer.md")
     assert "roles/test-evaluator/test-evaluator-output-standard.md" in read(target / "code-role" / "role-instance-prompts" / "test-evaluator.md")
     assert "workflow/orchestrator/milestone-contract.md" in read(target / "code-role" / "role-instance-prompts" / "test-evaluator.md")
+    assert "docs/workflow/role-completion-contract.md" in read(target / "code-role" / "role-instance-prompts" / "test-evaluator.md")
     assert "workflow/evaluation/evaluation-sop.md" in read(target / "code-role" / "role-instance-prompts" / "test-evaluator.md")
     assert "roles/reviewer/reviewer-output-standard.md" in reviewer_prompt
     assert "workflow/orchestrator/milestone-contract.md" in reviewer_prompt
+    assert "docs/workflow/role-completion-contract.md" in reviewer_prompt
     assert "workflow/evaluation/evaluation-sop.md" in reviewer_prompt
     assert "copy-ready short Orchestrator consumption-check summary" in reviewer_prompt
+    assert "role_completion_status=1" in reviewer_prompt
+    assert "role_completion_status=0" in reviewer_prompt
     assert "must not generate the authoritative next-role startup message" in reviewer_prompt
     assert not (target / "code-role" / "state-index").exists()
     assert "code-role/" in read(exclude)

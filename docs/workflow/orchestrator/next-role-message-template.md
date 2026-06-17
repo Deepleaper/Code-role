@@ -70,11 +70,28 @@ milestone contract / 里程碑契约:
 milestone 对齐结果 / Milestone alignment result:
 {MILESTONE_ALIGNMENT_RESULT}
 
+上游角色完成状态 / Upstream role completion status:
+{UPSTREAM_ROLE_COMPLETION_STATUS_1_OR_0}
+
+上游完成条件计数 / Upstream completion condition count:
+{UPSTREAM_COMPLETION_CONDITIONS_MET}/{UPSTREAM_COMPLETION_CONDITIONS_TOTAL}
+
+上游未满足完成条件 / Upstream unmet completion conditions:
+{UPSTREAM_UNMET_COMPLETION_CONDITIONS_OR_NONE}
+
 如有残余风险 / Residual risk, if any:
 {RESIDUAL_RISK_OR_NONE}
 
 是否允许进入本角色 / Whether this role may start:
 {HANDOFF_DECISION}
+
+路由规则 / Routing rule:
+
+- 只有当上游 `role_completion_status=1`、完成条件计数相等、未满足条件为 `none` 时，才能把上游产出作为完成态交给本角色。
+- 如果上游 `role_completion_status=0`，本角色不能把它当作完成输入；必须记录阻塞并回到 Orchestrator。
+
+- The upstream packet may be consumed as completed input only when `role_completion_status=1`, completion counts match, and unmet conditions are `none`.
+- If upstream `role_completion_status=0`, this role must not treat it as completed input. Record the blocker and return to Orchestrator.
 
 三、权威上游输入 / Authoritative Upstream Input
 
@@ -190,13 +207,29 @@ Wait for the user to reply "开始" before execution.
 完成后请输出：
 After completion, output:
 
-我本环节围绕 milestone 完成的是：
-What I completed for this milestone is:
-{ONE_SENTENCE_SUMMARY}
+role_completion_status:
+1 | 0
+
+assigned_completion_conditions_total:
+<integer>
+
+assigned_completion_conditions_met:
+<integer>
+
+unmet_completion_conditions:
+none | <condition id list>
+
+completion_evidence:
+- condition_id: <id>
+  met: 1 | 0
+  evidence: <concrete evidence>
+
+forbidden_completion_claim_used:
+true | false
 
 然后列出 / Then list:
 
-1. 本角色完成了什么 / what this role completed
+1. 本角色完成条件是否全部满足 / whether every role completion condition is met
 2. 产出路径 / output path
 3. 关键结论 / key conclusions
 4. 这些结论如何服务 milestone / how these conclusions serve the milestone
@@ -212,6 +245,7 @@ What I completed for this milestone is:
 - 除非用户要求 strict handoff，不要加入 readiness conversion 指令 / Do not include readiness conversion instructions unless the user requested strict handoff.
 - 默认轻量流程里，不要求 `packet.lock.json` 或 `sha256` / Do not ask for `packet.lock.json` or `sha256` in the default lightweight flow.
 - 让角色聚焦 milestone 产出，而不是流程管控 / Keep the role focused on milestone output, not process control.
+- 完成状态只能是 `role_completion_status=1` 或 `role_completion_status=0` / Completion status can only be `role_completion_status=1` or `role_completion_status=0`.
 - 不要让 Orchestrator 编写专业问题、专业背景、专业结论或专业输出清单 / Do not let Orchestrator write professional questions, background, conclusions, or output lists.
 - 下一角色的专业问题必须由该角色从上游 packet 中提取 / The next role's professional questions must be derived by that role from the upstream packet.
 - 如果 Orchestrator 已允许进入下一角色，必须输出完整可复制启动消息 / If Orchestrator has allowed the next role to start, output the full copy-ready startup message.

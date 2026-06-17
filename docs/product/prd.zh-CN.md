@@ -330,6 +330,7 @@ Reviewer 不只看代码 diff。
 Reviewer 要检查：
 
 - `milestone-contract.md` 是否是已确认的原始目标锚点。
+- 每个角色最终版本是否有 `role_completion_status=1`。
 - Test Evaluator 是否遵守 `evaluation-sop.md`。
 - packet 链路是否完整。
 - Implementer 是否越权。

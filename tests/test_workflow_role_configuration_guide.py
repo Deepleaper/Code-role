@@ -58,6 +58,7 @@ def test_role_configuration_guide_preserves_packet_and_boundary_rules() -> None:
     assert "handoff.manifest.json" in text
     assert "packet-vNNN" in text
     assert "`latest.json` is deprecated" in text
-    assert "Default workflow may advance from a completed `draft` packet" in text
+    assert "Default workflow may advance from a `draft` packet only when its completion block reports `role_completion_status=1`" in text
+    assert "role_completion_status=0" in text
     assert "Chat is not the source of truth" in text
     assert "Product / PRD" in text

@@ -200,7 +200,7 @@ The workflow must protect handed-off packets from silent drift without forcing s
 Acceptance:
 
 - Valid packet statuses are documented.
-- Daily handoff can advance from a completed `draft` packet after user acceptance and Orchestrator routing.
+- Daily handoff can advance from a `draft` packet only when `role_completion_status=1`, the user accepts the output, and Orchestrator routes it.
 - `ready_for_next_role` is reserved for explicit strict handoff.
 - Strict `ready_for_next_role` packets are immutable.
 - If a strict handed-off packet needs changes, a new packet version must be created.
@@ -215,7 +215,8 @@ Acceptance:
 
 - Each target project can generate `code-role/workflow/orchestrator/milestone-contract.md`.
 - Orchestrator checks the contract before routing convenience, packet shape, or downstream speed.
-- Execution-role completion summaries must state which success criteria they served.
+- Execution-role completion summaries must include binary `role_completion_status`, completion condition counts, unmet condition list, and concrete evidence.
+- Orchestrator must stop the chain when `role_completion_status=0`.
 - Outputs touching non-goals or hard prohibitions must be routed back or held.
 - Reviewer audits the full final packet chain against the confirmed contract.
 

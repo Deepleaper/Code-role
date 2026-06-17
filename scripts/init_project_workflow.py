@@ -61,6 +61,7 @@ def role_contract_path(config: BootstrapConfig, role_id: str) -> str:
 
 def role_extra_read_paths(config: BootstrapConfig, role_id: str) -> list[str]:
     common = [
+        workflow_doc_path(config, "role-completion-contract.md"),
         str(config.workflow_root / "orchestrator" / "milestone-contract.md"),
     ]
     if role_id == "researcher":
@@ -102,6 +103,7 @@ This folder is local-only workflow assistance. It is not product runtime content
 - `workflow/orchestrator/final-packet-index.md`
 - `workflow/orchestrator/milestone-contract.md`
 - `workflow/evaluation/evaluation-sop.md`
+- Code-role `docs/workflow/role-completion-contract.md`
 - role packet `handoff.manifest.json` files
 - strict handoff `packet.lock.json` files, only when explicitly requested
 
@@ -136,6 +138,7 @@ external_research_allowed_default: {external}
 - `code-role/state-index/` is optional non-authoritative navigation when generated.
 - Orchestrator state and packet manifests remain authoritative. Packet locks are authoritative only in strict handoff mode.
 - `workflow/orchestrator/milestone-contract.md` is the hard goal anchor for the active milestone.
+- Code-role `docs/workflow/role-completion-contract.md` defines the binary role completion gate.
 - `workflow/evaluation/evaluation-sop.md` is the hard evaluation anchor for Test Evaluator and Reviewer.
 - Product release artifacts must exclude `code-role/`.
 
@@ -192,6 +195,13 @@ unknown
 success_criteria:
 - unknown
 
+role_completion_conditions:
+- id: unknown
+  role: unknown
+  required: true
+  condition: unknown
+  evidence_required: unknown
+
 non_goals:
 - unknown
 
@@ -220,17 +230,20 @@ allowed_chain:
 {config.initial_chain}
 
 evidence_requirements:
-- Each role completion summary must state which success criteria it served.
-- Each role completion summary must state whether it touched non-goals or hard prohibitions.
+- Each role completion summary must include `role_completion_status`.
+- `role_completion_status=1` is valid only when all assigned completion conditions are met with concrete evidence.
+- If any assigned condition is missing, unverifiable, or only qualitatively described, `role_completion_status` must be `0`.
 - Orchestrator must check this contract before packet structure or routing convenience.
 
 drift_detection_questions:
 - Does this output answer the milestone business goal?
-- Does this output move the delivery goal closer to completion?
-- Which success criteria did it cover?
+- Are all assigned role completion conditions met with concrete evidence?
+- Is `role_completion_status` exactly `1` or `0`?
+- Is `assigned_completion_conditions_met` equal to `assigned_completion_conditions_total`?
+- Is `unmet_completion_conditions` equal to `none`?
 - Did it introduce any out-of-scope claim?
 - Did it touch any hard prohibition?
-- Does the proposed next role reduce milestone uncertainty?
+- Did it use forbidden completion language such as "mostly complete", "closer to completion", or "pass_with_residual_risk" as completion?
 
 correction_policy:
 - If role output drifts: return to the same role for revision.
@@ -345,7 +358,7 @@ This file records the current final packet for each role in `{config.project_nam
 
 The Orchestrator owns this file. Reviewer uses it as the authoritative index for final-version milestone drift audit.
 
-It is not a history log.
+It is not a history log. A role output may become the current final output only when `role_completion_status=1` and the user accepts it for this milestone.
 
 ## Current Milestone Anchor
 
@@ -373,7 +386,7 @@ It is not a history log.
 
 ## Update Rule
 
-- Update this file only after the user accepts a role output as the current final version for this milestone.
+- Update this file only after `role_completion_status=1` and the user accepts a role output as the current final version for this milestone.
 - Do not list every historical packet version here.
 - Do not scan for newest files to infer final versions.
 - If a role output is revised, point the role row to the new accepted packet.
@@ -440,13 +453,15 @@ Rules / 规则:
 - Do not call real provider APIs, access authenticated/private resources, download or execute remote content, or send secrets/project-private data externally unless the user separately approves that exact action. / 未经用户单独批准，不调用真实 provider API、不访问需认证或私有资源、不下载或执行远程内容、不向外部发送秘密或项目私有数据。
 - Do not run `git add`, `git commit`, or `git push`. / 不执行 `git add`、`git commit` 或 `git push`。
 - Do not mark a draft packet `ready_for_next_role` unless the user explicitly requests strict handoff. / 除非用户明确要求严格交接，不把 draft packet 标记为 `ready_for_next_role`。
+- Completion status is binary. Include `role_completion_status=1` only when every assigned completion condition has concrete evidence; otherwise use `role_completion_status=0`. / 完成状态是二值。只有每个指定完成条件都有具体证据时才写 `role_completion_status=1`；否则写 `role_completion_status=0`。
 - When you finish a packet, end the same completion response with the copy-ready short Orchestrator consumption-check summary from `{workflow_doc_path(config, "orchestrator/consumption-check-request-template.md")}`. / 完成 packet 后，在同一条完成回复末尾追加该模板中的可复制短版 Orchestrator 消费检查摘要，供用户发回项目经理。
 - You may recommend a downstream role, but you must not generate the authoritative next-role startup message. Orchestrator owns consumable checks, chain routing, and next-role startup message generation. / 你可以建议下游角色，但不能生成权威的下一角色启动消息；Orchestrator 负责消费检查、链路路由和下一角色启动消息。
 
 Milestone alignment rule / 里程碑对齐规则:
 
 - Keep this role focused on the current milestone output. / 保持本角色聚焦当前 milestone 产出。
-- Completion reports must state how the output serves the current milestone and whether there is task-goal drift. / 完成汇报必须说明产出如何服务当前 milestone，以及是否存在任务目标漂移。
+- Completion reports must include condition count, met count, unmet conditions, concrete evidence, and forbidden completion language flag. / 完成汇报必须包含条件总数、满足数、未满足项、具体证据和禁用完成表述标记。
+- If `role_completion_status=0`, do not recommend starting the next role as a completed handoff. / 如果 `role_completion_status=0`，不要建议把它作为完成态交接给下一角色。
 
 First response / 首次回复:
 
