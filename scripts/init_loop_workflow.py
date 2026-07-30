@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Initialize or sync the four-workstation Code-role goal loop."""
+"""Initialize or sync the Code-role four-workstation Minimal Profile."""
 
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ TEMPLATE_FILES = (
     "pm-decision.md",
 )
 
-LEGACY_ACTIVE_ROLE_FILES = (
+FULL_PROFILE_ROLE_FILES = (
     "workflow-orchestrator.md",
     "researcher.md",
     "product-prd.md",
@@ -64,10 +64,10 @@ def ensure_local_exclude(project_root: Path) -> None:
     exclude.write_text(f"{current}{suffix}code-role/\n", encoding="utf-8")
 
 
-def archive_legacy_active_roles(code_role: Path) -> None:
+def archive_full_profile_roles(code_role: Path) -> None:
     role_root = code_role / "role-instance-prompts"
-    archive_root = code_role / "archive" / "v1-role-instance-prompts"
-    for filename in LEGACY_ACTIVE_ROLE_FILES:
+    archive_root = code_role / "archive" / "full-profile-role-instance-prompts"
+    for filename in FULL_PROFILE_ROLE_FILES:
         source = role_root / filename
         if not source.exists():
             continue
@@ -167,7 +167,7 @@ external_research_allowed_default: true
 
 - `code-role/` is local-only assistance, not product runtime content.
 - `milestone-board.md` is the only active control state.
-- Old workflow packets and state indexes are history only.
+- Full Profile packets and state indexes may remain as history, but they do not control a project while the Minimal Profile is active.
 - Product attachments carry professional content; Project Manager references them instead of rewriting them.
 - Code-role does not own the target project's Git or release process.
 """
@@ -187,7 +187,7 @@ The Project Manager is always the controller. The other three workstations are c
 
 项目经理始终是控制器。其他三个工位围绕一个被选中的 `KR=0` 动态调用，不构成固定链路。
 
-Legacy prompt filenames are archived under `code-role/archive/` during sync.
+Full Profile prompt filenames are archived under `code-role/archive/` during sync so the active prompt directory contains exactly four Minimal Profile workstations.
 """
 
 
@@ -219,7 +219,7 @@ def initialize(project_root: Path, project_name: str, sync: bool) -> list[Path]:
 
     code_role.mkdir(parents=True, exist_ok=True)
     if sync:
-        archive_legacy_active_roles(code_role)
+        archive_full_profile_roles(code_role)
 
     generated: dict[Path, str] = {
         code_role / "README.md": render_project_readme(project_name),
@@ -302,7 +302,7 @@ def validate(project_root: Path) -> list[str]:
     )
     for marker in forbidden_markers:
         if marker in combined_roles:
-            errors.append(f"active role prompts contain legacy marker: {marker}")
+            errors.append(f"active Minimal Profile prompts contain packet-profile marker: {marker}")
 
     assignment = (code_role / "templates" / "assignment.md").read_text(
         encoding="utf-8"
@@ -357,11 +357,19 @@ def validate(project_root: Path) -> list[str]:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("project_root", type=Path)
-    parser.add_argument("--project-name")
-    parser.add_argument("--sync", action="store_true")
-    parser.add_argument("--check", action="store_true")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("project_root", type=Path, help="Target project path.")
+    parser.add_argument("--project-name", help="Project display name.")
+    parser.add_argument(
+        "--sync",
+        action="store_true",
+        help="Refresh Minimal Profile rules while preserving milestone state and work.",
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Validate an initialized Minimal Profile without writing files.",
+    )
     return parser.parse_args()
 
 

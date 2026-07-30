@@ -1,10 +1,8 @@
-# Document Workflow
+# Full Profile: Eight-Role Document Workflow / 八角色完整文档工作流
 
-> Legacy profile / 历史模式
+> This is the Code-role Full Profile for complex, high-risk, research-heavy, or audit-intensive milestones. The four-workstation Minimal Profile is documented in [`../loop/README.md`](../loop/README.md).
 >
-> This eight-role packet workflow is retained for compatibility and audit history. New projects should use the four-workstation goal loop in [`../loop/README.md`](../loop/README.md) and `scripts/init_loop_workflow.py`.
->
-> 本八角色 packet 工作流仅为兼容和历史审计保留。新项目应使用 [`../loop/README.md`](../loop/README.md) 中的四工位目标闭环和 `scripts/init_loop_workflow.py`。
+> 这是 Code-role 的八角色完整版，适用于复杂、高风险、研究密集或需要完整审计链的 milestone。四角色最小版见 [`../loop/README.md`](../loop/README.md)。
 
 This folder defines the document-based role workflow for Code-role role instances.
 
@@ -15,6 +13,10 @@ The workflow is discussion-first, not automation-first. Each role produces a doc
 The workflow has eight configured role slots. The [Workflow Orchestrator](orchestrator/ROLE.md) is the control role; the other seven roles are execution roles.
 
 The recommended usage model is one configured Codex role instance per role. Do not run the full workflow by switching roles inside one conversation.
+
+The Minimal and Full profiles are both supported product configurations. Select one at milestone start. Do not mix their active state models inside the same milestone: Minimal uses `milestone-board.md`; Full uses Orchestrator state plus versioned packets.
+
+四角色最小版和八角色完整版都是正式支持的产品配置。应在 milestone 启动时选择一套，同一 milestone 内不要混用两套活跃状态模型：最小版使用 `milestone-board.md`，完整版使用 Orchestrator 状态和版本化 packets。
 
 ## Current Scope
 

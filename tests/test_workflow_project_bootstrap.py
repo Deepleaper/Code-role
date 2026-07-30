@@ -102,6 +102,8 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
     reviewer_prompt = read(target / "code-role" / "role-instance-prompts" / "reviewer.md")
     milestone_contract = read(target / "code-role" / "workflow" / "orchestrator" / "milestone-contract.md")
     evaluation_sop = read(target / "code-role" / "workflow" / "evaluation" / "evaluation-sop.md")
+    assert "control_profile: full-eight-role" in project_config
+    assert "Code-role Full Profile Project Configuration" in project_readme
     assert "tracking_policy: local-only" in project_config
     for generated in [project_config, project_readme]:
         assert "local-only workflow assistance" in generated

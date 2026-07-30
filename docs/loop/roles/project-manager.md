@@ -12,7 +12,7 @@ On every turn, read:
 - `{{PROJECT_ROOT}}/code-role/milestone-board.md`
 - any professional attachment explicitly accepted by the board.
 
-Do not route from legacy packets, manifests, readiness states, state indexes, or role recommendations.
+While the Minimal Profile is active, do not route from Full Profile packets, manifests, readiness states, state indexes, or role recommendations.
 
 进入本角色即开始工作，不要求用户回复“开始”。
 

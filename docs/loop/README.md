@@ -1,8 +1,8 @@
 # Code-role Goal Loop / Code-role 目标闭环
 
-This is the default Code-role operating model.
+This is the Code-role Minimal Profile: the smallest complete milestone-control unit.
 
-这是 Code-role 的默认运行模式。
+这是 Code-role 四角色最小版：能够完整控制一个软件里程碑的最小单元。
 
 ## Purpose / 目的
 
@@ -47,9 +47,9 @@ Research is a capability inside Product Strategy and Engineering. Architecture a
 - Role-specific return templates under `code-role/templates/`.
 - Detailed attachments under `code-role/work/<milestone>/`.
 
-Packets, manifests, readiness transitions, locks, state indexes, and archived role prompts are not part of the default loop.
+Packets, manifests, readiness transitions, locks, state indexes, and archived role prompts are not part of the Minimal Profile control model.
 
-Packet、manifest、readiness 转换、lock、state-index 和归档角色提示词不属于默认闭环。
+Packet、manifest、readiness 转换、lock、state-index 和归档角色提示词不属于四角色最小版控制模型。
 
 ## Start / 启动
 
@@ -80,8 +80,12 @@ The initializer adds `code-role/` to `.git/info/exclude` when the target is a Gi
 
 如果目标项目是 Git 仓库，初始化器会把 `code-role/` 写入本地 `.git/info/exclude`。这样角色控制材料保持本地，不会修改产品仓库已跟踪的 `.gitignore`。
 
-## Legacy Profile / 历史模式
+## Full Profile / 八角色完整版
 
-The previous eight-role packet workflow remains under [`docs/workflow/`](../workflow/README.md) for compatibility and audit history. It is not the default initialization path.
+The eight-role Full Profile lives under [`docs/workflow/`](../workflow/README.md). Use it when research, product definition, architecture, code-context mapping, implementation, independent evaluation, and final audit need separate professional ownership and versioned packet evidence.
 
-之前的八角色 packet 工作流仍保留在 [`docs/workflow/`](../workflow/README.md)，仅用于兼容和历史审计，不是默认初始化路径。
+八角色完整版位于 [`docs/workflow/`](../workflow/README.md)。当调研、产品定义、架构、代码上下文、实现、独立评估和最终审计需要独立专业责任及版本化 packet 证据时使用它。
+
+Neither profile is deprecated. Select one profile for a milestone and keep its control records authoritative throughout that milestone.
+
+两套配置都不是历史遗留。每个 milestone 选择其中一套，并在该 milestone 内始终以所选配置的控制记录为权威。

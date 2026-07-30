@@ -3,81 +3,120 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Code-role 工作流说明与项目初始化指南</title>
+  <meta name="description" content="Code-role 四角色最小版与八角色完整版的产品说明、选择方法和项目初始化指南。">
+  <title>Code-role 双配置工作流与项目初始化指南</title>
   <style>
     :root {
       color-scheme: light;
-      --ink: #17202a;
-      --muted: #5d6d7e;
-      --line: #d7dde5;
+      --ink: #18202a;
+      --muted: #586473;
+      --line: #d8dee7;
       --soft: #f5f7fa;
       --panel: #ffffff;
-      --accent: #1f6feb;
-      --accent-soft: #eaf2ff;
-      --warn: #8a5a00;
-      --warn-soft: #fff6d8;
-      --ok: #0f6b3d;
-      --ok-soft: #e7f6ed;
-      --code: #101828;
+      --blue: #1768ac;
+      --blue-soft: #eaf3fb;
+      --green: #17663a;
+      --green-soft: #eaf6ef;
+      --amber: #7a5200;
+      --amber-soft: #fff5d9;
+      --code: #101722;
+      --max: 1120px;
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       color: var(--ink);
       background: #ffffff;
-      font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+
+    a {
+      color: var(--blue);
     }
 
     .page {
-      max-width: 1080px;
+      width: min(100% - 40px, var(--max));
       margin: 0 auto;
-      padding: 44px 28px 80px;
+      padding: 52px 0 84px;
     }
 
     header {
-      padding-bottom: 28px;
+      padding-bottom: 34px;
       border-bottom: 1px solid var(--line);
-      margin-bottom: 32px;
     }
 
     .eyebrow {
       margin: 0 0 10px;
-      color: var(--accent);
+      color: var(--blue);
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 750;
+      letter-spacing: 0;
+    }
+
+    h1,
+    h2,
+    h3 {
       letter-spacing: 0;
     }
 
     h1 {
+      max-width: 860px;
       margin: 0;
-      font-size: 34px;
-      line-height: 1.22;
-      letter-spacing: 0;
+      font-size: 50px;
+      line-height: 1.16;
     }
 
-    .subtitle {
-      max-width: 820px;
-      margin: 18px 0 0;
+    .lead {
+      max-width: 850px;
+      margin: 20px 0 0;
       color: var(--muted);
-      font-size: 18px;
+      font-size: 19px;
+    }
+
+    .meta {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 9px 24px;
+      margin: 26px 0 0;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .toc a {
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    section {
+      padding-top: 42px;
     }
 
     h2 {
-      margin: 40px 0 14px;
-      font-size: 24px;
-      line-height: 1.35;
-      letter-spacing: 0;
+      margin: 0 0 14px;
+      font-size: 28px;
+      line-height: 1.3;
     }
 
     h3 {
       margin: 28px 0 10px;
-      font-size: 19px;
+      font-size: 20px;
       line-height: 1.4;
-      letter-spacing: 0;
     }
 
     p {
@@ -86,7 +125,7 @@
 
     ul,
     ol {
-      margin: 0 0 16px 24px;
+      margin: 0 0 18px 24px;
       padding: 0;
     }
 
@@ -94,457 +133,474 @@
       margin: 6px 0;
     }
 
+    .profiles {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin: 22px 0;
+    }
+
+    .profile {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .profile.minimal {
+      border-top: 4px solid var(--green);
+    }
+
+    .profile.full {
+      border-top: 4px solid var(--blue);
+    }
+
+    .profile h3 {
+      margin: 0 0 6px;
+      font-size: 23px;
+    }
+
+    .profile .tag {
+      display: inline-block;
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .profile ul {
+      margin-bottom: 0;
+    }
+
+    .note,
+    .success,
+    .warning {
+      margin: 20px 0;
+      padding: 15px 17px;
+      border: 1px solid;
+      border-radius: 8px;
+    }
+
+    .note {
+      background: var(--blue-soft);
+      border-color: #abcde8;
+    }
+
+    .success {
+      color: var(--green);
+      background: var(--green-soft);
+      border-color: #abd7bc;
+    }
+
+    .warning {
+      color: var(--amber);
+      background: var(--amber-soft);
+      border-color: #e6c869;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 16px 0 24px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+
+    th,
+    td {
+      padding: 12px 13px;
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--soft);
+      font-weight: 750;
+    }
+
     code {
+      padding: 1px 5px;
       color: var(--code);
       background: var(--soft);
       border: 1px solid var(--line);
       border-radius: 5px;
-      padding: 1px 5px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      font-size: 0.92em;
+      font: 0.92em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
 
     pre {
-      overflow: auto;
-      margin: 14px 0 18px;
-      padding: 16px;
-      color: #eef4ff;
-      background: #111827;
+      overflow-x: auto;
+      margin: 14px 0 20px;
+      padding: 17px;
+      color: #eff5ff;
+      background: #111821;
       border-radius: 8px;
       font-size: 14px;
       line-height: 1.55;
     }
 
     pre code {
+      padding: 0;
       color: inherit;
       background: transparent;
       border: 0;
-      padding: 0;
       font-size: inherit;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 14px 0 22px;
-      font-size: 15px;
-    }
-
-    th,
-    td {
-      vertical-align: top;
-      padding: 11px 12px;
-      border: 1px solid var(--line);
-      text-align: left;
-    }
-
-    th {
-      background: var(--soft);
-      font-weight: 700;
-    }
-
-    .toc {
+    .flow {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 8px 20px;
-      margin: 22px 0 4px;
-      padding: 18px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 20px 0 24px;
+      counter-reset: step;
+    }
+
+    .flow-step {
+      position: relative;
+      min-height: 116px;
+      padding: 17px 14px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
       background: var(--soft);
-      border: 1px solid var(--line);
-      border-radius: 8px;
     }
 
-    .toc a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .note,
-    .warning,
-    .success {
-      margin: 18px 0;
-      padding: 14px 16px;
-      border-radius: 8px;
-      border: 1px solid;
-    }
-
-    .note {
-      background: var(--accent-soft);
-      border-color: #b8d3ff;
-    }
-
-    .warning {
-      color: var(--warn);
-      background: var(--warn-soft);
-      border-color: #f2d27a;
-    }
-
-    .success {
-      color: var(--ok);
-      background: var(--ok-soft);
-      border-color: #a6dfbd;
-    }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin: 16px 0 22px;
-    }
-
-    .box {
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-    }
-
-    .box h3 {
-      margin-top: 0;
-    }
-
-    .meta {
-      margin-top: 18px;
-      color: var(--muted);
+    .flow-step::before {
+      counter-increment: step;
+      content: counter(step);
+      display: block;
+      width: 27px;
+      height: 27px;
+      margin-bottom: 9px;
+      color: #ffffff;
+      background: var(--blue);
+      border-radius: 50%;
       font-size: 14px;
+      font-weight: 750;
+      line-height: 27px;
+      text-align: center;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 12px;
+      margin: 18px 0 24px;
+    }
+
+    .role {
+      padding: 15px;
+      border-left: 4px solid var(--blue);
+      background: var(--soft);
+    }
+
+    .role strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .checklist {
+      padding: 18px 20px;
+      background: var(--soft);
+      border-left: 4px solid var(--green);
     }
 
     footer {
-      margin-top: 48px;
-      padding-top: 20px;
-      border-top: 1px solid var(--line);
+      margin-top: 54px;
+      padding-top: 22px;
       color: var(--muted);
+      border-top: 1px solid var(--line);
       font-size: 14px;
+    }
+
+    @media (max-width: 780px) {
+      .page {
+        width: min(100% - 28px, var(--max));
+        padding-top: 32px;
+      }
+
+      .profiles {
+        grid-template-columns: 1fr;
+      }
+
+      .flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 460px) {
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
     }
   </style>
 </head>
 <body>
   <main class="page">
     <header>
-      <p class="eyebrow">Code-role / Discussion-first Codex Workflow</p>
-      <h1>Code-role 工作流说明与项目初始化指南</h1>
-      <p class="subtitle">
-        这份文档解释 Code-role 是怎么来的、解决什么问题、每个角色怎么协作，以及如何把它快速初始化到一个具体项目里。
+      <p class="eyebrow">Code-role / Codex Software Delivery Control</p>
+      <h1>Code-role：四角色最小单元，八角色完整交付</h1>
+      <p class="lead">
+        Code-role 用明确责任、固定任务接口、客观证据和独立评估控制 Codex 编程交付。
+        它提供两套正式配置：四角色最小版用于快速、完整的目标闭环；八角色完整版用于复杂、高风险和需要完整审计的工程交付。
       </p>
-      <p class="meta">适用对象：想用 Codex 做复杂编程交付，但希望每一步先讨论、再确认、再执行的个人开发者、技术负责人和 AI 工作流设计者。</p>
+      <p class="meta">适用对象：个人开发者、技术创始人、工程负责人和 AI 工程工作流设计者。</p>
     </header>
 
     <nav class="toc" aria-label="目录">
-      <a href="#origin">1. 它是怎么来的</a>
-      <a href="#positioning">2. 它是什么，不是什么</a>
-      <a href="#roles">3. 八个角色</a>
-      <a href="#packet">4. Packet 与交接</a>
-      <a href="#chains">5. 工作链路</a>
+      <a href="#origin">1. 为什么需要</a>
+      <a href="#profiles">2. 两套正式配置</a>
+      <a href="#choose">3. 如何选择</a>
+      <a href="#minimal">4. 四角色最小版</a>
+      <a href="#full">5. 八角色完整版</a>
       <a href="#init">6. 初始化到项目</a>
-      <a href="#run">7. 实际运行流程</a>
-      <a href="#git">8. Git 与发布边界</a>
-      <a href="#faq">9. 常见问题</a>
+      <a href="#operate">7. 日常控制方法</a>
+      <a href="#evidence">8. 完成与证据</a>
+      <a href="#git">9. Git 与发布边界</a>
     </nav>
 
     <section id="origin">
-      <h2>1. 它是怎么来的</h2>
+      <h2>1. 为什么需要 Code-role</h2>
       <p>
-        Code-role 来自一个很具体的工程问题：直接让 Codex 在一个聊天里完成需求分析、架构设计、代码实现、测试和 review，短期看很快，长期看很难稳定交付。
+        直接让 Codex 在一个对话里同时完成需求、架构、代码、测试和 review，最常见的问题不是“不会写”，而是目标不断漂移：
+        每个阶段都产出了内容，但没有人对最终里程碑负责；实现自报成功，评估口径又随着结果变化。
       </p>
       <p>
-        常见问题包括：需求还没确认就开始写代码；架构假设留在聊天里；实现范围不断漂移；测试标准不清；review 只能看结果，追溯不到为什么这么做。
+        Code-role 不把更多流程当成目标。它只保留能够提高交付确定性的控制点：谁负责目标、谁负责专业结论、怎样证明完成、谁独立评估。
       </p>
-      <p>
-        Code-role 的做法是把 Codex 编程过程拆成多个专业角色，每个角色只产出自己的文件化结果。用户先和这个角色讨论，确认后再进入下一个角色。这样流程不是自动化流水线，而是一个可审计、可讨论、可回退的工程控制层。
-      </p>
-      <div class="note">
-        核心原则：聊天可以用于讨论，但不能作为事实源。事实源必须落在文档、manifest、lock、状态文件和 Git 记录里。
+      <div class="success">
+        共同原则：项目经理负责 milestone，专业角色负责专业判断，实现不能自我验收，必需证据未获得就是未完成。
       </div>
     </section>
 
-    <section id="positioning">
-      <h2>2. 它是什么，不是什么</h2>
-      <div class="two-col">
-        <div class="box">
-          <h3>Code-role 是什么</h3>
+    <section id="profiles">
+      <h2>2. 两套正式配置</h2>
+      <p>四角色与八角色不是新旧版本，也不是高低等级。它们是同一产品针对不同任务复杂度提供的两种流程深度。</p>
+      <div class="profiles">
+        <article class="profile minimal">
+          <h3>四角色最小版</h3>
+          <span class="tag">Minimal Profile</span>
+          <p>完整控制一个软件 milestone 所需的最小责任单元。</p>
           <ul>
-            <li>本地角色配置项目。</li>
-            <li>讨论优先的 Codex 工作流模板。</li>
-            <li>用文档 packet 控制复杂编程任务的过程层。</li>
-            <li>让每个角色有明确输入、输出和边界。</li>
-            <li>让实现、测试、review 都能追溯上游依据。</li>
+            <li>一份里程碑作战板作为唯一权威。</li>
+            <li>每轮只处理一个已确认的 <code>KR=0</code>。</li>
+            <li>项目经理、产品策略、工程、独立评估。</li>
+            <li>固定任务书与固定回报，不使用 packet 链。</li>
+            <li>适合产品方向较清楚、范围可控的持续迭代。</li>
           </ul>
-        </div>
-        <div class="box">
-          <h3>Code-role 不是什么</h3>
+        </article>
+        <article class="profile full">
+          <h3>八角色完整版</h3>
+          <span class="tag">Full Profile</span>
+          <p>把研究、产品、架构、上下文、实现、评估和审计拆成独立专业责任。</p>
           <ul>
-            <li>不是多 Agent 自动执行平台。</li>
-            <li>不是让 Codex 一路自动写到底。</li>
-            <li>不是 GitHub、Jira、Linear 或 IDE 替代品。</li>
-            <li>不是产品运行时内容。</li>
-            <li>不是默认要进入客户交付包的内容。</li>
+            <li>Orchestrator 状态与版本化 packets 作为权威链路。</li>
+            <li>每个专业角色都有独立输入、输出和完成契约。</li>
+            <li>Test Evaluator 与 Reviewer 分别负责评估和最终审计。</li>
+            <li>支持严格 handoff、manifest 和可选 packet lock。</li>
+            <li>适合复杂、高风险、研究密集或需要审计追溯的 milestone。</li>
           </ul>
-        </div>
+        </article>
       </div>
-      <p>
-        推荐使用模型：
-      </p>
-      <pre><code>Code-role 项目 = 角色定义、workflow 协议、初始化脚本
-目标业务项目 = 实际被分析、讨论或修改的代码仓库</code></pre>
-    </section>
-
-    <section id="roles">
-      <h2>3. 八个角色</h2>
-      <p>
-        Code-role 推荐一个角色一个 Codex 对话。这样做不是为了增加仪式感，而是为了隔离职责和上下文。
-      </p>
-      <table>
-        <thead>
-          <tr>
-            <th>角色</th>
-            <th>职责</th>
-            <th>是否能改代码</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Workflow Orchestrator</td>
-            <td>流程总控。判断 milestone、chain、权威 packet、下一角色、是否可消费。</td>
-            <td>不能。</td>
-          </tr>
-          <tr>
-            <td>Researcher</td>
-            <td>只做事实调研、证据地图、风险和开放问题。</td>
-            <td>不能。</td>
-          </tr>
-          <tr>
-            <td>Product / PRD</td>
-            <td>把研究输入转成需求范围、验收标准、非目标和产品决策。</td>
-            <td>不能。</td>
-          </tr>
-          <tr>
-            <td>Architect</td>
-            <td>定义架构边界、接口、数据流、测试策略和架构风险。</td>
-            <td>不能。</td>
-          </tr>
-          <tr>
-            <td>Code Context</td>
-            <td>映射代码影响范围、依赖、测试入口和实现约束。</td>
-            <td>不能。</td>
-          </tr>
-          <tr>
-            <td>Implementer</td>
-            <td>在明确授权的文件范围内实现改动，并写实现记录。</td>
-            <td>可以，但必须先获批。</td>
-          </tr>
-          <tr>
-            <td>Test Evaluator</td>
-            <td>评估测试计划、测试结果、回归矩阵和质量门禁。</td>
-            <td>不能。</td>
-          </tr>
-          <tr>
-            <td>Reviewer</td>
-            <td>审查最终链路、gap、残余风险和是否允许进入下一阶段。</td>
-            <td>不能。</td>
-          </tr>
-        </tbody>
-      </table>
-      <p>
-        每个角色都有自己的 <code>ROLE.md</code>，启动时必须读取自己的角色定义。角色不能靠聊天记忆猜自己该做什么。
-      </p>
-    </section>
-
-    <section id="packet">
-      <h2>4. Packet 与交接</h2>
-      <p>
-        每个执行角色的产出都是一个版本化 packet。packet 是一个文件夹，里面包含该角色的正文文档和 <code>handoff.manifest.json</code>。
-      </p>
-      <pre><code>code-role/workflow/roles/product-prd/reports/&lt;milestone&gt;/packet-v001/
-  product-brief.md
-  prd.md
-  acceptance-criteria.md
-  non-goals.md
-  decision-log.md
-  handoff.manifest.json</code></pre>
-      <p>
-        <code>handoff.manifest.json</code> 是下游角色的入口。它记录这个 packet 属于哪个角色、是什么状态、包含哪些文档、消费了哪些上游 packet、是否阻塞、是否允许下游消费。
-      </p>
-      <p>
-        packet 从 <code>draft</code> 开始。默认轻量流程里，用户接受该角色产出后，Orchestrator 就可以把这个 draft packet 交给下一角色。只有当用户明确要求严格交接、审计、不可变证据或发布级留档时，才需要把 packet 标记为 <code>ready_for_next_role</code>，并创建 <code>packet.lock.json</code> 记录 hash。
-      </p>
       <div class="warning">
-        不允许下游角色扫描“最新文件”来猜输入。必须由 Orchestrator 或用户提供精确的 upstream manifest 路径。
+        同一个 milestone 只能有一套活跃控制模型。不能一边用四角色的 <code>milestone-board.md</code> 路由，一边又让八角色 packet 状态决定进度。
       </div>
     </section>
 
-    <section id="chains">
-      <h2>5. 工作链路</h2>
-      <p>
-        不同任务不需要同样重的流程。Code-role 用 chain 控制流程长度。
+    <section id="choose">
+      <h2>3. 如何选择</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>判断问题</th>
+              <th>选择四角色最小版</th>
+              <th>选择八角色完整版</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>产品含义</td>
+              <td>已经明确，或产品策略工位可以一次解决。</td>
+              <td>需要独立研究和 PRD 多轮收敛。</td>
+            </tr>
+            <tr>
+              <td>架构风险</td>
+              <td>可作为工程工位中的一种工作模式处理。</td>
+              <td>架构契约必须在代码映射和实现前独立确认。</td>
+            </tr>
+            <tr>
+              <td>证据追溯</td>
+              <td>一份作战板和专业附件足够。</td>
+              <td>必须保留分角色、分版本的 packet 链。</td>
+            </tr>
+            <tr>
+              <td>评估与审计</td>
+              <td>独立评估工位可以同时冻结基线并完成复评。</td>
+              <td>Test Evaluator 与 Reviewer 需要职责分离。</td>
+            </tr>
+            <tr>
+              <td>流程成本</td>
+              <td>需要更快启动和更少手动传递。</td>
+              <td>愿意用更多流程换取更强专业隔离和审计。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="checklist">
+        最简单的选择规则：如果把某个专业环节合并进工程工位会丢失重要判断或审计证据，就使用八角色完整版；否则从四角色最小版开始。
       </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Chain</th>
-            <th>适用场景</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>full-chain</code></td>
-            <td>新功能、复杂重构、安全/权限/运行时相关变更。</td>
-          </tr>
-          <tr>
-            <td><code>mini-chain</code></td>
-            <td>范围较清楚，但仍需要架构和代码上下文的任务。</td>
-          </tr>
-          <tr>
-            <td><code>patch-chain</code></td>
-            <td>小修复、小文档治理、小范围实现。</td>
-          </tr>
-          <tr>
-            <td><code>docs-only-chain</code></td>
-            <td>只改文档，不进入实现。</td>
-          </tr>
-          <tr>
-            <td><code>research-only</code></td>
-            <td>只做调研，不进入 PRD、架构或实现。</td>
-          </tr>
-        </tbody>
-      </table>
+    </section>
+
+    <section id="minimal">
+      <h2>4. 四角色最小版</h2>
+      <div class="role-grid">
+        <div class="role"><strong>项目经理</strong>定义 Objective 与二值 KR；每轮选择一个 <code>KR=0</code>；依据独立证据更新状态。</div>
+        <div class="role"><strong>产品策略</strong>解决用户价值、产品行为、范围、阈值、非目标和 claim boundary。</div>
+        <div class="role"><strong>工程</strong>完成必要研究、架构、代码上下文、实现、测试和候选证据。</div>
+        <div class="role"><strong>独立评估</strong>冻结评估 SOP，并对完整必需范围运行目标检查与回归检查。</div>
+      </div>
+      <div class="flow" aria-label="四角色最小版流程">
+        <div class="flow-step"><strong>确认 OKR</strong>用户确认一个 Objective 和不超过五个二值 KR。</div>
+        <div class="flow-step"><strong>选择一个 KR=0</strong>项目经理只下发一份完整任务书。</div>
+        <div class="flow-step"><strong>专业执行</strong>被选工位直接执行，并用唯一回报模板交付。</div>
+        <div class="flow-step"><strong>独立证据</strong>项目经理只依据接受的独立证据更新 KR。</div>
+      </div>
+      <p>
+        四角色不是固定链。产品含义清楚时可以直接进入工程；评估基线未冻结时先进入独立评估的 <code>baseline_freeze</code> 模式；工程提交候选结果后再进入 <code>full_evaluation</code>。
+      </p>
+    </section>
+
+    <section id="full">
+      <h2>5. 八角色完整版</h2>
+      <div class="role-grid">
+        <div class="role"><strong>Workflow Orchestrator</strong>控制 milestone、权威状态、路由和关闭。</div>
+        <div class="role"><strong>Researcher</strong>整理仓库证据、外部研究、风险与未知项。</div>
+        <div class="role"><strong>Product / PRD</strong>定义产品价值、范围、验收和 claim boundary。</div>
+        <div class="role"><strong>Architect</strong>定义架构契约、边界、接口、数据流和风险。</div>
+        <div class="role"><strong>Code Context</strong>映射精确文件、函数、字段、测试、artifact 和实现约束。</div>
+        <div class="role"><strong>Implementer</strong>修改被批准的业务文件，并提交实现与验证证据。</div>
+        <div class="role"><strong>Test Evaluator</strong>依据冻结 SOP 独立执行完整评估。</div>
+        <div class="role"><strong>Reviewer</strong>从 Orchestrator 开始审计所有最终角色产物是否偏离原始 milestone。</div>
+      </div>
+      <p>
+        每个专业角色完成后先返回 Orchestrator。Orchestrator 检查里程碑一致性、专业模板完整性和客观证据，再决定下一角色。专业结论来自角色 packet，不由 Orchestrator 自行改写。
+      </p>
+      <pre><code>Workflow Orchestrator
+  -> Researcher -> Workflow Orchestrator
+  -> Product / PRD -> Workflow Orchestrator
+  -> Architect -> Workflow Orchestrator
+  -> Code Context -> Workflow Orchestrator
+  -> Implementer -> Workflow Orchestrator
+  -> Test Evaluator -> Workflow Orchestrator
+  -> Reviewer -> Workflow Orchestrator</code></pre>
     </section>
 
     <section id="init">
       <h2>6. 初始化到具体项目</h2>
-      <p>
-        以前初始化一个项目需要手动创建 <code>code-role/</code>、角色 prompt、Orchestrator 状态和索引文件。现在可以用初始化脚本一次生成基础配置。
-      </p>
-      <h3>6.1 准备 Code-role 项目</h3>
+      <h3>6.1 获取 Code-role</h3>
       <pre><code>git clone https://github.com/Deepleaper/Code-role.git
 cd Code-role</code></pre>
-      <h3>6.2 在目标项目中生成配置</h3>
+
+      <h3>6.2 初始化四角色最小版</h3>
+      <pre><code>python scripts/init_loop_workflow.py "/absolute/path/to/project" \
+  --project-name "Project Name"</code></pre>
+      <p>同步新规则且保留现有作战板和专业附件：</p>
+      <pre><code>python scripts/init_loop_workflow.py "/absolute/path/to/project" \
+  --project-name "Project Name" \
+  --sync</code></pre>
+      <p>校验：</p>
+      <pre><code>python scripts/init_loop_workflow.py "/absolute/path/to/project" --check</code></pre>
+
+      <h3>6.3 初始化八角色完整版</h3>
+      <p>先预览：</p>
       <pre><code>python scripts/init_project_workflow.py \
-  --target "/path/to/Target Project" \
-  --project-name "Target Project" \
+  --target "/absolute/path/to/project" \
+  --project-name "Project Name" \
   --initial-milestone workflow-bootstrap \
-  --initial-chain research-only \
+  --initial-chain full-chain</code></pre>
+      <p>确认后写入：</p>
+      <pre><code>python scripts/init_project_workflow.py \
+  --target "/absolute/path/to/project" \
+  --project-name "Project Name" \
+  --initial-milestone workflow-bootstrap \
+  --initial-chain full-chain \
   --write</code></pre>
-      <p>
-        如果只是预览会生成哪些文件，可以去掉 <code>--write</code>。
-      </p>
-      <h3>6.3 local-only 边界</h3>
-      <p>
-        <code>code-role/</code> 是本地辅助层，不是业务项目交付内容。初始化脚本会在目标项目存在 <code>.git/info/exclude</code> 时加入 <code>code-role/</code>，避免它进入目标项目 Git 历史。
-      </p>
+
       <div class="note">
-        <code>code-role/</code> 不应进入模板索引、客户交付包、CLI payload 或 release artifact。它服务于本地角色协作，不属于项目本身的交付。
+        两套初始化器都只生成本地角色控制文件，不修改业务源码。如果目标目录已经是 Git 仓库，会把 <code>code-role/</code> 加入本地 <code>.git/info/exclude</code>。
       </div>
-      <h3>6.4 初始化后会生成什么</h3>
-      <pre><code>code-role/
-  README.md
-  project-config.md
-  role-instance-prompts/
-    workflow-orchestrator.md
-    researcher.md
-    product-prd.md
-    architect.md
-    code-context.md
-    implementer.md
-    test-evaluator.md
-    reviewer.md
-  workflow/
-    orchestrator/
-      workflow-state.md
-      milestone-registry.md
-      decision-log.md
-      final-packet-index.md
-      milestone-contract.md
-    evaluation/
-      evaluation-sop.md</code></pre>
-      <p>
-        初始化脚本不会创建 Researcher、PRD、Architect、Implementer 等执行角色 packet。执行角色 packet 必须由对应角色在用户确认后创建。
-      </p>
-      <p>
-        <code>workflow/orchestrator/milestone-contract.md</code> 是当前 milestone 的硬目标锚点；第一个执行角色启动前应由 Orchestrator 和用户确认。<code>docs/workflow/role-completion-contract.md</code> 定义二值完成门禁：只有每个指定完成条件都有具体证据时，角色才能写 <code>role_completion_status=1</code>；否则必须写 <code>role_completion_status=0</code>，流程停在当前角色。<code>workflow/evaluation/evaluation-sop.md</code> 是评估师和 Reviewer 使用的硬评估锚点；评估师不能每次临时换口径。
-      </p>
-      <p>
-        如确实需要给新角色提供额外导航，可以在初始化时加 <code>--with-state-index</code>，生成可选的 <code>code-role/state-index/</code>。默认流程不生成它。
-      </p>
     </section>
 
-    <section id="run">
-      <h2>7. 实际运行流程</h2>
+    <section id="operate">
+      <h2>7. 日常控制方法</h2>
+      <h3>四角色最小版</h3>
       <ol>
-        <li>打开 Workflow Orchestrator 的 Codex 对话。</li>
-        <li>粘贴目标项目里的 <code>code-role/role-instance-prompts/workflow-orchestrator.md</code>。</li>
-        <li>让 Orchestrator 恢复状态，确认第一个真实 milestone、chain 和 <code>milestone-contract.md</code>。</li>
-        <li>Orchestrator 输出下一个角色和精确 upstream manifest。</li>
-        <li>为下一个角色打开新的 Codex 对话。</li>
-        <li>粘贴对应的 <code>code-role/role-instance-prompts/&lt;role&gt;.md</code>。</li>
-        <li>角色先确认读取范围、写入范围和禁止范围。</li>
-        <li>用户回复“开始”后，角色创建 draft packet。</li>
-        <li>角色完成后，先输出二值完成块：<code>role_completion_status</code>、条件总数、满足数、未满足清单和具体证据；再在同一条完成回复末尾给出可复制的 Orchestrator consumption-check summary。</li>
-        <li>用户把这段摘要直接发给 Orchestrator / 项目经理。</li>
-        <li>Orchestrator 优先检查 <code>role_completion_status=1</code>、条件计数相等、未满足条件为 <code>none</code>、证据具体；再检查产出是否仍对齐 <code>milestone-contract.md</code>、manifest、文档、阻塞项和用户是否接受该产出。</li>
-        <li>进入 Test Evaluator 前，确认 <code>evaluation-sop.md</code> 是否适用于本 milestone；Reviewer 最终审计该 SOP 是否被遵守。</li>
-        <li>默认轻量流程下，如果 Orchestrator 明确允许进入下一角色，必须直接贴出可复制的下一角色启动消息。</li>
-        <li>只有用户明确要求严格交接时，才进入 <code>ready_for_next_role</code> 和 <code>packet.lock.json</code>。</li>
+        <li>只在项目经理对话中确认 Objective、KR、非目标和独立证据。</li>
+        <li>项目经理选择一个 <code>KR=0</code>，使用固定 <code>PM Assignment</code>。</li>
+        <li>把任务书贴入被选工位对话；完整任务书即启动，不再回复“开始”。</li>
+        <li>工位使用唯一回报模板，并附专业附件。</li>
+        <li>把回报贴回项目经理；项目经理接受或打回。</li>
+        <li>候选实现必须交给独立评估，工程不能自报 KR 通过。</li>
       </ol>
-      <h3>state-index 的作用</h3>
-      <p>
-        <code>code-role/state-index/</code> 是可选角色接入索引。它告诉新角色当前项目走到哪一步、该读什么、不能读什么、当前残余风险是什么。
-      </p>
-      <p>
-        它不是默认必需文件，也不是新的事实来源。如果 state-index 和 manifest、严格模式下的 packet.lock 或 Orchestrator 状态冲突，必须以后者为准。
-      </p>
+      <h3>八角色完整版</h3>
+      <ol>
+        <li>Orchestrator 确认 milestone contract、chain 和当前权威输入。</li>
+        <li>Orchestrator 使用该角色专属任务模板下发任务。</li>
+        <li>专业角色消费精确上游 packet 文档，产出自己的版本化 packet。</li>
+        <li>角色用固定完成模板回报 Orchestrator。</li>
+        <li>Orchestrator 检查里程碑对齐、专业完整性与客观证据。</li>
+        <li>Test Evaluator 完成独立评估，Reviewer 最终审计整条链路。</li>
+      </ol>
+      <p>当前两套配置都使用人工可复制传递，不声称已自动跨对话派发。</p>
+    </section>
+
+    <section id="evidence">
+      <h2>8. 完成与证据</h2>
+      <ul>
+        <li><code>0</code>：必需结果尚未获得独立证据。</li>
+        <li><code>1</code>：所有冻结通过条件都有可接受证据。</li>
+        <li>必需检查未运行就是 <code>0</code>。</li>
+        <li>残余问题必须成为新要求、明确非目标，或保持未解决状态。</li>
+        <li><code>partial_pass</code> 和 <code>pass_with_residual_risk</code> 不能关闭 milestone。</li>
+        <li>只有项目经理更新 milestone 状态。</li>
+      </ul>
+      <div class="warning">
+        “更接近完成”“方向正确”“基本可用”都不是完成状态。完成声明必须指向具体条件、观察结果和独立证据。
+      </div>
     </section>
 
     <section id="git">
-      <h2>8. Git 与发布边界</h2>
-      <p>
-        Code-role 不接管业务项目的 Git 工作流。Git 还是原来的 Git，按项目原本的工程习惯处理。
-      </p>
-      <h3>8.1 推荐 Git 流程</h3>
-      <p>
-        角色可以报告当前有哪些文件修改、哪些文件未跟踪、是否存在 unrelated dirty files。但它不应该为了普通 <code>git add</code>、<code>git commit</code> 或 <code>git push</code> 再开一条角色链。
-      </p>
-      <ol>
-        <li>产品和代码变更按项目原有 Git 流程提交。</li>
-        <li><code>code-role/</code> 默认通过 <code>.git/info/exclude</code> 保持本地。</li>
-        <li>如果用户直接要求 Codex 执行 Git 命令，Codex 按普通工程任务处理，不需要 Orchestrator / Reviewer gate。</li>
-      </ol>
-      <h3>8.2 发布物边界</h3>
-      <p>
-        <code>code-role/</code> 不属于产品发布物。
-      </p>
-      <pre><code>code-role/ is local-only workflow assistance.
-It is not product runtime content.
-It is not part of the target project's delivery.
-It should remain outside the target project's Git history.</code></pre>
-    </section>
-
-    <section id="faq">
-      <h2>9. 常见问题</h2>
-      <h3>必须一个角色一个对话吗？</h3>
-      <p>
-        推荐这样做。它能强隔离职责，减少上下文污染，也符合“每一步先讨论再执行”的目标。初始化脚本会生成每个角色的启动 prompt，降低手动配置成本。
-      </p>
-      <h3>能不能让 Codex 自动跑完整链路？</h3>
-      <p>
-        不建议。Code-role 的目标不是自动化跑完，而是控制质量和边界。每个状态转换、实现开始、Git 操作都需要用户确认。
-      </p>
-      <h3>packet 什么时候要 lock？</h3>
-      <p>
-        只有严格交接、审计、不可变证据或发布级留档需要 lock。日常控制流程只需要记录精确 upstream manifest 和用户接受结果，不需要默认生成 <code>packet.lock.json</code>。
-      </p>
-      <h3>state-index 会不会变成新的事实源？</h3>
-      <p>
-        不会。它只是可选导航索引。权威永远是 Orchestrator 状态文件、<code>final-packet-index.md</code>、<code>handoff.manifest.json</code>，以及严格模式下的 <code>packet.lock.json</code>。
-      </p>
-      <h3>新项目最快怎么开始？</h3>
-      <p>
-        克隆 Code-role，运行 <code>scripts/init_project_workflow.py</code>，打开 Orchestrator 对话并粘贴生成的启动 prompt。之后每个角色都使用目标项目里生成的对应 prompt。
-      </p>
+      <h2>9. Git 与发布边界</h2>
+      <p>Code-role 不接管目标项目原有 Git 流程，也不为普通 Git 操作建立第二套审批链。</p>
+      <ul>
+        <li>产品代码仍按目标项目原有方式 branch、commit、review、merge 和 release。</li>
+        <li>目标项目中的 <code>code-role/</code> 默认是 local-only 辅助。</li>
+        <li><code>code-role/</code> 不是产品 runtime、客户交付包、CLI payload 或 release artifact。</li>
+        <li>Code-role 模板仓库自身可以正常提交和发布。</li>
+      </ul>
+      <pre><code>Target project code-role/:
+local role-control assistance
+not product runtime
+not product delivery
+not committed by default</code></pre>
     </section>
 
     <footer>
-      <p>Code-role 是讨论优先的本地角色工作流模板。它的重点不是替代工程判断，而是让 Codex 的工程过程更可控、更可追溯、更容易和人讨论。</p>
+      Code-role 的目的不是把流程做重，而是让流程深度与风险匹配：四角色保证最小完整性，八角色保证专业拆分和完整审计。
     </footer>
   </main>
 </body>

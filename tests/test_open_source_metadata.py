@@ -32,20 +32,49 @@ def test_open_source_supporting_files_exist() -> None:
     assert not missing
 
 
-def test_readme_exposes_goal_loop_diagram_and_example() -> None:
+def test_readme_exposes_both_supported_profiles() -> None:
     readme = read(ROOT / "README.md")
     example = read(ROOT / "examples" / "minimal-target" / "README.md")
 
     assert "```mermaid" in readme
+    assert "Minimal Profile / 四角色最小版" in readme
+    assert "Full Profile / 八角色完整版" in readme
+    assert "Neither profile is deprecated" in readme
+    assert "scripts/init_loop_workflow.py" in readme
+    assert "scripts/init_project_workflow.py" in readme
     assert "Project Manager selects one KR=0" in readme
     assert "Product Strategy" in readme
     assert "Engineering" in readme
     assert "Independent Evaluation" in readme
-    assert "There is no fixed four-role chain" in readme
-    assert "valid assignment starts immediately" in readme.lower()
+    assert "A complete PM Assignment starts the selected workstation immediately" in readme
+    assert "Workflow Orchestrator" in readme
+    assert "Researcher" in readme
+    assert "Architect" in readme
+    assert "Code Context" in readme
+    assert "Implementer" in readme
+    assert "Test Evaluator" in readme
+    assert "Reviewer" in readme
     assert "partial_pass" in readme
-    assert "manual copy-ready transport" in readme
     assert "Minimal target example" in readme
     assert "examples/minimal-target/README.md" in readme
     assert "Do not commit target-project `code-role/` output by default." in example
     assert "完整任务书即直接启动" in example
+
+
+def test_product_docs_define_minimal_and_full_profiles() -> None:
+    english_prd = read(ROOT / "docs" / "product" / "prd.md")
+    chinese_prd = read(ROOT / "docs" / "product" / "prd.zh-CN.md")
+    html = read(
+        ROOT / "docs" / "product" / "code-role-workflow-guide.zh-CN.html"
+    )
+    full_profile = read(ROOT / "docs" / "workflow" / "README.md")
+
+    assert "Minimal Profile" in english_prd
+    assert "Full Profile" in english_prd
+    assert "四角色最小版" in chinese_prd
+    assert "八角色完整版" in chinese_prd
+    assert "四角色最小版" in html
+    assert "八角色完整版" in html
+    assert "Full Profile: Eight-Role Document Workflow" in full_profile
+    assert "Legacy Eight-Role Profile" not in read(ROOT / "README.md")
+    assert "本八角色 packet 工作流仅为兼容" not in full_profile

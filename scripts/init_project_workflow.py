@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Legacy: initialize the previous eight-role packet workflow scaffold.
+"""Initialize the Full Profile eight-role packet workflow scaffold.
 
-New projects should use ``scripts/init_loop_workflow.py``. This compatibility
-script creates navigation and role-start files only. It does not run role work,
-create packets for execution roles, stage files, commit, push, or touch business
-source files.
+Use this profile for complex, high-risk, research-heavy, or audit-intensive
+milestones. The script creates navigation and role-start files only. It does
+not run role work, create packets for execution roles, stage files, commit,
+push, or touch business source files.
 """
 
 from __future__ import annotations
@@ -291,9 +291,9 @@ If any required professional field is missing, set `{role_completion_conformant_
 
 
 def render_project_readme(config: BootstrapConfig) -> str:
-    return f"""# Code-role Project Configuration
+    return f"""# Code-role Full Profile Project Configuration
 
-This directory configures Code-role for `{config.project_name}`.
+This directory configures the eight-role Code-role Full Profile for `{config.project_name}`.
 
 This folder is local-only workflow assistance. It is not product runtime content, is not part of the target project's delivery, and should not be committed or pushed with the target project.
 
@@ -330,6 +330,7 @@ def render_project_config(config: BootstrapConfig) -> str:
 project_name: {config.project_name}
 target_project_path: {config.target}
 workflow_root: {config.workflow_root}
+control_profile: full-eight-role
 tracking_policy: {config.tracking}
 external_research_allowed_default: {external}
 

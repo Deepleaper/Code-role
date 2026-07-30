@@ -4,4 +4,5 @@ This directory contains public examples for understanding Code-role setup and wo
 
 此目录用于展示 Code-role 的初始化方式和工作流边界。
 
-- [Minimal target project](minimal-target/README.md)
+- [Minimal Profile target project / 四角色最小版示例](minimal-target/README.md)
+- [Full Profile setup / 八角色完整版初始化](../docs/workflow/project-bootstrap.md)

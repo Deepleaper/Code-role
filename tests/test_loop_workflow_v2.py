@@ -44,6 +44,9 @@ def test_goal_loop_initializes_exactly_four_active_roles(tmp_path: Path) -> None
         "product-strategy.md",
         "project-manager.md",
     ]
+    project_config = read(target / "code-role" / "project-config.md")
+    assert "control_model: goal-loop-v2" in project_config
+    assert "active_roles:" in project_config
     assert "code-role/" in read(target / ".git" / "info" / "exclude")
 
 
@@ -75,7 +78,7 @@ def test_goal_loop_has_one_kr_binary_evidence_contract(tmp_path: Path) -> None:
     assert "not only the latest diff" in evaluator
 
 
-def test_sync_archives_old_active_names_and_preserves_board(tmp_path: Path) -> None:
+def test_sync_archives_full_profile_prompts_and_preserves_board(tmp_path: Path) -> None:
     target = tmp_path / "target"
     old_role_root = target / "code-role" / "role-instance-prompts"
     old_role_root.mkdir(parents=True)
@@ -112,7 +115,7 @@ def test_sync_archives_old_active_names_and_preserves_board(tmp_path: Path) -> N
             target
             / "code-role"
             / "archive"
-            / "v1-role-instance-prompts"
+            / "full-profile-role-instance-prompts"
             / filename
         ).exists()
     active = sorted(
