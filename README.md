@@ -1,10 +1,25 @@
 # Code-role
 
+<p align="center">
+  <img src="assets/code-role-social-preview.svg" alt="Code-role: milestone control for reliable AI coding" width="100%">
+</p>
+
+<p align="center">
+  <a href="https://github.com/Deepleaper/Code-role/actions/workflows/tests.yml"><img src="https://github.com/Deepleaper/Code-role/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
+  <a href="https://github.com/Deepleaper/Code-role/releases"><img src="https://img.shields.io/github/v/release/Deepleaper/Code-role?display_name=tag" alt="Release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/Deepleaper/Code-role" alt="MIT License"></a>
+  <a href="https://github.com/Deepleaper/Code-role/stargazers"><img src="https://img.shields.io/github/stars/Deepleaper/Code-role?style=social" alt="GitHub stars"></a>
+</p>
+
 **Control one software milestone with explicit ownership, objective evidence, and independent evaluation.**
 
 **用明确责任、客观证据和独立评估控制一个软件里程碑。**
 
-Code-role is a local role-control system for Codex-assisted software delivery. It provides two official operating profiles:
+Code-role is a local operating system for reliable AI coding. It keeps Codex roles focused on one accepted software milestone and prevents implementation activity from being mistaken for delivery evidence.
+
+Code-role 是一套面向可靠 AI 编程的本地工作机制。它让 Codex 角色始终围绕一个已确认的软件里程碑工作，并防止把“写了代码”误判成“完成了交付”。
+
+It provides two official operating profiles:
 
 - **Minimal Profile:** four workstations, the smallest complete milestone-control unit.
 - **Full Profile:** eight roles, a separated professional workflow with versioned packet evidence.
@@ -17,6 +32,34 @@ Code-role 是一个用于控制 Codex 编程交付的本地角色系统，正式
 Neither profile is deprecated. Choose one profile for each milestone according to complexity, risk, and audit needs.
 
 两套配置都不是旧版。每个 milestone 根据复杂度、风险和审计要求选择其中一套。
+
+## 60-Second Start / 60 秒启动
+
+```bash
+git clone https://github.com/Deepleaper/Code-role.git
+cd Code-role
+python3 scripts/init_loop_workflow.py "/absolute/path/to/your-project" \
+  --project-name "Your Project"
+python3 scripts/init_loop_workflow.py "/absolute/path/to/your-project" --check
+```
+
+Then open the generated `code-role/role-instance-prompts/project-manager.md`, define one Objective with binary Key Results, and let the Project Manager route the first `KR=0`.
+
+然后打开生成的 `code-role/role-instance-prompts/project-manager.md`，定义一个 Objective 和可二值验收的 Key Results，由项目经理调度第一个 `KR=0`。
+
+See the [complete four-workstation walkthrough](examples/minimal-goal-loop/README.md) to inspect one milestone from PM Assignment through independent evaluation and closure.
+
+查看[四工位完整闭环示例](examples/minimal-goal-loop/README.md)，了解一个 milestone 如何从项目经理任务书、工程交付、独立评估一直走到关闭。
+
+## What Makes It Different / 核心差异
+
+| Principle | Code-role behavior |
+| --- | --- |
+| One accountable outcome | The Project Manager owns one accepted Objective and its binary KRs. |
+| One missing result at a time | Every assignment targets one current `KR=0`, not an open-ended role agenda. |
+| Evidence before status | Unrun checks, missing evidence, and partial results remain `0`. |
+| Independent acceptance | Engineering produces candidate evidence; Independent Evaluation decides observed pass/fail. |
+| Local control plane | Generated `code-role/` files stay outside product runtime and target-project releases by default. |
 
 ## Why / 为什么
 
@@ -229,6 +272,17 @@ Both initializers add `code-role/` to the target repository's local `.git/info/e
 - [中文产品需求对齐稿](docs/product/prd.zh-CN.md)
 - [中文 HTML 说明与初始化指南](docs/product/code-role-workflow-guide.zh-CN.html)
 - [Minimal target example](examples/minimal-target/README.md)
+- [Complete goal-loop walkthrough / 完整目标闭环示例](examples/minimal-goal-loop/README.md)
+
+## Community / 社区
+
+- Ask implementation questions or share a real workflow in [GitHub Discussions](https://github.com/Deepleaper/Code-role/discussions).
+- Report reproducible problems through [GitHub Issues](https://github.com/Deepleaper/Code-role/issues).
+- See the public [Roadmap](ROADMAP.md), [Changelog](CHANGELOG.md), and [Contributing Guide](CONTRIBUTING.md).
+
+If Code-role makes an AI coding milestone more predictable, star the repository and share the evidence from your first completed loop. Real project feedback is more valuable than generic promotion.
+
+如果 Code-role 让你的 AI 编程里程碑变得更可控，欢迎 Star，并分享第一个真实闭环的证据。真实项目反馈比泛泛宣传更有价值。
 
 ## Development / 开发
 

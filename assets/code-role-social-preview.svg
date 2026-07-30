@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">Code-role social preview</title>
+  <desc id="desc">Milestone control for reliable AI coding with four-role and eight-role operating profiles.</desc>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#27302d" stroke-width="1"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#60d394"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="640" fill="#111513"/>
+  <rect width="1280" height="640" fill="url(#grid)" opacity="0.72"/>
+  <rect x="56" y="48" width="184" height="34" rx="6" fill="#f2c14e"/>
+  <text x="148" y="71" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111513">OPEN SOURCE · MIT</text>
+
+  <text x="56" y="190" font-family="Arial, Helvetica, sans-serif" font-size="92" font-weight="800" fill="#f5f7f6">Code-role</text>
+  <text x="60" y="246" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="600" fill="#b7c2bd">Milestone control for reliable AI coding</text>
+  <text x="60" y="290" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#8e9c96">Objective → evidence → independent evaluation</text>
+
+  <rect x="60" y="370" width="250" height="90" rx="8" fill="#1d2421" stroke="#60d394" stroke-width="2"/>
+  <text x="185" y="407" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#60d394">MINIMAL PROFILE</text>
+  <text x="185" y="440" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#f5f7f6">4-role goal loop</text>
+
+  <rect x="330" y="370" width="250" height="90" rx="8" fill="#1d2421" stroke="#7dd3fc" stroke-width="2"/>
+  <text x="455" y="407" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#7dd3fc">FULL PROFILE</text>
+  <text x="455" y="440" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#f5f7f6">8-role audit trail</text>
+
+  <text x="60" y="548" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#b7c2bd">Local-first · Discussion-first · Evidence-driven</text>
+  <text x="60" y="580" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#72817a">github.com/Deepleaper/Code-role</text>
+
+  <circle cx="824" cy="322" r="91" fill="#1d2421" stroke="#f2c14e" stroke-width="4"/>
+  <text x="824" y="310" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#f2c14e">PROJECT</text>
+  <text x="824" y="343" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="800" fill="#f5f7f6">MANAGER</text>
+
+  <rect x="1000" y="114" width="214" height="72" rx="8" fill="#1d2421" stroke="#7dd3fc" stroke-width="2"/>
+  <text x="1107" y="158" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#f5f7f6">PRODUCT</text>
+  <rect x="1000" y="286" width="214" height="72" rx="8" fill="#1d2421" stroke="#60d394" stroke-width="2"/>
+  <text x="1107" y="330" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#f5f7f6">ENGINEERING</text>
+  <rect x="1000" y="458" width="214" height="72" rx="8" fill="#1d2421" stroke="#f2c14e" stroke-width="2"/>
+  <text x="1107" y="502" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#f5f7f6">EVALUATION</text>
+
+  <path d="M890 258 C930 210 960 176 998 158" fill="none" stroke="#60d394" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M916 322 L996 322" fill="none" stroke="#60d394" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M890 386 C930 434 960 468 998 486" fill="none" stroke="#60d394" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M1000 176 C945 205 914 235 879 268" fill="none" stroke="#58655f" stroke-width="2" stroke-dasharray="7 7"/>
+  <path d="M1000 338 C962 354 940 356 915 350" fill="none" stroke="#58655f" stroke-width="2" stroke-dasharray="7 7"/>
+  <path d="M1000 502 C944 475 914 442 879 399" fill="none" stroke="#58655f" stroke-width="2" stroke-dasharray="7 7"/>
+</svg>

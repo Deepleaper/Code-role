@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Workflow design question / 工作流设计讨论
+    url: https://github.com/Deepleaper/Code-role/discussions
+    about: Ask how to model a milestone, choose a profile, or adapt a role boundary.

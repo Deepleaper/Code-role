@@ -1,0 +1,60 @@
+name: Bug report / 缺陷报告
+description: Report a reproducible problem in an initializer, validator, template, or document.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please report observed behavior and evidence. Do not include secrets or private project content.
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Operating profile
+      options:
+        - Minimal Profile (4 workstations)
+        - Full Profile (8 roles)
+        - Shared tooling or documentation
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Code-role version or commit
+      placeholder: v0.3.0 or commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Exact command or action
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed result
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Reproduction evidence
+      description: Include sanitized output, relevant paths, and the smallest reproducible example.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed credentials, tokens, and private project content.
+          required: true

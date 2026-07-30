@@ -24,12 +24,50 @@ def test_open_source_supporting_files_exist() -> None:
     expected = [
         ROOT / "CONTRIBUTING.md",
         ROOT / "SECURITY.md",
+        ROOT / "ROADMAP.md",
+        ROOT / "CHANGELOG.md",
         ROOT / ".github" / "workflows" / "tests.yml",
+        ROOT / ".github" / "ISSUE_TEMPLATE" / "bug-report.yml",
+        ROOT / ".github" / "ISSUE_TEMPLATE" / "workflow-feedback.yml",
         ROOT / "examples" / "README.md",
         ROOT / "examples" / "minimal-target" / "README.md",
+        ROOT / "examples" / "minimal-goal-loop" / "README.md",
+        ROOT / "assets" / "code-role-social-preview.svg",
+        ROOT / "assets" / "code-role-social-preview.png",
+        ROOT / "docs" / "promotion" / "LAUNCH-KIT.md",
+        ROOT / "docs" / "promotion" / "STAR-GROWTH-PLAN.md",
     ]
     missing = [path for path in expected if not path.exists()]
     assert not missing
+
+
+def test_public_entry_points_are_actionable() -> None:
+    readme = read(ROOT / "README.md")
+    social_preview = read(ROOT / "assets" / "code-role-social-preview.svg")
+    walkthrough = read(ROOT / "examples" / "minimal-goal-loop" / "README.md")
+    launch_kit = read(ROOT / "docs" / "promotion" / "LAUNCH-KIT.md")
+    growth_plan = read(ROOT / "docs" / "promotion" / "STAR-GROWTH-PLAN.md")
+
+    assert "60-Second Start / 60 秒启动" in readme
+    assert "What Makes It Different / 核心差异" in readme
+    assert "GitHub Discussions" in readme
+    assert "Complete Minimal Goal Loop / 四工位完整闭环示例" in walkthrough
+    assert 'width="1280"' in social_preview
+    assert 'height="640"' in social_preview
+    assert "Show HN" in launch_kit
+    assert "Product Hunt" in launch_kit
+    assert "Never buy stars." in growth_plan
+
+
+def test_social_preview_png_meets_github_dimensions() -> None:
+    preview = ROOT / "assets" / "code-role-social-preview.png"
+    data = preview.read_bytes()
+
+    assert data[:8] == b"\x89PNG\r\n\x1a\n"
+    width = int.from_bytes(data[16:20], "big")
+    height = int.from_bytes(data[20:24], "big")
+    assert (width, height) == (1280, 640)
+    assert len(data) < 1_000_000
 
 
 def test_readme_exposes_both_supported_profiles() -> None:

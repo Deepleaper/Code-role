@@ -1,0 +1,54 @@
+name: Workflow feedback / 工作流反馈
+description: Share evidence from a real milestone and propose one focused improvement.
+title: "[Workflow]: "
+labels:
+  - workflow-feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The most useful feedback shows where Code-role reduced or created uncertainty in a real milestone.
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Operating profile
+      options:
+        - Minimal Profile (4 workstations)
+        - Full Profile (8 roles)
+    validations:
+      required: true
+  - type: input
+    id: milestone
+    attributes:
+      label: Milestone in one sentence
+      placeholder: Add deterministic JSON export without changing text output.
+    validations:
+      required: true
+  - type: textarea
+    id: worked
+    attributes:
+      label: What became clearer?
+      description: Name the assignment, evidence, or decision that improved.
+    validations:
+      required: true
+  - type: textarea
+    id: guess
+    attributes:
+      label: Where did a role still have to guess?
+      description: Point to the exact missing input, ambiguous field, or invalid handoff.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Share counts, pass/fail results, or redacted excerpts. Do not include private code.
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: Smallest useful change
+      description: Propose one narrow improvement, not a new workflow layer.
+    validations:
+      required: true
