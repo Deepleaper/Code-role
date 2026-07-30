@@ -1,0 +1,142 @@
+import subprocess
+import sys
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SCRIPT = ROOT / "scripts" / "init_loop_workflow.py"
+
+
+def read(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
+
+
+def run_init(target: Path, *extra: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT),
+            str(target),
+            "--project-name",
+            "Example Project",
+            *extra,
+        ],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+
+def test_goal_loop_initializes_exactly_four_active_roles(tmp_path: Path) -> None:
+    target = tmp_path / "target"
+    (target / ".git" / "info").mkdir(parents=True)
+
+    result = run_init(target)
+
+    assert result.returncode == 0, result.stderr
+    role_root = target / "code-role" / "role-instance-prompts"
+    active = sorted(
+        path.name for path in role_root.glob("*.md") if path.name != "README.md"
+    )
+    assert active == [
+        "engineering.md",
+        "independent-evaluation.md",
+        "product-strategy.md",
+        "project-manager.md",
+    ]
+    assert "code-role/" in read(target / ".git" / "info" / "exclude")
+
+
+def test_goal_loop_has_one_kr_binary_evidence_contract(tmp_path: Path) -> None:
+    target = tmp_path / "target"
+    target.mkdir()
+    assert run_init(target).returncode == 0
+
+    loop = read(target / "code-role" / "LOOP.md")
+    assignment = read(target / "code-role" / "templates" / "assignment.md")
+    evaluator = read(
+        target
+        / "code-role"
+        / "role-instance-prompts"
+        / "independent-evaluation.md"
+    )
+
+    assert "One KR Per Iteration" in loop
+    assert "There is no `partial_pass`" in loop
+    assert "three failed Engineering-to-Evaluation attempts" in loop
+    assert "current_kr_status: 0" in assignment
+    assert "role_prompt_path:" in assignment
+    assert "frozen_pass_conditions:" in assignment
+    board = read(target / "code-role" / "milestone-board.md")
+    assert "Evaluation SOP frozen" in board
+    assert "Current iteration" in board
+    assert "full_evaluation" in evaluator
+    assert "Every required unrun check is `0`" in evaluator
+    assert "not only the latest diff" in evaluator
+
+
+def test_sync_archives_old_active_names_and_preserves_board(tmp_path: Path) -> None:
+    target = tmp_path / "target"
+    old_role_root = target / "code-role" / "role-instance-prompts"
+    old_role_root.mkdir(parents=True)
+    for filename in (
+        "workflow-orchestrator.md",
+        "researcher.md",
+        "product-prd.md",
+        "architect.md",
+        "code-context.md",
+        "implementer.md",
+        "test-evaluator.md",
+        "reviewer.md",
+    ):
+        (old_role_root / filename).write_text(filename, encoding="utf-8")
+    board = target / "code-role" / "milestone-board.md"
+    board.write_text("existing business state\n", encoding="utf-8")
+
+    result = run_init(target, "--sync")
+
+    assert result.returncode == 0, result.stderr
+    assert read(board) == "existing business state\n"
+    for filename in (
+        "workflow-orchestrator.md",
+        "researcher.md",
+        "product-prd.md",
+        "architect.md",
+        "code-context.md",
+        "implementer.md",
+        "test-evaluator.md",
+        "reviewer.md",
+    ):
+        assert not (old_role_root / filename).exists()
+        assert (
+            target
+            / "code-role"
+            / "archive"
+            / "v1-role-instance-prompts"
+            / filename
+        ).exists()
+    active = sorted(
+        path.name for path in old_role_root.glob("*.md") if path.name != "README.md"
+    )
+    assert active == [
+        "engineering.md",
+        "independent-evaluation.md",
+        "product-strategy.md",
+        "project-manager.md",
+    ]
+
+
+def test_check_mode_accepts_generated_project(tmp_path: Path) -> None:
+    target = tmp_path / "target"
+    target.mkdir()
+    assert run_init(target).returncode == 0
+
+    result = subprocess.run(
+        [sys.executable, str(SCRIPT), str(target), "--check"],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "goal-loop validation passed" in result.stdout

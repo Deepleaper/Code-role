@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Initialize a target project's Code-role workflow scaffold.
+"""Legacy: initialize the previous eight-role packet workflow scaffold.
 
-The script creates navigation and role-start files only. It does not run role
-work, create packets for execution roles, stage files, commit, push, or touch
-business source files.
+New projects should use ``scripts/init_loop_workflow.py``. This compatibility
+script creates navigation and role-start files only. It does not run role work,
+create packets for execution roles, stage files, commit, push, or touch business
+source files.
 """
 
 from __future__ import annotations
@@ -86,6 +87,207 @@ def role_extra_read_paths(config: BootstrapConfig, role_id: str) -> list[str]:
             workflow_doc_path(config, "roles/reviewer/reviewer-output-standard.md"),
         ]
     return common
+
+
+ROLE_PROFESSIONAL_STARTUP_CHECKS = {
+    "researcher": """researcher_professional_startup_check:
+research_objective_understood: 1 | 0
+milestone_research_question: <one sentence>
+research_deliverable_target: <uncertainty this research must reduce>
+expected_gap_categories: architecture_gap | implementation_gap | evidence_gap | evaluation_gap | unknown
+downstream_decision_to_reduce: <Product/PRD | Architect | Code Context | Test Evaluator | Reviewer decision>""",
+    "product-prd": """product_prd_professional_startup_check:
+product_problem_to_define: <one sentence>
+target_user_or_operator_to_define: <user/operator>
+user_value_to_define: <value>
+product_scope_to_define: <scope boundary>
+non_goals_to_define: <non-goal boundary>
+acceptance_criteria_to_define: <verification target>
+architect_handoff_to_define: <what Architect must preserve or decide>""",
+    "architect": """architect_professional_startup_check:
+architecture_objective_understood: 1 | 0
+product_commitment_to_preserve: <product commitment>
+contracts_to_define: <contract list or unknown>
+boundaries_to_protect: <boundary list or unknown>
+code_context_uncertainty_to_reduce: <exact ambiguity>""",
+    "code-context": """code_context_professional_startup_check:
+code_context_objective_understood: 1 | 0
+architecture_contract_to_map: <contract>
+implementation_seams_to_identify: file | function | field | test | artifact
+implementer_uncertainty_to_reduce: <exact ambiguity>""",
+    "implementer": """implementer_professional_startup_check:
+implementation_objective_understood: 1 | 0
+authorized_product_architecture_context: <target>
+authorized_writable_scope_present: 1 | 0
+verification_target_present: 1 | 0
+test_evaluator_handoff_to_produce: <commands/artifacts/claims>""",
+    "test-evaluator": """test_evaluator_professional_startup_check:
+evaluation_objective_understood: 1 | 0
+milestone_success_criteria_to_evaluate: <criteria>
+evaluation_sop_baseline_thresholds_present: 1 | 0
+evaluation_mechanism_needs_user_confirmation: 1 | 0
+full_independent_evaluation_to_run: <SOP layers, metrics, artifacts, blockers>""",
+    "reviewer": """reviewer_professional_startup_check:
+review_objective_understood: 1 | 0
+original_milestone_anchor_to_audit_against: <anchor>
+full_chain_audit_scope_present: 1 | 0
+orchestrator_included_in_audit: 1 | 0
+closure_decision_not_owned_by_reviewer: 1""",
+}
+
+
+ROLE_COMPLETION_BLOCKS = {
+    "researcher": """researcher_completion_template_conformant: 1 | 0
+research_objective_answered: 1 | 0
+gap_table_complete: 1 | 0
+confirmed_unconfirmed_unknown_separated: 1 | 0
+downstream_owner_map_complete: 1 | 0
+source_log_complete: 1 | 0""",
+    "product-prd": """product_prd_completion_template_conformant: 1 | 0
+product_problem_defined: 1 | 0
+target_user_defined: 1 | 0
+user_value_defined: 1 | 0
+scope_defined: 1 | 0
+non_goals_defined: 1 | 0
+acceptance_criteria_binary: 1 | 0
+claim_boundary_defined: 1 | 0
+architect_handoff_constraints_defined: 1 | 0""",
+    "architect": """architect_completion_template_conformant: 1 | 0
+product_commitment_preserved: 1 | 0
+architecture_contracts_defined: 1 | 0
+boundary_map_defined: 1 | 0
+state_and_data_flow_defined: 1 | 0
+schema_or_artifact_expectations_defined: 1 | 0
+risk_register_defined: 1 | 0
+code_context_handoff_defined: 1 | 0""",
+    "code-context": """code_context_completion_template_conformant: 1 | 0
+architecture_contract_mapped: 1 | 0
+file_function_field_seams_complete: 1 | 0
+artifact_field_map_complete: 1 | 0
+test_surface_map_complete: 1 | 0
+writable_and_readonly_surfaces_separated: 1 | 0
+implementation_contract_defined: 1 | 0
+stop_conditions_defined: 1 | 0""",
+    "implementer": """implementer_completion_template_conformant: 1 | 0
+authorized_scope_respected: 1 | 0
+changed_files_exact: 1 | 0
+changed_files_mapped_to_requirements: 1 | 0
+tests_or_no_test_reason_recorded: 1 | 0
+verification_commands_recorded: 1 | 0
+runtime_boundary_proof_recorded: 1 | 0
+test_evaluator_handoff_complete: 1 | 0""",
+    "test-evaluator": """test_evaluator_completion_template_conformant: 1 | 0
+evaluation_scope_basis_confirmed: 1 | 0
+sop_layers_evaluated_or_marked_not_run: 1 | 0
+each_gate_has_metric_expected_observed_evidence: 1 | 0
+commands_and_artifacts_recorded: 1 | 0
+unsupported_claims_rejected: 1 | 0
+binary_route_field_present: 1 | 0
+milestone_impact_recorded: 1 | 0""",
+    "reviewer": """reviewer_completion_template_conformant: 1 | 0
+original_milestone_anchor_audited: 1 | 0
+orchestrator_audited: 1 | 0
+role_by_role_drift_matrix_complete: 1 | 0
+acceptance_gap_checked: 1 | 0
+evaluation_sop_baseline_checked: 1 | 0
+packet_chain_audited: 1 | 0
+final_gate_binary: 1 | 0
+return_role_or_closure_discussion_route_defined: 1 | 0""",
+}
+
+
+def role_completion_conformant_field(role_id: str) -> str:
+    return f"{role_id.replace('-', '_')}_completion_template_conformant"
+
+
+def render_professional_objective_section(role_id: str) -> str:
+    if role_id == "workflow-orchestrator":
+        return """Role-specific professional completion gate / 分角色专业完成门:
+
+When checking a completed role, Orchestrator must require that role's `*_completion_template_conformant=1`. Missing or `0` means the output is not consumable, even if files exist and manifest JSON is valid.
+
+检查角色产出时，项目经理必须要求对应角色的 `*_completion_template_conformant=1`。缺失或为 `0` 时，即使文件存在、manifest 合法，也不可消费。
+
+```text
+researcher requires researcher_completion_template_conformant=1
+product-prd requires product_prd_completion_template_conformant=1
+architect requires architect_completion_template_conformant=1
+code-context requires code_context_completion_template_conformant=1
+implementer requires implementer_completion_template_conformant=1
+test-evaluator requires test_evaluator_completion_template_conformant=1
+reviewer requires reviewer_completion_template_conformant=1
+```
+
+Professional fields must be checked before process fields. A role output fails if it mostly reports read/write/forbidden scope but does not prove its professional completion fields.
+
+必须先检查专业字段，再检查流程字段。如果角色主要汇报读取/写入/禁止范围，却没有证明专业完成字段，则产出失败.
+"""
+    return """Professional objective first / 专业目标优先:
+
+- Your first response must start from this role's professional objective for the current milestone, before read/write/forbidden scope. / 首次回复必须先确认本角色对当前 milestone 的专业目标，再写读取、写入和禁止范围。
+- Process boundaries are required, but they are not the main deliverable. / 流程边界必须写，但不是本角色主交付。
+- If the professional objective is unclear, set `assignment_issue_detected=1`, set packet/formal execution permission to `0`, and ask for the missing milestone/product/evidence fields. / 如果专业目标不清楚，标记任务问题，禁止写 packet/正式执行，并索要缺失字段。
+"""
+
+
+def render_first_response_section(role_id: str) -> str:
+    if role_id == "workflow-orchestrator":
+        return """First response / 首次回复:
+
+1. Confirm this conversation is the `workflow-orchestrator` role. / 确认本对话是 `workflow-orchestrator` 角色。
+2. State `role_activation_status=active`. / 明确写出 `role_activation_status=active`。
+3. State which Orchestrator state, milestone, index, and upstream packet files you will read. / 说明将读取哪些 Orchestrator 状态、milestone、索引和上游 packet 文件。
+4. State what Orchestrator state files you may update, if any. / 说明可能更新哪些 Orchestrator 状态文件，如有。
+5. State forbidden scope. / 说明禁止范围。
+6. For role routing, state the role's milestone target, completion definition, required output, and exact next-role message source. / 如果要路由角色，说明该角色的 milestone 目标、完成定义、所需产出和精确下一角色消息来源。
+7. Wait for user confirmation before writing Orchestrator state. / 等用户确认后再写 Orchestrator 状态。
+"""
+
+    return f"""First response / 首次回复:
+
+1. Confirm this conversation is the `{role_id}` role. / 确认本对话是 `{role_id}` 角色。
+2. State `role_activation_status=active`. / 明确写出 `role_activation_status=active`。
+3. State the professional startup check first: / 先写专业启动检查：
+
+```text
+{ROLE_PROFESSIONAL_STARTUP_CHECKS[role_id]}
+```
+4. State `assignment_issue_detected=0|1` and list missing or conflicting task fields. / 明确写出任务问题和缺失字段。
+5. State `packet_write_allowed=1|0` for packet creation/write execution. / 明确写出是否允许写 packet。
+6. State exact read scope. / 说明精确读取范围。
+7. State exact write scope, if any. / 说明精确写入范围。
+8. State forbidden scope. / 说明禁止范围。
+9. State blockers or questions, if any; blockers do not cancel role activation. / 如有 blocker 或问题，明确列出。
+10. Wait for user confirmation before writing. / 等用户确认后再写入。
+"""
+
+
+def render_completion_response_section(role_id: str, config: BootstrapConfig) -> str:
+    if role_id == "workflow-orchestrator":
+        return ""
+    return f"""Completion response / 完成回复:
+
+The final response after writing the packet must include this structured block before the Orchestrator check request. Free-form summaries cannot replace it.
+
+写完 packet 后的最终回复必须先包含本结构化块，再附 Orchestrator 检查请求；自由文本总结不能替代。
+
+```text
+{ROLE_COMPLETION_BLOCKS[role_id]}
+role_completion_status: 1 | 0
+assigned_completion_conditions_total: <integer>
+assigned_completion_conditions_met: <integer>
+unmet_completion_conditions: none | <condition ids>
+completion_evidence:
+- condition_id: <id>
+  evidence: <file path | artifact path | command/result | source reference | explicit inspected field>
+forbidden_completion_claim_used: true | false
+orchestrator_next_check_request: <copy-ready lightweight consumption check summary from {workflow_doc_path(config, "orchestrator/consumption-check-request-template.md")}>
+```
+
+If any required professional field is missing, set `{role_completion_conformant_field(role_id)}=0`, set `role_completion_status=0`, list the missing fields, and do not recommend route-forward as a completed handoff.
+
+如果缺少任一专业字段，必须把 `{role_completion_conformant_field(role_id)}` 置为 `0`，`role_completion_status=0`，列出缺失字段，不得建议完成态路由。
+"""
 
 
 def render_project_readme(config: BootstrapConfig) -> str:
@@ -463,12 +665,11 @@ Milestone alignment rule / 里程碑对齐规则:
 - Completion reports must include condition count, met count, unmet conditions, concrete evidence, and forbidden completion language flag. / 完成汇报必须包含条件总数、满足数、未满足项、具体证据和禁用完成表述标记。
 - If `role_completion_status=0`, do not recommend starting the next role as a completed handoff. / 如果 `role_completion_status=0`，不要建议把它作为完成态交接给下一角色。
 
-First response / 首次回复:
+{render_professional_objective_section(role_id).rstrip()}
 
-1. State which files you will read. / 说明你会读取哪些文件。
-2. State what you will write, if anything. / 说明你会写入什么，如有。
-3. State forbidden scope. / 说明禁止范围。
-4. Wait for user confirmation before writing. / 等用户确认后再写入。
+{render_first_response_section(role_id).rstrip()}
+
+{render_completion_response_section(role_id, config).rstrip()}
 """
 
 

@@ -1,315 +1,179 @@
 # Code-role
 
-Code-role is a discussion-first local workflow template for controlling Codex-assisted programming work.
+**One milestone. One current KR. One professional action. One independent evaluation.**
 
-Code-role 是一个 discussion-first 的本地工作流模板，用来控制 Codex 参与编程时的角色边界、上下文交接和交付质量。
+**一个里程碑、一个当前 KR、一次专业执行、一次独立评估。**
 
-It is not an automation runner. Its purpose is to make every professional step discussable, reviewable, and explicitly accepted before the next role acts.
+Code-role is a local, OKR-driven evidence loop for controlling Codex-assisted software delivery. It keeps the Project Manager responsible for the outcome, lets professional workstations operate independently, and prevents unverified activity from being reported as milestone completion.
 
-它不是自动执行代码的工具。它的目标是让每个专业环节都先讨论、可审阅、可确认，然后再进入下一角色。
+Code-role 是一个本地、OKR 驱动的 Codex 编程交付证据闭环。项目经理对最终结果负责，专业工位独立工作，没有经过验证的活动不能被写成里程碑完成。
 
-## What It Solves / 解决什么问题
+## Why / 为什么
 
-Large coding tasks often drift when one Codex conversation tries to research, write PRD, design architecture, inspect code, implement, test, and review at the same time.
+Long role chains tend to optimize workflow artifacts instead of the product goal. A role can produce a polished report, valid manifest, or large code diff while the milestone is still not complete.
 
-复杂编程任务如果在一个 Codex 对话里同时做调研、PRD、架构、代码上下文、实现、测试和审计，很容易出现目标漂移、上下文混乱和越权执行。
+过长的角色链容易优化流程文件，而不是产品目标。一个角色可以写出漂亮报告、合法 manifest 或大量代码，但里程碑仍然没有完成。
 
-Code-role fixes that by splitting work into role-specific conversations:
+Code-role v0.2 replaces the default eight-role packet chain with a bounded goal loop:
 
-Code-role 通过拆分独立角色对话解决这个问题：
+- one user-accepted Objective;
+- no more than five binary Key Results;
+- exactly one `KR=0` selected per iteration;
+- dynamic routing instead of a fixed role chain;
+- frozen evaluation criteria before implementation optimization;
+- independent targeted and regression evaluation;
+- a three-attempt default stop rule;
+- human gates only for goal changes, budget expansion, and irreversible actions.
 
-- Workflow Orchestrator / 项目经理
-- Researcher / 研究员
-- Product / PRD / 产品经理
-- Architect / 架构师
-- Code Context / Context Engineer / 代码上下文工程师
-- Implementer / 实现工程师
-- Test Evaluator / 测试评估师
-- Reviewer / 审计评审
+## Four Workstations / 四个工位
 
-Each execution role writes a versioned document packet. The next role consumes that packet as its professional input. Chat is not the source of truth.
+| Workstation | Owns |
+| --- | --- |
+| Project Manager / 项目经理 | Objective, KR definitions, current KR, routing, iteration budget, milestone closure |
+| Product Strategy / 产品策略 | User value, product behavior, scope, thresholds, claim boundary |
+| Engineering / 工程 | Engineering research, necessary design, implementation, tests, candidate evidence |
+| Independent Evaluation / 独立评估 | Evaluation baseline, complete required SOP, independent evidence, binary observed results |
 
-每个执行角色产出一个版本化文档 packet。下一个角色消费这个 packet 作为专业输入。聊天记录不是事实源。
+Research is a capability inside Product Strategy and Engineering. Architecture and context engineering are Engineering modes. They are not mandatory stages.
 
-## Core Principles / 核心原则
+研究属于产品策略和工程能力。架构与上下文工程属于工程工作模式，不是必须经过的独立环节。
 
-- Discussion first, execution second.
-- Every role confirms read scope, write scope, forbidden scope, and milestone alignment before writing.
-- Non-Implementer roles produce documents only.
-- Implementer can modify project files only after explicit user approval and exact writable scope confirmation.
-- Orchestrator checks milestone alignment before routing to the next role.
-- Orchestrator uses `milestone-contract.md` as the hard goal anchor for the active milestone.
-- Test Evaluator uses `evaluation-sop.md` as the hard evaluation anchor for the active milestone.
-- Every role completion status is binary: `role_completion_status=1` only when every assigned completion condition has concrete evidence; otherwise it is `0`.
-- Every role completion response includes a copy-ready summary for Orchestrator / Project Manager.
-- When Orchestrator routes forward, it must paste a copy-ready startup message for the next role.
-- Public-source network research is allowed by default for every role when relevant to the milestone.
-- Real provider APIs, authenticated/private resources, downloads, remote execution, or sending secrets/project-private data externally require separate explicit approval.
-- Daily workflow is lightweight: user acceptance plus Orchestrator routing is enough.
-- Strict `ready_for_next_role`, `packet.lock.json`, and `sha256` locking are optional advanced mode only.
-- Target-project `code-role/` folders are local assistance, not product runtime or release artifacts.
-
-中文规则：
-
-- 先讨论，再执行。
-- 每个角色写入前必须确认读取范围、写入范围、禁止范围和 milestone 对齐。
-- 非 Implementer 角色只产出文档。
-- Implementer 只有在用户明确批准并确认精确可写范围后，才能修改项目文件。
-- Orchestrator / 项目经理先检查 milestone 是否漂移，再决定是否路由下一角色。
-- Orchestrator 使用 `milestone-contract.md` 作为当前 milestone 的硬目标锚点。
-- Test Evaluator 使用 `evaluation-sop.md` 作为当前 milestone 的硬评估锚点。
-- 每个角色完成状态只有二值：只有所有指定完成条件都有具体证据满足时，`role_completion_status=1`；否则为 `0`。
-- 每个角色完成后，必须在同一条回复末尾附上给 Orchestrator 的可复制摘要。
-- Orchestrator 如果允许进入下一角色，必须直接贴出可复制的下一角色启动消息。
-- 每个角色默认都可以在当前 milestone 相关范围内使用公开来源联网研究。
-- 调用真实 provider API、访问私有认证资源、下载或执行远程内容、向外部发送秘密或项目私有数据，都需要单独明确批准。
-- 日常流程保持轻量：用户接受产出 + Orchestrator 路由即可。
-- 严格 `ready_for_next_role`、`packet.lock.json`、`sha256` 只作为高级 strict handoff 模式。
-- 目标项目里的 `code-role/` 是本地辅助，不是产品运行时内容，也不进入发布交付。
-
-## Repository Contents / 仓库内容
-
-```text
-docs/product/
-  prd.md
-  prd.zh-CN.md
-  code-role-workflow-guide.zh-CN.html
-
-docs/workflow/
-  README.md
-  role-configuration-guide.md
-  project-bootstrap.md
-  handoff-protocol.md
-  packet-schema.md
-  workflow-chain-policy.md
-  source-map.md
-  orchestrator/
-  roles/
-  tools/
-
-scripts/
-  init_project_workflow.py
-
-examples/
-  minimal-target/
-
-tests/
-  test_workflow_*.py
-```
-
-Key documents / 关键文档：
-
-- [Chinese product guide HTML](docs/product/code-role-workflow-guide.zh-CN.html)
-- [Chinese PRD](docs/product/prd.zh-CN.md)
-- [English PRD](docs/product/prd.md)
-- [Workflow guide](docs/workflow/README.md)
-- [Role configuration guide](docs/workflow/role-configuration-guide.md)
-- [Milestone contract](docs/workflow/milestone-contract.md)
-- [Role completion contract](docs/workflow/role-completion-contract.md)
-- [Evaluation SOP](docs/workflow/evaluation-sop.md)
-- [Project practices](docs/workflow/project-practices.md)
-- [Role instance setup](docs/workflow/role-instance-setup.md)
-- [Target project bootstrap](docs/workflow/project-bootstrap.md)
-- [Optional state index](docs/workflow/state-index.md)
-- [Git operation policy](docs/workflow/git-operation-policy.md)
-- [Minimal target example](examples/minimal-target/README.md)
-
-Open source documents / 开源文档：
-
-- [Contributing guide](CONTRIBUTING.md)
-- [Security policy](SECURITY.md)
-- [MIT License](LICENSE)
-
-## Fast Start In A Target Project / 在目标项目中快速启动
-
-Run from this Code-role repository:
-
-在 Code-role 仓库里执行：
-
-```bash
-python scripts/init_project_workflow.py \
-  --target "/path/to/Target Project" \
-  --project-name "Target Project" \
-  --initial-milestone workflow-bootstrap \
-  --initial-chain research-only \
-  --write
-```
-
-This creates local workflow assistance in the target project:
-
-它会在目标项目中创建本地辅助配置：
-
-```text
-code-role/
-  README.md
-  project-config.md
-  role-instance-prompts/
-  workflow/
-    orchestrator/
-      milestone-contract.md
-      workflow-state.md
-      milestone-registry.md
-      decision-log.md
-      final-packet-index.md
-    evaluation/
-      evaluation-sop.md
-```
-
-By default, it does not generate `state-index/`. Add `--with-state-index` only when optional navigation files are useful.
-
-默认不会生成 `state-index/`。只有确实需要可选导航文件时，才加 `--with-state-index`。
-
-If the target is a Git repository, the script adds `code-role/` to `.git/info/exclude`. That keeps workflow assistance local and out of the target project's Git history.
-
-如果目标项目是 Git 仓库，初始化脚本会把 `code-role/` 写入 `.git/info/exclude`。这样 workflow 辅助文件保留在本地，不进入目标项目 Git 历史。
-
-## How To Run The Workflow / 如何运行流程
-
-1. Open the Workflow Orchestrator conversation.
-2. Paste `code-role/role-instance-prompts/workflow-orchestrator.md`.
-3. Ask Orchestrator to restore state:
-
-```text
-项目经理，执行 startup routine，恢复当前状态
-```
-
-4. Confirm the real milestone and chain.
-5. Orchestrator routes to the next role and pastes a copy-ready startup message.
-6. Open that role in a separate Codex conversation.
-7. Paste the generated role prompt and Orchestrator startup message.
-8. The role confirms scope first.
-9. Reply `开始` only after the scope is correct.
-10. After completion, copy the role's Orchestrator summary back to the Orchestrator conversation.
-
-Create one configured Codex role instance per role. Do not run the whole workflow by switching roles inside one conversation.
-
-中文步骤：
-
-1. 打开 Workflow Orchestrator / 项目经理对话。
-2. 粘贴 `code-role/role-instance-prompts/workflow-orchestrator.md`。
-3. 让项目经理恢复状态：
-
-```text
-项目经理，执行 startup routine，恢复当前状态
-```
-
-4. 确认真实 milestone 和 chain。
-5. Orchestrator 路由下一角色，并直接贴出可复制启动消息。
-6. 为该角色打开单独 Codex 对话。
-7. 粘贴生成的角色 prompt 和 Orchestrator 启动消息。
-8. 角色先确认范围。
-9. 范围正确后，回复 `开始`。
-10. 角色完成后，把它末尾的 Orchestrator 摘要复制回项目经理对话。
-
-## Workflow Diagram / 流程图
+## Goal Loop / 目标闭环
 
 ```mermaid
 flowchart LR
-  O["Workflow Orchestrator / 项目经理"]
-  R["Researcher / 研究员"]
-  P["Product / PRD / 产品经理"]
-  A["Architect / 架构师"]
-  C["Code Context / 上下文工程师"]
-  I["Implementer / 实现工程师"]
-  T["Test Evaluator / 测试评估师"]
-  V["Reviewer / 审计评审"]
-
-  O --> R
-  R --> O
-  O --> P
-  P --> O
-  O --> A
-  A --> O
-  O --> C
-  C --> O
-  O --> I
-  I --> O
-  O --> T
-  T --> O
-  O --> V
-  V --> O
+    U["User confirms Objective and KRs"] --> PM["Project Manager selects one KR=0"]
+    PM --> D{"Product meaning clear?"}
+    D -- "No" --> P["Product Strategy"]
+    P --> PM
+    D -- "Yes, baseline missing" --> V0["Independent Evaluation freezes SOP"]
+    V0 --> PM
+    D -- "Yes, actionable" --> E["Engineering"]
+    E --> V["Independent Evaluation"]
+    V -- "Fail with evidence" --> PM
+    V -- "Pass with evidence" --> PM
+    PM -- "Any accepted KR=0" --> D
+    PM -- "All accepted KRs=1" --> H["Human close, merge, or release gate"]
 ```
 
-Every professional role returns its binary completion block and packet to the Orchestrator. The Orchestrator checks `role_completion_status`, objective evidence, and milestone alignment before routing. Professional conclusions come from role packets, not from Orchestrator speculation.
+There is no fixed four-role chain. Product Strategy runs only when product meaning is unclear. Independent Evaluation can first freeze the baseline and later run the full evaluation. Engineering never self-passes a KR.
 
-每个专业角色完成后都把二值完成块和 packet 回传项目经理。项目经理先检查 `role_completion_status`、客观证据和 milestone 对齐，再决定是否路由下一角色。专业结论来自各角色 packet，不来自项目经理自行推断。
+不存在固定四角色链。只有产品含义不清时才运行产品策略；独立评估可以先冻结基线，再执行完整评估；工程不能自行把 KR 判为通过。
 
-## Role Chain / 角色链路
+## Minimal State / 最小状态
 
-Typical full chain:
+Each target project has one active control record:
 
-典型完整链路：
+每个目标项目只有一份活跃控制记录：
 
 ```text
-Workflow Orchestrator
-  -> Researcher -> Workflow Orchestrator review
-  -> Product / PRD -> Workflow Orchestrator review
-  -> Architect -> Workflow Orchestrator review
-  -> Code Context -> Workflow Orchestrator review
-  -> Implementer -> Workflow Orchestrator review
-  -> Test Evaluator -> Workflow Orchestrator review
-  -> Reviewer -> Workflow Orchestrator review
-  -> Workflow Orchestrator closeout
+code-role/
+  LOOP.md
+  milestone-board.md
+  role-instance-prompts/
+    project-manager.md
+    product-strategy.md
+    engineering.md
+    independent-evaluation.md
+  templates/
+    assignment.md
+    product-return.md
+    engineering-return.md
+    evaluation-return.md
+    pm-decision.md
+  work/
+    <milestone>/
 ```
 
-Supported chain types:
+The milestone board is authoritative. Detailed attachments preserve professional reasoning and evidence, but they do not route work or update KR status.
 
-支持的链路类型：
+里程碑作战板是唯一权威。详细附件保存专业判断和证据，但不能自行路由或修改 KR 状态。
 
-- `full-chain`: high-risk or full lifecycle work.
-- `mini-chain`: scope is mostly known, but architecture/context/testing/review are still needed.
-- `patch-chain`: narrow implementation follow-up with known scope.
-- `docs-only-chain`: documentation-only work.
-- `research-only`: research that stops before PRD or implementation.
-
-## Validation / 校验
-
-Run tests:
-
-运行测试：
+## Install In A Project / 初始化到项目
 
 ```bash
-.venv/bin/python -m pytest -q
+python scripts/init_loop_workflow.py "/absolute/path/to/project" \
+  --project-name "Project Name"
 ```
 
-Validate a packet template:
+Sync new role rules into an existing Code-role project while preserving its milestone board and work history:
 
-校验 packet 模板：
+把新角色规则同步到已有项目，同时保留作战板和工作历史：
 
 ```bash
-python docs/workflow/tools/validate_workflow_packet.py docs/workflow/roles/researcher/templates
+python scripts/init_loop_workflow.py "/absolute/path/to/project" \
+  --project-name "Project Name" \
+  --sync
 ```
 
-## Git And Release Boundary / Git 与发布边界
+Validate:
 
-For this repository, Code-role itself is committed and published as a workflow template.
+```bash
+python scripts/init_loop_workflow.py "/absolute/path/to/project" --check
+```
 
-对于本仓库，Code-role 本身会作为工作流模板提交和发布。
+The initializer adds `code-role/` to the target repository's local `.git/info/exclude`. Code-role files remain local assistance and do not enter product release artifacts by default.
 
-For target projects, generated `code-role/` folders are local operator assistance by default. They should not be committed, pushed, packaged, indexed, or shipped as product release artifacts unless a team explicitly decides to promote Code-role into that repository's standard workflow.
+初始化器会把 `code-role/` 加入目标仓库本地 `.git/info/exclude`。Code-role 文件默认只作为本地辅助，不进入产品发布物。
 
-对于目标项目，初始化生成的 `code-role/` 默认只是本地操作者辅助。除非团队明确决定把 Code-role 升级为该项目的标准工作流，否则它不应被提交、推送、打包、索引或作为产品发布内容交付。
+## Daily Use / 日常使用
 
-Normal Git operations for product code remain normal Git operations. Code-role can report Git facts, but it does not own or gate normal project commits.
+1. Start or refresh one Project Manager conversation with `project-manager.md`.
+2. Confirm the Objective and binary Key Results.
+3. Project Manager prints one copy-ready assignment for one `KR=0`.
+4. Paste the assignment into the selected workstation conversation.
+5. A valid assignment starts immediately; there is no additional `开始` step.
+6. Paste the workstation's fixed return back to Project Manager.
+7. Project Manager accepts or rejects the return and updates the board.
+8. Repeat until every accepted KR is independently verified as `1`.
 
-产品代码的 Git 操作仍按项目原有方式执行。Code-role 可以报告 Git 状态，但不接管也不阻断正常项目提交。
+This release intentionally uses manual copy-ready transport. It does not claim automatic cross-conversation dispatch. Automation can be added later after the protocol proves stable.
 
-## Status / 当前状态
+本版本刻意使用手动可复制传递，不声称可以自动跨对话派发。只有协议在真实项目中稳定后，才值得增加自动化。
 
-Current template status:
+## Completion Rules / 完成规则
 
-当前模板状态：
+- `0` means not independently proven.
+- `1` means every frozen condition has independent evidence.
+- An unrun required check is `0`.
+- A residual issue becomes a new KR, an explicit non-goal, or remains unresolved at `0`.
+- `partial_pass` and `pass_with_residual_risk` cannot close a milestone.
+- Only Project Manager updates milestone status.
+- Only the user authorizes Objective/KR changes and irreversible release actions.
 
-- Eight roles are defined.
-- Role output standards are defined for professional deliverables.
-- Orchestrator milestone-alignment checks are defined.
-- Lightweight handoff is the default.
-- Strict packet locking is optional.
-- Target-project bootstrap is available.
-- Tests cover workflow rules, role boundaries, packet templates, and bootstrap behavior.
+## Documentation / 文档
 
-## License / 许可
+- [Goal loop guide / 目标闭环说明](docs/loop/README.md)
+- [Goal loop contract / 目标闭环协议](docs/loop/LOOP.md)
+- [Project Manager role](docs/loop/roles/project-manager.md)
+- [Product Strategy role](docs/loop/roles/product-strategy.md)
+- [Engineering role](docs/loop/roles/engineering.md)
+- [Independent Evaluation role](docs/loop/roles/independent-evaluation.md)
+- [Minimal target example](examples/minimal-target/README.md)
+
+## Legacy Eight-Role Profile / 历史八角色模式
+
+The previous discussion-first packet workflow remains under [`docs/workflow/`](docs/workflow/README.md) for existing projects that need its audit history. It is no longer the default.
+
+旧 discussion-first packet 工作流保留在 [`docs/workflow/`](docs/workflow/README.md)，供需要历史审计的已有项目使用，但不再是默认模式。
+
+Legacy references:
+
+- [Project bootstrap](docs/workflow/project-bootstrap.md)
+- [State index](docs/workflow/state-index.md)
+- [Git operation policy](docs/workflow/git-operation-policy.md)
+- [Project practices](docs/workflow/project-practices.md)
+- [Milestone contract](docs/workflow/milestone-contract.md)
+- [Role completion contract](docs/workflow/role-completion-contract.md)
+- [Evaluation SOP](docs/workflow/evaluation-sop.md)
+- [Role instance setup](docs/workflow/role-instance-setup.md)
+
+The legacy profile used one configured Codex role instance per role, `role_completion_status`, strict packets, and flows such as Researcher -> Workflow Orchestrator review. Those mechanisms are documented for compatibility only.
+
+## Development / 开发
+
+```bash
+python -m pytest
+```
 
 Code-role is released under the [MIT License](LICENSE).
-
-Code-role 使用 [MIT License](LICENSE) 开源。

@@ -1,7 +1,7 @@
 [project]
 name = "code-role"
-version = "0.1.0"
-description = "Local document-based role workflow template for controlling Codex-assisted software delivery."
+version = "0.2.0"
+description = "Local OKR-driven evidence loop for controlling Codex-assisted software delivery."
 requires-python = ">=3.9"
 readme = "README.md"
 license = { file = "LICENSE" }

@@ -146,6 +146,30 @@ def test_init_project_workflow_creates_fast_setup_files(tmp_path: Path) -> None:
     assert "role_completion_status=1" in reviewer_prompt
     assert "role_completion_status=0" in reviewer_prompt
     assert "must not generate the authoritative next-role startup message" in reviewer_prompt
+    assert "Role-specific professional completion gate" in orchestrator_prompt
+    assert "product-prd requires product_prd_completion_template_conformant=1" in orchestrator_prompt
+    assert "Professional fields must be checked before process fields" in orchestrator_prompt
+    assert "researcher_professional_startup_check" in researcher_prompt
+    assert "researcher_completion_template_conformant" in researcher_prompt
+    assert "product_prd_professional_startup_check" in product_prompt
+    assert "product_prd_completion_template_conformant" in product_prompt
+    assert "reviewer_professional_startup_check" in reviewer_prompt
+    assert "reviewer_completion_template_conformant" in reviewer_prompt
+    for role_id in [
+        "researcher",
+        "product-prd",
+        "architect",
+        "code-context",
+        "implementer",
+        "test-evaluator",
+        "reviewer",
+    ]:
+        role_prompt = read(target / "code-role" / "role-instance-prompts" / f"{role_id}.md")
+        assert "Professional objective first" in role_prompt
+        assert "State the professional startup check first" in role_prompt
+        assert "Completion response / 完成回复" in role_prompt
+        assert "Free-form summaries cannot replace it" in role_prompt
+        assert f"{role_id.replace('-', '_')}_completion_template_conformant" in role_prompt
     assert not (target / "code-role" / "state-index").exists()
     assert "code-role/" in read(exclude)
 

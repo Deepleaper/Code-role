@@ -1,5 +1,11 @@
 # Document Workflow
 
+> Legacy profile / 历史模式
+>
+> This eight-role packet workflow is retained for compatibility and audit history. New projects should use the four-workstation goal loop in [`../loop/README.md`](../loop/README.md) and `scripts/init_loop_workflow.py`.
+>
+> 本八角色 packet 工作流仅为兼容和历史审计保留。新项目应使用 [`../loop/README.md`](../loop/README.md) 中的四工位目标闭环和 `scripts/init_loop_workflow.py`。
+
 This folder defines the document-based role workflow for Code-role role instances.
 
 The workflow separates responsibilities into roles. Each role reads approved document packets from upstream roles and writes a new versioned document packet for downstream roles. Roles do not pass state through chat memory as the source of truth.

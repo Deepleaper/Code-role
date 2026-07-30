@@ -32,24 +32,20 @@ def test_open_source_supporting_files_exist() -> None:
     assert not missing
 
 
-def test_readme_exposes_workflow_diagram_and_example() -> None:
+def test_readme_exposes_goal_loop_diagram_and_example() -> None:
     readme = read(ROOT / "README.md")
     example = read(ROOT / "examples" / "minimal-target" / "README.md")
 
     assert "```mermaid" in readme
-    assert "Workflow Orchestrator / 项目经理" in readme
-    assert "R --> O" in readme
-    assert "P --> O" in readme
-    assert "A --> O" in readme
-    assert "C --> O" in readme
-    assert "I --> O" in readme
-    assert "T --> O" in readme
-    assert "V --> O" in readme
-    assert "O --> R --> P --> A --> C --> I --> T --> V --> O" not in readme
-    assert "Every professional role returns its binary completion block and packet to the Orchestrator." in readme
-    assert "role_completion_status" in readme
-    assert "Researcher -> Workflow Orchestrator review" in readme
+    assert "Project Manager selects one KR=0" in readme
+    assert "Product Strategy" in readme
+    assert "Engineering" in readme
+    assert "Independent Evaluation" in readme
+    assert "There is no fixed four-role chain" in readme
+    assert "valid assignment starts immediately" in readme.lower()
+    assert "partial_pass" in readme
+    assert "manual copy-ready transport" in readme
     assert "Minimal target example" in readme
     assert "examples/minimal-target/README.md" in readme
     assert "Do not commit target-project `code-role/` output by default." in example
-    assert "项目经理，执行 startup routine，恢复当前状态" in example
+    assert "完整任务书即直接启动" in example
