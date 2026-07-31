@@ -36,6 +36,10 @@ def test_open_source_supporting_files_exist() -> None:
         ROOT / "assets" / "code-role-social-preview.png",
         ROOT / "docs" / "promotion" / "LAUNCH-KIT.md",
         ROOT / "docs" / "promotion" / "STAR-GROWTH-PLAN.md",
+        ROOT / "docs" / "promotion" / "TWO-CASE-LAUNCH-STORY.md",
+        ROOT / "docs" / "case-studies" / "README.md",
+        ROOT / "docs" / "case-studies" / "deepbrain.md",
+        ROOT / "docs" / "case-studies" / "leaper-agent.md",
     ]
     missing = [path for path in expected if not path.exists()]
     assert not missing
@@ -57,6 +61,24 @@ def test_public_entry_points_are_actionable() -> None:
     assert "Show HN" in launch_kit
     assert "Product Hunt" in launch_kit
     assert "Never buy stars." in growth_plan
+
+
+def test_real_cases_preserve_private_project_claim_boundaries() -> None:
+    readme = read(ROOT / "README.md")
+    deepbrain = read(ROOT / "docs" / "case-studies" / "deepbrain.md")
+    leaper_agent = read(ROOT / "docs" / "case-studies" / "leaper-agent.md")
+    case_index = read(ROOT / "docs" / "case-studies" / "README.md")
+
+    assert "Real Project Cases / 真实项目案例" in readme
+    assert "DeepBrain memory runtime" in readme
+    assert "Leaper Agent enterprise runtime" in readme
+    assert "Both source repositories are private." in case_index
+    assert "Milestone pass | `0`" in deepbrain
+    assert "Reviewer route allowed | `0`" in deepbrain
+    assert "production ready = 0" in deepbrain
+    assert "Current KR pass | `0`" in leaper_agent
+    assert "`evaluation_sop_frozen = 0`" in leaper_agent
+    assert "does not claim that Leaper Agent already beats Hermes" in leaper_agent
 
 
 def test_social_preview_png_meets_github_dimensions() -> None:

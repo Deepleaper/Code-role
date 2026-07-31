@@ -61,6 +61,19 @@ See the [complete four-workstation walkthrough](examples/minimal-goal-loop/READM
 | Independent acceptance | Engineering produces candidate evidence; Independent Evaluation decides observed pass/fail. |
 | Local control plane | Generated `code-role/` files stay outside product runtime and target-project releases by default. |
 
+## Real Project Cases / 真实项目案例
+
+Code-role was shaped by two private, real-world AI engineering projects. The value of these cases is not that both milestones are complete. Neither case is presented as complete. The value is that Code-role kept strong partial results from becoming unsupported product claims.
+
+Code-role 来自两个真实的私有 AI 工程项目。这两个案例的价值不是“都成功完成了”，我们也没有把它们包装成完成案例。真正的价值在于：即使已经取得大量局部成果，Code-role 仍然阻止团队把不完整证据扩大成产品结论。
+
+| Case | Evidence that looked strong | What still remained `0` | Control value |
+| --- | --- | --- | --- |
+| [DeepBrain memory runtime](docs/case-studies/deepbrain.md) | 1,750 unit tests, 142 frontend/runtime tests, S50 `50/50`, LongMemEval-S `499/500`, and `100/100` grounded source joins | Fair comparator, representative raw benchmark reruns, repair proof, clean reproducibility, and production cost/SLO evidence | Independent Evaluation held the milestone and Reviewer route at `0` instead of turning a `73/100` partial result into “production ready.” |
+| [Leaper Agent enterprise runtime](docs/case-studies/leaper-agent.md) | A detailed Hermes comparison plan and a professional-looking evaluation baseline | Real task artifacts, isolated holdout, committed grader mechanism, concrete same-condition runtime, and canonical integrity evidence | The Project Manager rejected the first baseline and kept Engineering blocked until evaluation became executable rather than declarative. |
+
+Read the complete [two-case launch story](docs/promotion/TWO-CASE-LAUNCH-STORY.md).
+
 ## Why / 为什么
 
 AI coding work drifts when progress is measured by activity instead of accepted product evidence. A polished document, a large diff, or a passing local command does not prove that the milestone is complete.
@@ -273,6 +286,7 @@ Both initializers add `code-role/` to the target repository's local `.git/info/e
 - [中文 HTML 说明与初始化指南](docs/product/code-role-workflow-guide.zh-CN.html)
 - [Minimal target example](examples/minimal-target/README.md)
 - [Complete goal-loop walkthrough / 完整目标闭环示例](examples/minimal-goal-loop/README.md)
+- [Real project cases / 真实项目案例](docs/case-studies/README.md)
 
 ## Community / 社区
 

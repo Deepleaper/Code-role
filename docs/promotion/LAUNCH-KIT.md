@@ -62,6 +62,8 @@ Code-role now has two operating profiles. The Minimal Profile is the default: Pr
 
 This is not an autonomous coding runner. It is a local control layer for human-discussed, evidence-driven delivery. I would especially value feedback from people running multi-agent or multi-conversation coding workflows.
 
+The workflow came from two private projects. In DeepBrain, Independent Evaluation kept a strong `73/100` partial result from becoming an unsupported production claim. In Leaper Agent, the Project Manager rejected a professional-looking evaluation baseline because its task data, holdout isolation, grader mechanism, and runtime conditions were not executable yet.
+
 ## X / Twitter
 
 **English**
@@ -107,6 +109,10 @@ The failure mode I kept seeing was subtle: every AI role could produce a profess
 我反复遇到一种很隐蔽的失败：每个 AI 角色都能写出看起来专业的内容，但项目目标却在一次次交接中漂移。解决办法不是再增加一个 Agent，而是建立稳定的控制闭环，把责任、完成证据和验收权写清楚。
 
 Continue with one real before/after milestone and link directly to the worked example.
+
+Ready-to-publish source article:
+
+- [Two real projects taught me that AI coding needs milestone control](TWO-CASE-LAUNCH-STORY.md)
 
 ## Reddit Or Forum Post
 

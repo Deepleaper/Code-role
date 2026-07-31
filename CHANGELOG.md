@@ -4,6 +4,19 @@ All notable public changes to Code-role are documented here.
 
 Code-role 的重要公开变更记录在这里。
 
+## [0.3.1] - 2026-07-31
+
+### Added
+
+- Sanitized bilingual case studies from DeepBrain and Leaper Agent.
+- A two-case launch article explaining how Code-role prevented premature closure and invalid Engineering startup.
+- README proof points that preserve the actual `0` gates rather than presenting unfinished milestones as success stories.
+
+### Changed
+
+- Launch materials now lead with real project evidence instead of hypothetical workflow claims.
+- Public case disclosure explicitly excludes private source, repository paths, customer data, and implementation details.
+
 ## [0.3.0] - 2026-07-30
 
 ### Added
@@ -27,4 +40,5 @@ Code-role 的重要公开变更记录在这里。
 - Repository test suite: `68 passed`.
 - Social preview: `1280 x 640`, PNG under `1 MB`.
 
+[0.3.1]: https://github.com/Deepleaper/Code-role/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/Deepleaper/Code-role/compare/v0.1.1...v0.3.0
