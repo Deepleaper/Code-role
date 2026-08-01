@@ -1,5 +1,9 @@
 # Goal Loop Contract / 目标闭环协议
 
+This profile follows [`../dialogue-control.md`](../dialogue-control.md). If an older prompt conflicts with that contract, the dialogue-control contract wins.
+
+本配置遵守 [`../dialogue-control.md`](../dialogue-control.md)。旧提示词与其冲突时，以对话控制契约为准。
+
 ## 1. One Authority / 唯一权威
 
 `code-role/milestone-board.md` is the only active control record.
@@ -24,11 +28,11 @@ Chat summaries, role self-reports, old packets, manifests, indexes, and scores c
 - 残余事项必须成为新 KR、明确非目标，或保持为未解决的 `KR=0`。
 - 只有项目经理更新 KR 和 milestone 状态。
 
-## 3. One KR Per Iteration / 每轮一个 KR
+## 3. One Primary KR Per Iteration / 每轮一个主要 KR
 
-Each assignment targets exactly one accepted `KR=0`. The assignment may require regression checks for other KRs, but it cannot quietly add a second delivery target.
+Each assignment targets exactly one accepted primary `KR=0`. It may include the coherent supporting checks and regressions required to decide that KR, but it cannot quietly add another product outcome.
 
-每份任务书只针对一个已确认的 `KR=0`。任务可以要求回归其他 KR，但不能暗中增加第二个交付目标。
+每份任务书只针对一个已确认的主要 `KR=0`。可以包含判断该 KR 必需的同一组支撑检查和回归，但不能暗中增加另一个产品结果。
 
 ## 4. Dynamic Routing / 动态路由
 
@@ -58,21 +62,31 @@ A workstation starts immediately after receiving a complete `PM Assignment`. It 
 
 工位收到完整的 `PM Assignment` 后直接开始工作，不再要求用户回复“开始”。
 
-This version uses manual transport between separate role conversations. Project Manager prints the copy-ready assignment; the user pastes it into the selected role conversation. The role prints its fixed return; the user pastes that return to Project Manager. No prompt may claim automatic dispatch unless an actual dispatch tool was called successfully.
+This version uses manual transport between separate role conversations. Project Manager prints the copy-ready assignment; the user pastes it into the selected role conversation. The role prints its short return; the user pastes that return to Project Manager. No prompt may claim automatic dispatch unless an actual dispatch tool was called successfully.
 
-本版本使用独立角色对话之间的手动传递。项目经理输出可复制任务书，用户把它贴入对应角色对话；角色输出固定回报，用户再贴回项目经理。没有真实成功调用调度工具时，任何提示词都不得声称已经自动派发。
+本版本使用独立角色对话之间的手动传递。项目经理输出可复制任务书，用户把它贴入对应角色对话；角色输出短回报，用户再贴回项目经理。没有真实成功调用调度工具时，任何提示词都不得声称已经自动派发。
 
-## 6. Fixed Transport, Flexible Attachments / 固定流转，灵活附件
+The role must not send a startup acknowledgement or narrate routine progress. It reports only a consolidated blocker that needs a user decision, or the final short return.
 
-- Project Manager uses only `templates/assignment.md` to assign professional work.
+角色不得发送启动确认或叙述常规过程，只在需要用户决策的真实阻塞发生时集中提问，或者直接提交最终短回报。
+
+## 6. Role-Specific Transport, Artifact-First Acceptance / 分角色流转，附件优先
+
+- Project Manager uses the selected workstation's role-specific assignment template.
 - Each workstation uses only its role-specific return template.
 - Detailed professional work lives in attachments under `code-role/work/<milestone>/`.
 - Project Manager references accepted professional attachments; it does not rewrite their professional content.
+- Return formatting is navigation convenience, not a completion gate. If the attachment contains sufficient evidence, Project Manager evaluates it directly.
 
-- 项目经理只使用 `templates/assignment.md` 下发专业任务。
+- 项目经理使用被选工位唯一的分角色任务模板。
 - 每个工位只使用自己唯一的回报模板。
 - 详细专业工作写入 `code-role/work/<milestone>/` 附件。
 - 项目经理引用已接受的专业附件，不重写其中的专业内容。
+- 回报格式只是导航便利，不是完成门禁；附件证据充分时，项目经理直接审阅附件。
+
+Project Manager must freeze the complete required-check set before issuing the assignment. A requirement discovered later is a task-definition defect and must not be counted as a failed role attempt.
+
+项目经理必须在发出任务前一次冻结完整检查集；后续才发现的要求属于任务定义缺陷，不得计为角色失败轮次。
 
 ## 7. Evaluation Before Pass / 通过前独立评估
 

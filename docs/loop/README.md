@@ -42,8 +42,9 @@ Research is a capability inside Product Strategy and Engineering. Architecture a
 ## Canonical Files / 权威文件
 
 - `code-role/milestone-board.md`: the only active milestone state.
+- `code-role/DIALOGUE-CONTROL.md`: shared conversation and artifact-first acceptance contract.
 - `code-role/LOOP.md`: the operating contract.
-- `code-role/templates/assignment.md`: the only PM-to-workstation task format.
+- Role-specific assignment templates under `code-role/templates/`.
 - Role-specific return templates under `code-role/templates/`.
 - Detailed attachments under `code-role/work/<milestone>/`.
 
@@ -82,7 +83,7 @@ The initializer adds `code-role/` to `.git/info/exclude` when the target is a Gi
 
 ## Full Profile / 八角色完整版
 
-The eight-role Full Profile lives under [`docs/workflow/`](../workflow/README.md). Use it when research, product definition, architecture, code-context mapping, implementation, independent evaluation, and final audit need separate professional ownership and versioned packet evidence.
+The eight-role Full Profile lives under [`docs/workflow/`](../workflow/README.md). It uses the same artifact-first dialogue control while adding separate research, product, architecture, code-context, implementation, evaluation, and audit ownership with versioned packet evidence.
 
 八角色完整版位于 [`docs/workflow/`](../workflow/README.md)。当调研、产品定义、架构、代码上下文、实现、独立评估和最终审计需要独立专业责任及版本化 packet 证据时使用它。
 

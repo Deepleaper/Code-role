@@ -12,24 +12,22 @@ def read(path: Path) -> str:
 def test_source_map_covers_all_eight_roles() -> None:
     text = read(SOURCE_MAP)
     for section in [
-        "Orchestrator Read Scope",
-        "Researcher Read Scope",
-        "Product / PRD Read Scope",
-        "Architect Read Scope",
-        "Code Context Read Scope",
-        "Implementer Read Scope",
-        "Test Evaluator Read Scope",
-        "Reviewer Read Scope",
+        "Workflow Orchestrator",
+        "Researcher",
+        "Product / PRD",
+        "Architect",
+        "Code Context",
+        "Implementer",
+        "Test Evaluator",
+        "Reviewer",
     ]:
         assert section in text
 
 
 def test_source_map_hardens_high_risk_roles() -> None:
     text = read(SOURCE_MAP)
-    assert "The Implementer must not begin from chat-only instruction" in text
-    assert "Orchestrator must approve Implementer start" in text
-    assert "The Test Evaluator must not modify code or tests" in text
-    assert "code-role/workflow/evaluation/evaluation-sop.md" in text
-    assert "The Reviewer must not implement fixes" in text
-    assert "code-role/workflow/orchestrator/milestone-contract.md" in text
-    assert "The Code Context role must not modify code, tests" in text
+    assert "Historical packet scopes never accumulate into permanent restrictions" in text
+    assert "does not need to predict every changed file" in text
+    assert "Must not repair the candidate" in text
+    assert "Must not implement fixes" in text
+    assert "Must not implement fixes, change tests" in text

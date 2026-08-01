@@ -15,8 +15,8 @@
 
 | Confirmation / 确认项 | Source Label / 来源标签 | Status / 状态 | Evidence / 证据 |
 | --- | --- | --- | --- |
-| implementation start allowed | implementation_start_confirmation | confirmed / missing / blocked | <user and Orchestrator confirmation> |
-| exact writable scope confirmed | approved_writable_scope | confirmed / missing / blocked | <scope source> |
+| valid assignment received | valid_assignment | 0 / 1 | <assignment path or message id> |
+| writable module or directory scope confirmed | approved_writable_scope | 0 / 1 | <assignment source> |
 
 ## What Changed / 实际改动
 

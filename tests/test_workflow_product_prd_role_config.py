@@ -27,37 +27,29 @@ def test_product_prd_role_files_exist() -> None:
     assert not missing
 
 
-def test_product_prd_role_consumes_researcher_packet() -> None:
+def test_product_prd_role_consumes_assignment_named_evidence() -> None:
     role = read(PRODUCT / "ROLE.md")
     manifest = json.loads((PRODUCT / "templates" / "handoff.manifest.json").read_text(encoding="utf-8"))
 
-    assert "accepted Researcher packets" in role
-    assert "read the upstream `handoff.manifest.json` first" in role
-    assert "Product PRD Output Standard" in role
-    assert "owns product commitment, not product imagination" in role
-    assert "must not become committed scope" in role
-    assert "records the exact Researcher packet consumed as input" in role
-    assert "locks the Researcher packet" not in role
+    assert "complete Product / PRD Assignment" in role
+    assert "accepted Researcher artifacts and user decisions" in role
+    assert "A complete assignment starts work immediately" in role
+    assert "Do not recommend or choose the next role" in role
     assert manifest["role"] == "product-prd"
-    assert manifest["handoff_to"] == ["architect"]
-    assert manifest["input_packets"][0]["role"] == "researcher"
-    assert manifest["input_packets"][0]["status_at_consumption"] == "draft"
-    assert manifest["input_packets"][0]["consumption_status"] == "accepted_as_input"
+    assert manifest["return_to"] == "workflow-orchestrator"
+    assert manifest["input_packets"] == []
+    assert "assignment-named upstream artifacts" in manifest["source_scopes"]
 
 
 def test_product_prd_boundaries_are_documented() -> None:
     role = read(PRODUCT / "ROLE.md")
     source_map = read(WORKFLOW / "source-map.md")
 
-    assert "does not write implementation code" in role
-    assert "does not change tests" in role
-    assert "does not make architecture decisions" in role
-    assert "does not edit release docs" in role
-    assert "does not turn external frontier research directly into committed scope" in role
-    assert "does not present unconfirmed product judgment as user decision" in role
-    assert "does not write requirements without acceptance criteria" in role
+    assert "implementation architecture, code, tests, evaluation verdicts" in role
+    assert "Do not invent implementation details as product facts" in role
+    assert "Do not silently change an accepted Objective" in role
     assert "docs/workflow/roles/product-prd/reports/<milestone>/packet-vNNN/" in source_map
-    assert "must not write product source docs, architecture docs, release docs, code, or tests" in source_map
+    assert "Must not write architecture implementation, code, tests" in source_map
 
 
 def test_product_prd_output_standard_defines_product_commitment_quality() -> None:

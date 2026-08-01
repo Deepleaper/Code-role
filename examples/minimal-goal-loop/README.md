@@ -17,10 +17,11 @@ This is an illustrative, internally consistent packet set. Its command observati
 ## Read In This Order / 阅读顺序
 
 1. [`milestone-board.md`](milestone-board.md): the accepted Objective, binary KR, and final control state.
-2. [`01-pm-assignment.md`](01-pm-assignment.md): the exact missing evidence assigned to Engineering.
+2. [`01-pm-engineering-assignment.md`](01-pm-engineering-assignment.md): the exact missing evidence assigned to Engineering.
 3. [`02-engineering-return.md`](02-engineering-return.md): candidate implementation evidence, not self-acceptance.
-4. [`03-independent-evaluation-return.md`](03-independent-evaluation-return.md): a fresh, independent run of every frozen check.
-5. [`04-pm-decision.md`](04-pm-decision.md): the only document that changes the KR from `0` to `1`.
+4. [`03-pm-evaluation-assignment.md`](03-pm-evaluation-assignment.md): the frozen full-evaluation task issued by Project Manager.
+5. [`04-independent-evaluation-return.md`](04-independent-evaluation-return.md): a fresh, independent run of every frozen check.
+6. [`05-pm-decision.md`](05-pm-decision.md): the only document that changes the KR from `0` to `1`.
 
 ## What This Demonstrates / 这个示例证明什么
 

@@ -1,17 +1,13 @@
 # PM Decision / 项目经理决策
 
+assignment_id:
 milestone:
-accepted_role_return: 0 | 1
 accepted_attachment:
-
-kr_updates:
-| KR | previous (0/1) | current (0/1) | independent evidence |
-| --- | ---: | ---: | --- |
-
-decision: return_same_workstation | assign_product_strategy | assign_engineering | assign_independent_evaluation | request_user_decision | milestone_complete
-decision_reason_code:
-selected_next_kr:
-next_iteration:
-next_workstation:
+target_kr_before: 0 | 1
+target_kr_after: 0 | 1
+evidence_basis:
+failed_check_ids: none | <check ids>
+blocker_owner: none | product-strategy | engineering | independent-evaluation | project-manager | user
+route: product-strategy | engineering | independent-evaluation | request_user_decision | milestone_complete
 milestone_pass: 0 | 1
-human_action_required:
+next_assignment_or_user_decision:

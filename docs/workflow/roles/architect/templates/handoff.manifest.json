@@ -15,22 +15,13 @@
     {"path": "test-strategy.md", "type": "test_strategy", "required": true, "description": "Tests required downstream."},
     {"path": "risk-register.md", "type": "risk_register", "required": true, "description": "Architecture risks."}
   ],
-  "input_packets": [
-    {
-      "role": "product-prd",
-      "milestone": "template",
-      "packet_version": "packet-v001",
-      "manifest": "docs/workflow/roles/product-prd/reports/<milestone>/packet-v001/handoff.manifest.json",
-      "status_at_consumption": "draft",
-      "consumption_status": "accepted_as_input"
-    }
-  ],
+  "input_packets": [],
   "source_scopes": [
     "docs/workflow/source-map.md",
     "docs/workflow/roles/architect/architect-output-standard.md",
-    "upstream product-prd packet"
+    "assignment-named upstream artifacts"
   ],
-  "handoff_to": ["code-context"],
+  "return_to": "workflow-orchestrator",
   "open_questions": [],
   "blocked": false,
   "required_confirmations": []

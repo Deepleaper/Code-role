@@ -44,9 +44,7 @@
     "docs/workflow/source-map.md",
     "docs/workflow/roles/researcher/researcher-output-standard.md"
   ],
-  "handoff_to": [
-    "product-prd"
-  ],
+  "return_to": "workflow-orchestrator",
   "open_questions": [],
   "blocked": false,
   "required_confirmations": []

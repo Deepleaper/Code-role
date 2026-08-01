@@ -39,24 +39,13 @@
       "description": "Product decisions and evidence behind them."
     }
   ],
-  "input_packets": [
-    {
-      "role": "researcher",
-      "milestone": "template",
-      "packet_version": "packet-v001",
-      "manifest": "docs/workflow/roles/researcher/reports/<milestone>/packet-v001/handoff.manifest.json",
-      "status_at_consumption": "draft",
-      "consumption_status": "accepted_as_input"
-    }
-  ],
+  "input_packets": [],
   "source_scopes": [
     "docs/workflow/source-map.md",
     "docs/workflow/roles/product-prd/product-prd-output-standard.md",
-    "upstream researcher packet"
+    "assignment-named upstream artifacts"
   ],
-  "handoff_to": [
-    "architect"
-  ],
+  "return_to": "workflow-orchestrator",
   "open_questions": [],
   "blocked": false,
   "required_confirmations": []

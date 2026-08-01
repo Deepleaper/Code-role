@@ -19,7 +19,7 @@ Every Reviewer packet must review these points:
 7. PRD 或验收标准与测试结论是否一致 / whether PRD or acceptance criteria align with test conclusions
 8. 实现改动是否遵守批准范围 / whether implementation changes stayed inside approved scope
 9. Test Evaluator 的质量结论是否有足够证据支撑 / whether Test Evaluator quality gate is evidence-backed
-10. 是否可以关闭、接受残余风险，或必须回流 / whether to close, accept residual risk, or send back
+10. 二值审计门是否通过；未通过时由哪个角色修正 / whether the binary review gate passes and which role owns correction when it fails
 
 Reviewer 不重新实现、不重新测试、不替代 Orchestrator 路由；Reviewer 负责指出哪个角色漂移，包括 `workflow-orchestrator`，Orchestrator 负责指挥该角色修正。
 
@@ -76,9 +76,9 @@ Use this layer to judge whether active `evaluation-sop.md` was confirmed and fol
 - baseline gap status: `confirmed`、`partial`、`missing`、`unsupported`
 - final gate impact / 对最终门禁的影响
 
-如果 evaluation SOP、评估机制或 baseline 未确认，Reviewer 不得建议 `final_acceptance=true`。
+如果 evaluation SOP、评估机制或 baseline 未确认，对应必需检查记为 `0`，因此 `review_gate_pass=0`。
 
-If evaluation SOP, evaluation mechanism, or baseline is unconfirmed, Reviewer must not recommend `final_acceptance=true`.
+If the evaluation SOP, mechanism, or baseline is unconfirmed, the required check is `0`, so `review_gate_pass=0`.
 
 如果行业共识或 benchmark 没有来源，Reviewer 必须标记为 `unsupported` 或 `unknown`。
 
@@ -98,9 +98,9 @@ Use this layer to compare Product / PRD acceptance criteria, Implementer changes
 - gap status: `covered`、`partial`、`missing`、`not_applicable`
 - final acceptance impact / 对最终验收的影响
 
-Test Evaluator 的 `pass_with_residual_risk` 不等于 Reviewer 自动接受。
+Test Evaluator 的诊断风险不能形成第三种完成状态。
 
-Test Evaluator `pass_with_residual_risk` does not mean Reviewer automatically accepts.
+Diagnostic risk does not create a third completion state.
 
 ### 4. Packet Chain Audit / Packet 链审计
 
@@ -126,25 +126,23 @@ Strict handoff locks are not required by default. Missing locks are a structural
 
 Use this layer for Reviewer final recommendation.
 
-允许状态 / Allowed statuses:
+唯一门禁字段 / Single gate field:
 
-- `approve`
-- `pass_with_residual_risk`
-- `request_changes`
-- `blocked`
+```text
+review_gate_pass: 0 | 1
+```
 
 必须记录 / Must record:
 
-- gate status / gate 状态
-- final_acceptance: true / false
-- unresolved P0 / P1 / P2
-- accepted residual risks / 已接受残余风险
-- required user confirmations / 需要用户确认事项
-- recommended next action / 建议下一步
+- required review check IDs / 必需审计项 ID
+- each check result: `0 | 1` / 每项检查结果
+- failed check IDs / 未通过项 ID
+- evidence paths / 证据路径
+- blocker owner for every failed check / 每个失败项的责任角色
 
-`final_acceptance=true` 只能在没有 unresolved P0/P1、验收差距已覆盖、且用户允许关闭时建议。
+只有所有必需检查都有独立、可重复的通过证据时，`review_gate_pass=1`；任一必需检查失败、未运行、未知或仅有定性判断时均为 `0`。风险只能绑定到失败检查、用户新接受的 KR 或明确 non-goal，不能形成第三种门禁状态。
 
-`final_acceptance=true` may only be recommended when there is no unresolved P0/P1, acceptance gaps are covered, and the user allows closure.
+`review_gate_pass=1` only when every required check has independent, repeatable pass evidence. Any failed, unrun, unknown, or qualitative required check makes it `0`. A risk must map to a failed check, a newly accepted KR, or an explicit non-goal; it never creates a third gate state.
 
 ## 来源标签 / Source Labels
 
@@ -246,23 +244,24 @@ It must include:
 - strict handoff status if requested / 如用户要求 strict handoff，则记录 strict handoff 状态
 - drift status / 漂移状态
 
-## Final Gate 标准 / Final Gate Standard
+## Binary Final Gate 标准 / 二值最终门禁标准
 
 `final-gate.md` 必须说明：
 
 `final-gate.md` must state:
 
-- gate status / gate 状态
-- final_acceptance / 最终验收建议
+- review_gate_pass / 审计门: `0 | 1`
+- required checks total / 必需检查总数
+- required checks passed / 必需检查通过数
+- failed check IDs / 失败检查项
 - milestone contract status / milestone contract 状态
 - evaluation SOP status / evaluation SOP 状态
-- milestone closure recommendation / milestone 关闭建议
-- next action / 下一步动作
-- user confirmations required / 用户确认项
+- correction owner / 修正责任人
+- evidence basis / 证据依据
 
-Reviewer 可以建议关闭或回流，但不能自己关闭 milestone。
+Reviewer 只提交二值审计证据和修正责任人，不能自己关闭 milestone。
 
-Reviewer may recommend closure or return, but must not close the milestone itself.
+Reviewer reports binary audit evidence and correction ownership; it does not close the milestone itself.
 
 ## 禁止输出 / Forbidden Output
 

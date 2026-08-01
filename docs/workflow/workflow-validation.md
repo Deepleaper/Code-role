@@ -26,9 +26,9 @@ The tool is stored under `docs/workflow/`, so it is covered by the local workflo
 
 ### Consumption
 
-- lightweight downstream consumption requires `role_completion_status=1` and user acceptance of the upstream role output.
+- lightweight downstream consumption requires Project Manager acceptance of the upstream professional artifact against the frozen assignment checks.
 - upstream status may remain `draft` in lightweight mode.
-- Orchestrator should record the user acceptance and next-role route.
+- Orchestrator records artifact acceptance and the evidence-based route.
 - downstream `input_packets` must record exact upstream role, milestone, packet version, manifest path, and status at consumption.
 - strict downstream consumption requires `ready_for_next_role` and `packet.lock.json`.
 
@@ -54,18 +54,20 @@ The lock records hashes for packet files. A future validator can compare current
 
 Before implementation:
 
-- chain permits implementation
-- Product/PRD or equivalent scope is accepted, unless the user explicitly chose patch-chain
-- Code Context packet exists for non-trivial work
-- user explicitly allows Implementer to start
+- the Implementer assignment is complete;
+- objective, authoritative inputs, writable modules or directories, required checks, and stop condition are present;
+- product or architecture decisions needed by the change are accepted;
+- task-specific exclusions are explicit when needed.
+
+A valid assignment authorizes ordinary local implementation. No second startup confirmation is required.
 
 ### Chain-Specific Checks
 
-- `full-chain`: all seven execution role packets must be present unless current stage is earlier in the chain.
-- `mini-chain`: requires accepted product scope or explicit user override.
-- `patch-chain`: must not touch runtime boundary, memory scope, permissions, schema, or release claims.
-- `docs-only-chain`: must not include code or test changes.
-- `research-only`: may stop after Researcher only if Orchestrator records why.
+- named chains are planning hints, not fixed predecessor/successor gates;
+- every selected role must answer one explicit evidence gap;
+- every professional role returns to Workflow Orchestrator;
+- `docs-only-chain` assignments must not request code changes;
+- implementation evidence cannot pass a KR without required independent evaluation.
 
 ## Privacy / Repo Boundary
 

@@ -135,6 +135,6 @@ def test_product_docs_define_minimal_and_full_profiles() -> None:
     assert "八角色完整版" in chinese_prd
     assert "四角色最小版" in html
     assert "八角色完整版" in html
-    assert "Full Profile: Eight-Role Document Workflow" in full_profile
+    assert "Full Profile: Eight-Role Workflow" in full_profile
     assert "Legacy Eight-Role Profile" not in read(ROOT / "README.md")
     assert "本八角色 packet 工作流仅为兼容" not in full_profile

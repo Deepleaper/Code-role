@@ -1,28 +1,70 @@
-# Full Profile: Eight-Role Document Workflow / 八角色完整文档工作流
+# Full Profile: Eight-Role Workflow / 八角色完整版
 
-> This is the Code-role Full Profile for complex, high-risk, research-heavy, or audit-intensive milestones. The four-workstation Minimal Profile is documented in [`../loop/README.md`](../loop/README.md).
->
-> 这是 Code-role 的八角色完整版，适用于复杂、高风险、研究密集或需要完整审计链的 milestone。四角色最小版见 [`../loop/README.md`](../loop/README.md)。
+Use the Full Profile when a milestone benefits from separate research, product, architecture, code-context, implementation, independent-evaluation, and final-audit ownership.
 
-This folder defines the document-based role workflow for Code-role role instances.
+当复杂或高风险 milestone 需要独立的研究、产品、架构、上下文、实现、评估和最终审计责任时，使用八角色完整版。
 
-The workflow separates responsibilities into roles. Each role reads approved document packets from upstream roles and writes a new versioned document packet for downstream roles. Roles do not pass state through chat memory as the source of truth.
+The Full Profile follows the shared [Dialogue Control Contract](../dialogue-control.md). It keeps professional packet depth without making packet formatting the delivery goal.
 
-The workflow is discussion-first, not automation-first. Each role produces a documented output for user discussion. The default flow is lightweight about packet locking, but not about completion: Orchestrator may route the next role from a `draft` packet only when `role_completion_status=1`.
+八角色遵守共享[对话控制契约](../dialogue-control.md)：保留专业 packet 深度，但不把 packet 格式当成交付目标。
 
-The workflow has eight configured role slots. The [Workflow Orchestrator](orchestrator/ROLE.md) is the control role; the other seven roles are execution roles.
+## Eight Roles / 八个角色
 
-The recommended usage model is one configured Codex role instance per role. Do not run the full workflow by switching roles inside one conversation.
+| Role | Professional ownership |
+| --- | --- |
+| Workflow Orchestrator / 项目经理 | Objective, binary KRs, artifact acceptance, blocker ownership, routing, closure |
+| Researcher / 研究员 | Current-project evidence, frontier research, evidence map, risks, unknowns |
+| Product / PRD / 产品经理 | User value, behavior, scope, non-goals, binary acceptance, claim boundary |
+| Architect / 架构师 | Contracts, boundaries, interfaces, data/state flow, test strategy, architecture risks |
+| Code Context / 上下文工程师 | Exact file/function/field/test/artifact seams and implementation constraints |
+| Implementer / 实现工程师 | Project changes, tests, verification, candidate evidence |
+| Test Evaluator / 测试评估师 | Frozen evaluation baseline and complete independent evaluation |
+| Reviewer / 复核审计 | Orchestrator and role-by-role drift audit against the original milestone |
 
-The Minimal and Full profiles are both supported product configurations. Select one at milestone start. Do not mix their active state models inside the same milestone: Minimal uses `milestone-board.md`; Full uses Orchestrator state plus versioned packets.
+Each role uses a separate configured conversation. Every professional role returns to Workflow Orchestrator. There is no role-to-role self-routing.
 
-四角色最小版和八角色完整版都是正式支持的产品配置。应在 milestone 启动时选择一套，同一 milestone 内不要混用两套活跃状态模型：最小版使用 `milestone-board.md`，完整版使用 Orchestrator 状态和版本化 packets。
+每个角色使用独立对话；所有专业角色都回到项目经理；角色之间不能自行路由。
 
-## Current Scope
+All non-Implementer roles produce governance or professional documents only. Implementer is the only role that changes target-project code under a valid assignment.
 
-Currently materialized role files:
+## Active Control / 活跃控制
 
-- [Workflow Orchestrator](orchestrator/ROLE.md)
+- `milestone-contract.md` anchors Objective, KRs, evidence, non-goals, and claim boundaries.
+- Orchestrator state records the current target, accepted artifact pointers, and blocker owner.
+- Professional packet documents are the substantive handoff.
+- `handoff.manifest.json` is packet index and provenance metadata, not a completion gate.
+- `ready_for_next_role` and `packet.lock.json` are optional strict-audit controls only when explicitly requested.
+- Chat summaries, role self-reports, packet status, and locks do not update a KR by themselves.
+
+## Operating Loop / 运行闭环
+
+```mermaid
+flowchart LR
+    U["User accepts Objective and KRs"] --> PM["Workflow Orchestrator"]
+    PM --> R["Selected professional role"]
+    R --> PM
+    PM --> D{"Substantive evidence gap"}
+    D --> R
+    PM --> X["All KRs = 1 and required audit = 1"]
+```
+
+Workflow Orchestrator chooses the blocker owner from evidence. A complete role-specific assignment starts immediately. The role writes its packet, sends one short return, and does not choose the next role.
+
+## Binary Rules / 二值规则
+
+- Every accepted KR is `0` or `1`.
+- Required unrun, missing, inferred, or qualitative evidence is `0`.
+- `assignment_pass=1` means the current role's assigned checks passed; it does not pass the KR.
+- `evaluation_pass=1` requires every frozen required check to pass independently.
+- `review_gate_pass=1` requires every assigned final-audit check to pass.
+- `partial_pass`, `pass_with_residual_risk`, and similar gate states are invalid.
+
+## Assignment And Return / 任务与回报
+
+Each professional role owns exactly one `templates/assignment.md` and one `templates/return.md`. Detailed professional outputs remain in that role's packet templates.
+
+每个专业角色只有一份任务书模板和一份短回报模板；详细专业产出继续使用本角色 packet 模板。
+
 - [Researcher](roles/researcher/ROLE.md)
 - [Product / PRD](roles/product-prd/ROLE.md)
 - [Architect](roles/architect/ROLE.md)
@@ -30,50 +72,38 @@ Currently materialized role files:
 - [Implementer](roles/implementer/ROLE.md)
 - [Test Evaluator](roles/test-evaluator/ROLE.md)
 - [Reviewer](roles/reviewer/ROLE.md)
+- [Workflow Orchestrator](orchestrator/ROLE.md)
 
-The [Role Configuration Guide](role-configuration-guide.md) defines the operating model and role responsibilities for the full workflow.
+## Human Gates / 人工闸门
 
-## Core Rules
+Human confirmation is limited to Objective/KR/threshold/dataset/grader/claim changes, budget expansion, private-data external transfer, and irreversible external actions. Routine routing, local work, packet writing, public research, and normal project Git practice do not require another Code-role approval.
 
-- Every role owns its own folder under `docs/workflow/roles/<role>/`.
-- Every role writes reports only under `docs/workflow/roles/<role>/reports/`.
-- Every role conversation must point to that role's explicit output.
-- Every role should be configured and used as a separate role instance.
-- Unrelated requests must be corrected and routed to the proper role.
-- Every non-Implementer role produces documents only and does not change code.
-- Implementer is the only role that may change approved project files, and only after user-confirmed implementation start.
-- Every milestone output is a versioned packet: `packet-v001`, `packet-v002`, and so on.
-- Every milestone must have a confirmed `milestone-contract.md` before the first execution role starts.
-- Every role completion status is binary. `role_completion_status=1` requires all assigned completion conditions to be met with concrete evidence; any missing condition means `role_completion_status=0`.
-- Test Evaluator must use `evaluation-sop.md` as the stable evaluation anchor for the milestone.
-- Packet content is immutable only in strict handoff mode after it is marked `ready_for_next_role`.
-- `latest.json` is deprecated for daily workflow. Use Orchestrator state and `final-packet-index.md` to identify current outputs.
-- Downstream roles must read `handoff.manifest.json`, not guess which files matter.
-- Downstream roles must record the exact upstream packet version they consumed.
-- Strict `ready_for_next_role` plus `packet.lock.json` handoff is advanced optional mode. Daily lightweight workflow should not require it.
-- Implementer must not start from chat-only instruction.
-- Each role must stop for discussion when scope, tradeoffs, evidence, risks, or handoff readiness are not settled.
-- Advancing to the next role requires `role_completion_status=1` and user acceptance of that role output.
-- Upstream packet manifests must be passed explicitly between role instances.
+## Initialize / 初始化
 
-## Protocol Documents
+```bash
+python scripts/init_project_workflow.py \
+  --target "/absolute/path/to/project" \
+  --project-name "Project Name" \
+  --initial-milestone workflow-bootstrap \
+  --initial-chain full-chain \
+  --write
+```
 
-- [Role Configuration Guide](role-configuration-guide.md)
-- [Project Practices](project-practices.md)
-- [Workflow Bootstrap](bootstrap.md)
-- [Project Bootstrap](project-bootstrap.md)
-- [Milestone Contract](milestone-contract.md)
-- [Role Completion Contract](role-completion-contract.md)
-- [Evaluation SOP](evaluation-sop.md)
-- [Role Instance Setup](role-instance-setup.md)
-- [State Index](state-index.md) optional navigation
-- [Git Operation Policy](git-operation-policy.md)
-- [Workflow Chain Policy](workflow-chain-policy.md)
+See [Project Bootstrap](project-bootstrap.md) and [Role Configuration Guide](role-configuration-guide.md).
+
+## Protocols / 协议
+
+- [Dialogue Control](../dialogue-control.md)
 - [Discussion-First Protocol](discussion-first-protocol.md)
-- [Status Transition Protocol](status-transition-protocol.md)
-- [Workflow Validation](workflow-validation.md)
-- [Orchestrator Startup Routine](orchestrator/STARTUP.md)
-- [Orchestrator Consumption Check Request Template](orchestrator/consumption-check-request-template.md)
+- [Role Completion Contract](role-completion-contract.md)
+- [Milestone Contract](milestone-contract.md)
+- [Evaluation SOP](evaluation-sop.md)
 - [Handoff Protocol](handoff-protocol.md)
-- [Packet Schema](packet-schema.md)
-- [Source Map](source-map.md)
+- [Workflow Chain Policy](workflow-chain-policy.md)
+- [Role Instance Setup](role-instance-setup.md)
+- [Project Bootstrap](project-bootstrap.md)
+- [State Index](state-index.md), optional non-authoritative navigation
+- [Project Practices](project-practices.md)
+- [Git Operation Policy](git-operation-policy.md)
+- [Packet Schema](packet-schema.md), optional strict-audit metadata
+- [Status Transition Protocol](status-transition-protocol.md), optional strict handoff

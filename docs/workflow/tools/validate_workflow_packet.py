@@ -27,7 +27,7 @@ REQUIRED_MANIFEST_FIELDS = {
     "documents",
     "input_packets",
     "source_scopes",
-    "handoff_to",
+    "return_to",
     "open_questions",
     "blocked",
     "required_confirmations",
@@ -71,6 +71,9 @@ def validate_manifest(packet_dir: Path) -> dict[str, Any]:
     status = manifest["status"]
     if status not in VALID_PACKET_STATUSES:
         raise ValidationError(f"invalid packet status: {status}")
+
+    if manifest["return_to"] != "workflow-orchestrator":
+        raise ValidationError("manifest return_to must be workflow-orchestrator")
 
     documents = manifest["documents"]
     if not isinstance(documents, list):

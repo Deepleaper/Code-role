@@ -1,212 +1,114 @@
-# Source Map
+# Source Map / 读写边界
 
-This source map tells each role where to read and write by default.
+This file defines stable role ownership. Task-specific input paths, writable modules, exclusions, and evidence belong in the current role assignment. Historical packet scopes never accumulate into permanent restrictions.
 
-## Global Read Defaults
+本文件只定义稳定角色边界。任务级输入路径、可写模块、特殊排除项和证据要求写在当前任务书中；历史 packet 的范围不得累积成永久限制。
 
-Every role may read:
+## Shared Read Rule / 通用读取规则
 
-- [Document Workflow](README.md)
-- [Handoff Protocol](handoff-protocol.md)
-- [Packet Schema](packet-schema.md)
-- [Workflow Chain Policy](workflow-chain-policy.md)
-- [State Index](state-index.md), only when optional state-index files are generated
-- its own `ROLE.md`
-- upstream packet manifests explicitly provided by the user or by the previous role
-- target-project `code-role/state-index/roles/<role>.md` when present
+Every role may read the active dialogue contract, milestone contract, workflow state, its own role contract and output standard, assignment-named artifacts, and repository files reasonably necessary to answer its professional question.
 
-## Orchestrator Read Scope
+角色不需要为普通本地读取逐文件申请许可。若任务缺少会改变产品目标、评估基线、成本预算或不可逆动作的用户决策，才集中提出 blocker。
 
-The Orchestrator may read:
+## Workflow Orchestrator / 项目经理
 
-- `docs/workflow/`
-- role `ROLE.md` files
-- upstream packet manifests explicitly provided by the user
-- current packet manifests needed to determine workflow state
+May read all accepted professional artifacts and their referenced evidence.
 
-The Orchestrator should not read broad runtime code by default. It controls process state, not implementation.
-
-## Orchestrator Write Scope
-
-The Orchestrator writes only:
+May write only:
 
 ```text
-docs/workflow/orchestrator/workflow-state.md
-docs/workflow/orchestrator/milestone-registry.md
-docs/workflow/orchestrator/decision-log.md
-docs/workflow/orchestrator/final-packet-index.md
+code-role/workflow/orchestrator/workflow-state.md
+code-role/workflow/orchestrator/milestone-contract.md
+code-role/workflow/orchestrator/final-packet-index.md
+code-role/workflow/evaluation/evaluation-sop.md
 ```
 
-The Orchestrator must not write role report packets, code, tests, product docs, architecture docs, or release docs.
+Must not write professional role conclusions, target-project code, tests, or execution-role packets.
 
-In an initialized target project, an explicitly authorized optional indexing step may write `code-role/state-index/`. That index remains non-authoritative navigation and must not replace Orchestrator state or packet manifests.
+## Researcher / 研究员
 
-## Researcher Read Scope
+May read repository files and public sources needed to answer the assigned research question.
 
-The Researcher may read these repo areas when needed to verify facts:
-
-- `docs/architecture/`
-- `docs/runtime/`
-- `docs/opc-agent/`
-- `docs/benchmarks/`
-- `docs/release/`
-- `docs/reports/`
-- `examples/`
-- `tests/`
-- `src/`
-
-Code and tests should be read for factual verification only. The Researcher does not change runtime code, tests, product requirements, or architecture decisions.
-
-## Researcher Write Scope
-
-The Researcher writes only under:
+Writes only:
 
 ```text
 docs/workflow/roles/researcher/reports/<milestone>/packet-vNNN/
 ```
 
-The Researcher must not write outside its reports folder without explicit user confirmation.
+Must not write PRD commitments, architecture commitments, code, tests, evaluation verdicts, or Orchestrator state.
 
-## Product / PRD Read Scope
+## Product / PRD / 产品经理
 
-The Product / PRD role may read:
+May read assignment-named evidence, relevant product documents, repository behavior evidence, and public market or industry sources.
 
-- upstream Researcher packet manifests explicitly provided by the user or previous role
-- files listed in the upstream Researcher manifest
-- `docs/PRD.md` and existing product docs when needed for consistency
-- `docs/release/` only to avoid contradicting release boundaries
-- `docs/workflow/` protocol and role files
-
-The Product / PRD role should not read broad code paths by default. If product scope depends on current implementation facts, ask for confirmation or hand off to Code Context.
-
-## Product / PRD Write Scope
-
-The Product / PRD role writes only under:
+Writes only:
 
 ```text
 docs/workflow/roles/product-prd/reports/<milestone>/packet-vNNN/
 ```
 
-The Product / PRD role must not write product source docs, architecture docs, release docs, code, or tests without explicit user confirmation.
+Must not write architecture implementation, code, tests, evaluation verdicts, or Orchestrator state.
 
-## Architect Read Scope
+## Architect / 架构师
 
-The Architect may read:
+May read accepted product/research artifacts and repository files needed to verify current architecture facts.
 
-- Product / PRD packet manifests explicitly provided by the user or Orchestrator
-- Researcher packet manifests when needed for evidence traceability
-- files listed in upstream manifests
-- `docs/architecture/`
-- `docs/runtime/`
-- `docs/opc-agent/`
-- relevant `src/` and `tests/` for factual verification only
-
-The Architect should not read broad repo paths by default. If architecture depends on implementation details, ask for the Code Context role to map them.
-
-## Architect Write Scope
-
-The Architect writes only under:
+Writes only:
 
 ```text
 docs/workflow/roles/architect/reports/<milestone>/packet-vNNN/
 ```
 
-The Architect must not write runtime code, tests, release docs, or product source docs without explicit user confirmation.
+Must not implement code, change tests, make product commitments, or issue evaluation verdicts.
 
-## Code Context Read Scope
+## Code Context / 上下文工程师
 
-The Code Context role may read:
+May inspect any repository file, function, test, dependency, configuration, or generated artifact reasonably necessary to map the assigned implementation seam and impact.
 
-- Architect packet manifests
-- Product / PRD packet manifests
-- files listed in upstream manifests
-- `src/`, `tests/`, `examples/`, and relevant docs within the scope approved by Architect or Orchestrator
-
-The Code Context role may inspect broad repo paths only when the upstream packet or Orchestrator explicitly requires an impact map.
-
-## Code Context Write Scope
-
-The Code Context role writes only under:
+Writes only:
 
 ```text
 docs/workflow/roles/code-context/reports/<milestone>/packet-vNNN/
 ```
 
-The Code Context role must not modify code, tests, examples, product docs, architecture docs, or release docs.
+Must not implement fixes, change tests, or convert a writable candidate into authorization.
 
-## Implementer Read Scope
+## Implementer / 实现工程师
 
-The Implementer may read:
+May read and modify target-project files inside the modules or directories authorized by a complete Implementer assignment. The assignment lists task-specific exclusions only when needed; it does not need to predict every changed file.
 
-- Code Context packet
-- Architect packet
-- Product / PRD packet
-- files explicitly listed in upstream implementation scope
-- relevant code, tests, examples, and docs needed to implement the approved scope
+May also write its own packet under:
 
-The Implementer must not begin from chat-only instruction. Orchestrator must approve Implementer start.
+```text
+docs/workflow/roles/implementer/reports/<milestone>/packet-vNNN/
+```
 
-## Implementer Write Scope
+Must not change Objective, KR, frozen evaluation inputs, public claim boundaries, task-specific exclusions, or upstream packets.
 
-The Implementer may write:
+## Test Evaluator / 测试评估师
 
-- approved code files
-- approved tests
-- approved examples
-- docs required by the approved implementation
-- its own packet under `docs/workflow/roles/implementer/reports/<milestone>/packet-vNNN/`
+May read and execute everything required by the frozen evaluation SOP, including repository code, tests, datasets, candidate artifacts, and runtime outputs.
 
-The Implementer must not write outside approved scope, change release claims, or change license without explicit user confirmation.
-
-## Test Evaluator Read Scope
-
-The Test Evaluator may read:
-
-- active `code-role/workflow/orchestrator/milestone-contract.md`
-- active `code-role/workflow/evaluation/evaluation-sop.md`
-- Implementer packet
-- Product / PRD acceptance criteria
-- Architect test strategy
-- relevant code and tests
-- test output
-
-The Test Evaluator may run tests when the user allows the cost and scope.
-
-## Test Evaluator Write Scope
-
-The Test Evaluator writes only under:
+Writes only:
 
 ```text
 docs/workflow/roles/test-evaluator/reports/<milestone>/packet-vNNN/
 ```
 
-The Test Evaluator must not modify code or tests unless explicitly reassigned as Implementer for a new packet.
+Must not repair the candidate, alter the frozen SOP after seeing results, or turn Implementer self-report into independent evidence.
 
-## Reviewer Read Scope
+## Reviewer / 复核审计
 
-The Reviewer may read:
+May read the original milestone anchor, Workflow Orchestrator outputs, every accepted final role artifact, frozen evaluation SOP, evaluator evidence, relevant source/test evidence, and Git diff needed for the assigned full-flow audit.
 
-- active `code-role/workflow/orchestrator/milestone-contract.md`
-- active `code-role/workflow/evaluation/evaluation-sop.md`
-- Orchestrator `final-packet-index.md`
-- all packet manifests in the selected chain
-- packet documents listed by those manifests
-- git status and diffs when needed
-- relevant test output
-- relevant source files only to verify review findings
-
-## Reviewer Write Scope
-
-The Reviewer writes only under:
+Writes only:
 
 ```text
 docs/workflow/roles/reviewer/reports/<milestone>/packet-vNNN/
 ```
 
-The Reviewer must not implement fixes, modify tests, change packet history, or approve unresolved P0.
+Must not implement fixes, rerun itself as Test Evaluator, rewrite upstream artifacts, route directly to another role, or close the milestone.
 
-## External Sources
+## Network And External Actions / 联网与外部动作
 
-Public-source network research is allowed by default when relevant to the milestone. Each role must declare planned network purpose and source types in its first response, and must record external sources in its packet.
-
-Downloads, execution of remote content, authenticated/private resources, provider APIs, or sending secrets/project-private data externally require separate explicit user approval for that exact action.
+Public-source research is allowed when relevant and must be labeled in the professional artifact. Explicit user approval is required for authenticated/private resources, paid provider work outside the accepted budget, remote code execution, private-data external transfer, or irreversible external actions.

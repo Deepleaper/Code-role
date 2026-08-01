@@ -13,23 +13,14 @@
     {"path": "verification-log.md", "type": "verification_log", "required": true, "description": "Verification commands and outcomes."},
     {"path": "risk-notes.md", "type": "risk_notes", "required": true, "description": "Residual implementation risks."}
   ],
-  "input_packets": [
-    {
-      "role": "code-context",
-      "milestone": "template",
-      "packet_version": "packet-v001",
-      "manifest": "docs/workflow/roles/code-context/reports/<milestone>/packet-v001/handoff.manifest.json",
-      "status_at_consumption": "draft",
-      "consumption_status": "accepted_as_input"
-    }
-  ],
+  "input_packets": [],
   "source_scopes": [
     "docs/workflow/source-map.md",
     "docs/workflow/roles/implementer/implementer-output-standard.md",
-    "upstream code-context packet",
+    "assignment-named upstream artifacts",
     "approved writable scope"
   ],
-  "handoff_to": ["test-evaluator"],
+  "return_to": "workflow-orchestrator",
   "open_questions": [],
   "blocked": false,
   "required_confirmations": []

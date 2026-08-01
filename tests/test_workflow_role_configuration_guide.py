@@ -28,7 +28,7 @@ def test_role_configuration_guide_defines_eight_configured_roles() -> None:
         "reviewer",
     ]:
         assert f"`{role_id}`" in text
-    assert "The remaining seven roles are execution roles" in text
+    assert "The remaining seven roles are professional execution roles" in text
 
 
 def test_role_configuration_guide_includes_role_setup_details() -> None:
@@ -47,10 +47,9 @@ def test_role_configuration_guide_includes_role_setup_details() -> None:
     assert "Role 1: Workflow Orchestrator" in text
     assert "Role 8: Reviewer" in text
     assert "Repository / Publishing Boundary" in text
-    assert "keep `docs/workflow/` out of GitHub commits" in text
-    assert "keep `docs/workflow/` out of release packages" in text
-    assert "bootstrap `docs/workflow/` from a local template folder or local initialization script" in text
-    assert "not part of the execution packet chain" in text
+    assert "local workflow assistance" in text
+    assert "out of target-project GitHub commits and release packages" in text
+    assert "Code-role source repository itself tracks these templates normally" in text
 
 
 def test_role_configuration_guide_preserves_packet_and_boundary_rules() -> None:
@@ -58,7 +57,7 @@ def test_role_configuration_guide_preserves_packet_and_boundary_rules() -> None:
     assert "handoff.manifest.json" in text
     assert "packet-vNNN" in text
     assert "`latest.json` is deprecated" in text
-    assert "Default workflow may advance from a `draft` packet only when its completion block reports `role_completion_status=1`" in text
-    assert "role_completion_status=0" in text
+    assert "Default handoff does not require readiness conversion or packet lock" in text
+    assert "A complete assignment starts immediately" in text
     assert "Chat is not the source of truth" in text
     assert "Product / PRD" in text

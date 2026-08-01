@@ -10,7 +10,7 @@
 | Project type | Private AI agent memory runtime |
 | Milestone | Business runtime memory productization |
 | Core question | Can DeepBrain produce source-grounded business answers, compare fairly with Hermes, diagnose losses, repair them, and reproduce the evidence? |
-| Independent Evaluation result | `partial_pass_not_milestone_complete` |
+| Independent Evaluation result | `evaluation_pass=0` |
 | Weighted score | `73 / 100` |
 | Milestone pass | `0` |
 | Reviewer route allowed | `0` |

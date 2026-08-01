@@ -38,8 +38,8 @@ def test_packet_protocol_versions_and_handoff_are_explicit() -> None:
     assert "packet-vNNN" in protocol
     assert "final-packet-index.md" in schema
     assert "handoff.manifest.json" in protocol
-    assert "Downstream roles must record the exact upstream packet version" in protocol
-    assert "Strict handoff is optional" in protocol
+    assert "records the exact assignment-named upstream artifact versions" in protocol
+    assert "Strict Handoff" in protocol
     assert "packet-v001" in schema
     assert "input_packets" in schema
 
@@ -48,19 +48,14 @@ def test_researcher_read_write_boundaries_are_documented() -> None:
     role = read(RESEARCHER / "ROLE.md")
     source_map = read(WORKFLOW / "source-map.md")
 
-    assert "does not write PRD" in role
-    assert "does not write code" in role
-    assert "does not change tests" in role
-    assert "may use public-source network research by default" in role
-    assert "does not use authenticated/private resources" in role
+    assert "PRD, architecture commitments, code, tests, evaluation verdicts" in role
+    assert "Public-source network research is allowed by default" in role
+    assert "Separate approval is required for authenticated/private resources" in role
     assert "Researcher Output Standard" in role
-    assert "Current project research and frontier research must remain separate" in role
-    assert "must not be presented as current project facts" in role
-    assert "accepted upstream packets" in role
-    assert "approved upstream packets" not in role
-    assert "default product handoff target is recorded as `product-prd`" in role
+    assert "separate current-project facts from papers, industry practice, and inference" in role
+    assert "Do not recommend or choose the next role" in role
     assert "docs/workflow/roles/researcher/reports/<milestone>/packet-vNNN/" in source_map
-    assert "must not write outside its reports folder without explicit user confirmation" in source_map
+    assert "Must not write PRD commitments" in source_map
 
 
 def test_researcher_output_standard_separates_project_and_frontier_research() -> None:
@@ -86,7 +81,7 @@ def test_researcher_manifest_template_is_machine_readable() -> None:
     assert manifest["schema_version"] == "0.1"
     assert manifest["role"] == "researcher"
     assert manifest["status"] == "draft"
-    assert manifest["handoff_to"] == ["product-prd"]
+    assert manifest["return_to"] == "workflow-orchestrator"
     assert "docs/workflow/roles/researcher/researcher-output-standard.md" in manifest["source_scopes"]
     assert {
         "research-brief.md",

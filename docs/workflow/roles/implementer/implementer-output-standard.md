@@ -1,8 +1,8 @@
 # Implementer 输出规范 / Implementer Output Standard
 
-Implementer 是唯一可以在用户明确批准后修改目标项目文件的执行角色。
+Implementer 是唯一可依据项目经理下发的有效任务书修改目标项目文件的执行角色。
 
-The Implementer is the only execution role that may modify target-project files after explicit user approval.
+The Implementer is the only execution role that may modify target-project files under a valid Project Manager assignment.
 
 ## 核心质量标准 / Core Quality Bar
 
@@ -10,31 +10,31 @@ The Implementer is the only execution role that may modify target-project files 
 
 Every Implementer packet must prove four points:
 
-1. 实现启动已被明确批准 / implementation start was explicitly approved
-2. 写入范围是精确确认的 / writable scope was exactly confirmed
+1. 实现任务书完整有效 / implementation assignment was complete and valid
+2. 写入范围足以完成目标且没有越界 / writable scope was sufficient and respected
 3. 每个改动都服务当前 milestone / every change serves the current milestone
 4. 验证证据足以支持交给 Test Evaluator / verification evidence is sufficient for Test Evaluator handoff
 
-如果缺少 exact writable scope，Implementer 不得开始。
+有效任务书本身即是启动授权，不再要求单独的“开始”确认。任务书必须给出目标、权威输入、允许修改的模块或目录、任务特定禁止项、必需检查和停止条件；不要求项目经理预先枚举实现过程中可能触及的每个文件。
 
-If exact writable scope is missing, Implementer must not start.
+A valid assignment is the start authorization; no separate `start` confirmation is required. It must define the objective, authoritative inputs, writable modules or directories, task-specific exclusions, required checks, and stop condition. Project Manager does not need to predict every file the implementation may touch.
 
 ## 三类实现依据 / Three Implementation Evidence Layers
 
 ### 1. 已批准实现范围 / Approved Implementation Scope
 
-用于记录用户和 Orchestrator 明确批准的实现目标、可写文件和验证命令。
+用于记录项目经理任务书确定的实现目标、可写模块或目录、任务特定禁止项和验证要求。
 
-Use this layer for implementation objective, writable files, and verification commands explicitly approved by the user and Orchestrator.
+Use this layer for the implementation objective, writable modules or directories, task-specific exclusions, and verification requirements fixed by the Project Manager assignment.
 
 必须记录 / Must record:
 
 - implementation objective / 实现目标
-- exact writable scope / 精确可写范围
+- writable scope / 可写模块或目录
 - forbidden scope / 禁止范围
 - dirty-file handling rule / 已有脏文件处理规则
 - verification commands / 验证命令
-- implementation start confirmation / 实现启动确认
+- assignment validity / 任务书有效性
 
 ### 2. 当前项目实际改动 / Actual Project Changes
 
@@ -44,8 +44,8 @@ Use this layer for actual changed files, change type, and reason.
 
 输出要求 / Output requirements:
 
-- 每个 changed file 必须在 approved writable scope 内 / every changed file must be inside approved writable scope
-- 每个改动必须说明对应的 Code Context constraint 或用户确认 / every change must cite Code Context constraint or user confirmation
+- 每个 changed file 必须在任务书允许的模块或目录内 / every changed file must be inside an assignment-authorized module or directory
+- 每个改动必须说明对应的有效任务书检查项或已接受上游约束 / every change must cite a valid-assignment check or accepted upstream constraint
 - 不得修改未批准文件 / unapproved files must not be modified
 - 不得修改上游 packet / upstream packets must not be modified
 
@@ -53,7 +53,7 @@ Use this layer for actual changed files, change type, and reason.
 
 用于记录验证命令、结果、失败、未执行原因和剩余风险。
 
-Use this layer for verification commands, results, failures, skipped checks, and residual risks.
+Use this layer for verification commands, results, failures, skipped checks, and risks mapped to binary required checks.
 
 输出要求 / Output requirements:
 
@@ -68,8 +68,8 @@ Use this layer for verification commands, results, failures, skipped checks, and
 
 Every key claim must use one source label:
 
-- `implementation_start_confirmation`: 用户和 Orchestrator 明确允许实现启动 / explicit user and Orchestrator start confirmation
-- `approved_writable_scope`: 精确批准的可写范围 / exact approved writable scope
+- `valid_assignment`: 项目经理下发的完整有效任务书 / complete valid Project Manager assignment
+- `approved_writable_scope`: 任务书允许的模块或目录 / assignment-authorized module or directory
 - `code_context_constraint`: 来自 Code Context 的实现约束 / from Code Context implementation constraints
 - `accepted_upstream_scope`: 来自已接受上游范围 / from accepted upstream scope
 - `actual_file_change`: 实际文件改动 / actual file change
@@ -89,7 +89,7 @@ Unlabeled key conclusions are forbidden.
 `implementation-summary.md` should state:
 
 - milestone 对齐 / milestone alignment
-- implementation start confirmation / 实现启动确认
+- assignment validity / 任务书有效性
 - approved objective / 已批准目标
 - actual change summary / 实际改动摘要
 - what was intentionally not changed / 明确未改什么
@@ -139,7 +139,7 @@ Implementer 不得：
 
 The Implementer must not:
 
-- 从聊天指令直接开始实现 / start from chat-only instruction
+- 从缺少目标、必需检查或写入边界的不完整任务开始实现 / start from an incomplete assignment missing objective, required checks, or write boundary
 - 把 Code Context 的 `writable_candidate` 当成已批准写入范围 / treat Code Context `writable_candidate` as approved writable scope
 - 修改未批准文件 / modify unapproved files
 - 扩展产品范围或架构边界 / expand product scope or architecture boundary

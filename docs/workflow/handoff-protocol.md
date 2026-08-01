@@ -1,124 +1,54 @@
-# Handoff Protocol
+# Handoff Protocol / 交接协议
 
-This protocol controls how roles exchange work through documents.
+## Default Handoff / 默认交接
 
-## Packet Location
+The default Full Profile handoff has four steps:
 
-Each role writes packets under:
+1. Workflow Orchestrator issues one complete role-specific assignment.
+2. The role starts immediately and writes its professional packet.
+3. The role sends one short role-specific return.
+4. Workflow Orchestrator reads the packet, applies the required checks, and issues one decision.
 
-```text
-docs/workflow/roles/<role>/reports/<milestone>/packet-vNNN/
-```
+默认交接不包含启动确认、等待“开始”、readiness 转换或 packet lock。
 
-Example:
+Professional packets use `packet-vNNN/` directories. `handoff.manifest.json` records the exact assignment-named upstream artifact versions actually consumed; it does not prescribe a fixed predecessor or successor.
 
-```text
-docs/workflow/roles/researcher/reports/mvp-scope/packet-v001/
-```
+Downstream consumption is recorded as `accepted_as_input` in the downstream manifest. Downstream roles must not mutate upstream packet manifests.
 
-## Packet Lifecycle
+## Professional Authority / 专业权威
 
-Valid packet statuses:
+Professional packet documents and referenced evidence are authoritative. `handoff.manifest.json` indexes those documents and records provenance. The short return is navigation only.
 
-- `draft`: work in progress.
-- `ready_for_next_role`: approved for strict immutable downstream consumption.
-- `blocked`: missing required input or decision.
-- `superseded`: replaced by a newer packet.
+Workflow Orchestrator must not reject sufficient evidence solely because:
 
-`accepted` is not written back to upstream packet manifests. Downstream acceptance is recorded as `accepted_as_input` in the downstream packet and in Orchestrator state.
+- return fields are missing or reordered;
+- packet status is `draft`;
+- `ready_for_next_role` is false;
+- `packet.lock.json` is absent;
+- the role did not recommend a next role.
 
-Default handoff is lightweight:
+## Acceptance / 验收
 
-- The user may accept a role output for the next role without forcing a `ready_for_next_role` status transition only when `role_completion_status=1`.
-- The Orchestrator records that acceptance and generates the next-role startup message.
-- The downstream packet records the upstream manifest path and the actual upstream status at consumption, even if that status is `draft`.
+Project Manager checks milestone alignment and every assigned substantive check. It records `assignment_pass=0|1`, failed check IDs, evidence, and blocker owner.
 
-Strict handoff is optional:
+An incomplete assignment routes to the owner of the failed check. It does not automatically return to the same role.
 
-- Use `ready_for_next_role` and `packet.lock.json` only when the user explicitly asks for strict handoff, auditability, immutability, or release-grade evidence.
-- Do not ask the owning role to do a readiness conversion by default.
+## Strict Handoff / 严格交接
 
-## Versioning Rules
+When the user explicitly requests immutable audit handoff, packet status transition and lock rules from [Status Transition Protocol](status-transition-protocol.md) apply. Strict handoff must not be introduced during ordinary delivery or used to delay a substantive next step.
 
-- Packet versions are append-only.
-- Do not edit a packet after it is marked `ready_for_next_role`.
-- If content must change, create the next packet version.
-- Orchestrator state records the current authoritative packet. `final-packet-index.md` records each role's accepted current final output.
-- Downstream roles must record the exact upstream packet version they read in their own `handoff.manifest.json`.
-- Strict handoff may also lock packet hashes with `packet.lock.json`.
-- Downstream roles must not mutate upstream packet manifests.
-- `accepted_as_input` is a downstream consumption record, not an upstream packet status.
+Do not ask the owning role to perform readiness conversion in default handoff.
 
-## Required Packet Files
+## Human Gates / 人工闸门
 
-Every packet must include:
+No user confirmation is required between ordinary role handoffs after Objective, KRs, and current assignment scope are accepted. Ask the user only for decisions defined by the shared dialogue-control contract.
 
-- `handoff.manifest.json`
-- role-specific output documents
-- a source log or evidence map when the role cites repo facts
+## Forbidden Handoff Work / 禁止交接工作
 
-The manifest is the contract. Downstream roles read the manifest first and then read only the files listed by the manifest unless explicitly instructed otherwise.
-
-## Required User Confirmation
-
-Ask for user confirmation before:
-
-- creating a new milestone name when the requested milestone is ambiguous
-- using provider APIs, authenticated/private network resources, downloads, remote execution, or sending secrets/project-private data externally
-- reading code paths outside the approved source map
-- marking a packet `ready_for_next_role`
-- superseding a packet that was already accepted
-- changing this handoff protocol or the global source map
-- advancing to the next role after accepting a role output with `role_completion_status=1`
-- allowing Implementer to start work
-
-## Downstream Input Lock
-
-When a downstream role consumes an upstream packet, it records:
-
-- upstream role
-- milestone
-- packet version
-- manifest path
-- packet status at time of consumption
-- consumption status, normally `accepted_as_input`
-
-This prevents silent drift when upstream roles publish newer packets later. In lightweight mode, the record is a navigation and accountability link. In strict mode, `packet.lock.json` adds hash-level immutability.
-
-## Orchestrator Consumption Check Summary
-
-Every execution role must include a short Orchestrator consumption-check summary at the end of its completion response.
-
-This summary is the copy-ready message the user sends back to Workflow Orchestrator / Project Manager. It must appear in the same conversation response as the role's completion report, not in a separate hidden file.
-
-The summary must include:
-
-- current role
-- milestone
-- packet path
-- handoff manifest path
-- reported packet status
-- binary `role_completion_status`
-- assigned completion condition counts
-- unmet completion condition list
-- completion evidence list
-- forbidden completion claim flag
-- milestone alignment
-- possible drift
-- recommended routing, if any
-- request for Orchestrator to check binary role completion, milestone alignment, manifest readability, user acceptance, and next route
-- boundary reminder that Orchestrator must not modify the role packet, create downstream packets, run Git commands, or modify business files
-
-Use [Orchestrator Consumption Check Request Template](orchestrator/consumption-check-request-template.md).
-
-The current role may recommend a downstream role, but it must not generate the authoritative next-role startup message. Orchestrator owns binary completion checks, consumable checks, chain routing, and next-role startup message generation.
-
-When Orchestrator accepts an output with `role_completion_status=1` and decides to start the next role, it must paste a copy-ready next-role startup message in its response. It should not only say "start the next role" or only list the role name.
-
-## Status Transitions
-
-See [Status Transition Protocol](status-transition-protocol.md).
-
-## Implementer Gate
-
-Implementer must not begin from chat-only instruction. Implementation requires an approved chain decision from the Orchestrator and explicit user permission to start.
+- format-only revision;
+- readiness-only revision;
+- lock-only revision;
+- repeated read/write/forbidden recitation;
+- role-generated next-role startup message;
+- Orchestrator rewriting upstream professional conclusions;
+- treating Git add/commit/push as Code-role gates.

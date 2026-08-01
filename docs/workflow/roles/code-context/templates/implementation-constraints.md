@@ -2,8 +2,9 @@
 
 ## Scope Status / 范围状态
 
-- implementation start authorized / 是否已授权实现: no
-- exact writable scope confirmed / 精确可写范围是否已确认: no
+- implementer assignment ready / Implementer 任务书是否可下发: 0
+- writable module or directory candidates / 可写模块或目录候选: <paths>
+- task-specific exclusions / 任务特定禁止项: <paths or none>
 - user confirmation needed / 需要用户确认:
 
 ## Recommended Writable Candidates / 建议写入候选

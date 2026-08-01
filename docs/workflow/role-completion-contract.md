@@ -1,150 +1,103 @@
-# Role Completion Contract / 角色完成契约
+# Full Profile Assignment Acceptance / 八角色任务验收契约
 
-This contract makes role completion binary and evidence-based.
+This contract applies the shared [Dialogue Control Contract](../dialogue-control.md) to Full Profile packets.
 
-本契约把角色完成状态改为二值、可验证、可审计。
+本契约把共享[对话控制契约](../dialogue-control.md)应用到八角色 packet 工作流。
 
-## Rule / 规则
-
-`role_completion_status` has only two valid values:
-
-`role_completion_status` 只有两个合法值：
+## 1. Two Binary Results / 两个二值结果
 
 ```text
-1 = all assigned completion conditions are met with concrete evidence
-0 = one or more assigned completion conditions are unmet, missing evidence, or unverifiable
+assignment_pass = 1
 ```
 
-There is no intermediate completion state.
-
-不存在中间完成状态。
-
-## Required Completion Block / 必填完成块
-
-Every execution role final response must include this block before the Orchestrator consumption-check summary:
-
-每个执行角色的完成回复必须在 Orchestrator 消费检查摘要前包含本块：
+means every check assigned to the current role has concrete evidence.
 
 ```text
-role_completion_status:
-1 | 0
-
-assigned_completion_conditions_total:
-<integer>
-
-assigned_completion_conditions_met:
-<integer>
-
-unmet_completion_conditions:
-none | <condition id list>
-
-completion_evidence:
-- condition_id: <id>
-  met: 1 | 0
-  evidence: <packet file, repo file, command output, user confirmation, or explicit not_applicable rule>
-
-forbidden_completion_claim_used:
-true | false
+assignment_pass = 0
 ```
 
-## Completion Calculation / 完成计算
+means at least one assigned check failed, was not run, is unknown, or lacks evidence.
 
-The completion calculation is mechanical:
+`assignment_pass` does not update a milestone KR. A KR remains `0` until Project Manager accepts independent evidence for every frozen KR condition.
 
-完成计算必须是机械规则：
+`assignment_pass` 不直接更新 milestone KR。冻结条件没有全部获得独立证据前，KR 始终为 `0`。
+
+## 2. Artifact Is Authoritative / 附件是专业权威
+
+The packet's professional documents and referenced evidence are authoritative for role work. `handoff.manifest.json` is a document index and provenance record. The short role return is a transport summary.
+
+packet 中的专业文档和引用证据是角色工作的权威内容；`handoff.manifest.json` 是文档索引和来源记录；短回报只是流转摘要。
+
+- Project Manager must inspect the professional documents.
+- Missing return fields, field order, packet `draft` status, or absent lock do not invalidate otherwise sufficient professional evidence.
+- Strict `ready_for_next_role` and `packet.lock.json` remain optional audit controls only when the user explicitly requests strict handoff.
+- Project Manager may extract a summary from the packet but may not invent a professional conclusion.
+
+## 3. Mechanical Check / 机械检查
+
+For each assigned check:
 
 ```text
-if assigned_completion_conditions_met == assigned_completion_conditions_total
-and unmet_completion_conditions == none
-and every required condition has concrete evidence
-and forbidden_completion_claim_used == false:
-  role_completion_status = 1
-else:
-  role_completion_status = 0
+check_pass = 1 only when expected observation and required evidence are both present
+check_pass = 0 otherwise
+
+assignment_pass = 1 only when every required check_pass = 1
+assignment_pass = 0 otherwise
 ```
 
-If evidence is missing, unknown, inferred, or only qualitative, the condition is not met.
+Required `not_run`, `unknown`, inferred, or qualitative results are `0`. Diagnostic risk labels never create a third completion state.
 
-如果证据缺失、未知、仅为推断或只有定性描述，该条件计为未满足。
+## 4. Routing From Substance / 依据实质路由
 
-## Forbidden Completion Language / 禁用完成表述
+Project Manager routes from the failed check and its owner:
 
-These phrases must not be used as completion proof:
+- research evidence missing: Researcher;
+- product meaning or acceptance ambiguous: Product / PRD;
+- architecture contract ambiguous: Architect;
+- repository seam or impact unknown: Code Context;
+- implementation or candidate evidence missing: Implementer;
+- evaluation mechanism invalid or independent evidence missing: Test Evaluator;
+- final flow drift or acceptance gap audit missing: Reviewer;
+- Objective, KR, threshold, claim boundary, budget, or irreversible action decision: user through Project Manager.
 
-以下表述不能作为完成证据：
+An incomplete assignment does not automatically return to the same role. It returns to the role that owns the substantive blocker.
 
-- mostly complete
-- basically done
-- moved the milestone forward
-- closer to completion
-- enough for now
-- looks good
-- directionally correct
-- pass_with_residual_risk as completion
-- partial completion
-- largely aligned
-- mostly aligned
+未通过的任务不自动打回原角色，而是交给实质 blocker 的责任角色。
 
-## Gate Rule / 门禁规则
+## 5. Short Return / 短回报
 
-Orchestrator may route to the next role only when:
-
-项目经理只有在以下条件全部满足时才能路由下一角色：
+Every professional role uses its role-specific return template. It contains:
 
 ```text
-role_completion_status = 1
-assigned_completion_conditions_met = assigned_completion_conditions_total
-unmet_completion_conditions = none
-forbidden_completion_claim_used = false
+assignment_id
+assignment_pass: 0 | 1
+check_results
+artifact_paths
+evidence_paths
+substantive_blockers
+return_to: workflow-orchestrator
 ```
 
-If any field fails, Orchestrator must return the work to the same role or ask the user to revise the milestone contract.
+The role must not recommend the next role. Project Manager owns routing.
 
-任一字段不满足时，项目经理必须打回同一角色修正，或要求用户先修改 milestone contract。
+## 6. Evaluation And Review / 评估与审计
 
-## Process Stop Rule / 流程停止规则
+- Test Evaluator reports `evaluation_pass: 0|1`.
+- Reviewer reports `review_gate_pass: 0|1`.
+- A required unrun check is `0`.
+- `partial_pass`, `pass_with_residual_risk`, `mostly complete`, and similar phrases cannot be gate values.
+- Risks remain explicit records linked to failed checks, new KRs, or accepted non-goals.
 
-The workflow is milestone control. If one role does not complete its assigned milestone conditions, the workflow stops at that role.
+## 7. No Format-Only Rework / 禁止格式返工
 
-整个流程就是 milestone 管控。任一角色未完成自己被分配的 milestone 条件，流程就停在该角色。
+Project Manager must not request a role revision solely to:
 
-```text
-if current_role.role_completion_status = 0:
-  next_role_start_allowed = false
-  final_packet_index_update_allowed = false
-  milestone_closure_allowed = false
-```
+- restate read/write/forbidden scope;
+- add a startup confirmation;
+- reorder return fields;
+- convert a packet from `draft` to `ready_for_next_role` in normal mode;
+- create a packet lock;
+- repeat evidence already present in the artifact;
+- add a next-role recommendation.
 
-User acceptance can accept an incomplete packet as a draft discussion artifact, but it cannot convert `role_completion_status=0` into completed handoff.
-
-用户可以接受未完成 packet 作为草稿讨论材料，但不能把 `role_completion_status=0` 转成已完成交接。
-
-To continue, one of two actions must happen:
-
-继续推进只能发生以下两种动作之一：
-
-1. The same role revises the output until `role_completion_status=1`.
-2. The user changes the milestone contract, then the role recalculates completion against the new contract.
-
-No other role may continue the chain from an incomplete output.
-
-其他角色不能基于未完成输出继续链路。
-
-## Implementer-Specific Rule / Implementer 专项规则
-
-Code changes do not equal role completion.
-
-代码改动不等于角色完成。
-
-Implementer may report an action status separately:
-
-Implementer 可以单独报告执行状态：
-
-```text
-implementation_action_status:
-code_changed | docs_changed | no_change | blocked
-```
-
-But `role_completion_status` is still `1` only when every assigned implementation condition and verification condition is met with concrete evidence.
-
-但只有所有指定实现条件和验证条件都有具体证据满足时，`role_completion_status` 才能是 `1`。
+Only missing or failed professional checks justify rework.

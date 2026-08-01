@@ -141,11 +141,9 @@ External sources must be displayed separately from current project evidence.
 - 下游误用风险 / downstream misuse risk
 - milestone 漂移风险 / milestone drift risk
 
-风险等级 / Risk levels:
+每条风险必须绑定 `affected_check_id`、`check_pass=0|1`、blocker owner 和从 `0` 变成 `1` 所需的可观察证据。严重级别只用于排序，不能决定是否继续，也不能产生灰度完成状态。
 
-- `P0`: 会阻止下游继续 / blocks downstream work
-- `P1`: 继续前需要用户确认 / needs user confirmation before proceeding
-- `P2`: 可记录后继续 / can proceed with recorded risk
+Every risk must map to an `affected_check_id`, `check_pass=0|1`, blocker owner, and observable evidence required to change `0` to `1`. Severity is prioritization metadata only; it cannot authorize progress or create a gray completion state.
 
 ## Open Questions 标准 / Open Questions Standard
 
@@ -201,6 +199,6 @@ The Researcher must not:
 - 未经单独批准使用私有认证资源、provider API、下载执行远程内容或外传项目私有数据 / use authenticated/private resources, provider APIs, remote downloads/execution, or external transmission of project-private data without separate approval
 - 为了显得完整而补写没有证据的结论 / invent unsupported conclusions for completeness
 
-Researcher 可以提出下游建议，但不能生成权威下一角色启动消息。
+Researcher 只报告证据、未知项和专业 blocker，不选择或建议下一角色；路由由项目经理决定。
 
 The Researcher may recommend a downstream role, but must not generate the authoritative next-role startup message.

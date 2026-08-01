@@ -39,7 +39,7 @@ Use this layer to fix the milestone-level evaluation mechanism and prevent the T
 
 必须记录 / Must record:
 
-- SOP status: `confirmed`、`draft`、`partial`、`missing`、`blocked`
+- SOP confirmation: `sop_confirmed=0|1`
 - required layers / 必需评估层
 - not-run policy / 未运行项处理规则
 - claim boundary / 允许和禁止的质量结论
@@ -66,9 +66,9 @@ Use this layer to record the mechanism, metrics, data, and pass threshold used f
 - pass/fail threshold / 通过或失败阈值
 - user confirmation status / 用户确认状态
 
-首次启动时，Test Evaluator 必须先和用户确认这些内容，不能直接进入评估。
+完整任务书已经包含这些决定时，Test Evaluator 直接开始。只有任务书缺少用户专属决定时，才一次性列出全部缺项。
 
-On first startup, Test Evaluator must confirm these items with the user before evaluation.
+When the complete assignment already contains these decisions, Test Evaluator starts immediately. Ask once for the complete missing decision set only when a user-owned decision is absent.
 
 ### 3. 行业共识评估参考 / Industry Or Common-Consensus Evaluation References
 
@@ -126,16 +126,16 @@ Use this layer for results actually read, run, inspected, or observed by Test Ev
 
 ### 6. Test Evaluator 质量判断与 SOP 校准 / Evaluator Quality Judgment And SOP Calibration
 
-用于给出质量门结论、回归风险和是否建议进入 Reviewer。
+用于给出二值质量门结论、回归风险和实质 blocker owner。
 
-Use this layer for quality gate decision, regression risk, and reviewer handoff recommendation.
+Use this layer for the binary quality gate, regression risk, and substantive blocker ownership.
 
 输出要求 / Output requirements:
 
 - 标注 `evaluator_judgment`
-- 区分 `pass`、`pass_with_residual_risk`、`fail`、`blocked`
-- `final_acceptance` 默认不是 true；只有证据充分且无未解决 P0/P1 时才可建议 true
-- 如果评估基线未确认，不能给 `pass`
+- 只使用 `evaluation_pass=0|1`
+- 任何必需检查失败、未运行或证据不足，`evaluation_pass=0`
+- 如果评估基线未确认，`evaluation_pass=0`
 - 如果证据不足，必须说明缺口和下一步
 - 必须说明 SOP 是否继续有效、是否需要修订、是否阻断 Reviewer
 
@@ -263,32 +263,31 @@ Do not convert `not_run` into `pass`.
 
 `quality-gate.md` must provide a clear gate.
 
-允许状态 / Allowed statuses:
+允许状态 / Allowed status:
 
-- `pass`
-- `pass_with_residual_risk`
-- `fail`
-- `blocked`
+- `evaluation_pass: 0 | 1`
 
 必须记录：
 
 It must record:
 
-- gate status / gate 状态
-- final_acceptance: true / false
+- evaluation pass / 评估通过: `0 | 1`
+- required checks total / 必需检查总数
+- required checks passed / 必需检查通过数
+- failed check IDs / 失败检查项
 - open P0 / open P1 / open P2
 - evidence basis / 证据基础
 - evaluation SOP status / 评估 SOP 状态
 - evaluation baseline status / 评估基线状态
-- Reviewer handoff recommendation / Reviewer 交接建议
+- failed check owner / 失败检查责任人
 
-`final_acceptance=true` 只能在 SOP 已确认、必需层没有 `not_run`、证据充分且无未解决 P0/P1 时建议。
+只有 SOP 已确认、全部必需检查通过且证据充分时，`evaluation_pass=1`。
 
-`final_acceptance=true` may only be recommended when the SOP is confirmed, required layers are not `not_run`, evidence is sufficient, and no unresolved P0/P1 remains.
+`evaluation_pass=1` is allowed only when the SOP is confirmed, every required check passes, and evidence is sufficient.
 
-如果 SOP、评估机制或 baseline 仍未确认，gate 必须是 `blocked` 或 `pass_with_residual_risk`。
+如果 SOP、评估机制或 baseline 未确认，`evaluation_pass=0`，并记录 blocker code。
 
-If SOP, evaluation mechanism, or baseline remains unconfirmed, the gate must be `blocked` or `pass_with_residual_risk`.
+If SOP, evaluation mechanism, or baseline is unconfirmed, set `evaluation_pass=0` and record the blocker code.
 
 ## SOP Calibration 标准 / SOP Calibration Standard
 
@@ -306,9 +305,9 @@ It must record:
 - proposed SOP amendments, if any / 如有，建议修订项
 - whether Reviewer can audit using this SOP / Reviewer 是否可基于该 SOP 审计
 
-SOP 不得在 packet 内静默变化。任何变更都必须写入 `sop-calibration.md` 并交给用户或 Reviewer 判断。
+SOP 不得在 packet 内静默变化。候选结果出现后的任何变更都必须获得用户明确批准、创建新版本，并重跑受影响证据。
 
-The SOP must not drift silently inside a packet. Any change must be recorded in `sop-calibration.md` and handed to the user or Reviewer.
+The SOP must not drift silently. Any change after candidate results requires explicit user approval, a new version, and rerun of affected evidence.
 
 ## 禁止输出 / Forbidden Output
 

@@ -69,7 +69,7 @@ Before `draft -> ready_for_next_role`:
 
 Before downstream consumption in lightweight mode:
 
-- user has accepted the upstream role output with `role_completion_status=1` for the next role
+- Project Manager has accepted the upstream professional artifact against the frozen assignment checks
 - downstream packet records `status_at_consumption`
 - downstream packet records `consumption_status`
 - downstream packet records exact upstream manifest path and packet version
@@ -85,7 +85,7 @@ Before downstream consumption in strict mode:
 The user confirms:
 
 - chain type
-- advancing to the next role after accepting output with `role_completion_status=1`
+- advancing after Project Manager accepts the professional artifact against the frozen assignment checks
 - `draft -> ready_for_next_role` for strict handoff
 - role skip
 - Implementer start

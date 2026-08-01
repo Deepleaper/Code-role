@@ -105,9 +105,9 @@ Unlabeled key conclusions are forbidden.
 - 来源标签 / source label
 - 依据 / evidence basis
 
-`writable_candidate` 不是写入授权。Implementer 仍需用户和 Orchestrator 确认 exact writable scope。
+`writable_candidate` 不是写入授权。项目经理必须在 Implementer 任务书中确认允许修改的模块或目录以及任务特定禁止项；不要求预先枚举每个文件。
 
-`writable_candidate` is not write authorization. Implementer still needs user and Orchestrator confirmation of exact writable scope.
+`writable_candidate` is not write authorization. Project Manager must authorize writable modules or directories and task-specific exclusions in the Implementer assignment; an exhaustive per-file list is not required.
 
 ## Dependency Map 标准 / Dependency Map Standard
 
@@ -181,4 +181,4 @@ Code Context must not:
 
 Code Context 可以建议 Implementer 需要的文件范围，但最终实现启动必须由用户和 Orchestrator 确认。
 
-Code Context may recommend file scope for Implementer, but implementation start must be confirmed by the user and Orchestrator.
+Code Context may recommend file scope for Implementer. Project Manager authorizes implementation by issuing a complete Implementer assignment; no second startup confirmation is required.

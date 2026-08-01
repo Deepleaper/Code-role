@@ -3,18 +3,9 @@
 assignment_id:
 milestone:
 current_kr:
-assignment_completed: 0 | 1
-
-product_decision:
-acceptance_definition:
-claim_boundary:
-non_goals:
-
-evidence:
-- type: repo_evidence | external_evidence | professional_judgment | unknown
-  source:
-  finding:
-
-unresolved_questions:
-recommended_next_owner: project-manager | engineering | independent-evaluation
+assignment_pass: 0 | 1
+check_results: <check_id -> 0|1>
 attachment_path:
+evidence_paths:
+substantive_blockers: none | <blocker ids>
+return_to: project-manager

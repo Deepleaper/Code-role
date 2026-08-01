@@ -1,113 +1,40 @@
-# Role Instance Setup
+# Role Instance Setup / 角色对话配置
 
-Code-role is intended to be used as a role-configuration project.
+## Two Projects / 两个项目
 
-The recommended current setup is:
+- **Role-configuration project:** this Code-role repository supplies contracts and templates.
+- **Target code project:** the product repository receives local `code-role/` prompts, state, and work artifacts.
 
-```text
-Code-role project
-  -> stores workflow protocol files
-  -> stores role definitions
-  -> stores role packet outputs
-  -> hosts one configured conversation per role
+Do not run the Full Profile by switching roles inside one conversation. Create one configured Codex role instance per role.
 
-Target code project
-  -> contains the product code being discussed or changed
-  -> is read by research / architecture / code-context roles only within approved scope
-  -> is written only by Implementer after explicit approval
-```
-
-Do not run the full workflow by switching roles inside one conversation. Each role should be configured and used as a separate role instance.
-
-## Role Instance
-
-A role instance is one configured Codex conversation dedicated to exactly one role.
-
-Examples:
-
-- `workflow-orchestrator` instance
-- `researcher` instance
-- `product-prd` instance
-- `architect` instance
-- `code-context` instance
-- `implementer` instance
-- `test-evaluator` instance
-- `reviewer` instance
-
-Each instance reads its own `ROLE.md` and follows only that role's prompt contract.
-
-## Required Per-Role Configuration
-
-Each role instance should be configured with:
-
-- the role's `ROLE.md`
-- `docs/workflow/README.md`
-- `docs/workflow/discussion-first-protocol.md`
-- `docs/workflow/handoff-protocol.md`
-- `docs/workflow/packet-schema.md`
-- `docs/workflow/source-map.md`
-- any upstream `handoff.manifest.json` explicitly provided for the milestone
-- the target project path, when that role needs to inspect or modify the product project
-
-The role instance must not infer upstream input from chat memory or by scanning for the newest packet.
-
-## Conversation Rule
-
-Each role instance has one job: produce that role's explicit output.
-
-If the conversation moves away from that output, the role must correct it:
-
-1. State that the request is outside the current role's scope.
-2. Name the role that should handle the request.
-3. Return to the current role's expected output.
-
-## Suggested Setup Flow
-
-1. Clone `Deepleaper/Code-role` into a local Code-role project.
-2. Bootstrap the target project with `scripts/init_project_workflow.py`.
-3. Create one Codex role instance for `workflow-orchestrator`.
-4. Paste `code-role/role-instance-prompts/workflow-orchestrator.md` into that instance.
-5. Create each execution role instance only when Orchestrator routes to it.
-6. Paste that role's generated prompt from `code-role/role-instance-prompts/`.
-7. Let the role read the explicit upstream manifest. If optional `code-role/state-index/roles/<role>.md` exists, it may use that file only as navigation.
-8. Let each role write only its own packet output.
-9. Let Implementer write target project files only after the packet chain and user confirmation allow implementation.
-
-The generated prompts reduce setup friction. They do not replace role `ROLE.md` files, packet manifests, or Orchestrator routing.
-
-## Fast Bootstrap
-
-Use the bootstrap script from the Code-role repository:
+## Initialize / 初始化
 
 ```bash
 python scripts/init_project_workflow.py \
-  --target "/path/to/Target Project" \
-  --project-name "Target Project" \
+  --target "/absolute/path/to/project" \
+  --project-name "Project Name" \
+  --initial-milestone workflow-bootstrap \
+  --initial-chain full-chain \
   --write
 ```
 
-Omit `--write` to preview the files. The script creates local-only project config, role-instance prompts, and Orchestrator state files. Add `--with-state-index` only when you want optional navigation files. The script also adds `code-role/` to `.git/info/exclude` when that target file exists. It does not create execution packets, mark readiness, stage files, commit, or push.
+The initializer writes eight prompts under `code-role/role-instance-prompts/` and role-specific assignment/return templates under `code-role/templates/`.
 
-See `project-bootstrap.md`, `state-index.md`, and `git-operation-policy.md`.
+## Configure Once / 一次配置
 
-## Target Project Handling
+For each conversation, paste the matching role-instance prompt once. Do not require the role to restate its identity or boundary after every assignment.
 
-The target project should be provided as an explicit path in the milestone or role prompt.
+## Run / 运行
 
-Non-Implementer roles may inspect target project files only within source-map and packet-approved scope.
+1. Workflow Orchestrator defines and obtains acceptance for Objective and binary KRs.
+2. It prints one complete role-specific assignment.
+3. The user pastes the assignment to the selected configured role conversation.
+4. The role starts immediately, writes its professional artifact, and returns one short result.
+5. The user pastes the short result to Workflow Orchestrator.
+6. Workflow Orchestrator reads the artifact and routes the substantive blocker owner.
 
-Implementer may modify target project files only when:
+No separate `开始`, readiness conversion, packet lock, or Git confirmation is part of normal role flow.
 
-- Orchestrator confirms implementation may start
-- upstream packets are consumable
-- the target project path is explicit
-- the approved file scope is explicit
-- the user confirms implementation start
+## Refresh / 刷新
 
-## Embedded Workflow Alternative
-
-Some teams may choose to copy `docs/workflow/` into the target code project.
-
-That is allowed, but it is not the only supported model. If embedded in the target project, follow `bootstrap.md` and decide whether workflow files stay local-only or become a committed repo standard.
-
-For the current Code-role usage model, prefer the separate role-configuration project.
+Rerun the initializer with `--force --write` to refresh generated prompts and templates. Existing milestone contract, workflow state, final-output index, evaluation SOP, and professional packet reports are preserved.

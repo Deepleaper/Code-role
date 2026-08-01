@@ -56,7 +56,15 @@ def test_goal_loop_has_one_kr_binary_evidence_contract(tmp_path: Path) -> None:
     assert run_init(target).returncode == 0
 
     loop = read(target / "code-role" / "LOOP.md")
-    assignment = read(target / "code-role" / "templates" / "assignment.md")
+    engineering_assignment = read(
+        target / "code-role" / "templates" / "engineering-assignment.md"
+    )
+    product_assignment = read(
+        target / "code-role" / "templates" / "product-assignment.md"
+    )
+    evaluation_assignment = read(
+        target / "code-role" / "templates" / "evaluation-assignment.md"
+    )
     evaluator = read(
         target
         / "code-role"
@@ -64,12 +72,20 @@ def test_goal_loop_has_one_kr_binary_evidence_contract(tmp_path: Path) -> None:
         / "independent-evaluation.md"
     )
 
-    assert "One KR Per Iteration" in loop
+    assert "One Primary KR Per Iteration" in loop
     assert "There is no `partial_pass`" in loop
     assert "three failed Engineering-to-Evaluation attempts" in loop
-    assert "current_kr_status: 0" in assignment
-    assert "role_prompt_path:" in assignment
-    assert "frozen_pass_conditions:" in assignment
+    for assignment in (
+        engineering_assignment,
+        product_assignment,
+        evaluation_assignment,
+    ):
+        assert "target_kr:" in assignment
+        assert "role_prompt_path:" in assignment
+        assert "required_checks:" in assignment
+        assert "stop_condition:" in assignment
+    assert "writable_scope:" in engineering_assignment
+    assert "frozen_sop_path:" in evaluation_assignment
     board = read(target / "code-role" / "milestone-board.md")
     assert "Evaluation SOP frozen" in board
     assert "Current iteration" in board

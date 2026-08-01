@@ -398,7 +398,7 @@
             <li>一份里程碑作战板作为唯一权威。</li>
             <li>每轮只处理一个已确认的 <code>KR=0</code>。</li>
             <li>项目经理、产品策略、工程、独立评估。</li>
-            <li>固定任务书与固定回报，不使用 packet 链。</li>
+            <li>产品、工程、评估各有角色专属任务书与短回报，不使用 packet 链。</li>
             <li>适合产品方向较清楚、范围可控的持续迭代。</li>
           </ul>
         </article>
@@ -408,7 +408,7 @@
           <p>把研究、产品、架构、上下文、实现、评估和审计拆成独立专业责任。</p>
           <ul>
             <li>Orchestrator 状态与版本化 packets 作为权威链路。</li>
-            <li>每个专业角色都有独立输入、输出和完成契约。</li>
+            <li>每个专业角色都有专属任务书、专业附件和短回报契约。</li>
             <li>Test Evaluator 与 Reviewer 分别负责评估和最终审计。</li>
             <li>支持严格 handoff、manifest 和可选 packet lock。</li>
             <li>适合复杂、高风险、研究密集或需要审计追溯的 milestone。</li>
@@ -497,7 +497,7 @@
         <div class="role"><strong>Reviewer</strong>从 Orchestrator 开始审计所有最终角色产物是否偏离原始 milestone。</div>
       </div>
       <p>
-        每个专业角色完成后先返回 Orchestrator。Orchestrator 检查里程碑一致性、专业模板完整性和客观证据，再决定下一角色。专业结论来自角色 packet，不由 Orchestrator 自行改写。
+        每个专业角色完成后先返回 Orchestrator。Orchestrator 检查里程碑一致性、任务书必需检查与客观证据，再决定下一角色。专业结论来自角色 packet，不由 Orchestrator 自行改写；聊天格式不构成完成门禁。
       </p>
       <pre><code>Workflow Orchestrator
   -> Researcher -> Workflow Orchestrator
@@ -550,22 +550,25 @@ cd Code-role</code></pre>
       <h3>四角色最小版</h3>
       <ol>
         <li>只在项目经理对话中确认 Objective、KR、非目标和独立证据。</li>
-        <li>项目经理选择一个 <code>KR=0</code>，使用固定 <code>PM Assignment</code>。</li>
+        <li>项目经理选择一个 <code>KR=0</code>，填写目标工位专属任务书。</li>
         <li>把任务书贴入被选工位对话；完整任务书即启动，不再回复“开始”。</li>
-        <li>工位使用唯一回报模板，并附专业附件。</li>
-        <li>把回报贴回项目经理；项目经理接受或打回。</li>
+        <li>工位写专业附件并发送短回报；不复述稳定角色规则和附件正文。</li>
+        <li>把回报贴回项目经理；项目经理以附件证据而非聊天格式接受或打回。</li>
         <li>候选实现必须交给独立评估，工程不能自报 KR 通过。</li>
       </ol>
       <h3>八角色完整版</h3>
       <ol>
         <li>Orchestrator 确认 milestone contract、chain 和当前权威输入。</li>
         <li>Orchestrator 使用该角色专属任务模板下发任务。</li>
-        <li>专业角色消费精确上游 packet 文档，产出自己的版本化 packet。</li>
-        <li>角色用固定完成模板回报 Orchestrator。</li>
-        <li>Orchestrator 检查里程碑对齐、专业完整性与客观证据。</li>
+        <li>完整任务书即启动；专业角色消费权威上游文档并产出自己的版本化 packet。</li>
+        <li>角色用专属短回报返回 Orchestrator，不选择下一角色。</li>
+        <li>Orchestrator 直接审阅专业附件，检查里程碑对齐、专业完整性与客观证据。</li>
         <li>Test Evaluator 完成独立评估，Reviewer 最终审计整条链路。</li>
       </ol>
       <p>当前两套配置都使用人工可复制传递，不声称已自动跨对话派发。</p>
+      <div class="success">
+        两套配置共用同一对话控制：启动确认消息为 0，常规过程汇报为 0，格式返工为 0；只有实质 blocker 或用户决策才增加对话轮次。
+      </div>
     </section>
 
     <section id="evidence">

@@ -3,7 +3,7 @@
 This folder contains product-level documents for Code-role.
 
 - [Minimal Profile / 四角色最小版](../loop/README.md): smallest complete milestone-control unit.
-- [Full Profile / 八角色完整版](../workflow/README.md): separated professional ownership and packet-level audit chain.
+- [Full Profile / 八角色完整版](../workflow/README.md): separated professional ownership, artifact-first handoff, and packet-level audit chain.
 - [中文产品需求对齐稿](prd.zh-CN.md): 用于需求对齐、范围确认和迭代讨论。
 - [English PRD](prd.md): dual-profile product direction, requirements, and selection rules.
 - [中文 HTML 说明与初始化指南](code-role-workflow-guide.zh-CN.html): 用于外发介绍、配置说明和项目初始化指引。

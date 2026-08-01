@@ -20,7 +20,9 @@ ROLE_FILES = (
 )
 
 TEMPLATE_FILES = (
-    "assignment.md",
+    "product-assignment.md",
+    "engineering-assignment.md",
+    "evaluation-assignment.md",
     "product-return.md",
     "engineering-return.md",
     "evaluation-return.md",
@@ -78,6 +80,17 @@ def archive_full_profile_roles(code_role: Path) -> None:
         source.unlink()
 
 
+def archive_obsolete_minimal_templates(code_role: Path) -> None:
+    source = code_role / "templates" / "assignment.md"
+    if not source.exists():
+        return
+    destination = code_role / "archive" / "minimal-profile-templates" / "assignment.md"
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if not destination.exists():
+        shutil.copy2(source, destination)
+    source.unlink()
+
+
 def render_project_readme(project_name: str) -> str:
     return f"""# {project_name} Code-role
 
@@ -103,9 +116,9 @@ One Project Manager controls three callable professional workstations around one
 1. Open the Project Manager conversation.
 2. Give it `role-instance-prompts/project-manager.md`.
 3. Confirm the Objective and Key Results.
-4. Project Manager prints one copy-ready assignment for one `KR=0`.
+4. Project Manager prints one role-specific copy-ready assignment for one primary `KR=0`.
 5. Paste it into the selected workstation conversation; a valid assignment starts immediately.
-6. Paste the workstation's fixed return back to Project Manager.
+6. Paste the workstation's short return back to Project Manager; Project Manager reads the professional attachment directly.
 7. Repeat until every accepted KR has independent evidence and equals `1`.
 
 Only the selected workstation runs. There is no fixed four-role chain.
@@ -130,9 +143,9 @@ Project: `{project_name}`
 1. Start or refresh the Project Manager conversation with `role-instance-prompts/project-manager.md`.
 2. The Project Manager reads `LOOP.md` and `milestone-board.md`.
 3. Confirm one Objective and no more than five binary Key Results.
-4. Copy the Project Manager's single `PM Assignment` into the selected workstation conversation.
+4. Copy the Project Manager's role-specific assignment into the selected workstation conversation.
 5. A complete assignment starts work immediately; do not add a separate `开始` step.
-6. Copy the fixed workstation return back to Project Manager.
+6. Copy the short workstation return back to Project Manager; return formatting is not a completion gate.
 7. Project Manager updates the board from accepted evidence and selects the next `KR=0`.
 
 Only Objective/KR changes, evaluation-threshold changes, budget expansion, and irreversible external actions require an additional human gate.
@@ -158,6 +171,9 @@ active_roles:
 - independent-evaluation
 transport_model: manual-copy-ready-assignment-and-return
 valid_assignment_starts_immediately: true
+startup_acknowledgement_required: false
+format_only_rework_allowed: false
+role_self_routing_allowed: false
 fixed_role_chain: false
 completion_model: binary-key-results
 default_iteration_limit_per_kr: 3
@@ -205,7 +221,7 @@ Recommended filenames:
 - Independent Evaluation baseline: `evaluation-sop-<assignment-id>.md`
 - Independent Evaluation result: `evaluation-report-<assignment-id>.md`
 
-Attachments contain professional detail and evidence. They do not route work or update KR status. The fixed role return points to the attachment, and Project Manager decides whether to accept it.
+Attachments contain professional detail and evidence. They do not route work or update KR status. The short role return points to the attachment, and Project Manager decides whether to accept it.
 """
 
 
@@ -220,11 +236,13 @@ def initialize(project_root: Path, project_name: str, sync: bool) -> list[Path]:
     code_role.mkdir(parents=True, exist_ok=True)
     if sync:
         archive_full_profile_roles(code_role)
+        archive_obsolete_minimal_templates(code_role)
 
     generated: dict[Path, str] = {
         code_role / "README.md": render_project_readme(project_name),
         code_role / "START-HERE.md": render_start_here(project_name),
         code_role / "project-config.md": render_project_config(project_name, project_root),
+        code_role / "DIALOGUE-CONTROL.md": render(ROOT / "docs" / "dialogue-control.md", project_name, project_root),
         code_role / "LOOP.md": render(SOURCE / "LOOP.md", project_name, project_root),
         code_role / "role-instance-prompts" / "README.md": render_role_readme(),
         code_role / "work" / "README.md": render_work_readme(),
@@ -259,8 +277,11 @@ def validate(project_root: Path) -> list[str]:
 
     required = [
         code_role / "LOOP.md",
+        code_role / "DIALOGUE-CONTROL.md",
         code_role / "milestone-board.md",
-        code_role / "templates" / "assignment.md",
+        code_role / "templates" / "product-assignment.md",
+        code_role / "templates" / "engineering-assignment.md",
+        code_role / "templates" / "evaluation-assignment.md",
         code_role / "templates" / "pm-decision.md",
     ]
     required.extend(code_role / "role-instance-prompts" / name for name in ROLE_FILES)
@@ -273,7 +294,7 @@ def validate(project_root: Path) -> list[str]:
 
     loop = (code_role / "LOOP.md").read_text(encoding="utf-8")
     required_loop_markers = (
-        "One KR Per Iteration",
+        "One Primary KR Per Iteration",
         "Valid Assignment Starts Work",
         "Evaluation Before Pass",
         "three failed Engineering-to-Evaluation attempts",
@@ -304,18 +325,21 @@ def validate(project_root: Path) -> list[str]:
         if marker in combined_roles:
             errors.append(f"active Minimal Profile prompts contain packet-profile marker: {marker}")
 
-    assignment = (code_role / "templates" / "assignment.md").read_text(
-        encoding="utf-8"
-    )
-    for marker in (
-        "current_kr_status: 0",
-        "iteration:",
-        "role_prompt_path:",
-        "frozen_pass_conditions:",
-        "stop_conditions:",
+    for filename in (
+        "product-assignment.md",
+        "engineering-assignment.md",
+        "evaluation-assignment.md",
     ):
-        if marker not in assignment:
-            errors.append(f"assignment template missing marker: {marker}")
+        assignment = (code_role / "templates" / filename).read_text(encoding="utf-8")
+        for marker in (
+            "target_kr:",
+            "role_prompt_path:",
+            "required_checks:",
+            "required_output_attachment:",
+            "stop_condition:",
+        ):
+            if marker not in assignment:
+                errors.append(f"{filename} missing marker: {marker}")
 
     board = (code_role / "milestone-board.md").read_text(encoding="utf-8")
     for marker in (
@@ -335,7 +359,8 @@ def validate(project_root: Path) -> list[str]:
     for marker in (
         "manual transport",
         "Do not claim automatic dispatch",
-        "exactly one accepted `KR=0` per iteration",
+        "exactly one primary accepted `KR=0` per iteration",
+        "Missing return fields or field order are not blockers",
     ):
         if marker not in project_manager:
             errors.append(f"project manager prompt missing marker: {marker}")
@@ -349,6 +374,7 @@ def validate(project_root: Path) -> list[str]:
         "Every required unrun check is `0`",
         "not only the latest diff",
         "Do not use `partial_pass` or `pass_with_residual_risk`",
+        "Any SOP change after candidate evidence requires explicit user approval",
     ):
         if marker not in evaluator:
             errors.append(f"evaluator prompt missing marker: {marker}")

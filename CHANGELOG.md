@@ -4,6 +4,28 @@ All notable public changes to Code-role are documented here.
 
 Code-role 的重要公开变更记录在这里。
 
+## [Unreleased]
+
+### Added
+
+- A shared bilingual dialogue-control contract for both the four-workstation and eight-role profiles.
+- Role-specific assignment and short-return templates for every professional role.
+- Historical-conversation regression tests covering startup chatter, format-only rework, role self-routing, incomplete evaluation setup, SOP drift, and narrated Orchestrator checks.
+
+### Changed
+
+- Complete assignments now start work immediately; startup acknowledgements, routine progress narration, readiness-only turns, and format-only rework are removed from normal flow.
+- Project Manager now accepts professional artifacts before judging chat transport format and routes only from substantive failed checks.
+- Evaluation and review gates are strictly binary, with risks mapped to failed checks, new accepted KRs, or explicit non-goals.
+- Full Profile manifests return to Workflow Orchestrator instead of hard-coding a fixed successor.
+- Implementer scope uses assignment-authorized modules or directories instead of accumulated historical per-file whitelists.
+- Both initializers now generate the same dialogue controls; Full Profile refresh preserves durable milestone and evaluation state.
+- The public four-workstation walkthrough now demonstrates separate Engineering and Independent Evaluation assignments with short returns.
+
+### Verification
+
+- Repository test suite: `75 passed`.
+
 ## [0.3.1] - 2026-07-31
 
 ### Added

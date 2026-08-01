@@ -66,7 +66,7 @@ The role responsibility must come from `ROLE.md`, not from packet inference.
 - completed packet chain
 - current gate
 - `quality_gate.status`, when available
-- `final_acceptance`, when available
+- binary `review_gate_pass`, when available
 - residual risks
 - recommended next confirmation
 

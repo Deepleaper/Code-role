@@ -77,8 +77,8 @@ Workstations:
 The Minimal Profile uses:
 
 - one authoritative `milestone-board.md`;
-- one fixed PM assignment template;
-- one fixed return template per professional workstation;
+- one role-specific assignment template for each professional workstation;
+- one short return template per professional workstation;
 - professional attachments under `code-role/work/<milestone>/`;
 - dynamic routing for one accepted `KR=0` at a time.
 
@@ -159,9 +159,9 @@ Do not switch profiles silently during a milestone. A change requires:
 ### FR-3: Professional Ownership
 
 - Project Manager does not invent or rewrite professional conclusions.
-- Every professional role has a fixed input and fixed return contract.
+- Every professional role has a role-specific assignment and short return contract.
 - Detailed professional reasoning is stored in role-owned artifacts.
-- Missing required professional fields makes the return unacceptable.
+- Missing required professional evidence makes the assignment fail; imperfect chat formatting does not erase evidence already present in the artifact.
 
 ### FR-4: Independent Evaluation
 

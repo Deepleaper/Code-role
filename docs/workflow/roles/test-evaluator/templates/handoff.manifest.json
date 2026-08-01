@@ -17,16 +17,7 @@
     {"path": "quality-gate.md", "type": "quality_gate", "required": true, "description": "Quality gate decision."},
     {"path": "sop-calibration.md", "type": "sop_calibration", "required": true, "description": "Post-evaluation SOP adherence and calibration record."}
   ],
-  "input_packets": [
-    {
-      "role": "implementer",
-      "milestone": "template",
-      "packet_version": "packet-v001",
-      "manifest": "docs/workflow/roles/implementer/reports/<milestone>/packet-v001/handoff.manifest.json",
-      "status_at_consumption": "draft",
-      "consumption_status": "accepted_as_input"
-    }
-  ],
+  "input_packets": [],
   "source_scopes": [
     "docs/workflow/source-map.md",
     "docs/workflow/evaluation-sop.md",
@@ -34,7 +25,7 @@
     "code-role/workflow/evaluation/evaluation-sop.md",
     "user-confirmed evaluation mechanism and baseline",
     "approved industry/common-consensus evaluation references when available",
-    "upstream implementer packet"
+    "assignment-named upstream artifacts"
   ],
   "evaluation_baseline": {
     "sop_status": "draft",
@@ -42,7 +33,13 @@
     "industry_reference_status": "unknown",
     "benchmark_dataset_status": "unknown"
   },
-  "handoff_to": ["reviewer"],
+  "return_to": "workflow-orchestrator",
+  "quality_gate": {
+    "evaluation_pass": 0,
+    "required_check_results": [],
+    "failed_check_ids": [],
+    "allowed_values": [0, 1]
+  },
   "open_questions": [],
   "blocked": false,
   "required_confirmations": []

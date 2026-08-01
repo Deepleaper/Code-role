@@ -1,176 +1,55 @@
-# Workflow Chain Policy
+# Workflow Selection Policy / 工作流选择策略
 
-This document defines when to use each workflow chain and which packet statuses may be consumed.
+Full Profile separates professional ownership but does not impose a fixed chain. Workflow Orchestrator routes to the owner of the current evidence gap.
 
-## Chain Type Matrix
+八角色拆分专业责任，但不强制每次依次走完八个角色。
 
-| Chain | Roles | Use When |
-| --- | --- | --- |
-| `full-chain` | `researcher -> product-prd -> architect -> code-context -> implementer -> test-evaluator -> reviewer` | User value, product scope, architecture, runtime, permission, schema, or security risk is unclear. |
-| `mini-chain` | `architect -> code-context -> implementer -> test-evaluator -> reviewer` | Product scope is already accepted, but architecture and implementation still need controlled handoff. |
-| `patch-chain` | `code-context -> implementer -> test-evaluator -> reviewer` | A narrow fix has accepted scope and does not touch runtime boundary, permission, memory, schema, or release claims. |
-| `docs-only-chain` | `product-prd or architect -> reviewer` | Documentation-only work that does not change runtime behavior, schema, permission, release status, or user-facing capability. |
-| `research-only` | `researcher -> product-prd or stop` | A question needs research before product commitment, or the workflow intentionally stops after research. |
+## Named Profiles / 命名组合
 
-The Workflow Orchestrator selects a chain and records the decision. The Orchestrator cannot approve state transitions for the user.
+Named chains are planning presets, not routing authority:
 
-Architect must not hand off directly to Test Evaluator in implementation-bound work. Architecture packets first go to Code Context / Context Engineer so downstream roles receive a stable file, dependency, impact, test, and implementation-constraint map.
+| Chain | Typical roles |
+| --- | --- |
+| `full-chain` | Researcher, Product / PRD, Architect, Code Context, Implementer, Test Evaluator, Reviewer as needed |
+| `mini-chain` | Product / PRD or Architect, Code Context, Implementer, Test Evaluator, optional Reviewer |
+| `patch-chain` | Code Context when needed, Implementer, Test Evaluator, optional Reviewer |
+| `docs-only-chain` | Relevant document owner, optional Reviewer |
+| `research-only` | Researcher, then Orchestrator decision |
 
-## Chain Details
+## Evidence Routing / 证据路由
 
-### `full-chain`
+- evidence or frontier uncertainty: Researcher;
+- product ambiguity: Product / PRD;
+- architecture ambiguity: Architect;
+- repository-context ambiguity: Code Context;
+- implementation gap: Implementer;
+- evaluation baseline or independent evidence gap: Test Evaluator;
+- final flow-wide drift audit: Reviewer.
 
-Use for high-impact work:
+Every selected role returns to Workflow Orchestrator. Architecture usually benefits from Code Context before implementation, but the Orchestrator may skip roles whose professional uncertainty is already resolved by accepted evidence.
 
-```text
-researcher -> product-prd -> architect -> code-context -> implementer -> test-evaluator -> reviewer
-```
+## Routing Gate / 路由门禁
 
-Required for:
-
-- new product capability
-- runtime, memory, permission, schema, or security work
-- release positioning changes
-- unclear user value
-- work with P0/P1 risk
-
-Architect handoff rule:
-
-- after `architect`, route to `code-context`
-- do not route directly to `test-evaluator`
-
-### `mini-chain`
-
-Use for medium-impact work:
+Route when:
 
 ```text
-architect -> code-context -> implementer -> test-evaluator -> reviewer
+assignment is complete
+target evidence gap is explicit
+authoritative inputs are named
+required checks are frozen
+output path and stop condition are defined
 ```
 
-Allowed for:
+Do not route based on packet readiness, a role recommendation, or a fixed next-role table.
 
-- bounded implementation with already accepted product scope
-- architecture-sensitive docs or examples
-- moderate refactor with clear scope
+## Evaluation And Review / 评估与审计
 
-Architect handoff rule:
+- Implementer cannot pass its own KR.
+- Test Evaluator evaluates the complete frozen required scope, not only the latest diff.
+- Reviewer, when required, audits Workflow Orchestrator and all accepted final role outputs against the original milestone.
+- Required unrun evidence is `0`.
+- Evaluation and review gates are binary.
 
-- after `architect`, route to `code-context`
-- do not route directly to `test-evaluator`
+## Iteration Stop / 迭代停止
 
-### `patch-chain`
-
-Use for narrow fixes:
-
-```text
-code-context -> implementer -> test-evaluator -> reviewer
-```
-
-Allowed for:
-
-- small bug fix
-- small test fix
-- narrow follow-up with accepted scope
-
-Not allowed for:
-
-- permission model changes
-- memory scope changes
-- runtime boundary changes
-- release claims
-
-### `docs-only-chain`
-
-Use for documentation-only work:
-
-```text
-product-prd or architect -> reviewer
-```
-
-Allowed for:
-
-- wording cleanup
-- role configuration docs
-- protocol documentation updates
-
-Not allowed for:
-
-- changes that alter product claim, runtime behavior, schema, permission, release status, or user-facing capability.
-
-### `research-only`
-
-Use for research or discovery work:
-
-```text
-researcher -> product-prd or stop
-```
-
-Allowed for:
-
-- user-value investigation
-- technology or concept validation
-- deciding whether a product packet is needed
-
-If the workflow stops after Researcher, record the reason in the Orchestrator decision log.
-
-## Packet Consumption Policy
-
-Default rule:
-
-- Downstream roles may consume the current role's output only after `role_completion_status=1`, the user accepts it, and the Orchestrator records the handoff.
-- The upstream packet may still be `draft` in normal lightweight flow.
-- The downstream role records the exact upstream manifest and `status_at_consumption`.
-
-Strict handoff:
-
-- Use `ready_for_next_role` plus `packet.lock.json` only when the user explicitly asks for strict handoff, auditability, immutability, or release-grade evidence.
-- Do not route a role back for readiness conversion by default.
-- If strict handoff is requested and the packet remains `draft`, Orchestrator should hold the chain and ask the owning role to perform the strict transition.
-
-## Implementer Gate
-
-The Implementer must not begin work from chat-only instruction.
-
-Before implementation starts, the Orchestrator must confirm:
-
-- selected chain permits implementation
-- required upstream output exists and has been accepted by the user through Orchestrator
-- upstream packet status is recorded exactly, even when it remains `draft`
-- scope is clear
-- required acceptance criteria exist, unless the user explicitly chooses patch-chain for a narrow fix
-
-If any check fails, Implementer remains blocked.
-
-## Reviewer Gate
-
-The Reviewer must audit the full workflow against the original milestone, not only the code or packet chain.
-
-Reviewer checks:
-
-- Orchestrator `final-packet-index.md` exists and identifies current final outputs
-- original milestone anchor, success criteria, and non-goals are clear
-- Workflow Orchestrator state, decisions, consumption checks, and next-role handoff briefs did not drift from the original milestone
-- each execution role's current final packet serves the original milestone
-- required upstream packets exist for the selected chain
-- upstream packet versions are recorded through the final packet index
-- strict locks are present only when strict handoff was requested
-- lightweight handoffs were explicitly accepted by the user through Orchestrator
-- Implementer stayed within approved scope
-- Test Evaluator confirmed evaluation baseline, metric definitions, and benchmark or baseline data when applicable
-- Test Evaluator covered acceptance criteria when applicable
-- Reviewer identifies `correction_owner` when role output drift exists
-- no unresolved P0
-- P1 risks are explicitly accepted or sent back
-
-## User Confirmation Points
-
-User confirmation is required for:
-
-- creating ambiguous milestone names
-- selecting or changing chain type
-- marking packet `ready_for_next_role`
-- marking packet `accepted`
-- advancing from one role to the next after accepting an output with `role_completion_status=1`
-- allowing Implementer to start
-- skipping a role in a chain
-- accepting unresolved P1 risk
+After three failed implementation-to-evaluation attempts for the same primary KR, stop implementation and choose one: repair product definition, repair evaluation, split the KR, change scope/budget with the user, or terminate the milestone.

@@ -22,7 +22,7 @@ Code-role 是一套面向可靠 AI 编程的本地工作机制。它让 Codex �
 It provides two official operating profiles:
 
 - **Minimal Profile:** four workstations, the smallest complete milestone-control unit.
-- **Full Profile:** eight roles, a separated professional workflow with versioned packet evidence.
+- **Full Profile:** eight roles, separated professional ownership with versioned packet evidence and the same artifact-first dialogue control.
 
 Code-role 是一个用于控制 Codex 编程交付的本地角色系统，正式提供两套配置：
 
@@ -101,8 +101,8 @@ Code-role 在两套配置中都坚持四条规则：
 | Best for | Clear product direction, bounded engineering work, normal iteration speed | Complex or high-risk milestones, unresolved research/architecture, formal audit needs |
 | 适用场景 | 产品方向清楚、工程范围可控、需要快速迭代 | 复杂或高风险 milestone、研究和架构不确定、需要完整审计 |
 | Roles | 4 workstations | 8 separate roles |
-| Control state | One `milestone-board.md` | Orchestrator state plus versioned packets |
-| Handoff | One fixed assignment and one fixed return per workstation | Role packets and exact `handoff.manifest.json` inputs |
+| Control state | One `milestone-board.md` | Milestone contract, Orchestrator state, and accepted packet pointers |
+| Handoff | One role-specific assignment and one short return | One role-specific assignment, professional packet, and short return |
 | Evaluation | Independent Evaluation workstation | Test Evaluator plus final Reviewer audit |
 | Process weight | Low | High |
 
@@ -142,9 +142,9 @@ flowchart LR
     PM -- "All KRs=1" --> H["Human close or release gate"]
 ```
 
-There is no fixed role chain. Each assignment targets exactly one accepted `KR=0`. A complete PM Assignment starts the selected workstation immediately.
+There is no fixed role chain. Each assignment targets one primary accepted `KR=0` and its coherent required checks. A complete PM Assignment starts the selected workstation immediately.
 
-不存在固定角色链。每份任务书只针对一个已确认的 `KR=0`。工位收到完整 PM Assignment 后直接开始工作。
+不存在固定角色链。每份任务书只针对一个主要 `KR=0` 及其同一组必要检查。工位收到完整 PM Assignment 后直接开始工作。
 
 ### Initialize Minimal Profile / 初始化四角色最小版
 
@@ -189,7 +189,7 @@ Minimal Profile documentation:
 | Test Evaluator / 测试评估师 | Freezes or consumes the evaluation SOP and independently evaluates the complete required scope |
 | Reviewer / 复核审计 | Audits Orchestrator and every final role output against the original milestone and evaluation baseline |
 
-The Full Profile is discussion-first and document-based. Each professional role has one configured conversation, consumes explicit upstream packet documents, and writes a versioned packet for Project Manager review.
+The Full Profile is decision-first and document-based. Each professional role has one configured conversation, starts from one complete role-specific assignment, consumes explicit upstream packet documents, and writes a versioned packet for artifact-first Project Manager review.
 
 八角色完整版以讨论和专业文档为核心。每个专业角色使用独立对话，消费明确的上游 packet 文档，并产出版本化 packet 交由项目经理审阅。
 
@@ -216,7 +216,7 @@ flowchart LR
     PM --> V --> PM
 ```
 
-The diagram shows control returning to Project Manager after every professional role. The exact selected chain can still be `full-chain`, `mini-chain`, `patch-chain`, `docs-only-chain`, or `research-only`.
+The diagram shows control returning to Project Manager after every professional role. Named chains remain planning presets; evidence and blocker ownership determine the actual next role.
 
 流程图表示每个专业角色完成后都返回项目经理检查。实际可按任务选择 `full-chain`、`mini-chain`、`patch-chain`、`docs-only-chain` 或 `research-only`。
 
@@ -262,7 +262,7 @@ Full Profile documentation:
 - `1` means every frozen pass condition has acceptable evidence.
 - An unrun required check is `0`.
 - A residual item becomes a new accepted requirement, an explicit non-goal, or remains unresolved at `0`.
-- `partial_pass` and `pass_with_residual_risk` cannot close a milestone.
+- Evaluation and review gates are binary. `partial_pass` and `pass_with_residual_risk` are invalid gate states.
 - Only Project Manager updates milestone status.
 - Only the user accepts Objective/KR changes, evaluation-threshold changes, budget expansion, and irreversible release actions.
 

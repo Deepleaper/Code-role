@@ -42,6 +42,6 @@ Roles must not:
 - create a Git milestone just to run normal Git commands
 - require Reviewer approval for ordinary staging or pushing
 - include local `code-role/` files in product release artifacts
-- treat `pass_with_residual_risk` as final product acceptance
+- treat `review_gate_pass=0` as milestone closure
 
-`final_acceptance=false` means the role chain has not closed product acceptance. It does not mean Git is blocked.
+`review_gate_pass=0` means the role chain has not closed milestone acceptance. It does not mean ordinary target-project Git work is blocked.

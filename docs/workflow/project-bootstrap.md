@@ -1,45 +1,26 @@
-# Project Bootstrap
+# Project Bootstrap / 项目初始化
 
-Project bootstrap turns a target repository into a Code-role-controlled workspace without manually writing every role prompt and state file.
+Bootstrap creates local Full Profile role-control files. It does not run roles, create professional packets, modify business files, or perform Git operations.
 
-Bootstrap creates local configuration and navigation files only. It does not run any role, create execution packets, stage Git files, commit, push, or modify business source files.
-
-Generated `code-role/` files are local-only target-project assistance. They are not part of the target project's product delivery and should not be committed or pushed with that project.
-
-## Inputs
-
-Required inputs:
-
-- target project path
-- project name
-- initial milestone
-- initial chain
-- external research default
-
-The tracking policy is fixed as `local-only`. If the target project is a Git repository, bootstrap adds `code-role/` to `.git/info/exclude` so the helper files remain available locally without entering the target project's Git history.
-
-## Fast Path
-
-From the Code-role repository:
+## Command / 命令
 
 ```bash
 python scripts/init_project_workflow.py \
   --target "/path/to/Target Project" \
   --project-name "Target Project" \
   --initial-milestone workflow-bootstrap \
-  --initial-chain research-only \
+  --initial-chain full-chain \
   --write
 ```
 
-Omit `--write` for a dry run.
+Omit `--write` for dry run. Add `--force` to refresh generated prompts and templates. Durable milestone state and evaluation SOP files are preserved.
 
-## Files Created
-
-Bootstrap creates:
+## Generated Files / 生成文件
 
 ```text
 code-role/
   README.md
+  DIALOGUE-CONTROL.md
   project-config.md
   role-instance-prompts/
     workflow-orchestrator.md
@@ -50,44 +31,27 @@ code-role/
     implementer.md
     test-evaluator.md
     reviewer.md
+  templates/
+    <role>-assignment.md
+    <role>-return.md
   workflow/
     orchestrator/
       workflow-state.md
-      milestone-registry.md
-      decision-log.md
+      milestone-contract.md
       final-packet-index.md
+    evaluation/
+      evaluation-sop.md
 ```
 
-If `--with-state-index` is provided, bootstrap also creates optional non-authoritative navigation files under `code-role/state-index/`.
+Optional `--with-state-index` creates non-authoritative navigation only.
 
-It intentionally does not create execution-role packet reports. Those must be created by the corresponding role instance after user confirmation.
+## Local Boundary / 本地边界
 
-When `.git/info/exclude` exists, bootstrap appends:
+Generated `code-role/` is local target-project assistance, not product runtime or release content. If `.git/info/exclude` exists, bootstrap adds `code-role/` there without modifying tracked `.gitignore`.
 
-```text
-code-role/
-```
+## After Bootstrap / 初始化后
 
-This keeps Code-role state local to the operator's workspace.
-
-## After Bootstrap
-
-1. Open the Workflow Orchestrator role instance.
-2. Paste `code-role/role-instance-prompts/workflow-orchestrator.md`.
-3. Confirm the first real milestone and selected chain.
-4. Let Orchestrator route to the next role.
-5. Open that role in a separate conversation and paste its role-instance prompt.
-
-## Boundary
-
-Bootstrap must not:
-
-- infer a milestone from chat memory
-- scan for the newest packet and treat it as authoritative
-- create Researcher, Product / PRD, Architect, Code Context, Implementer, Test Evaluator, or Reviewer packets
-- mark any packet `ready_for_next_role`
-- run tests
-- run Git staging, commit, or push
-- modify product source files
-
-Git operations remain normal project maintenance outside the role chain. Code-role may report Git-related facts, but it does not own or gate the target project's Git workflow.
+1. Configure eight conversations once from generated role prompts.
+2. Open Workflow Orchestrator and accept one Objective with binary KRs.
+3. Paste its first complete role-specific assignment to the selected role.
+4. Continue with one assignment and one short return per role iteration.

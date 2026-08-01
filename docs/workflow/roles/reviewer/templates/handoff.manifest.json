@@ -15,16 +15,7 @@
     {"path": "packet-chain-audit.md", "type": "packet_chain_audit", "required": true, "description": "Packet consumption, source scope, strict handoff, and drift audit."},
     {"path": "final-gate.md", "type": "final_gate", "required": true, "description": "Reviewer final gate recommendation."}
   ],
-  "input_packets": [
-    {
-      "role": "test-evaluator",
-      "milestone": "template",
-      "packet_version": "packet-v001",
-      "manifest": "docs/workflow/roles/test-evaluator/reports/<milestone>/packet-v001/handoff.manifest.json",
-      "status_at_consumption": "draft",
-      "consumption_status": "accepted_as_input"
-    }
-  ],
+  "input_packets": [],
   "final_packet_index": "docs/workflow/orchestrator/final-packet-index.md",
   "audit_scope": "current_final_versions_only",
   "source_scopes": [
@@ -36,7 +27,7 @@
     "code-role/workflow/evaluation/evaluation-sop.md",
     "docs/workflow/orchestrator/final-packet-index.md",
     "original milestone anchor from Orchestrator or user input",
-    "Orchestrator workflow-state, milestone-registry, decision-log, consumption-check outputs, and next-role handoff briefs",
+    "Orchestrator workflow-state, milestone-contract, final-packet-index, active evaluation SOP, and accepted assignments",
     "all upstream role packets in selected chain",
     "upstream test-evaluator packet",
     "upstream test-evaluator evaluation-sop.md",
@@ -50,13 +41,14 @@
     "sop_calibration_required": true,
     "mechanism_required": true,
     "benchmark_or_baseline_required": true,
-    "unsupported_industry_claims_block_final_acceptance": true
+    "unsupported_industry_claims_fail_required_check": true
   },
-  "handoff_to": ["orchestrator"],
+  "return_to": "workflow-orchestrator",
   "quality_gate": {
-    "status": "blocked",
-    "final_acceptance": false,
-    "allowed_statuses": ["approve", "pass_with_residual_risk", "request_changes", "blocked"]
+    "review_gate_pass": 0,
+    "required_check_results": [],
+    "failed_check_ids": [],
+    "allowed_values": [0, 1]
   },
   "open_questions": [],
   "blocked": false,

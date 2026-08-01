@@ -107,8 +107,9 @@ Safe to update:
 Do not overwrite by default:
 
 - `code-role/workflow/orchestrator/workflow-state.md`
-- `code-role/workflow/orchestrator/milestone-registry.md`
-- `code-role/workflow/orchestrator/decision-log.md`
+- `code-role/workflow/orchestrator/milestone-contract.md`
+- `code-role/workflow/orchestrator/final-packet-index.md`
+- `code-role/workflow/evaluation/evaluation-sop.md`
 - `code-role/workflow/roles/**`
 - `code-role/state-index/**`
 
@@ -161,7 +162,7 @@ Every role may use public-source network research when it helps the milestone.
 
 Required behavior:
 
-- state the network purpose in the first response
+- record network purpose and source types in the professional artifact or source log
 - state likely public source types
 - cite or record sources in the packet
 - separate external practice from local project fact

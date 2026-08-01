@@ -44,6 +44,6 @@ Use this section when public-source network research is relevant to the mileston
 
 ## Recommended Handoff / 建议交接
 
-- recommended next role / 建议下一角色:
+- unresolved professional question / 尚未解决的专业问题:
 - usable conclusions / 可交给下游使用的结论:
 - blockers or confirmations / 阻塞或需确认事项:

@@ -4,7 +4,7 @@ This file records the current final packet for each role in the active milestone
 
 The Orchestrator owns this file. Reviewer uses it as the authoritative index for final-version milestone drift audit.
 
-It is not a history log. If a role produces `packet-v002`, reports `role_completion_status=1`, and the user accepts it as the current final output for the milestone, update that role row to `packet-v002`.
+It is not a history log. If a role produces `packet-v002` and Project Manager accepts its professional artifact against the frozen assignment checks, update that role row to `packet-v002`.
 
 ## Current Milestone Anchor
 
@@ -21,7 +21,7 @@ It is not a history log. If a role produces `packet-v002`, reports `role_complet
 
 | Role | Current final output | Status | Accepted for milestone audit | Notes |
 | --- | --- | --- | --- | --- |
-| workflow-orchestrator | workflow-state.md, milestone-registry.md, decision-log.md, final-packet-index.md, latest next-role handoff brief if available | initialized | yes | Orchestrator output is audited by Reviewer for milestone drift. |
+| workflow-orchestrator | workflow-state.md, milestone-contract.md, final-packet-index.md, active evaluation-sop.md, latest accepted assignment if available | initialized | yes | Orchestrator output is audited by Reviewer for milestone drift. |
 | researcher | none | not_started | no | Update after user accepts Researcher final packet. |
 | product-prd | none | not_started | no | Update after user accepts Product / PRD final packet. |
 | architect | none | not_started | no | Update after user accepts Architect final packet. |
@@ -32,7 +32,8 @@ It is not a history log. If a role produces `packet-v002`, reports `role_complet
 
 ## Update Rule
 
-- Update this file only after `role_completion_status=1` and the user accepts a role output as the current final version for this milestone.
+- Update this file only after Project Manager reads the professional artifact and accepts it against the frozen assignment checks.
+- Missing return fields, packet readiness, or packet locks are not reasons to reject otherwise sufficient evidence.
 - Do not list every historical packet version here.
 - Do not scan for newest files to infer final versions.
 - If a role output is revised, point the role row to the new accepted packet.

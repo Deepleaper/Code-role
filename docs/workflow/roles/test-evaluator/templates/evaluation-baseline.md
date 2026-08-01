@@ -10,20 +10,20 @@
 - non-goals / 明确不做: <non-goals> [original_milestone_anchor]
 - milestone_alignment / milestone 对齐: <how this evaluation serves the milestone> [user_approved_eval_mechanism]
 - possible drift / 可能的目标漂移: none / minor / major / unknown [evaluator_judgment]
-- user_confirmation_status / 用户确认状态: confirmed / pending / blocked [user_approved_eval_mechanism]
+- baseline_confirmed / 基线已确认: 0 | 1 [user_approved_eval_mechanism]
 
 ## Active SOP Mapping / 当前 SOP 映射
 
 - active_sop_path / 当前 SOP 路径: code-role/workflow/evaluation/evaluation-sop.md [evaluation_sop]
-- active_sop_status / 当前 SOP 状态: confirmed | draft | partial | missing | blocked [evaluation_sop]
+- active_sop_confirmed / 当前 SOP 已确认: 0 | 1 [evaluation_sop]
 - baseline_extends_sop / 本基线是否扩展 SOP: false | true [sop_calibration]
 - if_extends_sop / 如扩展 SOP: record proposed changes in sop-calibration.md before Reviewer handoff [sop_calibration]
 
 ## Evaluation Mechanism / 评估机制
 
-| Mechanism / 机制 | Purpose / 用途 | Source Label / 来源标签 | Confirmation Status / 确认状态 |
+| Mechanism / 机制 | Purpose / 用途 | Source Label / 来源标签 | Confirmed (0/1) |
 | --- | --- | --- | --- |
-| <mechanism name> | <what it evaluates> | user_approved_eval_mechanism / evaluation_baseline / unknown | confirmed / pending / blocked |
+| <mechanism name> | <what it evaluates> | user_approved_eval_mechanism / evaluation_baseline / unknown | 0 |
 
 ## Industry Or Common-Consensus References / 行业或通用共识参考
 
@@ -37,15 +37,15 @@ Public-source network research is allowed by default when relevant to the evalua
 
 ## Benchmark Data And Baselines / Benchmark 数据与基线
 
-| Baseline Or Dataset / 基线或数据集 | Metric / 指标 | Threshold / 阈值 | Source Label / 来源标签 | Status / 状态 |
+| Baseline Or Dataset / 基线或数据集 | Metric / 指标 | Threshold / 阈值 | Source Label / 来源标签 | Confirmed (0/1) |
 | --- | --- | --- | --- | --- |
-| <baseline or dataset> | <metric> | <pass/fail threshold> | evaluation_baseline / benchmark_dataset_reference / metric_definition / unknown | confirmed / pending / blocked |
+| <baseline or dataset> | <metric> | <pass/fail threshold> | evaluation_baseline / benchmark_dataset_reference / metric_definition / unknown | 0 |
 
 ## Project Acceptance Mapping / 项目验收映射
 
-| Project Acceptance Criterion / 项目验收项 | Evaluation Metric / 评估指标 | Planned Evidence / 计划证据 | Gap / 缺口 |
+| Project Acceptance Criterion / 项目验收项 | Evaluation Metric / 评估指标 | Planned Evidence / 计划证据 | Mapped (0/1) |
 | --- | --- | --- | --- |
-| <criterion> [acceptance_criteria_evidence] | <metric> [metric_definition] | <command, inspection, or dataset> [evaluation_baseline] | none / partial / missing / unknown |
+| <criterion> [acceptance_criteria_evidence] | <metric> [metric_definition] | <command, inspection, or dataset> [evaluation_baseline] | 0 |
 
 ## Baseline Open Questions / 基线开放问题
 

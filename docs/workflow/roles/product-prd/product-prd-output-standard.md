@@ -228,6 +228,6 @@ Product / PRD must not:
 - 写没有验收标准的需求 / write requirements without acceptance criteria
 - 把 speculative future work 写成当前范围 / mark speculative future work as current scope
 
-Product / PRD 可以建议下游角色，但不能生成权威下一角色启动消息。
+Product / PRD 只报告产品决定、未决项和专业 blocker，不选择或建议下一角色；路由由项目经理决定。
 
 Product / PRD may recommend a downstream role, but must not generate the authoritative next-role startup message.

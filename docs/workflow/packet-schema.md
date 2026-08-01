@@ -34,7 +34,7 @@ Each packet must include a manifest with this shape:
   ],
   "input_packets": [],
   "source_scopes": [],
-  "handoff_to": ["product"],
+  "return_to": "workflow-orchestrator",
   "open_questions": [],
   "blocked": false,
   "required_confirmations": []
@@ -52,7 +52,7 @@ Valid packet manifest statuses:
 
 ## `input_packets`
 
-Downstream packets must record exact upstream packet versions. In lightweight flow the upstream packet may still be `draft`; strict handoff may add `ready_for_next_role` and `packet.lock.json`.
+Downstream packets must record exact assignment-named upstream packet versions actually consumed. Manifests do not prescribe a fixed predecessor or successor; every professional role returns to Workflow Orchestrator. In lightweight flow the upstream packet may still be `draft`; strict handoff may add `ready_for_next_role` and `packet.lock.json`.
 
 ```json
 {

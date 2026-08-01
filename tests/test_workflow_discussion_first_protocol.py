@@ -28,9 +28,9 @@ def test_discussion_first_protocol_exists_and_is_linked() -> None:
     protocol = read(WORKFLOW / "discussion-first-protocol.md")
     readme = read(WORKFLOW / "README.md")
 
-    assert "discussion-first, not automation-first" in protocol
-    assert "Every role conversation must point to that role's explicit output" in protocol
-    assert "Except for Implementer after explicit approval" in protocol
+    assert "It is not confirmation-first" in protocol
+    assert "the role starts immediately" in protocol
+    assert "no startup acknowledgement is sent" in protocol
     assert "discussion-first-protocol.md" in readme
 
 
@@ -46,7 +46,7 @@ def test_every_role_has_prompt_contract_and_scope_correction() -> None:
         assert "Conversation scope:" in text, role_file
         assert "All communication with this role must point" in text, role_file
         assert "outside" in text and "scope" in text, role_file
-        assert "return to" in text, role_file
+        assert "Do not switch roles" in text, role_file
 
 
 def test_non_implementer_roles_document_only_boundary() -> None:
@@ -56,15 +56,15 @@ def test_non_implementer_roles_document_only_boundary() -> None:
         assert "Must not write:" in text, role_file
 
     workflow_readme = read(WORKFLOW / "README.md")
-    assert "Every non-Implementer role produces documents only and does not change code" in workflow_readme
-    assert "Implementer is the only role that may change approved project files" in workflow_readme
+    assert "All non-Implementer roles produce governance or professional documents only" in workflow_readme
+    assert "Implementer is the only role that changes target-project code under a valid assignment" in workflow_readme
 
 
-def test_implementer_requires_user_confirmed_start() -> None:
+def test_implementer_starts_from_complete_assignment_without_second_gate() -> None:
     implementer = read(WORKFLOW / "roles" / "implementer" / "ROLE.md")
     protocol = read(WORKFLOW / "discussion-first-protocol.md")
 
-    assert "Orchestrator confirmation that implementation may start" in implementer
-    assert "Stop for user confirmation before implementation start" in implementer
-    assert "Implementer is the only role that may write approved project files" in protocol
-
+    assert "A complete assignment starts work immediately" in implementer
+    assert "Do not send a startup acknowledgement" in implementer
+    assert "Routine role routing, packet writing, local implementation" in protocol
+    assert "do not require another Code-role confirmation" in protocol
