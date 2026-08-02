@@ -7,35 +7,36 @@
   "created_at": "YYYY-MM-DD",
   "updated_at": "YYYY-MM-DD",
   "summary": "Template manifest for a Product / PRD packet.",
+  "artifact_policy": {"primary_artifact_from_assignment": true, "required_primary_artifact_count": 1, "documents_are_optional_annexes": true},
   "documents": [
     {
       "path": "product-brief.md",
       "type": "product_brief",
-      "required": true,
+      "required": false,
       "description": "Product problem, user, scope, and decision summary."
     },
     {
       "path": "prd.md",
       "type": "prd",
-      "required": true,
+      "required": false,
       "description": "Buildable product requirements."
     },
     {
       "path": "acceptance-criteria.md",
       "type": "acceptance_criteria",
-      "required": true,
+      "required": false,
       "description": "Criteria downstream tests and review should verify."
     },
     {
       "path": "non-goals.md",
       "type": "non_goals",
-      "required": true,
+      "required": false,
       "description": "Explicitly rejected scope and boundaries."
     },
     {
       "path": "decision-log.md",
       "type": "decision_log",
-      "required": true,
+      "required": false,
       "description": "Product decisions and evidence behind them."
     }
   ],

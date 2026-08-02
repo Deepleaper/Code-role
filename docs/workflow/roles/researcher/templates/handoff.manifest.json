@@ -7,35 +7,36 @@
   "created_at": "YYYY-MM-DD",
   "updated_at": "YYYY-MM-DD",
   "summary": "Template manifest for a Researcher packet.",
+  "artifact_policy": {"primary_artifact_from_assignment": true, "required_primary_artifact_count": 1, "documents_are_optional_annexes": true},
   "documents": [
     {
       "path": "research-brief.md",
       "type": "research_brief",
-      "required": true,
+      "required": false,
       "description": "Main research output."
     },
     {
       "path": "evidence-map.md",
       "type": "evidence_map",
-      "required": true,
+      "required": false,
       "description": "Claim-to-source map."
     },
     {
       "path": "risk-register.md",
       "type": "risk_register",
-      "required": true,
+      "required": false,
       "description": "Risks, uncertainty, and mitigations."
     },
     {
       "path": "open-questions.md",
       "type": "open_questions",
-      "required": true,
+      "required": false,
       "description": "Questions that block or inform downstream work."
     },
     {
       "path": "source-log.md",
       "type": "source_log",
-      "required": true,
+      "required": false,
       "description": "Sources read by the Researcher."
     }
   ],

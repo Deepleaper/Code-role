@@ -1,82 +1,67 @@
-# Workflow Validation
+# Workflow Validation / 工作流校验
 
-This document defines local validation checks for the document workflow.
+Validation checks whether Full Profile is controlling delivered outcomes. It is local by default and is not product CI unless the target team explicitly adopts it.
 
-The validator is local by default. It is not part of product CI unless the team explicitly promotes this workflow into a repository standard.
+## Default Delivery Checks / 默认交付校验
 
-## Local Validator
+### Milestone Contract
 
-Reference local tool:
+- Objective is user-accepted.
+- Every delivery KR describes an observable user, business, product, or runtime outcome.
+- Every KR has a binary threshold and required independent evidence.
+- Research, PRD, architecture, SOPs, tests, reports, packets, and reviews are not delivery KRs unless the user explicitly accepted the artifact itself as the external deliverable.
 
-```text
-docs/workflow/tools/validate_workflow_packet.py
-```
+### Current State
 
-The tool is stored under `docs/workflow/`, so it is covered by the local workflow exclude policy.
+- Workflow state contains one target KR and one exact current failed evidence item.
+- The current owner is the professional role able to repair or decide that evidence.
+- Accepted primary artifact and independent evidence paths exist when recorded.
+- Active state does not append chronological process logs.
 
-## Required Checks
+### Work Unit Assignment
 
-### Packet Structure
-
-- `handoff.manifest.json` exists.
-- manifest is valid JSON.
-- required manifest fields exist.
-- every document listed in `documents` exists.
-- document paths are relative to the packet directory.
-
-### Consumption
-
-- lightweight downstream consumption requires Project Manager acceptance of the upstream professional artifact against the frozen assignment checks.
-- upstream status may remain `draft` in lightweight mode.
-- Orchestrator records artifact acceptance and the evidence-based route.
-- downstream `input_packets` must record exact upstream role, milestone, packet version, manifest path, and status at consumption.
-- strict downstream consumption requires `ready_for_next_role` and `packet.lock.json`.
-
-### Status Transition
-
-- only the owning role writes its own packet manifest.
-- upstream packet manifest is not rewritten for downstream acceptance.
-- downstream acceptance is recorded as `accepted_as_input`.
-- `ready_for_next_role` packets are immutable.
-- post-ready changes require a new packet version.
-
-### Packet Lock
-
-When strict handoff is requested and a packet is marked `ready_for_next_role`, create:
+A valid assignment contains:
 
 ```text
-packet.lock.json
+objective
+target_kr
+current_failed_evidence
+role_deliverable
+authoritative_inputs
+acceptance_checks
+required_artifact_path
 ```
 
-The lock records hashes for packet files. A future validator can compare current hashes against the lock to detect drift.
+- Task-specific exclusions appear only when genuinely necessary.
+- The assignment does not require a precomputed per-file writable whitelist.
+- A complete assignment starts work immediately.
 
-### Implementer Gate
+### Primary Artifact
 
-Before implementation:
+- Exactly one primary professional artifact is required.
+- The artifact addresses the assigned failed evidence and every acceptance check.
+- Optional annexes exist only for useful evidence or reproducibility.
+- Chat return formatting, manifest readiness, and lock state are not substantive acceptance gates.
 
-- the Implementer assignment is complete;
-- objective, authoritative inputs, writable modules or directories, required checks, and stop condition are present;
-- product or architecture decisions needed by the change are accepted;
-- task-specific exclusions are explicit when needed.
+### Implementation And Evaluation
 
-A valid assignment authorizes ordinary local implementation. No second startup confirmation is required.
+- Implementer produces a runnable candidate and reproducible candidate evidence.
+- Analysis, plans, documents, and implementation claims alone cannot pass an implementation work unit.
+- Test Evaluator reports `evaluation_executed=0|1` separately from `kr_observed_pass=0|1`.
+- Required unrun, missing, inferred, unsupported, or environment-invalid evidence is `0`.
+- Reviewer, when required, audits the current accepted final artifacts against the original milestone.
 
-### Chain-Specific Checks
+## Optional Strict Audit / 可选严格审计
 
-- named chains are planning hints, not fixed predecessor/successor gates;
-- every selected role must answer one explicit evidence gap;
-- every professional role returns to Workflow Orchestrator;
-- `docs-only-chain` assignments must not request code changes;
-- implementation evidence cannot pass a KR without required independent evaluation.
+Only when the user explicitly requests immutable packet provenance:
 
-## Privacy / Repo Boundary
+- validate `handoff.manifest.json` structure and listed document paths;
+- record exact consumed upstream artifact versions;
+- require `ready_for_next_role` and `packet.lock.json`;
+- compare locked hashes and create a new packet version after any locked change.
 
-Validation must not:
+Strict audit metadata must not delay ordinary delivery or become a delivery KR.
 
-- call provider APIs
-- mutate runtime
-- write product code
-- write release docs
-- include local workflow files in GitHub commits by default
+## Privacy And Project Boundary / 隐私与项目边界
 
-Public-source network research is allowed for role work when relevant to the milestone, but validation itself remains local by default unless a specific network-dependent validator is explicitly introduced.
+Validation must not call paid providers, transmit private project data, mutate production, or perform irreversible external actions without the applicable user decision. Public-source research remains available to professional roles. Target-project Git and release actions follow that project's normal process.

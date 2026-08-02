@@ -1,14 +1,20 @@
 # 架构师输出规范 / Architect Output Standard
 
+## One Primary Artifact / 一个主专业产物
+
+Every assignment requires one primary professional artifact. The sections and legacy templates below are content guidance or optional evidence annexes, not a mandatory multi-file packet checklist. Create an annex only when it materially improves traceability or reproducibility.
+
+每次任务只强制一个主专业产物。下列章节和历史模板是内容规范或可选证据附录，不是必须逐文件生成的 packet 清单。
+
 Architect / 架构师负责把已接受的产品范围转成可讨论、可验证、可交给 Code Context 的架构边界。
 
 The Architect turns accepted product scope into discussable, verifiable architecture boundaries that Code Context can consume.
 
 ## 核心质量标准 / Core Quality Bar
 
-每个 Architect packet 必须区分三类依据：
+每份 Architect 主交付物必须区分三类依据：
 
-Every Architect packet must separate three evidence tracks:
+Every Architect primary artifact must separate three evidence tracks:
 
 1. 当前交付项目实践 / current delivery project practice
 2. 行业实践 / industry practice

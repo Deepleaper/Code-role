@@ -103,7 +103,7 @@ This directory is local-only role-control assistance. It is not product runtime 
 3. Paste its complete role-specific assignment to the selected role.
 4. A complete assignment starts immediately; no startup acknowledgement or separate `开始`.
 5. Paste the role's short return back to Workflow Orchestrator.
-6. Workflow Orchestrator reads the packet artifact and routes the substantive blocker owner.
+6. Workflow Orchestrator reads the primary professional artifact and routes the exact failed KR evidence owner.
 
 ## Active Control / 活跃控制
 
@@ -111,9 +111,9 @@ This directory is local-only role-control assistance. It is not product runtime 
 - `workflow/orchestrator/milestone-contract.md`
 - `workflow/orchestrator/workflow-state.md`
 - `workflow/evaluation/evaluation-sop.md`
-- accepted professional packet documents
+- accepted primary professional artifacts and evidence
 
-Packet manifests are document indexes. Readiness conversion and packet locks are optional strict-audit controls, not normal delivery gates.
+Packet manifests are optional provenance indexes. Readiness conversion and packet locks are optional strict-audit controls, not normal delivery gates.
 
 ## Git / Git 边界
 
@@ -128,6 +128,7 @@ def render_project_config(config: Config) -> str:
 project_name: {config.project_name}
 target_project_path: {config.target}
 control_profile: full-eight-role
+control_model: okr-delivery-v3
 tracking_policy: local-only
 initial_milestone: {config.initial_milestone}
 initial_chain_hint: {config.initial_chain}
@@ -145,26 +146,37 @@ authoritative_control:
 
 boundary:
 - code-role is local workflow assistance, not product runtime or release content
-- professional packet artifacts are authoritative; short returns are transport summaries
+- one primary professional artifact carries each role result; short returns are transport summaries
+- delivery KRs are user, business, product, or runtime outcomes; process artifacts are methods or evidence
 - target-project Git follows its normal process
 """
 
 
 def render_workflow_state(config: Config) -> str:
-    return f"""# Workflow State / 工作流状态
+    return f"""# Workflow State / 当前交付状态
 
 project: {config.project_name}
 active_milestone: {config.initial_milestone}
 objective_accepted: 0
-current_primary_kr: none
-current_assignment_id: none
-current_owner: workflow-orchestrator
-current_accepted_artifact: none
-current_failed_check_ids: none
-current_blocker_owner: user
+objective: unconfirmed
+target_kr: none
+target_kr_pass: 0
+current_failed_evidence: objective and outcome KRs are not accepted
+current_evidence_owner: user
+current_work_unit: none
+accepted_primary_artifact: none
+latest_independent_evidence: none
+current_iteration: 0
+iteration_limit: 3
 milestone_pass: 0
 
-next_decision: accept one Objective and binary KRs
+pending_human_decision: accept one Objective and binary outcome KRs
+
+rules:
+- record current accepted state only; do not append chronological workflow history
+- route the owner of current_failed_evidence
+- packet status, manifest readiness, and locks do not control routine routing
+- only independent outcome evidence can change a delivery KR from 0 to 1
 """
 
 
@@ -176,8 +188,8 @@ objective: unconfirmed
 objective_accepted: 0
 
 key_results:
-| KR | Observable pass condition | Required independent evidence | Pass (0/1) |
-| --- | --- | --- | ---: |
+| KR | Observable user/business/product/runtime outcome | Numeric threshold | Required independent evidence | Pass (0/1) |
+| --- | --- | --- | --- | ---: |
 
 non_goals:
 - unconfirmed
@@ -186,9 +198,12 @@ claim_boundary:
 - allowed: unconfirmed
 - forbidden: unconfirmed
 
-evaluation_sop_required: 1
+outcome_rule: delivery KRs describe observable user, business, product, or runtime outcomes
+method_rule: research, PRD, architecture, evaluation SOP, tests, reports, packets, and reviews are methods or evidence, not delivery KRs
+
+evaluation_sop_required_for_closure: 1
 evaluation_sop_path: {config.workflow / 'evaluation' / 'evaluation-sop.md'}
-iteration_limit_per_primary_kr: 3
+iteration_limit_per_kr: 3
 accepted_time_or_cost_budget: unconfirmed
 
 closure_rule: all accepted KRs are 1, required evaluation passes, and required review gate passes
@@ -223,7 +238,8 @@ claim_boundary:
 
 accepted_time_or_cost_budget: unconfirmed
 
-binary_rule: evaluation_pass is 1 only when every required check independently passes; otherwise 0
+purpose_rule: this SOP is an acceptance mechanism and evidence source, not a delivery KR
+binary_rule: evaluation_executed is 1 only when the complete assigned evaluation ran; kr_observed_pass is 1 only when every target-KR check independently passes
 sop_change_rule: post-candidate change requires user approval, new SOP version, and affected-evidence rerun
 """
 
@@ -237,9 +253,9 @@ def render_final_packet_index(config: Config) -> str:
 project: {config.project_name}
 milestone: {config.initial_milestone}
 
-This is a pointer table, not a completion gate. Workflow Orchestrator updates it after substantive artifact acceptance.
+This is a pointer table, not a completion gate. Workflow Orchestrator updates it after substantive primary-artifact acceptance.
 
-| Role | Accepted packet or artifact | Assignment pass (0/1) | Evidence note |
+| Role | Accepted primary artifact | Work-unit pass (0/1) | Evidence note |
 | --- | --- | ---: | --- |
 {rows}
 """
@@ -267,11 +283,11 @@ Read silently on every turn:
 - {milestone}
 - {state}
 - {sop}
-- accepted professional artifacts named by workflow state
+- accepted primary professional artifacts named by workflow state
 
 Respond to the user's actual request with exactly one OKR proposal, role-specific assignment, artifact decision, consolidated user-decision request, or milestone-closure decision.
 
-Do not send a startup acknowledgement or recovery report. Do not narrate reads or consumption checks. Do not write professional role conclusions. Read packet artifacts directly; return formatting, draft status, and optional locks are not substantive gates. Every professional role returns here, and only you choose the next role.
+Do not send a startup acknowledgement or recovery report. Do not narrate reads or consumption checks. Do not write professional role conclusions. Read primary artifacts directly; return formatting, draft status, and optional locks are not substantive gates. Every professional role returns here, and you route the exact failed KR evidence owner.
 
 Use Chinese by default.
 """
@@ -295,7 +311,7 @@ Read once when configured or refreshed:
 
 A complete Project Manager assignment starts work immediately. Do not send a startup acknowledgement, repeat read/write/forbidden boundaries, ask for `开始`, or narrate routine progress. Ask one consolidated blocker question only when a substantive user-owned decision is missing.
 
-Write this role's professional packet and then send the short role-specific return. Do not recommend or choose the next role. Return to Workflow Orchestrator. Packet documents carry professional truth; the short return is only a pointer.
+Write the assignment's one required primary professional artifact and then send the short role-specific return. Optional packet metadata or evidence annexes do not become extra completion gates. Do not recommend or choose the next role. Return to Workflow Orchestrator. The primary artifact carries professional truth; the short return is only a pointer.
 
 Public-source research is allowed when relevant. Explicit approval is required only for authenticated/private resources, paid provider execution outside accepted budget, private-data external transfer, or irreversible external actions.
 

@@ -65,6 +65,6 @@ Open a Project Manager conversation and use:
 然后根据 code-role/milestone-board.md 定义或恢复当前里程碑 OKR。
 ```
 
-After the user accepts the OKR, Project Manager selects one `KR=0` and prints one copy-ready assignment. Paste that assignment into the selected workstation conversation. A valid assignment starts immediately.
+After the user accepts the OKR, Project Manager selects one exact failed evidence item keeping a KR at `0` and prints one copy-ready assignment. Paste that assignment into the selected workstation conversation. A valid assignment starts immediately.
 
-用户确认 OKR 后，项目经理选择一个 `KR=0` 并输出一份可复制任务书。把任务书贴入对应工位对话，完整任务书即直接启动。
+用户确认 OKR 后，项目经理选择一个导致 KR 仍为 `0` 的精确失败证据，并输出一份可复制任务书。把任务书贴入对应工位对话，完整任务书即直接启动。

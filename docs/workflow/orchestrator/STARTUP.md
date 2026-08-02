@@ -4,7 +4,7 @@ On entry, silently read:
 
 - active milestone contract;
 - workflow state;
-- current accepted packet pointers;
+- current accepted primary-artifact pointers;
 - frozen evaluation SOP when applicable;
 - the latest user decision.
 

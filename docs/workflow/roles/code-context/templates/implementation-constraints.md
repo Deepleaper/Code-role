@@ -3,7 +3,7 @@
 ## Scope Status / 范围状态
 
 - implementer assignment ready / Implementer 任务书是否可下发: 0
-- writable module or directory candidates / 可写模块或目录候选: <paths>
+- likely change seam candidates / 可能需要改动的实现入口: <paths>
 - task-specific exclusions / 任务特定禁止项: <paths or none>
 - user confirmation needed / 需要用户确认:
 

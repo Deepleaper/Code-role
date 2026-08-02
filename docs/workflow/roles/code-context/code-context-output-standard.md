@@ -1,14 +1,20 @@
 # Code Context 输出规范 / Code Context Output Standard
 
+## One Primary Artifact / 一个主专业产物
+
+Every assignment requires one primary professional artifact. The sections and legacy templates below are content guidance or optional evidence annexes, not a mandatory multi-file packet checklist. Create an annex only when it materially improves traceability or reproducibility.
+
+每次任务只强制一个主专业产物。下列章节和历史模板是内容规范或可选证据附录，不是必须逐文件生成的 packet 清单。
+
 Code Context / Context Engineer 负责把 Architect packet 转成当前项目可执行上下文。
 
 Code Context / Context Engineer turns the Architect packet into implementation-ready context grounded in the current project.
 
 ## 核心质量标准 / Core Quality Bar
 
-每个 Code Context packet 必须区分三类内容：
+每份 Code Context 主交付物必须区分三类内容：
 
-Every Code Context packet must separate three layers:
+Every Code Context primary artifact must separate three layers:
 
 1. 架构意图 / architecture intent
 2. 当前项目代码证据 / current project code evidence
@@ -105,7 +111,7 @@ Unlabeled key conclusions are forbidden.
 - 来源标签 / source label
 - 依据 / evidence basis
 
-`writable_candidate` 不是写入授权。项目经理必须在 Implementer 任务书中确认允许修改的模块或目录以及任务特定禁止项；不要求预先枚举每个文件。
+`writable_candidate` 是实现入口判断，不是永久可写白名单。有效 Implementer 任务书授权为完成交付所合理必需的文件改动，只应列出真正必要的任务特定排除项。
 
 `writable_candidate` is not write authorization. Project Manager must authorize writable modules or directories and task-specific exclusions in the Implementer assignment; an exhaustive per-file list is not required.
 
@@ -176,7 +182,7 @@ Code Context must not:
 - 运行测试 / run tests
 - 做产品或架构决策 / make product or architecture decisions
 - 把 Architect 意图写成当前代码事实 / present Architect intent as current code fact
-- 把 writable candidate 写成已授权写入范围 / present writable candidates as approved writable scope
+- 把 writable candidate 写成永久可写白名单 / present writable candidates as a permanent writable whitelist
 - 直接启动 Implementer / start Implementer directly
 
 Code Context 可以建议 Implementer 需要的文件范围，但最终实现启动必须由用户和 Orchestrator 确认。

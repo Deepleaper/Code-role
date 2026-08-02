@@ -45,7 +45,7 @@ def test_goal_loop_initializes_exactly_four_active_roles(tmp_path: Path) -> None
         "project-manager.md",
     ]
     project_config = read(target / "code-role" / "project-config.md")
-    assert "control_model: goal-loop-v2" in project_config
+    assert "control_model: okr-delivery-v3" in project_config
     assert "active_roles:" in project_config
     assert "code-role/" in read(target / ".git" / "info" / "exclude")
 
@@ -82,16 +82,21 @@ def test_goal_loop_has_one_kr_binary_evidence_contract(tmp_path: Path) -> None:
     ):
         assert "target_kr:" in assignment
         assert "role_prompt_path:" in assignment
-        assert "required_checks:" in assignment
-        assert "stop_condition:" in assignment
-    assert "writable_scope:" in engineering_assignment
+        assert "current_failed_evidence:" in assignment
+        assert "role_deliverable:" in assignment
+        assert "acceptance_checks:" in assignment
+        assert "required_artifact_path:" in assignment
+        assert "stop_condition:" not in assignment
+    assert "task_specific_exclusions:" in engineering_assignment
     assert "frozen_sop_path:" in evaluation_assignment
     board = read(target / "code-role" / "milestone-board.md")
-    assert "Evaluation SOP frozen" in board
-    assert "Current iteration" in board
+    assert "Current failed evidence" in board
+    assert "Accepted evidence path" in board
+    assert "Iteration" in board
+    assert "Decision Log" not in board
     assert "full_evaluation" in evaluator
-    assert "Every required unrun check is `0`" in evaluator
-    assert "not only the latest diff" in evaluator
+    assert "Required missing, inferred, unsupported, or unrun checks are `0`" in evaluator
+    assert "not the latest diff" in evaluator
 
 
 def test_sync_archives_full_profile_prompts_and_preserves_board(tmp_path: Path) -> None:

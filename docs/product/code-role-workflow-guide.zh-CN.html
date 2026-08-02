@@ -354,7 +354,7 @@
       <p class="eyebrow">Code-role / Codex Software Delivery Control</p>
       <h1>Code-role：四角色最小单元，八角色完整交付</h1>
       <p class="lead">
-        Code-role 用明确责任、固定任务接口、客观证据和独立评估控制 Codex 编程交付。
+        Code-role 用明确责任、结果型 KR、单一主交付物、客观证据和独立评估控制 Codex 编程交付。
         它提供两套正式配置：四角色最小版用于快速、完整的目标闭环；八角色完整版用于复杂、高风险和需要完整审计的工程交付。
       </p>
       <p class="meta">适用对象：个人开发者、技术创始人、工程负责人和 AI 工程工作流设计者。</p>
@@ -384,6 +384,9 @@
       <div class="success">
         共同原则：项目经理负责 milestone，专业角色负责专业判断，实现不能自我验收，必需证据未获得就是未完成。
       </div>
+      <div class="warning">
+        交付 KR 必须是可观测的用户、业务、产品或运行时结果。调研、PRD、架构、评估 SOP、测试、报告、packet 和 review 只是方法或证据，不是交付 KR。
+      </div>
     </section>
 
     <section id="profiles">
@@ -396,9 +399,9 @@
           <p>完整控制一个软件 milestone 所需的最小责任单元。</p>
           <ul>
             <li>一份里程碑作战板作为唯一权威。</li>
-            <li>每轮只处理一个已确认的 <code>KR=0</code>。</li>
+            <li>每轮只处理一个导致 KR 仍为 <code>0</code> 的精确失败证据。</li>
             <li>项目经理、产品策略、工程、独立评估。</li>
-            <li>产品、工程、评估各有角色专属任务书与短回报，不使用 packet 链。</li>
+            <li>产品、工程、评估各有角色专属任务书、一份必需主交付物与短回报，不使用 packet 链。</li>
             <li>适合产品方向较清楚、范围可控的持续迭代。</li>
           </ul>
         </article>
@@ -407,10 +410,10 @@
           <span class="tag">Full Profile</span>
           <p>把研究、产品、架构、上下文、实现、评估和审计拆成独立专业责任。</p>
           <ul>
-            <li>Orchestrator 状态与版本化 packets 作为权威链路。</li>
-            <li>每个专业角色都有专属任务书、专业附件和短回报契约。</li>
+            <li>Orchestrator 精简状态与已接受主交付物是当前权威链路。</li>
+            <li>每个专业角色都有专属任务书、一份必需主交付物和短回报契约。</li>
             <li>Test Evaluator 与 Reviewer 分别负责评估和最终审计。</li>
-            <li>支持严格 handoff、manifest 和可选 packet lock。</li>
+            <li>packet、manifest 和 lock 仅在需要不可变审计时可选启用。</li>
             <li>适合复杂、高风险、研究密集或需要审计追溯的 milestone。</li>
           </ul>
         </article>
@@ -445,7 +448,7 @@
             <tr>
               <td>证据追溯</td>
               <td>一份作战板和专业附件足够。</td>
-              <td>必须保留分角色、分版本的 packet 链。</td>
+              <td>必须保留独立专业主交付物；版本化 packet 可选用于审计。</td>
             </tr>
             <tr>
               <td>评估与审计</td>
@@ -468,15 +471,15 @@
     <section id="minimal">
       <h2>4. 四角色最小版</h2>
       <div class="role-grid">
-        <div class="role"><strong>项目经理</strong>定义 Objective 与二值 KR；每轮选择一个 <code>KR=0</code>；依据独立证据更新状态。</div>
+        <div class="role"><strong>项目经理</strong>定义 Objective 与二值结果型 KR；每轮选择一个导致 KR 仍为 <code>0</code> 的失败证据；依据独立证据更新状态。</div>
         <div class="role"><strong>产品策略</strong>解决用户价值、产品行为、范围、阈值、非目标和 claim boundary。</div>
         <div class="role"><strong>工程</strong>完成必要研究、架构、代码上下文、实现、测试和候选证据。</div>
         <div class="role"><strong>独立评估</strong>冻结评估 SOP，并对完整必需范围运行目标检查与回归检查。</div>
       </div>
       <div class="flow" aria-label="四角色最小版流程">
         <div class="flow-step"><strong>确认 OKR</strong>用户确认一个 Objective 和不超过五个二值 KR。</div>
-        <div class="flow-step"><strong>选择一个 KR=0</strong>项目经理只下发一份完整任务书。</div>
-        <div class="flow-step"><strong>专业执行</strong>被选工位直接执行，并用唯一回报模板交付。</div>
+        <div class="flow-step"><strong>选择失败证据</strong>项目经理只下发一份完整任务书。</div>
+        <div class="flow-step"><strong>专业执行</strong>被选工位直接执行，产出一份主交付物，并用唯一短回报模板返回指针。</div>
         <div class="flow-step"><strong>独立证据</strong>项目经理只依据接受的独立证据更新 KR。</div>
       </div>
       <p>
@@ -497,7 +500,7 @@
         <div class="role"><strong>Reviewer</strong>从 Orchestrator 开始审计所有最终角色产物是否偏离原始 milestone。</div>
       </div>
       <p>
-        每个专业角色完成后先返回 Orchestrator。Orchestrator 检查里程碑一致性、任务书必需检查与客观证据，再决定下一角色。专业结论来自角色 packet，不由 Orchestrator 自行改写；聊天格式不构成完成门禁。
+        每个专业角色完成后先返回 Orchestrator。Orchestrator 检查里程碑一致性、当前失败证据、任务书验收检查与客观证据，再决定证据 owner。专业结论来自角色主交付物，不由 Orchestrator 自行改写；聊天格式、packet 状态和 lock 不构成日常完成门禁。
       </p>
       <pre><code>Workflow Orchestrator
   -> Researcher -> Workflow Orchestrator
@@ -550,19 +553,19 @@ cd Code-role</code></pre>
       <h3>四角色最小版</h3>
       <ol>
         <li>只在项目经理对话中确认 Objective、KR、非目标和独立证据。</li>
-        <li>项目经理选择一个 <code>KR=0</code>，填写目标工位专属任务书。</li>
+        <li>项目经理选择一个导致 <code>KR=0</code> 的精确失败证据，填写目标工位专属任务书。</li>
         <li>把任务书贴入被选工位对话；完整任务书即启动，不再回复“开始”。</li>
-        <li>工位写专业附件并发送短回报；不复述稳定角色规则和附件正文。</li>
+        <li>工位写一份必需主交付物并发送短回报；不复述稳定角色规则和交付物正文。</li>
         <li>把回报贴回项目经理；项目经理以附件证据而非聊天格式接受或打回。</li>
         <li>候选实现必须交给独立评估，工程不能自报 KR 通过。</li>
       </ol>
       <h3>八角色完整版</h3>
       <ol>
-        <li>Orchestrator 确认 milestone contract、chain 和当前权威输入。</li>
+        <li>Orchestrator 确认 milestone contract、结果型 KR、当前失败证据和权威输入。</li>
         <li>Orchestrator 使用该角色专属任务模板下发任务。</li>
-        <li>完整任务书即启动；专业角色消费权威上游文档并产出自己的版本化 packet。</li>
+        <li>完整任务书即启动；专业角色消费权威输入并产出一份主交付物，可选 packet 只记录溯源。</li>
         <li>角色用专属短回报返回 Orchestrator，不选择下一角色。</li>
-        <li>Orchestrator 直接审阅专业附件，检查里程碑对齐、专业完整性与客观证据。</li>
+        <li>Orchestrator 直接审阅主交付物，检查里程碑对齐、专业完整性与客观证据。</li>
         <li>Test Evaluator 完成独立评估，Reviewer 最终审计整条链路。</li>
       </ol>
       <p>当前两套配置都使用人工可复制传递，不声称已自动跨对话派发。</p>

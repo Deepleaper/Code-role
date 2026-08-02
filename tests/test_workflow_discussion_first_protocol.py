@@ -34,26 +34,26 @@ def test_discussion_first_protocol_exists_and_is_linked() -> None:
     assert "discussion-first-protocol.md" in readme
 
 
-def test_every_role_has_prompt_contract_and_scope_correction() -> None:
+def test_every_role_has_result_contract_and_role_boundary() -> None:
     for role_file in ROLE_FILES:
         text = read(role_file)
-        assert "## Prompt Contract" in text, role_file
-        assert "This role does:" in text, role_file
-        assert "Inputs:" in text, role_file
-        assert "Outputs:" in text, role_file
-        assert "May write:" in text, role_file
-        assert "Must not write:" in text, role_file
-        assert "Conversation scope:" in text, role_file
-        assert "All communication with this role must point" in text, role_file
-        assert "outside" in text and "scope" in text, role_file
-        assert "Do not switch roles" in text, role_file
+        assert "## Mission" in text, role_file
+        assert "configured as its own role instance" in text, role_file
+        assert "Do not switch roles inside this conversation" in text, role_file
+
+    for role_file in ROLE_FILES[1:]:
+        text = read(role_file)
+        assert "## Result Contract" in text, role_file
+        assert "one required primary professional artifact" in text, role_file
+        assert "## Boundaries" in text, role_file
+        assert "Do not narrate routine" in text, role_file
+        assert "Do not recommend or choose the next role" in text, role_file
 
 
 def test_non_implementer_roles_document_only_boundary() -> None:
     for role_file in NON_IMPLEMENTER_ROLE_FILES:
         text = read(role_file)
-        assert "code" in text, role_file
-        assert "Must not write:" in text, role_file
+        assert "## Boundaries" in text, role_file
 
     workflow_readme = read(WORKFLOW / "README.md")
     assert "All non-Implementer roles produce governance or professional documents only" in workflow_readme

@@ -2,14 +2,17 @@
 
 assignment_id:
 milestone:
-target_kr: <one KR or full-milestone evaluation>
+objective:
+target_kr:
+current_kr_state: 0
 assignment_mode: baseline_freeze | full_evaluation
-role_objective:
+current_failed_evidence:
+role_deliverable:
 authoritative_inputs:
 - path:
-frozen_sop_path:
-required_checks:
-| check_id | expected observation | required evidence |
+frozen_sop_path: none | <path>
+acceptance_checks:
+| check_id | expected independent observation | required evidence |
 | --- | --- | --- |
-required_packet_path:
-stop_condition:
+required_artifact_path:
+irreversible_actions: none

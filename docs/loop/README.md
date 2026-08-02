@@ -10,16 +10,16 @@ Code-role controls one software milestone through a bounded evidence loop:
 
 Code-role 通过一个有边界的证据闭环控制一个软件里程碑：
 
-1. Project Manager freezes one Objective and binary Key Results.
-2. Project Manager selects exactly one accepted `KR=0`.
+1. Project Manager freezes one Objective and binary outcome Key Results.
+2. Project Manager selects one exact failed or missing evidence item keeping an accepted KR at `0`.
 3. Product Strategy removes product uncertainty only when needed.
 4. Engineering produces a candidate implementation and evidence.
 5. Independent Evaluation reruns the frozen milestone SOP.
 6. Project Manager updates the board from independent evidence.
-7. The loop repeats until every accepted KR is `1`, or a stop condition is reached.
+7. The loop repeats until every accepted KR is `1`, the user ends or reframes the milestone, or the iteration budget is exhausted.
 
-1. 项目经理冻结一个 Objective 和一组二值 Key Results。
-2. 项目经理每轮只选择一个已确认的 `KR=0`。
+1. 项目经理冻结一个 Objective 和一组二值结果型 Key Results。
+2. 项目经理每轮只选择一个导致已确认 KR 仍为 `0` 的精确失败或缺失证据项。
 3. 只有存在产品不确定性时才调用产品策略。
 4. 工程工位产出候选实现和证据。
 5. 独立评估按照冻结的 milestone SOP 重新执行。
@@ -38,6 +38,10 @@ Code-role 通过一个有边界的证据闭环控制一个软件里程碑：
 Research is a capability inside Product Strategy and Engineering. Architecture and context engineering are modes inside Engineering. They are not mandatory routing stages.
 
 研究是产品策略和工程工位的能力。架构和上下文工程是工程工位的工作模式，不是必须依次经过的独立角色。
+
+A delivery KR must describe an observable user, business, product, or runtime outcome. Research, PRDs, architecture, evaluation SOPs, tests, reports, and reviews are methods or evidence. Each role writes one required primary artifact; additional attachments are optional.
+
+交付 KR 必须描述可观测的用户、业务、产品或运行时结果。调研、PRD、架构、评估 SOP、测试、报告和审计只是方法或证据。每个角色只有一份必需的主交付物，其他附件可选。
 
 ## Canonical Files / 权威文件
 

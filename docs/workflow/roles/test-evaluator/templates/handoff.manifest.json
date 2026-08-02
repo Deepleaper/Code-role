@@ -7,15 +7,16 @@
   "created_at": "YYYY-MM-DD",
   "updated_at": "YYYY-MM-DD",
   "summary": "Template manifest for a Test Evaluator packet. Test Evaluator confirms evaluation mechanism and baseline, then evaluates implementation evidence.",
+  "artifact_policy": {"primary_artifact_from_assignment": true, "required_primary_artifact_count": 1, "documents_are_optional_annexes": true},
   "documents": [
-    {"path": "evaluation-sop.md", "type": "evaluation_sop", "required": true, "description": "Consumption record for the active milestone evaluation SOP."},
-    {"path": "evaluation-baseline.md", "type": "evaluation_baseline", "required": true, "description": "Evaluation mechanism, metrics, benchmark data, industry references, and baseline confirmation."},
-    {"path": "test-plan.md", "type": "test_plan", "required": true, "description": "Test plan mapped to acceptance criteria."},
-    {"path": "test-results.md", "type": "test_results", "required": true, "description": "Test results."},
-    {"path": "regression-matrix.md", "type": "regression_matrix", "required": true, "description": "Regression coverage matrix."},
-    {"path": "failure-analysis.md", "type": "failure_analysis", "required": true, "description": "Failure analysis."},
-    {"path": "quality-gate.md", "type": "quality_gate", "required": true, "description": "Quality gate decision."},
-    {"path": "sop-calibration.md", "type": "sop_calibration", "required": true, "description": "Post-evaluation SOP adherence and calibration record."}
+    {"path": "evaluation-sop.md", "type": "evaluation_sop", "required": false, "description": "Consumption record for the active milestone evaluation SOP."},
+    {"path": "evaluation-baseline.md", "type": "evaluation_baseline", "required": false, "description": "Evaluation mechanism, metrics, benchmark data, industry references, and baseline confirmation."},
+    {"path": "test-plan.md", "type": "test_plan", "required": false, "description": "Test plan mapped to acceptance criteria."},
+    {"path": "test-results.md", "type": "test_results", "required": false, "description": "Test results."},
+    {"path": "regression-matrix.md", "type": "regression_matrix", "required": false, "description": "Regression coverage matrix."},
+    {"path": "failure-analysis.md", "type": "failure_analysis", "required": false, "description": "Failure analysis."},
+    {"path": "quality-gate.md", "type": "quality_gate", "required": false, "description": "Quality gate decision."},
+    {"path": "sop-calibration.md", "type": "sop_calibration", "required": false, "description": "Post-evaluation SOP adherence and calibration record."}
   ],
   "input_packets": [],
   "source_scopes": [
@@ -35,7 +36,8 @@
   },
   "return_to": "workflow-orchestrator",
   "quality_gate": {
-    "evaluation_pass": 0,
+    "evaluation_executed": 0,
+    "kr_observed_pass": 0,
     "required_check_results": [],
     "failed_check_ids": [],
     "allowed_values": [0, 1]

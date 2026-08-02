@@ -9,14 +9,14 @@ def read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def test_packet_schema_defines_immutability_rules() -> None:
+def test_packet_schema_keeps_immutability_in_optional_strict_mode() -> None:
     text = read(WORKFLOW / "packet-schema.md")
-    assert "Packet Immutability Rules" in text
-    assert "`packet-v001` may be edited only while its manifest status is `draft`" in text
-    assert "Once a packet status becomes `ready_for_next_role`, do not edit" in text
-    assert "`accepted` is not a packet manifest status for new packets" in text
-    assert "create the next version" in text
-    assert "Historical strict-handoff packets must remain immutable" in text
+    assert "Optional Packet Schema" in text
+    assert "must not become a routine delivery gate" in text
+    assert "Only when the user explicitly requests immutable audit handoff" in text
+    assert "A locked packet is immutable" in text
+    assert "changes require `packet-v002`" in text
+    assert "cannot change a delivery KR without substantive outcome evidence" in text
 
 
 def test_workflow_bootstrap_documents_local_boundary() -> None:

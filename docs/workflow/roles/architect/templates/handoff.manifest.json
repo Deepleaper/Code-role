@@ -7,13 +7,14 @@
   "created_at": "YYYY-MM-DD",
   "updated_at": "YYYY-MM-DD",
   "summary": "Template manifest for an Architect packet.",
+  "artifact_policy": {"primary_artifact_from_assignment": true, "required_primary_artifact_count": 1, "documents_are_optional_annexes": true},
   "documents": [
-    {"path": "architecture-plan.md", "type": "architecture_plan", "required": true, "description": "Architecture plan and implementation boundary."},
-    {"path": "boundary-map.md", "type": "boundary_map", "required": true, "description": "Module and ownership boundaries."},
-    {"path": "interface-contracts.md", "type": "interface_contracts", "required": true, "description": "Contracts to preserve or introduce."},
-    {"path": "data-flow.md", "type": "data_flow", "required": true, "description": "Data flow and sequence outline."},
-    {"path": "test-strategy.md", "type": "test_strategy", "required": true, "description": "Tests required downstream."},
-    {"path": "risk-register.md", "type": "risk_register", "required": true, "description": "Architecture risks."}
+    {"path": "architecture-plan.md", "type": "architecture_plan", "required": false, "description": "Architecture plan and implementation boundary."},
+    {"path": "boundary-map.md", "type": "boundary_map", "required": false, "description": "Module and ownership boundaries."},
+    {"path": "interface-contracts.md", "type": "interface_contracts", "required": false, "description": "Contracts to preserve or introduce."},
+    {"path": "data-flow.md", "type": "data_flow", "required": false, "description": "Data flow and sequence outline."},
+    {"path": "test-strategy.md", "type": "test_strategy", "required": false, "description": "Tests required downstream."},
+    {"path": "risk-register.md", "type": "risk_register", "required": false, "description": "Architecture risks."}
   ],
   "input_packets": [],
   "source_scopes": [

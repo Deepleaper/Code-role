@@ -1,5 +1,11 @@
 # 研究员输出规范 / Researcher Output Standard
 
+## One Primary Artifact / 一个主专业产物
+
+Every assignment requires one primary professional artifact. The sections and legacy templates below are content guidance or optional evidence annexes, not a mandatory multi-file packet checklist. Create an annex only when it materially improves traceability or reproducibility.
+
+每次任务只强制一个主专业产物。下列章节和历史模板是内容规范或可选证据附录，不是必须逐文件生成的 packet 清单。
+
 Researcher / 研究员负责把不清晰的问题变成可讨论、可追溯、可交给下游角色的研究 packet。
 
 The Researcher turns unclear questions into a sourced, discussable research packet that downstream roles can consume.
@@ -10,9 +16,9 @@ The Researcher's value is not collecting more material. It is separating facts, 
 
 ## 核心质量标准 / Core Quality Bar
 
-每个 Researcher packet 必须说清楚：
+每份 Researcher 主交付物必须说清楚：
 
-Every Researcher packet must make clear:
+Every Researcher primary artifact must make clear:
 
 1. 当前研究问题是什么 / what the research question is
 2. 当前项目事实是什么 / what the current project facts are

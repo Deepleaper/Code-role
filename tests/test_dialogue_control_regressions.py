@@ -114,7 +114,8 @@ def test_evaluation_and_review_gates_are_binary_in_both_profiles() -> None:
         read(WORKFLOW / "roles" / "reviewer" / "templates" / "handoff.manifest.json")
     )
 
-    assert "current_kr_observed_pass: 0 | 1" in minimal_evaluation
+    assert "evaluation_executed: 0 | 1" in minimal_evaluation
+    assert "kr_observed_pass: 0 | 1" in minimal_evaluation
     assert full_evaluation["quality_gate"]["allowed_values"] == [0, 1]
     assert full_review["quality_gate"]["allowed_values"] == [0, 1]
     assert "final_acceptance" not in full_review["quality_gate"]

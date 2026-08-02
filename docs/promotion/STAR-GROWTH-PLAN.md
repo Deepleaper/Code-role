@@ -50,7 +50,7 @@ Duration: days 8-10.
 
 Launch within one 48-hour window:
 
-1. Publish GitHub Release `v0.3.0`.
+1. Publish GitHub Release `v0.4.0` with the OKR-delivery refactor and verified test evidence.
 2. Post a technical `Show HN` with the problem, design tradeoff, and repository link.
 3. Launch on Product Hunt with a short demo and a candid first comment.
 4. Publish one bilingual technical article showing an actual milestone before and after Code-role.

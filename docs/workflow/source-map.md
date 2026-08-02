@@ -2,7 +2,7 @@
 
 This file defines stable role ownership. Task-specific input paths, writable modules, exclusions, and evidence belong in the current role assignment. Historical packet scopes never accumulate into permanent restrictions.
 
-本文件只定义稳定角色边界。任务级输入路径、可写模块、特殊排除项和证据要求写在当前任务书中；历史 packet 的范围不得累积成永久限制。
+本文件只定义稳定角色边界。任务级权威输入、主交付物路径、验收证据和真正必要的特殊排除项写在当前任务书中；历史 packet 的范围不得累积成永久限制。
 
 ## Shared Read Rule / 通用读取规则
 

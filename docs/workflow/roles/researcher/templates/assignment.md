@@ -2,14 +2,16 @@
 
 assignment_id:
 milestone:
+objective:
 target_kr:
-role_objective:
-research_question:
+current_kr_state: 0
+current_failed_evidence:
+role_deliverable:
 authoritative_inputs:
 - path:
-required_source_tracks: current_project | public_frontier
-required_checks:
+research_scope: current_project | public_frontier | both
+acceptance_checks:
 | check_id | uncertainty to remove | required evidence |
 | --- | --- | --- |
-required_packet_path:
-stop_condition:
+required_artifact_path:
+irreversible_actions: none

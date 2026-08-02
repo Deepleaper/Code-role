@@ -1,12 +1,12 @@
 # PM Decision / 项目经理决策
 
 assignment_id:
-milestone:
-accepted_attachment:
-target_kr_before: 0 | 1
-target_kr_after: 0 | 1
-evidence_basis:
-failed_check_ids: none | <check ids>
+accepted_deliverable: 0 | 1
+target_kr:
+kr_pass: 0 | 1
+accepted_artifact_path:
+accepted_evidence_path:
+failed_evidence: none | <exact missing/failed evidence>
 blocker_owner: none | product-strategy | engineering | independent-evaluation | project-manager | user
 route: product-strategy | engineering | independent-evaluation | request_user_decision | milestone_complete
 milestone_pass: 0 | 1

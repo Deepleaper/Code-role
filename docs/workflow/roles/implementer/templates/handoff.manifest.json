@@ -7,18 +7,19 @@
   "created_at": "YYYY-MM-DD",
   "updated_at": "YYYY-MM-DD",
   "summary": "Template manifest for an Implementer packet.",
+  "artifact_policy": {"primary_artifact_from_assignment": true, "required_primary_artifact_count": 1, "documents_are_optional_annexes": true},
   "documents": [
-    {"path": "implementation-summary.md", "type": "implementation_summary", "required": true, "description": "Summary of implemented changes."},
-    {"path": "changed-files.md", "type": "changed_files", "required": true, "description": "Files changed and reasons."},
-    {"path": "verification-log.md", "type": "verification_log", "required": true, "description": "Verification commands and outcomes."},
-    {"path": "risk-notes.md", "type": "risk_notes", "required": true, "description": "Residual implementation risks."}
+    {"path": "implementation-summary.md", "type": "implementation_summary", "required": false, "description": "Summary of implemented changes."},
+    {"path": "changed-files.md", "type": "changed_files", "required": false, "description": "Files changed and reasons."},
+    {"path": "verification-log.md", "type": "verification_log", "required": false, "description": "Verification commands and outcomes."},
+    {"path": "risk-notes.md", "type": "risk_notes", "required": false, "description": "Residual implementation risks."}
   ],
   "input_packets": [],
   "source_scopes": [
     "docs/workflow/source-map.md",
     "docs/workflow/roles/implementer/implementer-output-standard.md",
     "assignment-named upstream artifacts",
-    "approved writable scope"
+    "accepted assignment and task-specific exclusions"
   ],
   "return_to": "workflow-orchestrator",
   "open_questions": [],

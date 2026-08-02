@@ -2,13 +2,15 @@
 
 assignment_id:
 milestone:
+objective:
 target_kr:
-role_objective:
-product_question:
+current_kr_state: 0
+current_failed_evidence:
+role_deliverable:
 authoritative_inputs:
 - path:
-required_checks:
-| check_id | product decision required | required evidence |
+acceptance_checks:
+| check_id | observable product decision | required evidence |
 | --- | --- | --- |
-required_packet_path:
-stop_condition:
+required_artifact_path:
+irreversible_actions: none

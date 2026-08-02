@@ -119,7 +119,7 @@ def test_code_context_grounds_architecture_in_repository_seams() -> None:
     assert "current_code_evidence" in combined
     assert "context_engineer_judgment" in combined
     assert "writable_candidate" in combined
-    assert "writable module or directory candidates" in combined
+    assert "likely change seam candidates" in combined
 
 
 def test_implementer_uses_sufficient_scope_and_reproducible_evidence() -> None:
@@ -131,10 +131,11 @@ def test_implementer_uses_sufficient_scope_and_reproducible_evidence() -> None:
     )
     assert "A valid assignment is the start authorization" in standard
     assert "does not need to predict every file" in standard
-    assert "writable_scope:" in assignment
+    assert "required_artifact_path:" in assignment
+    assert "writable_scope:" not in assignment
     assert "task_specific_exclusions:" in assignment
-    assert "valid_assignment" in combined
-    assert "approved_writable_scope" in combined
+    assert "current failed evidence" in combined
+    assert "repo_evidence" in combined
     assert "actual_file_change" in combined
     assert "verification_evidence" in combined
     assert "Do not mark an unrun command or test as pass" in combined
@@ -153,10 +154,12 @@ def test_test_evaluator_freezes_sop_and_reports_binary_gate() -> None:
     assert "Active Milestone Evaluation SOP" in standard
     assert "SOP Calibration Standard" in standard
     assert "evaluate the complete frozen scope" in role
-    assert "Any post-candidate SOP change" in role
-    assert "evaluation_pass: 0 | 1" in combined
+    assert "Any SOP change after candidate evidence" in role
+    assert "evaluation_executed: 0 | 1" in combined
+    assert "kr_observed_pass: 0 | 1" in combined
     assert "Any required unrun, missing, inferred, or unsupported check" in combined
-    assert data["quality_gate"]["evaluation_pass"] == 0
+    assert data["quality_gate"]["evaluation_executed"] == 0
+    assert data["quality_gate"]["kr_observed_pass"] == 0
     assert data["quality_gate"]["allowed_values"] == [0, 1]
 
 

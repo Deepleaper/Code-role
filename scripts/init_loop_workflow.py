@@ -100,7 +100,7 @@ This directory is local-only role-control assistance. It is not product runtime 
 
 ## Active Model / 当前模型
 
-One Project Manager controls three callable professional workstations around one milestone board:
+One Project Manager controls three callable professional workstations around one outcome-OKR board:
 
 - [Project Manager / 项目经理](role-instance-prompts/project-manager.md)
 - [Product Strategy / 产品策略](role-instance-prompts/product-strategy.md)
@@ -115,11 +115,11 @@ One Project Manager controls three callable professional workstations around one
 
 1. Open the Project Manager conversation.
 2. Give it `role-instance-prompts/project-manager.md`.
-3. Confirm the Objective and Key Results.
-4. Project Manager prints one role-specific copy-ready assignment for one primary `KR=0`.
+3. Confirm one delivered-outcome Objective and no more than five outcome KRs.
+4. Project Manager selects one decisive failed evidence item keeping an outcome KR at `0` and prints one role-specific assignment.
 5. Paste it into the selected workstation conversation; a valid assignment starts immediately.
 6. Paste the workstation's short return back to Project Manager; Project Manager reads the professional attachment directly.
-7. Repeat until every accepted KR has independent evidence and equals `1`.
+7. Repeat until every accepted outcome KR has independent evidence and equals `1`.
 
 Only the selected workstation runs. There is no fixed four-role chain.
 
@@ -142,11 +142,11 @@ Project: `{project_name}`
 
 1. Start or refresh the Project Manager conversation with `role-instance-prompts/project-manager.md`.
 2. The Project Manager reads `LOOP.md` and `milestone-board.md`.
-3. Confirm one Objective and no more than five binary Key Results.
-4. Copy the Project Manager's role-specific assignment into the selected workstation conversation.
+3. Confirm one delivered-outcome Objective and no more than five outcome Key Results.
+4. Copy the Project Manager's assignment for one exact failed KR evidence item into the selected workstation conversation.
 5. A complete assignment starts work immediately; do not add a separate `开始` step.
 6. Copy the short workstation return back to Project Manager; return formatting is not a completion gate.
-7. Project Manager updates the board from accepted evidence and selects the next `KR=0`.
+7. Project Manager updates the board from accepted evidence and selects the next failed evidence item, if any.
 
 Only Objective/KR changes, evaluation-threshold changes, budget expansion, and irreversible external actions require an additional human gate.
 
@@ -160,7 +160,7 @@ def render_project_config(project_name: str, project_root: Path) -> str:
 project_name: {project_name}
 target_project_path: {project_root}
 tracking_policy: local-only
-control_model: goal-loop-v2
+control_model: okr-delivery-v3
 authoritative_control_record: {project_root / "code-role" / "milestone-board.md"}
 loop_contract: {project_root / "code-role" / "LOOP.md"}
 active_role_root: {project_root / "code-role" / "role-instance-prompts"}
@@ -175,7 +175,7 @@ startup_acknowledgement_required: false
 format_only_rework_allowed: false
 role_self_routing_allowed: false
 fixed_role_chain: false
-completion_model: binary-key-results
+completion_model: binary-outcome-key-results
 default_iteration_limit_per_kr: 3
 external_research_allowed_default: true
 
@@ -183,6 +183,7 @@ external_research_allowed_default: true
 
 - `code-role/` is local-only assistance, not product runtime content.
 - `milestone-board.md` is the only active control state.
+- Delivery KRs describe user, business, product, or runtime outcomes; process artifacts are methods or evidence.
 - Full Profile packets and state indexes may remain as history, but they do not control a project while the Minimal Profile is active.
 - Product attachments carry professional content; Project Manager references them instead of rewriting them.
 - Code-role does not own the target project's Git or release process.
@@ -221,7 +222,7 @@ Recommended filenames:
 - Independent Evaluation baseline: `evaluation-sop-<assignment-id>.md`
 - Independent Evaluation result: `evaluation-report-<assignment-id>.md`
 
-Attachments contain professional detail and evidence. They do not route work or update KR status. The short role return points to the attachment, and Project Manager decides whether to accept it.
+Each work unit has one primary professional artifact. Optional evidence annexes exist only when needed for reproduction. Artifacts do not route work or update KR status; Project Manager accepts evidence and routes the remaining failed KR evidence.
 """
 
 
@@ -332,24 +333,28 @@ def validate(project_root: Path) -> list[str]:
     ):
         assignment = (code_role / "templates" / filename).read_text(encoding="utf-8")
         for marker in (
+            "objective:",
             "target_kr:",
             "role_prompt_path:",
-            "required_checks:",
-            "required_output_attachment:",
-            "stop_condition:",
+            "current_failed_evidence:",
+            "role_deliverable:",
+            "acceptance_checks:",
+            "required_artifact_path:",
         ):
             if marker not in assignment:
                 errors.append(f"{filename} missing marker: {marker}")
 
     board = (code_role / "milestone-board.md").read_text(encoding="utf-8")
-    for marker in (
-        "Evaluation SOP frozen",
-        "Current KR",
-        "Current iteration",
-        "Milestone pass",
-    ):
-        if marker not in board:
-            errors.append(f"milestone board missing marker: {marker}")
+    board_uses_v3_schema = "Do not append chronological workflow history" in board
+    if board_uses_v3_schema:
+        for marker in (
+            "Current failed evidence",
+            "Accepted evidence path",
+            "Target KR",
+            "Milestone pass",
+        ):
+            if marker not in board:
+                errors.append(f"milestone board missing marker: {marker}")
     if "自动派发" in board:
         errors.append("milestone board must not claim automatic dispatch")
 
@@ -371,8 +376,8 @@ def validate(project_root: Path) -> list[str]:
     for marker in (
         "baseline_freeze",
         "full_evaluation",
-        "Every required unrun check is `0`",
-        "not only the latest diff",
+        "Required missing, inferred, unsupported, or unrun checks are `0`",
+        "not the latest diff",
         "Do not use `partial_pass` or `pass_with_residual_risk`",
         "Any SOP change after candidate evidence requires explicit user approval",
     ):
@@ -408,6 +413,16 @@ def main() -> int:
             for error in errors:
                 print(error, file=sys.stderr)
             return 1
+        board = (project_root / "code-role" / "milestone-board.md").read_text(
+            encoding="utf-8"
+        )
+        if "Do not append chronological workflow history" not in board:
+            print(
+                "goal-loop validation passed with preserved legacy milestone board; "
+                "Project Manager will compact it on the next substantive decision: "
+                f"{project_root}"
+            )
+            return 0
         print(f"goal-loop validation passed: {project_root}")
         return 0
 

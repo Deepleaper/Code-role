@@ -38,7 +38,7 @@ def test_packet_protocol_versions_and_handoff_are_explicit() -> None:
     assert "packet-vNNN" in protocol
     assert "final-packet-index.md" in schema
     assert "handoff.manifest.json" in protocol
-    assert "records the exact assignment-named upstream artifact versions" in protocol
+    assert "may record the exact assignment-named upstream artifact versions" in protocol
     assert "Strict Handoff" in protocol
     assert "packet-v001" in schema
     assert "input_packets" in schema

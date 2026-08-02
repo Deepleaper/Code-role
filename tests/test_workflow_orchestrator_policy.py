@@ -62,12 +62,13 @@ def test_chain_names_are_presets_not_a_fixed_role_order() -> None:
 
 def test_assignment_acceptance_is_binary_and_artifact_first() -> None:
     contract = read(WORKFLOW / "role-completion-contract.md")
-    assert "assignment_pass = 1" in contract
-    assert "assignment_pass = 0" in contract
-    assert "Artifact Is Authoritative" in contract
+    assert "work_unit_pass = 1" in contract
+    assert "work_unit_pass = 0" in contract
+    assert "Primary Artifact Is Authoritative" in contract
     assert "Missing return fields" in contract
     assert "Only missing or failed professional checks justify rework" in contract
-    assert "evaluation_pass: 0|1" in contract
+    assert "evaluation_executed: 0|1" in contract
+    assert "kr_observed_pass: 0|1" in contract
     assert "review_gate_pass: 0|1" in contract
 
 
@@ -86,9 +87,18 @@ def test_orchestrator_uses_role_specific_assignments_and_short_returns() -> None
         "reviewer",
     ):
         assert f"roles/{role_id}/templates/assignment.md" in assignment
-    assert "must state the professional question" in assignment
+    for field in (
+        "objective:",
+        "target_kr:",
+        "current_failed_evidence:",
+        "role_deliverable:",
+        "acceptance_checks:",
+        "required_artifact_path:",
+    ):
+        assert field in assignment
     assert "Do not issue a generic workflow essay" in assignment
-    assert "assignment_pass: 0 | 1" in role_return
+    assert "work_unit_pass: 0 | 1" in role_return
+    assert "artifact_path:" in role_return
     assert "Do not include a next-role recommendation" in role_return
     assert "Artifact Review" in standard
     assert "Format-only rework is forbidden" in standard

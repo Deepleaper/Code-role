@@ -2,15 +2,15 @@
 
 assignment_id:
 milestone:
+objective:
 target_kr:
-role_objective:
-architecture_question:
-accepted_product_commitments:
-- path:
+current_kr_state: 0
+current_failed_evidence:
+role_deliverable:
 authoritative_inputs:
 - path:
-required_checks:
-| check_id | contract or boundary required | required evidence |
+acceptance_checks:
+| check_id | implementable contract or boundary | required evidence |
 | --- | --- | --- |
-required_packet_path:
-stop_condition:
+required_artifact_path:
+irreversible_actions: none

@@ -36,8 +36,8 @@ Route when:
 assignment is complete
 target evidence gap is explicit
 authoritative inputs are named
-required checks are frozen
-output path and stop condition are defined
+role deliverable and binary acceptance checks are frozen
+one required primary artifact path is defined
 ```
 
 Do not route based on packet readiness, a role recommendation, or a fixed next-role table.

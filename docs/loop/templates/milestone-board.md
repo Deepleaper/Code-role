@@ -1,19 +1,15 @@
 # Milestone Board / 里程碑作战板
 
-## Control State / 当前控制状态
+<!-- Do not append chronological workflow history. Keep only current control state and evidence pointers. -->
+
+## Milestone / 里程碑
 
 | Field | Value |
 | --- | --- |
 | Project | `{{PROJECT_NAME}}` |
-| Active milestone | `unconfirmed` |
+| Milestone | `unconfirmed` |
 | Objective accepted | `0` |
-| KR definition accepted | `0` |
-| Evaluation SOP frozen | `0` |
-| Current KR | `none` |
-| Current iteration | `0 / 3` |
-| Current owner | `project-manager` |
 | Milestone pass | `0` |
-| Human gate | `confirm Objective and Key Results` |
 
 ## Objective / 目标
 
@@ -21,27 +17,24 @@
 
 ## Key Results / 关键结果
 
-| KR | Observable pass condition | Required independent evidence | Pass |
-| --- | --- | --- | ---: |
+| KR | Observable delivered outcome | Binary threshold | Required independent evidence | Accepted evidence path | Pass |
+| --- | --- | --- | --- | --- | ---: |
 
-## Current Iteration / 当前迭代
+## Current Delivery Loop / 当前交付闭环
 
 | Field | Value |
 | --- | --- |
+| Target KR | `none` |
+| Current failed evidence | `none` |
+| Current owner | `project-manager` |
 | Assignment ID | `none` |
-| Selected KR | `none` |
-| Assigned workstation | `none` |
-| Assignment mode | `none` |
-| Accepted upstream attachment | `none` |
-| Candidate result | `none` |
-| Independent evaluation | `none` |
-| Failure reason code | `none` |
+| Work unit | `none` |
+| Iteration | `0 / 3` |
+| Primary artifact path | `none` |
+| Evaluation contract path | `none` |
+| Latest independent evidence | `none` |
+| Human decision required | `confirm Objective and outcome KRs` |
 
 ## Non-Goals / 非目标
 
 - `unconfirmed`
-
-## Decision Log / 决策记录
-
-| Iteration | Evidence accepted | KR update | Decision | Next owner |
-| --- | --- | --- | --- | --- |

@@ -54,8 +54,10 @@ accepted_time_or_cost_budget:
 ```text
 check_pass = 1 only when expected observation and evidence satisfy the frozen threshold
 check_pass = 0 otherwise
-evaluation_pass = 1 only when every required check_pass = 1
-evaluation_pass = 0 otherwise
+evaluation_executed = 1 only when every required check was run under this frozen SOP with evaluator-owned evidence
+evaluation_executed = 0 otherwise
+kr_observed_pass = 1 only when evaluation_executed = 1 and every target-KR check_pass = 1
+kr_observed_pass = 0 otherwise
 ```
 
 Required `not_run`, missing, inferred, unsupported, or environment-invalid checks are `0`. Risks and blocker codes are recorded separately and never create a third gate status.
@@ -79,4 +81,4 @@ new_sop_version_created = 1
 affected_evidence_rerun = 1
 ```
 
-Until all three are true, affected evaluation evidence is invalid and `evaluation_pass=0`.
+Until all three are true, affected evaluation evidence is invalid for the new SOP version, so `evaluation_executed=0` and `kr_observed_pass=0`.

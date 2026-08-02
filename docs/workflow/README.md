@@ -4,9 +4,9 @@ Use the Full Profile when a milestone benefits from separate research, product, 
 
 当复杂或高风险 milestone 需要独立的研究、产品、架构、上下文、实现、评估和最终审计责任时，使用八角色完整版。
 
-The Full Profile follows the shared [Dialogue Control Contract](../dialogue-control.md). It keeps professional packet depth without making packet formatting the delivery goal.
+The Full Profile follows the shared [Dialogue Control Contract](../dialogue-control.md). It keeps separate professional ownership without turning role sequence or packet production into the delivery goal.
 
-八角色遵守共享[对话控制契约](../dialogue-control.md)：保留专业 packet 深度，但不把 packet 格式当成交付目标。
+八角色遵守共享[对话控制契约](../dialogue-control.md)：保留独立专业责任，但不把角色顺序或 packet 生产当成交付目标。
 
 ## Eight Roles / 八个角色
 
@@ -31,7 +31,7 @@ All non-Implementer roles produce governance or professional documents only. Imp
 
 - `milestone-contract.md` anchors Objective, KRs, evidence, non-goals, and claim boundaries.
 - Orchestrator state records the current target, accepted artifact pointers, and blocker owner.
-- Professional packet documents are the substantive handoff.
+- One assignment-named primary professional artifact is the substantive handoff; annexes are optional.
 - `handoff.manifest.json` is packet index and provenance metadata, not a completion gate.
 - `ready_for_next_role` and `packet.lock.json` are optional strict-audit controls only when explicitly requested.
 - Chat summaries, role self-reports, packet status, and locks do not update a KR by themselves.
@@ -48,22 +48,22 @@ flowchart LR
     PM --> X["All KRs = 1 and required audit = 1"]
 ```
 
-Workflow Orchestrator chooses the blocker owner from evidence. A complete role-specific assignment starts immediately. The role writes its packet, sends one short return, and does not choose the next role.
+Workflow Orchestrator chooses the owner of one exact failed evidence item. A complete role-specific assignment starts immediately. The role writes one primary professional artifact, sends one short return, and does not choose the next role.
 
 ## Binary Rules / 二值规则
 
 - Every accepted KR is `0` or `1`.
 - Required unrun, missing, inferred, or qualitative evidence is `0`.
-- `assignment_pass=1` means the current role's assigned checks passed; it does not pass the KR.
-- `evaluation_pass=1` requires every frozen required check to pass independently.
+- `work_unit_pass=1` means the current role's assigned checks passed; it does not pass the KR.
+- `evaluation_executed=1` requires the complete assigned evaluation to run; `kr_observed_pass=1` separately requires every frozen target-KR check to pass independently.
 - `review_gate_pass=1` requires every assigned final-audit check to pass.
 - `partial_pass`, `pass_with_residual_risk`, and similar gate states are invalid.
 
 ## Assignment And Return / 任务与回报
 
-Each professional role owns exactly one `templates/assignment.md` and one `templates/return.md`. Detailed professional outputs remain in that role's packet templates.
+Each professional role owns exactly one `templates/assignment.md` and one `templates/return.md`. The assignment names one required primary artifact. Existing packet templates are optional section guidance or evidence annexes, not a mandatory multi-file checklist.
 
-每个专业角色只有一份任务书模板和一份短回报模板；详细专业产出继续使用本角色 packet 模板。
+每个专业角色只有一份任务书模板和一份短回报模板。任务书指定一份必需的主交付物；现有 packet 模板只是可选章节指引或证据附件，不再是必须逐份完成的清单。
 
 - [Researcher](roles/researcher/ROLE.md)
 - [Product / PRD](roles/product-prd/ROLE.md)

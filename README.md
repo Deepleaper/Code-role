@@ -15,9 +15,9 @@
 
 **用明确责任、客观证据和独立评估控制一个软件里程碑。**
 
-Code-role is a local operating system for reliable AI coding. It keeps Codex roles focused on one accepted software milestone and prevents implementation activity from being mistaken for delivery evidence.
+Code-role is a local operating system for reliable AI coding. It keeps Codex roles focused on observable milestone outcomes and prevents research, documents, code activity, tests written, or workflow ceremony from being mistaken for delivery.
 
-Code-role 是一套面向可靠 AI 编程的本地工作机制。它让 Codex 角色始终围绕一个已确认的软件里程碑工作，并防止把“写了代码”误判成“完成了交付”。
+Code-role 是一套面向可靠 AI 编程的本地工作机制。它让 Codex 角色始终围绕可观测的里程碑结果工作，并防止把调研、文档、代码活动、“写了测试”或流程动作误判成交付。
 
 It provides two official operating profiles:
 
@@ -43,9 +43,9 @@ python3 scripts/init_loop_workflow.py "/absolute/path/to/your-project" \
 python3 scripts/init_loop_workflow.py "/absolute/path/to/your-project" --check
 ```
 
-Then open the generated `code-role/role-instance-prompts/project-manager.md`, define one Objective with binary Key Results, and let the Project Manager route the first `KR=0`.
+Then open the generated `code-role/role-instance-prompts/project-manager.md`, define one Objective with binary outcome Key Results, and let the Project Manager route the owner of the first failed or missing evidence item.
 
-然后打开生成的 `code-role/role-instance-prompts/project-manager.md`，定义一个 Objective 和可二值验收的 Key Results，由项目经理调度第一个 `KR=0`。
+然后打开生成的 `code-role/role-instance-prompts/project-manager.md`，定义一个 Objective 和可二值验收的结果型 Key Results，由项目经理调度第一个失败或缺失证据的责任工位。
 
 See the [complete four-workstation walkthrough](examples/minimal-goal-loop/README.md) to inspect one milestone from PM Assignment through independent evaluation and closure.
 
@@ -56,9 +56,11 @@ See the [complete four-workstation walkthrough](examples/minimal-goal-loop/READM
 | Principle | Code-role behavior |
 | --- | --- |
 | One accountable outcome | The Project Manager owns one accepted Objective and its binary KRs. |
-| One missing result at a time | Every assignment targets one current `KR=0`, not an open-ended role agenda. |
+| Outcome KRs only | Delivery KRs describe observable user, business, product, or runtime outcomes; process artifacts are methods or evidence. |
+| One failed evidence item at a time | Every assignment targets one exact reason a current KR remains `0`, not an open-ended role agenda. |
 | Evidence before status | Unrun checks, missing evidence, and partial results remain `0`. |
 | Independent acceptance | Engineering produces candidate evidence; Independent Evaluation decides observed pass/fail. |
+| One primary artifact | Every role has one required professional deliverable; annexes and packet metadata are optional. |
 | Local control plane | Generated `code-role/` files stay outside product runtime and target-project releases by default. |
 
 ## Real Project Cases / 真实项目案例
@@ -142,7 +144,7 @@ flowchart LR
     PM -- "All KRs=1" --> H["Human close or release gate"]
 ```
 
-There is no fixed role chain. Each assignment targets one primary accepted `KR=0` and its coherent required checks. A complete PM Assignment starts the selected workstation immediately.
+There is no fixed role chain. Each assignment targets one exact failed or missing evidence item keeping an accepted outcome KR at `0`. A complete PM Assignment starts the selected workstation immediately.
 
 不存在固定角色链。每份任务书只针对一个主要 `KR=0` 及其同一组必要检查。工位收到完整 PM Assignment 后直接开始工作。
 
@@ -189,9 +191,9 @@ Minimal Profile documentation:
 | Test Evaluator / 测试评估师 | Freezes or consumes the evaluation SOP and independently evaluates the complete required scope |
 | Reviewer / 复核审计 | Audits Orchestrator and every final role output against the original milestone and evaluation baseline |
 
-The Full Profile is decision-first and document-based. Each professional role has one configured conversation, starts from one complete role-specific assignment, consumes explicit upstream packet documents, and writes a versioned packet for artifact-first Project Manager review.
+The Full Profile is outcome-first and evidence-based. Each professional role has one configured conversation, starts from one complete role-specific assignment, consumes explicit authoritative inputs, and writes one required primary professional artifact for Project Manager review. Versioned packet metadata and annexes remain optional audit support.
 
-八角色完整版以讨论和专业文档为核心。每个专业角色使用独立对话，消费明确的上游 packet 文档，并产出版本化 packet 交由项目经理审阅。
+八角色完整版以结果和证据为核心。每个专业角色使用独立对话，消费明确的权威输入，并产出一份必需的主交付物交由项目经理审阅。版本化 packet 元数据和附件只是可选的审计支持。
 
 Use one configured Codex role instance per role. Do not run the Full Profile by switching roles inside one conversation.
 
@@ -284,6 +286,7 @@ Both initializers add `code-role/` to the target repository's local `.git/info/e
 - [English PRD](docs/product/prd.md)
 - [中文产品需求对齐稿](docs/product/prd.zh-CN.md)
 - [中文 HTML 说明与初始化指南](docs/product/code-role-workflow-guide.zh-CN.html)
+- [v0.4.0 release: less process, stronger outcomes / v0.4.0 发布说明](docs/promotion/V0.4.0-RELEASE.md)
 - [Minimal target example](examples/minimal-target/README.md)
 - [Complete goal-loop walkthrough / 完整目标闭环示例](examples/minimal-goal-loop/README.md)
 - [Real project cases / 真实项目案例](docs/case-studies/README.md)

@@ -20,10 +20,10 @@ def test_status_transition_protocol_exists_and_separates_acceptance() -> None:
 
 def test_packet_schema_uses_accepted_as_input_not_manifest_accepted() -> None:
     text = read(WORKFLOW / "packet-schema.md")
-    assert "Valid packet manifest statuses" in text
-    assert "`accepted` is not a packet manifest status for new packets" in text
+    assert "Manifest status describes provenance metadata, not work-unit acceptance" in text
+    assert "Valid values are `draft`, `blocked`, `ready_for_next_role`, and `superseded`" in text
     assert "\"consumption_status\": \"accepted_as_input\"" in text
-    assert "downstream acceptance must not mutate the upstream manifest" in text
+    assert "Downstream recording must not mutate an upstream manifest" in text
 
 
 def test_handoff_protocol_forbids_upstream_acceptance_rewrite() -> None:

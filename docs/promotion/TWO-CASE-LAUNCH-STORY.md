@@ -85,6 +85,12 @@ Leaper Agent 的问题发生在工程开始之前：**不能把一份专业方�
 
 这听起来比“让多个 Agent 自动协作”慢一点，但它换来的是更重要的东西：**你知道项目到底完成了没有。**
 
+### v0.4.0：把控制做硬，把流程做轻
+
+真实使用也暴露了另一类问题：如果每个角色都要先确认启动、转换 readiness、维护 packet lock、解释路由状态，角色就会把精力花在流程上，而不是修复让 KR 保持为 0 的真实证据缺口。
+
+因此 v0.4.0 保留二值 KR、独立评估和项目经理最终责任，同时删除默认流程中的启动确认、readiness-only 回合和强制 packet 元数据。现在每份任务只指向一个明确的失败证据，每个角色只强制交付一份主专业产物。流程更短，但完成标准没有放松。
+
 Code-role: https://github.com/Deepleaper/Code-role
 
 完整案例：
@@ -109,8 +115,14 @@ The two projects exposed the same control problem at different times:
 - DeepBrain: strong partial evidence must not become a complete product claim.
 - Leaper Agent: a professional plan must not become executable work until its inputs are real.
 
-That is why the minimal Code-role profile has four workstations: Project Manager, Product Strategy, Engineering, and Independent Evaluation. Each assignment targets one `KR=0`. Engineering cannot approve itself. Missing independent evidence remains `0`.
+That is why the minimal Code-role profile has four workstations: Project Manager, Product Strategy, Engineering, and Independent Evaluation. Each assignment targets one exact failed evidence item keeping an outcome KR at `0`. Engineering cannot approve itself. Missing independent evidence remains `0`.
 
 It is less theatrical than autonomous multi-agent orchestration, but it answers the question that matters: **is the software milestone actually complete?**
+
+### v0.4.0: harder control, lighter process
+
+Real use exposed a second failure mode: when every role must acknowledge startup, convert readiness, maintain packet locks, and narrate routing state, the workflow itself displaces the failed evidence keeping the KR at `0`.
+
+v0.4.0 keeps binary KRs, independent evaluation, and Project Manager accountability while removing startup acknowledgements, readiness-only turns, and mandatory packet metadata from the default path. Each assignment now targets one exact failed evidence item, and each role owes one primary professional artifact. The loop is shorter without weakening completion.
 
 Code-role: https://github.com/Deepleaper/Code-role

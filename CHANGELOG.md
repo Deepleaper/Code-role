@@ -6,25 +6,34 @@ Code-role 的重要公开变更记录在这里。
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-08-02
+
 ### Added
 
 - A shared bilingual dialogue-control contract for both the four-workstation and eight-role profiles.
+- An OKR Delivery Contract that permits only observable user, business, product, or runtime outcomes as delivery KRs.
+- One-primary-artifact assignment and return contracts for both profiles.
 - Role-specific assignment and short-return templates for every professional role.
-- Historical-conversation regression tests covering startup chatter, format-only rework, role self-routing, incomplete evaluation setup, SOP drift, and narrated Orchestrator checks.
+- Historical-conversation regression tests covering process KRs, startup chatter, format-only rework, role self-routing, incomplete evaluation setup, SOP drift, narrated Orchestrator checks, and bloated state history.
 
 ### Changed
 
 - Complete assignments now start work immediately; startup acknowledgements, routine progress narration, readiness-only turns, and format-only rework are removed from normal flow.
 - Project Manager now accepts professional artifacts before judging chat transport format and routes only from substantive failed checks.
+- Project Manager now assigns one exact failed evidence item instead of a broad `KR=0` agenda or fixed role chain.
+- Research, PRDs, architecture, evaluation SOPs, tests, reports, packets, and reviews are explicitly methods or evidence rather than delivery KRs.
+- Both Minimal and Full profiles require one primary professional artifact per work unit; annexes and packet metadata are optional.
 - Evaluation and review gates are strictly binary, with risks mapped to failed checks, new accepted KRs, or explicit non-goals.
+- Test Evaluator now reports `evaluation_executed` and `kr_observed_pass` as separate binary facts.
 - Full Profile manifests return to Workflow Orchestrator instead of hard-coding a fixed successor.
-- Implementer scope uses assignment-authorized modules or directories instead of accumulated historical per-file whitelists.
+- Implementer receives task-specific exclusions instead of accumulated historical per-file writable whitelists.
 - Both initializers now generate the same dialogue controls; Full Profile refresh preserves durable milestone and evaluation state.
-- The public four-workstation walkthrough now demonstrates separate Engineering and Independent Evaluation assignments with short returns.
+- Active milestone boards and Full Profile workflow state are compact current-state records rather than chronological process logs.
+- The public four-workstation walkthrough now demonstrates failed-evidence routing, one primary artifact, separate Engineering candidate evidence, and Independent Evaluation outcome evidence.
 
 ### Verification
 
-- Repository test suite: `75 passed`.
+- Repository test suite: `83 passed`.
 
 ## [0.3.1] - 2026-07-31
 
@@ -62,5 +71,7 @@ Code-role 的重要公开变更记录在这里。
 - Repository test suite: `68 passed`.
 - Social preview: `1280 x 640`, PNG under `1 MB`.
 
+[Unreleased]: https://github.com/Deepleaper/Code-role/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/Deepleaper/Code-role/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/Deepleaper/Code-role/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/Deepleaper/Code-role/compare/v0.1.1...v0.3.0

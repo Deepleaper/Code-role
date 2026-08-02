@@ -10,9 +10,9 @@ An existing command-line report tool only emits text. The accepted milestone is 
 
 一个现有的命令行报告工具只能输出文本。本轮已确认的 milestone 是增加确定性 JSON 输出，同时不改变原有文本行为。
 
-This is an illustrative, internally consistent packet set. Its command observations demonstrate the contract; they are not test results from the Code-role repository itself.
+This is an illustrative, internally consistent artifact set. Its command observations demonstrate the contract; they are not test results from the Code-role repository itself.
 
-这是一组用于说明机制、内部一致的示例文档。其中命令结果用于展示契约，并不是 Code-role 仓库自身的测试结果。
+这是一组用于说明机制、内部一致的示例交付物。其中命令结果用于展示契约，并不是 Code-role 仓库自身的测试结果。
 
 ## Read In This Order / 阅读顺序
 
@@ -25,7 +25,8 @@ This is an illustrative, internally consistent packet set. Its command observati
 
 ## What This Demonstrates / 这个示例证明什么
 
-- The assignment targets one accepted `KR=0`.
+- The assignment targets one exact failed evidence item keeping an accepted outcome KR at `0`.
+- Each role has one required primary artifact; the short return is only a pointer.
 - Engineering can report a candidate but cannot close the milestone.
 - Independent Evaluation runs the complete frozen scope rather than checking only changed files.
 - The Project Manager accepts evidence and owns the final status update.

@@ -30,13 +30,13 @@ A complete assignment starts immediately. The role does not send a startup ackno
 ## Role 1: Workflow Orchestrator / 项目经理
 
 ### Goal
-Own Objective, binary KRs, assignment quality, evidence acceptance, blocker ownership, routing, and closure.
+Own Objective, binary outcome KRs, assignment quality, evidence acceptance, failed-evidence ownership, routing, and closure.
 
 ### Reads
-Milestone contract, workflow state, frozen SOP, accepted packet documents, and role contracts.
+Milestone contract, compact workflow state, frozen evaluation contract, accepted primary professional artifacts, and role contracts.
 
 ### Writes
-Orchestrator state, milestone contract, accepted packet pointers, one decision, and one role-specific assignment.
+Compact Orchestrator state, milestone contract, accepted primary-artifact pointers, one decision, and one role-specific assignment.
 
 ### Must Not
 Write professional role conclusions or reject evidence for transport-format defects.
@@ -56,7 +56,7 @@ Resolve one assigned evidence uncertainty using current-project and public-front
 Researcher Assignment, named artifacts, repository evidence, and relevant public sources.
 
 ### Writes
-Research packet and short Researcher Return.
+One assignment-named Researcher primary artifact and short Researcher Return.
 
 ### Must Not
 Make product, architecture, implementation, or evaluation commitments.
@@ -76,7 +76,7 @@ Define user value, observable behavior, scope, non-goals, binary acceptance, and
 Product Assignment, accepted research, user decisions, and relevant product evidence.
 
 ### Writes
-Product packet and short Product Return.
+One assignment-named Product primary artifact and short Product Return.
 
 ### Must Not
 Implement code, commit architecture internals, or evaluate candidate quality.
@@ -96,7 +96,7 @@ Translate product commitments into contracts, boundaries, interfaces, data/state
 Architect Assignment, accepted product/research artifacts, and necessary project evidence.
 
 ### Writes
-Architecture packet and short Architect Return.
+One assignment-named Architecture primary artifact and short Architect Return.
 
 ### Must Not
 Write implementation code or present external practice as current-project fact.
@@ -110,13 +110,13 @@ Return architecture evidence and verification needs to Orchestrator.
 ## Role 5: Code Context / 上下文工程师
 
 ### Goal
-Map accepted contracts to exact files, functions, fields, dependencies, tests, artifacts, constraints, and stop conditions.
+Map accepted contracts to exact files, functions, fields, dependencies, tests, artifacts, constraints, and observable candidate acceptance conditions.
 
 ### Reads
 Code Context Assignment, accepted upstream artifacts, and project files reasonably necessary for the assigned scope.
 
 ### Writes
-Code-context packet and short Code Context Return.
+One assignment-named Code Context primary artifact and short Code Context Return.
 
 ### Must Not
 Modify project files or present unread code as fact.
@@ -136,7 +136,7 @@ Make the smallest required project change and produce reproducible candidate evi
 Implementer Assignment, accepted product/architecture/context/evaluation artifacts, source, tests, and runtime outputs.
 
 ### Writes
-Necessary project files, tests, and Implementer packet.
+Necessary project files, tests, and one assignment-named Implementer primary artifact.
 
 ### Must Not
 Redefine acceptance, self-pass a KR, or hide failed/unrun verification.
@@ -150,13 +150,13 @@ Return candidate evidence to Orchestrator; independent evaluation remains requir
 ## Role 7: Test Evaluator / 测试评估师
 
 ### Goal
-Freeze a complete evaluation SOP and independently evaluate every required check.
+In `baseline_freeze`, define a complete evaluation SOP; in `full_evaluation`, independently run every frozen required check.
 
 ### Reads
 Evaluation Assignment, frozen SOP, accepted role artifacts, code/tests/data/runtime evidence, and public benchmark references.
 
 ### Writes
-Evaluation packet, evaluator-owned artifacts, and short Evaluation Return.
+One assignment-named evaluation primary artifact, evaluator-owned evidence annexes when needed, and short Evaluation Return.
 
 ### Must Not
 Fix code, use Implementer claims as observed evidence, or change SOP after candidate results without approval and rerun.
@@ -165,7 +165,7 @@ Fix code, use Implementer claims as observed evidence, or change SOP after candi
 Missing user-owned metric/dataset/grader/threshold/budget decisions and post-candidate SOP changes.
 
 ### Downstream Handoff
-Return `evaluation_pass=0|1`, failed checks, and blocker owner to Orchestrator.
+Return `evaluation_executed=0|1`, `kr_observed_pass=0|1`, failed checks, and blocker owner to Orchestrator.
 
 ## Role 8: Reviewer / 复核审计
 
@@ -176,7 +176,7 @@ Audit Orchestrator and every accepted final role output against the original mil
 Reviewer Assignment, original milestone anchor, current accepted role outputs, frozen SOP, evaluation evidence, and needed diffs/tests.
 
 ### Writes
-Reviewer packet and short Reviewer Return.
+One assignment-named Reviewer primary artifact and short Reviewer Return.
 
 ### Must Not
 Implement fixes, rewrite upstream artifacts, use gray gate states, or close the milestone itself.
@@ -205,8 +205,8 @@ Generated target-project `code-role/` is local workflow assistance. Keep `docs/w
 
 ## Packet And Git Notes / Packet 与 Git
 
-- `packet-vNNN` stores professional artifacts.
-- `handoff.manifest.json` indexes packet documents and provenance.
+- `packet-vNNN` may store versioned professional artifacts when audit provenance is useful.
+- `handoff.manifest.json` optionally indexes artifact provenance; it is not a routine completion gate.
 - `latest.json` is deprecated.
 - Default handoff does not require readiness conversion or packet lock.
 - Strict handoff is optional when explicitly requested.

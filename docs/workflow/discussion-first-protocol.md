@@ -15,7 +15,7 @@ When complete:
 - no read/write/forbidden-scope recital is sent;
 - no extra `开始` confirmation is requested;
 - routine progress is not narrated;
-- the role writes only its professional packet and sends one short return.
+- the role writes the assignment's one primary professional artifact and sends one short return.
 
 ## Incomplete Assignment / 不完整任务
 
@@ -28,7 +28,7 @@ why_each_decision_blocks: <short reason>
 owner: project-manager | user
 ```
 
-Do not ask for missing fields one at a time. Do not create a packet until the blocker is resolved.
+Do not ask for missing fields one at a time. Do not create the primary artifact until the blocker is resolved.
 
 ## Conversation Scope / 对话范围
 
@@ -52,8 +52,8 @@ Stop for user decision only when changing:
 
 Routine role routing, packet writing, local implementation, local tests, public research, and normal project Git practice do not require another Code-role confirmation after a valid assignment is issued.
 
-## Artifact-First Handoff / 附件优先交接
+## Artifact-First Handoff / 交付物优先交接
 
-Professional packet documents are the handoff object. The short return points to them. Project Manager reads the packet and judges the frozen checks even when the short return is imperfect.
+The assignment-named primary professional artifact is the handoff object. Optional packet documents may provide provenance or evidence annexes. The short return points to the primary artifact. Project Manager reads that artifact and judges the frozen checks even when the short return is imperfect.
 
 Default handoff does not require `ready_for_next_role`, `packet.lock.json`, or a separate readiness conversation. Strict handoff remains optional for explicitly requested audit scenarios.

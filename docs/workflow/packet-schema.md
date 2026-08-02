@@ -1,18 +1,16 @@
-# Packet Schema
+# Optional Packet Schema / 可选 Packet Schema
 
-This document defines the stable fields for workflow packet pointers and handoff manifests.
+Full Profile requires one assignment-named primary professional artifact. Packet metadata is optional provenance support and must not become a routine delivery gate.
 
-## Current Output Pointer
+## Current Output Pointer / 当前产物指针
 
-Daily workflow does not require `latest.json`.
+Use Orchestrator `workflow-state.md` for the current target KR, failed evidence, owner, and accepted primary artifact. The compatibility file `final-packet-index.md` may point to each role's current accepted artifact.
 
-Use Orchestrator `workflow-state.md` for the current authoritative packet and `final-packet-index.md` for each role's current final output in a milestone.
-
-Legacy projects may still contain `latest.json`, but downstream roles must not treat it as authoritative when Orchestrator state or `final-packet-index.md` exists.
+Daily workflow does not require `latest.json`, `handoff.manifest.json`, readiness conversion, or a lock.
 
 ## `handoff.manifest.json`
 
-Each packet must include a manifest with this shape:
+When versioned provenance is useful, a packet may include this manifest:
 
 ```json
 {
@@ -23,15 +21,13 @@ Each packet must include a manifest with this shape:
   "status": "draft",
   "created_at": "YYYY-MM-DD",
   "updated_at": "YYYY-MM-DD",
-  "summary": "Short packet summary.",
-  "documents": [
-    {
-      "path": "research-brief.md",
-      "type": "research_brief",
-      "required": true,
-      "description": "Main research output."
-    }
-  ],
+  "summary": "Short artifact summary.",
+  "artifact_policy": {
+    "primary_artifact_from_assignment": true,
+    "required_primary_artifact_count": 1,
+    "documents_are_optional_annexes": true
+  },
+  "documents": [],
   "input_packets": [],
   "source_scopes": [],
   "return_to": "workflow-orchestrator",
@@ -41,18 +37,11 @@ Each packet must include a manifest with this shape:
 }
 ```
 
-Valid packet manifest statuses:
-
-- `draft`
-- `blocked`
-- `ready_for_next_role`
-- `superseded`
-
-`accepted` is not a packet manifest status for new packets. Downstream acceptance is recorded in downstream `input_packets` as `accepted_as_input`.
+Manifest status describes provenance metadata, not work-unit acceptance. Valid values are `draft`, `blocked`, `ready_for_next_role`, and `superseded`. Workflow Orchestrator accepts the primary artifact from substantive evidence, not manifest status.
 
 ## `input_packets`
 
-Downstream packets must record exact assignment-named upstream packet versions actually consumed. Manifests do not prescribe a fixed predecessor or successor; every professional role returns to Workflow Orchestrator. In lightweight flow the upstream packet may still be `draft`; strict handoff may add `ready_for_next_role` and `packet.lock.json`.
+When provenance is recorded, `input_packets` names exact assignment-relevant upstream artifact versions actually consumed. It never prescribes a fixed predecessor or successor.
 
 ```json
 {
@@ -65,15 +54,11 @@ Downstream packets must record exact assignment-named upstream packet versions a
 }
 ```
 
-Rules:
+Downstream recording must not mutate an upstream manifest.
 
-- `status_at_consumption` records the upstream manifest status when read.
-- `consumption_status` records the downstream role's action.
-- downstream acceptance must not mutate the upstream manifest.
+## `packet.lock.json` Strict Audit Mode
 
-## `packet.lock.json` Advanced Optional Mode
-
-When strict handoff is requested and a packet becomes `ready_for_next_role`, create a lock file:
+Only when the user explicitly requests immutable audit handoff, a `ready_for_next_role` packet may include:
 
 ```json
 {
@@ -83,29 +68,16 @@ When strict handoff is requested and a packet becomes `ready_for_next_role`, cre
   "packet_version": "packet-v001",
   "status": "ready_for_next_role",
   "files": [
-    {
-      "path": "handoff.manifest.json",
-      "sha256": "..."
-    }
+    {"path": "handoff.manifest.json", "sha256": "..."}
   ]
 }
 ```
 
-The lock detects drift after handoff.
+A locked packet is immutable; changes require `packet-v002`. Strict packet checks remain audit operations and cannot change a delivery KR without substantive outcome evidence.
 
-## Packet Immutability Rules
+## Compatibility / 兼容
 
-Packet immutability is required only for strict downstream audit.
-
-- `packet-v001` may be edited only while its manifest status is `draft`.
-- Once a packet status becomes `ready_for_next_role`, do not edit files inside that packet.
-- If content must change after `ready_for_next_role`, create the next version, for example `packet-v002`.
-- Orchestrator state and `final-packet-index.md` should move to the accepted current output.
-- Historical strict-handoff packets must remain immutable so downstream `input_packets` records do not drift.
-
-## Compatibility Rules
-
-- New manifest fields must be additive.
-- Unknown fields should be ignored by downstream roles unless strict validation is requested.
-- Status semantics cannot change without updating [Handoff Protocol](handoff-protocol.md).
-- Document paths in the manifest are relative to the packet directory.
+- New manifest fields are additive.
+- Unknown fields are ignored unless strict validation is requested.
+- Document paths are relative to the packet directory.
+- Legacy `latest.json` and packet status may be read for history but never override current Orchestrator state or an accepted primary artifact.

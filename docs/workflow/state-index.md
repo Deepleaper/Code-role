@@ -1,21 +1,22 @@
-# State Index
+# State Index / 状态索引
 
-The state index is an optional role onboarding shortcut. It helps a new role conversation find the current project state without relying on chat memory.
+The state index is an optional navigation shortcut for a new role conversation. It is not authoritative and must not become a second workflow state system.
 
-It is not authoritative.
+状态索引只是新角色对话的可选导航页，不是权威状态，也不得变成第二套工作流。
 
-Authoritative sources remain:
+## Authority / 权威来源
 
-- Orchestrator state files
-- role `handoff.manifest.json` files
-- strict handoff `packet.lock.json` files, only when strict handoff was requested
-- packet documents listed by manifests
+Read these sources directly:
 
-If the state index conflicts with a manifest, strict lock, or Orchestrator state file, the authoritative source wins.
+1. accepted milestone contract;
+2. compact Orchestrator workflow state;
+3. assignment-named accepted primary professional artifacts;
+4. frozen evaluation contract and latest independent evidence;
+5. optional strict packet manifest and lock only when immutable audit was explicitly requested.
 
-## Optional Location
+If the index conflicts with any authoritative source, ignore the index.
 
-In a target project:
+## Optional Location / 可选位置
 
 ```text
 code-role/state-index/
@@ -32,58 +33,43 @@ code-role/state-index/
     reviewer.md
 ```
 
-## Role Index Contract
+## Current Workflow Index / 当前工作索引
 
-Each role index answers one question:
+Keep only current navigation fields:
 
 ```text
-If this role starts now, what should it read, what should it do, what must it not do, and what confirmation is still required?
+milestone
+objective
+target_kr
+current_failed_evidence
+current_evidence_owner
+current_assignment_path
+accepted_primary_artifact_path
+latest_independent_evidence_path
+milestone_pass
+pending_human_decision
+authoritative_source_paths
 ```
 
-Each role index must include:
+Do not append role-by-role chronology, packet status narratives, readiness conversion instructions, residual-risk prose, or next-role recommendations.
 
-- role responsibility from that role's `ROLE.md`
-- current status in this project
-- official upstream manifest, or the reason this role should not start
-- traceability manifests
-- must-read files with exact paths
-- allowed read scope
-- forbidden scope
-- current gate / status
-- residual risks
-- next required confirmation
-- authoritative sources
+## Role Index / 角色索引
 
-The role responsibility must come from `ROLE.md`, not from packet inference.
+A role index may list only:
 
-## Current Workflow Index
+- stable role responsibility from that role's `ROLE.md`;
+- the exact current failed evidence assigned to the role, if any;
+- authoritative input paths;
+- required primary artifact path;
+- task-specific exclusions, if any;
+- the authoritative milestone and workflow-state paths.
 
-`current-workflow-index.md` summarizes:
+It must not restate the full role prompt, create a startup confirmation gate, choose a successor, or infer acceptance.
 
-- current milestone
-- selected chain
-- current authoritative packet
-- completed packet chain
-- current gate
-- `quality_gate.status`, when available
-- binary `review_gate_pass`, when available
-- residual risks
-- recommended next confirmation
+## Refresh / 刷新
 
-It should not introduce new conclusions. Every status, risk, or next step must be traceable to an Orchestrator state file or packet source.
+Refresh only when an accepted current-state pointer changes. Updating the index is a navigation operation and cannot change Objective, KR, routing, artifact acceptance, or milestone status.
 
-## Refresh Rule
+## Release Boundary / 发布边界
 
-If generated, refresh the state index after:
-
-- Orchestrator changes the active milestone or authoritative packet
-- a role output is accepted as the current final version
-- Reviewer produces a final gate
-
-Refreshing the index is a documentation operation. It must not modify upstream packets or Orchestrator state.
-
-## Release Boundary
-
-`state-index/` is governance navigation. It is not product runtime content.
-
-Do not include it in template indexes, customer delivery bundles, CLI payloads, or release artifacts.
+`state-index/` is local governance navigation. It is not product runtime content and is excluded from target-project release artifacts by default.

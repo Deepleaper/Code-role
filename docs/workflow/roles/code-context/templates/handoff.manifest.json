@@ -7,12 +7,13 @@
   "created_at": "YYYY-MM-DD",
   "updated_at": "YYYY-MM-DD",
   "summary": "Template manifest for a Code Context packet.",
+  "artifact_policy": {"primary_artifact_from_assignment": true, "required_primary_artifact_count": 1, "documents_are_optional_annexes": true},
   "documents": [
-    {"path": "code-map.md", "type": "code_map", "required": true, "description": "Relevant code and file map."},
-    {"path": "dependency-map.md", "type": "dependency_map", "required": true, "description": "Dependency map."},
-    {"path": "impact-analysis.md", "type": "impact_analysis", "required": true, "description": "Blast radius and risk analysis."},
-    {"path": "test-map.md", "type": "test_map", "required": true, "description": "Existing and missing tests."},
-    {"path": "implementation-constraints.md", "type": "implementation_constraints", "required": true, "description": "Allowed implementation scope."}
+    {"path": "code-map.md", "type": "code_map", "required": false, "description": "Relevant code and file map."},
+    {"path": "dependency-map.md", "type": "dependency_map", "required": false, "description": "Dependency map."},
+    {"path": "impact-analysis.md", "type": "impact_analysis", "required": false, "description": "Blast radius and risk analysis."},
+    {"path": "test-map.md", "type": "test_map", "required": false, "description": "Existing and missing tests."},
+    {"path": "implementation-constraints.md", "type": "implementation_constraints", "required": false, "description": "Allowed implementation scope."}
   ],
   "input_packets": [],
   "source_scopes": [

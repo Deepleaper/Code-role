@@ -2,15 +2,17 @@
 
 assignment_id:
 milestone:
+objective:
 target_kr:
-role_objective:
-context_question:
-accepted_architecture_inputs:
+current_kr_state: 0
+current_failed_evidence:
+role_deliverable:
+authoritative_inputs:
 - path:
-repository_scope_to_verify:
+repository_areas_to_verify:
 - path_or_area:
-required_checks:
-| check_id | file/function/test seam required | required evidence |
+acceptance_checks:
+| check_id | exact repository seam | required evidence |
 | --- | --- | --- |
-required_packet_path:
-stop_condition:
+required_artifact_path:
+irreversible_actions: none

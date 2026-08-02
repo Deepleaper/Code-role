@@ -1,5 +1,11 @@
 # 产品经理输出规范 / Product PRD Output Standard
 
+## One Primary Artifact / 一个主专业产物
+
+Every assignment requires one primary professional artifact. The sections and legacy templates below are content guidance or optional evidence annexes, not a mandatory multi-file packet checklist. Create an annex only when it materially improves traceability or reproducibility.
+
+每次任务只强制一个主专业产物。下列章节和历史模板是内容规范或可选证据附录，不是必须逐文件生成的 packet 清单。
+
 Product / PRD 角色负责把已接受的研究输入、用户目标和当前项目证据转成可讨论、可验收、可交给架构师的产品承诺。
 
 The Product / PRD role turns accepted research input, user goals, and current project evidence into a discussable, verifiable product commitment that can be handed to Architect.
@@ -10,9 +16,9 @@ Product / PRD owns product commitment, not product imagination.
 
 ## 核心质量标准 / Core Quality Bar
 
-每个 Product / PRD packet 必须回答：
+每份 Product / PRD 主交付物必须回答：
 
-Every Product / PRD packet must answer:
+Every Product / PRD primary artifact must answer:
 
 1. 当前 milestone 的业务目标是什么 / what the milestone business goal is
 2. 用户或使用者是谁 / who the user or operator is

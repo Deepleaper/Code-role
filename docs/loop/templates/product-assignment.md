@@ -1,15 +1,17 @@
-# Product Strategy Assignment / 产品策略任务书
+# PM Assignment -> Product Strategy / 项目经理任务书 -> 产品策略
 
 assignment_id:
 milestone:
+objective:
 target_kr:
+current_kr_state: 0
 role_prompt_path:
-role_objective:
-professional_question:
+current_failed_evidence:
+role_deliverable:
 authoritative_inputs:
 - path:
-required_checks:
-| check_id | expected product decision | required evidence |
+acceptance_checks:
+| check_id | observable decision/result | required evidence |
 | --- | --- | --- |
-required_output_attachment:
-stop_condition:
+required_artifact_path:
+irreversible_actions: none

@@ -1,20 +1,20 @@
-# Engineering Assignment / 工程任务书
+# PM Assignment -> Engineering / 项目经理任务书 -> 工程
 
 assignment_id:
 milestone:
+objective:
 target_kr:
+current_kr_state: 0
 role_prompt_path:
-role_objective:
-observed_gap:
+current_failed_evidence:
+role_deliverable:
 authoritative_inputs:
 - path:
-writable_scope:
-- module_or_directory:
-task_specific_exclusions: none | <paths/actions>
-required_checks:
-| check_id | expected behavior | required evidence |
+acceptance_checks:
+| check_id | runnable behavior/result | required evidence |
 | --- | --- | --- |
 required_regressions:
 - check_id:
-required_output_attachment:
-stop_condition:
+task_specific_exclusions: none
+required_artifact_path:
+irreversible_actions: none

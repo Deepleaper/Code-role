@@ -5,19 +5,19 @@
 The default Full Profile handoff has four steps:
 
 1. Workflow Orchestrator issues one complete role-specific assignment.
-2. The role starts immediately and writes its professional packet.
+2. The role starts immediately and writes the assignment's one primary professional artifact.
 3. The role sends one short role-specific return.
 4. Workflow Orchestrator reads the packet, applies the required checks, and issues one decision.
 
 默认交接不包含启动确认、等待“开始”、readiness 转换或 packet lock。
 
-Professional packets use `packet-vNNN/` directories. `handoff.manifest.json` records the exact assignment-named upstream artifact versions actually consumed; it does not prescribe a fixed predecessor or successor.
+Versioned `packet-vNNN/` directories remain available for provenance. `handoff.manifest.json` may record the exact assignment-named upstream artifact versions actually consumed; it does not prescribe a fixed predecessor, successor, or multi-file completion checklist.
 
 Downstream consumption is recorded as `accepted_as_input` in the downstream manifest. Downstream roles must not mutate upstream packet manifests.
 
 ## Professional Authority / 专业权威
 
-Professional packet documents and referenced evidence are authoritative. `handoff.manifest.json` indexes those documents and records provenance. The short return is navigation only.
+The assignment-named primary professional artifact and its referenced evidence are authoritative. `handoff.manifest.json` is optional provenance metadata. The short return is navigation only.
 
 Workflow Orchestrator must not reject sufficient evidence solely because:
 
@@ -29,7 +29,7 @@ Workflow Orchestrator must not reject sufficient evidence solely because:
 
 ## Acceptance / 验收
 
-Project Manager checks milestone alignment and every assigned substantive check. It records `assignment_pass=0|1`, failed check IDs, evidence, and blocker owner.
+Project Manager checks milestone alignment and every assigned substantive check. It records `work_unit_pass=0|1`, the one current failed evidence item, its evidence, and its owner.
 
 An incomplete assignment routes to the owner of the failed check. It does not automatically return to the same role.
 

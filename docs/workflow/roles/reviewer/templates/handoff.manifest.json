@@ -8,12 +8,13 @@
   "created_at": "YYYY-MM-DD",
   "updated_at": "YYYY-MM-DD",
   "summary": "Template manifest for a Reviewer packet. Reviewer reads milestone-contract, evaluation-sop, and Orchestrator final-packet-index, audits Workflow Orchestrator outputs and every execution-role final output against the original milestone, then checks SOP adherence, evaluation baseline validity, acceptance gaps, packet-chain evidence, risk decision, and final gate judgment.",
+  "artifact_policy": {"primary_artifact_from_assignment": true, "required_primary_artifact_count": 1, "documents_are_optional_annexes": true},
   "documents": [
-    {"path": "milestone-drift-audit.md", "type": "milestone_drift_audit", "required": true, "description": "Audit of Workflow Orchestrator outputs and execution-role outputs against the original milestone."},
-    {"path": "review-findings.md", "type": "review_findings", "required": true, "description": "Findings covering milestone alignment, evaluation baseline audit, and acceptance gaps."},
-    {"path": "risk-decision.md", "type": "risk_decision", "required": true, "description": "Risk acceptance, return, and blocker decisions."},
-    {"path": "packet-chain-audit.md", "type": "packet_chain_audit", "required": true, "description": "Packet consumption, source scope, strict handoff, and drift audit."},
-    {"path": "final-gate.md", "type": "final_gate", "required": true, "description": "Reviewer final gate recommendation."}
+    {"path": "milestone-drift-audit.md", "type": "milestone_drift_audit", "required": false, "description": "Audit of Workflow Orchestrator outputs and execution-role outputs against the original milestone."},
+    {"path": "review-findings.md", "type": "review_findings", "required": false, "description": "Findings covering milestone alignment, evaluation baseline audit, and acceptance gaps."},
+    {"path": "risk-decision.md", "type": "risk_decision", "required": false, "description": "Risk acceptance, return, and blocker decisions."},
+    {"path": "packet-chain-audit.md", "type": "packet_chain_audit", "required": false, "description": "Packet consumption, source scope, strict handoff, and drift audit."},
+    {"path": "final-gate.md", "type": "final_gate", "required": false, "description": "Reviewer final gate recommendation."}
   ],
   "input_packets": [],
   "final_packet_index": "docs/workflow/orchestrator/final-packet-index.md",
@@ -28,7 +29,7 @@
     "docs/workflow/orchestrator/final-packet-index.md",
     "original milestone anchor from Orchestrator or user input",
     "Orchestrator workflow-state, milestone-contract, final-packet-index, active evaluation SOP, and accepted assignments",
-    "all upstream role packets in selected chain",
+    "all current accepted primary role artifacts named by Orchestrator state or final output index",
     "upstream test-evaluator packet",
     "upstream test-evaluator evaluation-sop.md",
     "upstream test-evaluator evaluation-baseline.md",

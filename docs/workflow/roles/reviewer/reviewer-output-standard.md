@@ -1,14 +1,20 @@
 # Reviewer 输出规范 / Reviewer Output Standard
 
+## One Primary Artifact / 一个主专业产物
+
+Every assignment requires one primary professional artifact. The sections and legacy templates below are content guidance or optional evidence annexes, not a mandatory multi-file packet checklist. Create an annex only when it materially improves traceability or reproducibility.
+
+每次任务只强制一个主专业产物。下列章节和历史模板是内容规范或可选证据附录，不是必须逐文件生成的 packet 清单。
+
 Reviewer 负责审计从 Workflow Orchestrator 到所有执行角色的完整流程是否仍服务最初 milestone，并给当前 milestone 做最终审查判断。
 
 The Reviewer audits whether the full workflow, from Workflow Orchestrator through all execution roles, still serves the original milestone and makes the final review decision for the current milestone.
 
 ## 核心质量标准 / Core Quality Bar
 
-每个 Reviewer packet 必须审查以下事项：
+每份 Reviewer 主交付物必须审查以下事项：
 
-Every Reviewer packet must review these points:
+Every Reviewer primary artifact must review these points:
 
 1. 当前 `milestone-contract.md` 是否存在、已确认，并作为最初 milestone 锚点 / whether active `milestone-contract.md` exists, is confirmed, and anchors the original milestone
 2. Orchestrator 生成的 milestone、chain、消费检查和下一角色交接 brief 是否仍服务最初 milestone / whether Orchestrator-generated milestone, chain, consumption checks, and next-role handoff briefs still serve the original milestone

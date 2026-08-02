@@ -1,14 +1,20 @@
 # Test Evaluator 输出规范 / Test Evaluator Output Standard
 
+## One Primary Artifact / 一个主专业产物
+
+Every assignment requires one primary professional artifact. The sections and legacy templates below are content guidance or optional evidence annexes, not a mandatory multi-file packet checklist. Create an annex only when it materially improves traceability or reproducibility.
+
+每次任务只强制一个主专业产物。下列章节和历史模板是内容规范或可选证据附录，不是必须逐文件生成的 packet 清单。
+
 Test Evaluator 负责先确认评估机制与评估基线，再评估实现是否满足验收标准、架构边界和回归要求。
 
 The Test Evaluator first confirms evaluation mechanism and baseline, then evaluates whether implementation satisfies acceptance criteria, architecture boundaries, and regression requirements.
 
 ## 核心质量标准 / Core Quality Bar
 
-每个 Test Evaluator packet 必须先消费当前 milestone 的 `evaluation-sop.md`，再区分六类证据：
+在 `full_evaluation` 模式中，每份 Test Evaluator 主交付物必须先消费已冻结的 evaluation SOP，再区分六类证据。在 `baseline_freeze` 模式中，该交付物负责定义和校准 SOP，不得声明 KR 通过。
 
-Every Test Evaluator packet must first consume the active milestone `evaluation-sop.md`, then separate six evidence layers:
+In `full_evaluation`, every Test Evaluator primary artifact must consume the frozen evaluation SOP and separate six evidence layers. In `baseline_freeze`, the artifact defines and calibrates that SOP and cannot claim the KR passed:
 
 1. 当前 milestone 评估 SOP / active milestone evaluation SOP
 2. 用户确认的评估机制与 packet-local 基线 / user-confirmed evaluation mechanism and packet-local baseline
@@ -133,9 +139,9 @@ Use this layer for the binary quality gate, regression risk, and substantive blo
 输出要求 / Output requirements:
 
 - 标注 `evaluator_judgment`
-- 只使用 `evaluation_pass=0|1`
-- 任何必需检查失败、未运行或证据不足，`evaluation_pass=0`
-- 如果评估基线未确认，`evaluation_pass=0`
+- 分开记录 `evaluation_executed=0|1` 和 `kr_observed_pass=0|1`
+- 任何必需检查失败、未运行或证据不足，`kr_observed_pass=0`
+- 如果评估基线未确认，`full_evaluation` 不得开始，`evaluation_executed=0`
 - 如果证据不足，必须说明缺口和下一步
 - 必须说明 SOP 是否继续有效、是否需要修订、是否阻断 Reviewer
 
@@ -263,15 +269,17 @@ Do not convert `not_run` into `pass`.
 
 `quality-gate.md` must provide a clear gate.
 
-允许状态 / Allowed status:
+必须分开记录 / Required separate facts:
 
-- `evaluation_pass: 0 | 1`
+- `evaluation_executed: 0 | 1`
+- `kr_observed_pass: 0 | 1`
 
 必须记录：
 
 It must record:
 
-- evaluation pass / 评估通过: `0 | 1`
+- evaluation executed / 评估已完整执行: `0 | 1`
+- KR observed pass / KR 结果已观测通过: `0 | 1`
 - required checks total / 必需检查总数
 - required checks passed / 必需检查通过数
 - failed check IDs / 失败检查项
@@ -281,13 +289,13 @@ It must record:
 - evaluation baseline status / 评估基线状态
 - failed check owner / 失败检查责任人
 
-只有 SOP 已确认、全部必需检查通过且证据充分时，`evaluation_pass=1`。
+只有 `full_evaluation` 中 SOP 已确认、全部必需检查完整执行且证据充分时，`evaluation_executed=1`。只有全部目标 KR 检查通过时，`kr_observed_pass=1`。
 
-`evaluation_pass=1` is allowed only when the SOP is confirmed, every required check passes, and evidence is sufficient.
+In `full_evaluation`, `evaluation_executed=1` is allowed only when the SOP is confirmed and every required check was run with sufficient evidence. `kr_observed_pass=1` is allowed only when every target-KR check passed.
 
-如果 SOP、评估机制或 baseline 未确认，`evaluation_pass=0`，并记录 blocker code。
+如果 SOP、评估机制或 baseline 未确认，`full_evaluation` 的 `evaluation_executed=0`、`kr_observed_pass=0`，并记录 blocker code。
 
-If SOP, evaluation mechanism, or baseline is unconfirmed, set `evaluation_pass=0` and record the blocker code.
+If the SOP, evaluation mechanism, or baseline is unconfirmed, set both `evaluation_executed=0` and `kr_observed_pass=0` for `full_evaluation` and record the blocker code.
 
 ## SOP Calibration 标准 / SOP Calibration Standard
 

@@ -1,36 +1,48 @@
 # Implementation Summary / 实现摘要
 
-## Milestone Alignment / 里程碑对齐
+## Assignment Target / 任务目标
 
-- milestone / 里程碑:
-- original business goal / 原始业务目标:
-- original delivery goal / 原始交付目标:
-- success criteria / 成功标准:
-- non-goals / 明确不做:
-- approved implementation objective / 已批准实现目标:
-- how this implementation serves the milestone / 本实现如何服务 milestone:
-- possible drift / 可能的目标漂移: none / minor / major / unknown
+- milestone:
+- objective:
+- target KR:
+- current failed evidence:
+- role deliverable:
+- required primary artifact:
 
-## Implementation Start Confirmation / 实现启动确认
+## Observed Root Cause / 已观测根因
 
-| Confirmation / 确认项 | Source Label / 来源标签 | Status / 状态 | Evidence / 证据 |
+| Claim | Source label | Repository/runtime evidence |
+| --- | --- | --- |
+| <root-cause claim> | repo_evidence / implementer_judgment / unknown | <path, symbol, output, or evidence path> |
+
+## Implementation Decision / 实现决策
+
+- selected change:
+- reason:
+- relevant alternative rejected:
+- accepted contract preserved:
+
+## Actual Changes / 实际改动
+
+| Changed path | Behavioral change | Acceptance check | Source label |
 | --- | --- | --- | --- |
-| valid assignment received | valid_assignment | 0 / 1 | <assignment path or message id> |
-| writable module or directory scope confirmed | approved_writable_scope | 0 / 1 | <assignment source> |
+| <path> | <observable behavior> | <check id> | actual_file_change |
 
-## What Changed / 实际改动
+## Candidate Verification / 候选实现验证
 
-| Change / 改动 | Source Label / 来源标签 | Reason / 理由 | Downstream Verification / 下游验证 |
-| --- | --- | --- | --- |
-| <summary of actual change> | actual_file_change / code_context_constraint / implementer_judgment | <why changed> | <what Test Evaluator should check> |
+| Check ID | Expected | Observed | Status (0/1) | Evidence path |
+| --- | --- | --- | ---: | --- |
+| <check id> | <expected> | <actual or not_run> | 0 | <output/artifact> |
 
-## What Did Not Change / 明确未改内容
+## Runtime Boundary / 运行时边界
 
-- <file, module, scope, release claim, upstream packet, or behavior intentionally not changed>
+- actually exercised:
+- simulated or mocked:
+- not run:
+- unsupported claims:
 
-## Scope Boundary / 范围边界
+## Remaining Failures / 剩余失败
 
-- approved writable scope / 已批准可写范围:
-- forbidden scope / 禁止范围:
-- dirty-file handling rule / 脏文件处理规则:
-- scope expansion requested / 是否请求扩展: no
+- failed or unrun check IDs:
+- independent evaluator focus:
+- substantive blocker owner, if known:

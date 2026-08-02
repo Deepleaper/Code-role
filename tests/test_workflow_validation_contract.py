@@ -17,12 +17,14 @@ def read(path: Path) -> str:
 def test_workflow_validation_doc_defines_required_checks() -> None:
     text = read(WORKFLOW / "workflow-validation.md")
     for phrase in [
-        "manifest is valid JSON",
-        "every document listed in `documents` exists",
-        "lightweight downstream consumption requires Project Manager acceptance",
-        "downstream acceptance is recorded as `accepted_as_input`",
-        "`ready_for_next_role` packets are immutable",
-        "docs-only-chain",
+        "observable user, business, product, or runtime outcome",
+        "one exact current failed evidence item",
+        "required_artifact_path",
+        "does not require a precomputed per-file writable whitelist",
+        "Exactly one primary professional artifact is required",
+        "evaluation_executed=0|1",
+        "kr_observed_pass=0|1",
+        "Only when the user explicitly requests immutable packet provenance",
     ]:
         assert phrase in text
 
