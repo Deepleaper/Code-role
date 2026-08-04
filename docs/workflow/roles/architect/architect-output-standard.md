@@ -6,6 +6,10 @@ Every assignment requires one primary professional artifact. The sections and le
 
 每次任务只强制一个主专业产物。下列章节和历史模板是内容规范或可选证据附录，不是必须逐文件生成的 packet 清单。
 
+The architecture artifact covers the complete Product OKR and must include PKR-to-architecture traceability. It must not optimize one isolated MKR while leaving the remaining product contract unmapped.
+
+架构主产物必须覆盖完整 Product OKR，并包含 PKR-to-architecture 追踪；不得只优化一个 MKR 而遗漏其余产品契约。
+
 Architect / 架构师负责把已接受的产品范围转成可讨论、可验证、可交给 Code Context 的架构边界。
 
 The Architect turns accepted product scope into discussable, verifiable architecture boundaries that Code Context can consume.

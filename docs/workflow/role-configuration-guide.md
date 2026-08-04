@@ -30,10 +30,10 @@ A complete assignment starts immediately. The role does not send a startup ackno
 ## Role 1: Workflow Orchestrator / 项目经理
 
 ### Goal
-Own Objective, binary outcome KRs, assignment quality, evidence acceptance, failed-evidence ownership, routing, and closure.
+Own the complete Milestone Objective and `MKR-1...MKR-N`, assignment quality, global stage progression, evidence acceptance, repair routing, and closure.
 
 ### Reads
-Milestone contract, compact workflow state, frozen evaluation contract, accepted primary professional artifacts, and role contracts.
+OKR standard, milestone contract, compact workflow state, accepted global professional artifacts, candidate evidence, independent evaluation evidence, and role contracts.
 
 ### Writes
 Compact Orchestrator state, milestone contract, accepted primary-artifact pointers, one decision, and one role-specific assignment.
@@ -45,12 +45,12 @@ Write professional role conclusions or reject evidence for transport-format defe
 Only Objective/KR/threshold/dataset/grader/claim changes, budget expansion, private-data transfer, and irreversible actions.
 
 ### Downstream Handoff
-Select the owner of the substantive evidence gap. Every role returns to Orchestrator.
+Advance the mandatory global stage or return the failed complete contract to its owner. Every role returns to Orchestrator.
 
 ## Role 2: Researcher / 研究员
 
 ### Goal
-Resolve one assigned evidence uncertainty using current-project and public-frontier tracks.
+Resolve the complete milestone's material evidence questions using current-project and public-frontier tracks.
 
 ### Reads
 Researcher Assignment, named artifacts, repository evidence, and relevant public sources.
@@ -70,7 +70,7 @@ Return evidence and unknowns to Orchestrator.
 ## Role 3: Product / PRD / 产品经理
 
 ### Goal
-Define user value, observable behavior, scope, non-goals, binary acceptance, and claim boundaries.
+Define one complete Product Objective and `PKR-1...PKR-N` covering every MKR, including user value, observable behavior, scope, non-goals, binary acceptance, and claim boundaries.
 
 ### Reads
 Product Assignment, accepted research, user decisions, and relevant product evidence.
@@ -85,7 +85,7 @@ Implement code, commit architecture internals, or evaluate candidate quality.
 Changes to accepted product behavior, threshold, dataset, grader, or claim boundary.
 
 ### Downstream Handoff
-Return self-contained final product fields to Orchestrator.
+Return the complete Product OKR, MKR-to-PKR traceability, and Engineering-ready contract to Orchestrator.
 
 ## Role 4: Architect / 架构师
 
@@ -130,10 +130,10 @@ Return exact implementation context to Orchestrator.
 ## Role 6: Implementer / 实现工程师
 
 ### Goal
-Make the smallest required project change and produce reproducible candidate evidence.
+Own `EKR-1...EKR-N` decomposition and produce the complete integrated runnable candidate for the accepted Product OKR.
 
 ### Reads
-Implementer Assignment, accepted product/architecture/context/evaluation artifacts, source, tests, and runtime outputs.
+Implementer Assignment, accepted milestone/product/architecture/context contracts, source, tests, and runtime outputs.
 
 ### Writes
 Necessary project files, tests, and one assignment-named Implementer primary artifact.
@@ -150,10 +150,10 @@ Return candidate evidence to Orchestrator; independent evaluation remains requir
 ## Role 7: Test Evaluator / 测试评估师
 
 ### Goal
-In `baseline_freeze`, define a complete evaluation SOP; in `full_evaluation`, independently run every frozen required check.
+Start only after candidate readiness, record the executable SOP before inspecting candidate results, and independently run every required MKR/PKR check.
 
 ### Reads
-Evaluation Assignment, frozen SOP, accepted role artifacts, code/tests/data/runtime evidence, and public benchmark references.
+Evaluation Assignment, complete MKR/PKR contracts, runnable candidate, accepted role artifacts, code/tests/data/runtime evidence, and public benchmark references.
 
 ### Writes
 One assignment-named evaluation primary artifact, evaluator-owned evidence annexes when needed, and short Evaluation Return.
@@ -165,15 +165,15 @@ Fix code, use Implementer claims as observed evidence, or change SOP after candi
 Missing user-owned metric/dataset/grader/threshold/budget decisions and post-candidate SOP changes.
 
 ### Downstream Handoff
-Return `evaluation_executed=0|1`, `kr_observed_pass=0|1`, failed checks, and blocker owner to Orchestrator.
+Return `evaluation_executed=0|1`, per-MKR results, `product_contract_pass=0|1`, `milestone_observed_pass=0|1`, failed checks, and blocker owner to Orchestrator.
 
 ## Role 8: Reviewer / 复核审计
 
 ### Goal
-Audit Orchestrator and every accepted final role output against the original milestone and frozen SOP.
+Audit Orchestrator and every accepted final role output against the original complete MKR/PKR contracts, Engineering EKR traceability, mandatory stage order, and recorded evaluation SOP.
 
 ### Reads
-Reviewer Assignment, original milestone anchor, current accepted role outputs, frozen SOP, evaluation evidence, and needed diffs/tests.
+Reviewer Assignment, original milestone anchor, current accepted role outputs, recorded evaluation SOP, independent evidence, and needed diffs/tests.
 
 ### Writes
 One assignment-named Reviewer primary artifact and short Reviewer Return.
@@ -195,8 +195,8 @@ Use the generated file under `code-role/role-instance-prompts/<role>.md`. Config
 
 1. Run `scripts/init_project_workflow.py --write`.
 2. Create eight conversations and paste the matching generated prompt once.
-3. Open Workflow Orchestrator and accept one Objective and binary KRs.
-4. Paste the first role-specific assignment into the selected role conversation.
+3. Open Workflow Orchestrator and accept one complete Objective and `MKR-1...MKR-N`.
+4. Paste the global Researcher assignment when research is needed; otherwise paste the complete Product / PRD assignment.
 5. Paste the short return back to Workflow Orchestrator.
 
 ## Repository / Publishing Boundary / 仓库与发布边界

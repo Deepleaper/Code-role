@@ -29,22 +29,19 @@ def test_orchestrator_control_files_exist() -> None:
 
 def test_orchestrator_owns_result_control_not_professional_execution() -> None:
     role = read(ORCH / "ROLE.md")
-    assert "owns the accepted milestone result" in role
+    assert "owns the complete accepted milestone result" in role
     assert "It is not an execution role" in role
-    assert "inspect professional packet documents and evidence directly" in role
-    assert "Missing return fields" in role
-    assert "Do not emit narrated consumption-check progress" in role
-    assert "There is no fixed chain" in role
+    assert "complete Milestone OKR" in role
+    assert "complete Product OKR" in role
+    assert "Implementer alone creates and manages `EKR-1...EKR-N`" in role
+    assert "Test Evaluator starts only when" in role
+    assert "Read the primary professional artifact and evidence directly" in role
     assert "only you choose the next role" not in role
-    for forbidden in (
-        "research, PRD, architecture, code-context, implementation, evaluation, or review conclusions",
-        "product code or tests",
-        "execution-role packets",
-    ):
-        assert forbidden in role
+    assert "Do not write research, product, architecture, code-context, implementation, evaluation, or review conclusions" in role
+    assert "Do not create a second Git approval process" in role
 
 
-def test_chain_names_are_presets_not_a_fixed_role_order() -> None:
+def test_chain_names_preserve_mandatory_software_stage_order() -> None:
     policy = read(WORKFLOW / "workflow-chain-policy.md")
     for chain in (
         "full-chain",
@@ -54,10 +51,10 @@ def test_chain_names_are_presets_not_a_fixed_role_order() -> None:
         "research-only",
     ):
         assert f"`{chain}`" in policy
-    assert "does not impose a fixed chain" in policy
-    assert "routes to the owner of the current evidence gap" in policy
+    assert "Mandatory Stage Order" in policy
+    assert "complete `PKR-1...PKR-N` covering every MKR" in policy
+    assert "Test Evaluator must not start before a complete runnable candidate exists" in policy
     assert "Every selected role returns to Workflow Orchestrator" in policy
-    assert "Do not route based on packet readiness, a role recommendation" in policy
 
 
 def test_assignment_acceptance_is_binary_and_artifact_first() -> None:
@@ -68,7 +65,8 @@ def test_assignment_acceptance_is_binary_and_artifact_first() -> None:
     assert "Missing return fields" in contract
     assert "Only missing or failed professional checks justify rework" in contract
     assert "evaluation_executed: 0|1" in contract
-    assert "kr_observed_pass: 0|1" in contract
+    assert "one binary result for every `MKR-*`" in contract
+    assert "milestone_observed_pass: 0|1" in contract
     assert "review_gate_pass: 0|1" in contract
 
 
@@ -88,15 +86,15 @@ def test_orchestrator_uses_role_specific_assignments_and_short_returns() -> None
     ):
         assert f"roles/{role_id}/templates/assignment.md" in assignment
     for field in (
-        "objective:",
-        "target_kr:",
-        "current_failed_evidence:",
+        "milestone:",
+        "delivery_stage:",
+        "milestone_okr_path:",
         "role_deliverable:",
         "acceptance_checks:",
         "required_artifact_path:",
     ):
         assert field in assignment
-    assert "Do not issue a generic workflow essay" in assignment
+    assert "one complete professional delivery stage" in assignment
     assert "work_unit_pass: 0 | 1" in role_return
     assert "artifact_path:" in role_return
     assert "Do not include a next-role recommendation" in role_return

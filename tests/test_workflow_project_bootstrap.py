@@ -83,6 +83,7 @@ def test_full_profile_initializer_creates_eight_prompts_and_role_templates(
     required_control = (
         code_role / "README.md",
         code_role / "DIALOGUE-CONTROL.md",
+        code_role / "OKR-STANDARD.md",
         code_role / "project-config.md",
         code_role / "workflow" / "orchestrator" / "workflow-state.md",
         code_role / "workflow" / "orchestrator" / "milestone-contract.md",
@@ -105,6 +106,8 @@ def test_full_profile_initializer_creates_eight_prompts_and_role_templates(
 
     config = read(code_role / "project-config.md")
     assert "control_profile: full-eight-role" in config
+    assert "control_model: okr-delivery-v4" in config
+    assert "mandatory_delivery_order:" in config
     assert "valid_assignment_starts_immediately: true" in config
     assert "format_only_rework_allowed: false" in config
     assert "role_self_routing_allowed: false" in config

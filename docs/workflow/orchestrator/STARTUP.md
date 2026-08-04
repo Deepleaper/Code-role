@@ -3,9 +3,11 @@
 On entry, silently read:
 
 - active milestone contract;
+- shared OKR standard;
 - workflow state;
 - current accepted primary-artifact pointers;
-- frozen evaluation SOP when applicable;
+- complete accepted Product OKR when available;
+- Engineering candidate and independent evidence when available;
 - the latest user decision.
 
 Do not send a startup acknowledgement or narrated recovery report. Respond to the user's actual request with exactly one of:
@@ -16,10 +18,10 @@ Do not send a startup acknowledgement or narrated recovery report. Respond to th
 - consolidated user-decision request;
 - milestone closure decision.
 
-Never infer authority from the newest file. Use Orchestrator state and explicitly accepted artifacts. Missing return formatting, `draft` packet status, or an absent optional lock is not a substantive blocker.
+Never infer authority from the newest file. Use Orchestrator state and explicitly accepted artifacts. Preserve the global stage order: complete MKR -> complete PKR -> Engineering candidate -> Independent Evaluation. Missing return formatting, `draft` packet status, or an absent optional lock is not a substantive blocker.
 
 Canonical refresh instruction:
 
 ```text
-项目经理，读取当前 milestone contract、workflow state、冻结 SOP 和已接受专业附件，直接给出当前唯一决定。不要输出恢复过程。
+项目经理，读取 OKR 规范、当前 milestone contract、workflow state 和已接受全局专业产物，按“完整 MKR -> 完整 PKR -> 工程候选物 -> 独立评估”的阶段顺序直接给出当前唯一决定。不要输出恢复过程。
 ```

@@ -1,6 +1,6 @@
 # Milestone Board / 里程碑作战板
 
-<!-- Do not append chronological workflow history. Keep only current control state and evidence pointers. -->
+<!-- Keep complete current contracts and evidence pointers. Do not append process history or Engineering EKR detail. -->
 
 ## Milestone / 里程碑
 
@@ -8,32 +8,42 @@
 | --- | --- |
 | Project | `{{PROJECT_NAME}}` |
 | Milestone | `unconfirmed` |
-| Objective accepted | `0` |
+| Delivery stage | `milestone_definition` |
+| Milestone OKR accepted | `0` |
+| Product OKR accepted | `0` |
+| Candidate ready for independent evaluation | `0` |
+| Independent evaluation executed | `0` |
 | Milestone pass | `0` |
 
 ## Objective / 目标
 
 `unconfirmed`
 
-## Key Results / 关键结果
+## Milestone Key Results / 里程碑 MKR
 
-| KR | Observable delivered outcome | Binary threshold | Required independent evidence | Accepted evidence path | Pass |
-| --- | --- | --- | --- | --- | ---: |
+| MKR | Observable outcome | Subject and scenario | Binary threshold and conditions | Required independent evidence | Claim boundary | Pass |
+| --- | --- | --- | --- | --- | --- | ---: |
 
-## Current Delivery Loop / 当前交付闭环
+## Current Global Artifacts / 当前全局产物
+
+| Artifact | Accepted | Path |
+| --- | ---: | --- |
+| Complete Milestone OKR | 0 | `this board` |
+| Accepted Product OKR | 0 | `none` |
+| Engineering EKR and candidate record | 0 | `none` |
+| Runnable candidate | 0 | `none` |
+| Independent evaluation | 0 | `none` |
+
+## Current Stage / 当前阶段
 
 | Field | Value |
 | --- | --- |
-| Target KR | `none` |
-| Current failed evidence | `none` |
 | Current owner | `project-manager` |
 | Assignment ID | `none` |
-| Work unit | `none` |
-| Iteration | `0 / 3` |
-| Primary artifact path | `none` |
-| Evaluation contract path | `none` |
-| Latest independent evidence | `none` |
-| Human decision required | `confirm Objective and outcome KRs` |
+| Stage deliverable | `complete Milestone OKR` |
+| Current blocking contract | `Objective and complete MKRs are not accepted` |
+| Engineering-to-Evaluation attempt | `0 / 3` |
+| Human decision required | `confirm Objective and complete Milestone OKR` |
 
 ## Non-Goals / 非目标
 

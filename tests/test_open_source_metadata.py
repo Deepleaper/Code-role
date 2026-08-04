@@ -76,8 +76,9 @@ def test_real_cases_preserve_private_project_claim_boundaries() -> None:
     assert "Milestone pass | `0`" in deepbrain
     assert "Reviewer route allowed | `0`" in deepbrain
     assert "production ready = 0" in deepbrain
-    assert "Current KR pass | `0`" in leaper_agent
-    assert "`evaluation_sop_frozen = 0`" in leaper_agent
+    assert "Historical target pass | `0`" in leaper_agent
+    assert "Current-model interpretation" in leaper_agent
+    assert "current code-role standard does not route test evaluator before a runnable candidate" in leaper_agent.lower()
     assert "does not claim that Leaper Agent already beats Hermes" in leaper_agent
 
 
@@ -102,11 +103,13 @@ def test_readme_exposes_both_supported_profiles() -> None:
     assert "Neither profile is deprecated" in readme
     assert "scripts/init_loop_workflow.py" in readme
     assert "scripts/init_project_workflow.py" in readme
-    assert "Project Manager selects one KR=0" in readme
+    assert "Project Manager owns complete MKRs" in readme
+    assert "Product owns complete PKRs" in readme
+    assert "Engineering alone decomposes EKR stages" in readme
     assert "Product Strategy" in readme
     assert "Engineering" in readme
     assert "Independent Evaluation" in readme
-    assert "A complete PM Assignment starts the selected workstation immediately" in readme
+    assert "Software delivery uses a fixed dependency order" in readme
     assert "Workflow Orchestrator" in readme
     assert "Researcher" in readme
     assert "Architect" in readme
@@ -118,7 +121,8 @@ def test_readme_exposes_both_supported_profiles() -> None:
     assert "Minimal target example" in readme
     assert "examples/minimal-target/README.md" in readme
     assert "Do not commit target-project `code-role/` output by default." in example
-    assert "完整任务书即直接启动" in example
+    assert "完整里程碑 OKR" in example
+    assert "只有工程可以拆分 EKR" in example
 
 
 def test_product_docs_define_minimal_and_full_profiles() -> None:

@@ -18,12 +18,15 @@ def test_workflow_validation_doc_defines_required_checks() -> None:
     text = read(WORKFLOW / "workflow-validation.md")
     for phrase in [
         "observable user, business, product, or runtime outcome",
-        "one exact current failed evidence item",
+        "complete milestone KR set as `MKR-1...MKR-N`",
+        "one complete Product OKR for the whole milestone",
+        "Engineering may define `EKR-1...EKR-N`",
+        "Independent Evaluation cannot be the current stage before the candidate gate passes",
         "required_artifact_path",
         "does not require a precomputed per-file writable whitelist",
         "Exactly one primary professional artifact is required",
-        "evaluation_executed=0|1",
-        "kr_observed_pass=0|1",
+        "`evaluation_executed=0|1`",
+        "`mkr_observed_pass=0|1`",
         "Only when the user explicitly requests immutable packet provenance",
     ]:
         assert phrase in text

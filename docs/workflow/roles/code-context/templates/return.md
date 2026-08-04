@@ -1,8 +1,9 @@
 # Code Context Return / 上下文工程师回报
 
 assignment_id:
-target_kr:
+delivery_stage: architecture_and_code_context
 work_unit_pass: 0 | 1
+all_pkrs_mapped_to_repository: 0 | 1
 check_results: <check_id -> 0|1>
 artifact_path:
 evidence_paths:

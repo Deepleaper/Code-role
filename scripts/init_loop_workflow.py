@@ -107,7 +107,7 @@ One Project Manager controls three callable professional workstations around one
 - [Engineering / 工程](role-instance-prompts/engineering.md)
 - [Independent Evaluation / 独立评估](role-instance-prompts/independent-evaluation.md)
 
-`milestone-board.md` is the only active state. `LOOP.md` defines the loop contract.
+`milestone-board.md` is the only active state. `OKR-STANDARD.md` defines the three OKR layers and `LOOP.md` defines the delivery stages.
 
 `milestone-board.md` 是唯一活跃状态，`LOOP.md` 定义闭环协议。
 
@@ -115,15 +115,15 @@ One Project Manager controls three callable professional workstations around one
 
 1. Open the Project Manager conversation.
 2. Give it `role-instance-prompts/project-manager.md`.
-3. Confirm one delivered-outcome Objective and no more than five outcome KRs.
-4. Project Manager selects one decisive failed evidence item keeping an outcome KR at `0` and prints one role-specific assignment.
-5. Paste it into the selected workstation conversation; a valid assignment starts immediately.
-6. Paste the workstation's short return back to Project Manager; Project Manager reads the professional attachment directly.
-7. Repeat until every accepted outcome KR has independent evidence and equals `1`.
+3. Confirm one complete Milestone Objective and `MKR-1...MKR-N` under `OKR-STANDARD.md`.
+4. Product Strategy defines the complete `PKR-1...PKR-N` contract for every MKR.
+5. Engineering defines `EKR-1...EKR-N`, implements the complete candidate, and verifies integration and regressions.
+6. Independent Evaluation evaluates the complete runnable candidate against every MKR and PKR.
+7. Project Manager closes the milestone only from complete independent evidence.
 
-Only the selected workstation runs. There is no fixed four-role chain.
+Software delivery follows the mandatory Product -> Engineering -> Independent Evaluation stage order.
 
-每轮只运行被选中的工位，不存在固定四角色链。
+软件交付强制遵守“完整产品定义 → 完整工程候选物 → 独立评估”的阶段顺序。
 
 ## History / 历史
 
@@ -141,12 +141,12 @@ def render_start_here(project_name: str) -> str:
 Project: `{project_name}`
 
 1. Start or refresh the Project Manager conversation with `role-instance-prompts/project-manager.md`.
-2. The Project Manager reads `LOOP.md` and `milestone-board.md`.
-3. Confirm one delivered-outcome Objective and no more than five outcome Key Results.
-4. Copy the Project Manager's assignment for one exact failed KR evidence item into the selected workstation conversation.
-5. A complete assignment starts work immediately; do not add a separate `开始` step.
-6. Copy the short workstation return back to Project Manager; return formatting is not a completion gate.
-7. Project Manager updates the board from accepted evidence and selects the next failed evidence item, if any.
+2. The Project Manager reads `OKR-STANDARD.md`, `LOOP.md`, and `milestone-board.md`.
+3. Confirm one complete Milestone Objective and two to five `MKR` results.
+4. Product Strategy creates one complete Product OKR covering every MKR.
+5. Engineering decomposes execution into `EKR-1...EKR-N` and produces the complete runnable candidate.
+6. Independent Evaluation starts only after candidate readiness is `1` and evaluates the full MKR/PKR contract.
+7. Project Manager closes or returns the failed contract owner from independent evidence.
 
 Only Objective/KR changes, evaluation-threshold changes, budget expansion, and irreversible external actions require an additional human gate.
 
@@ -160,8 +160,9 @@ def render_project_config(project_name: str, project_root: Path) -> str:
 project_name: {project_name}
 target_project_path: {project_root}
 tracking_policy: local-only
-control_model: okr-delivery-v3
+control_model: okr-delivery-v4
 authoritative_control_record: {project_root / "code-role" / "milestone-board.md"}
+okr_standard: {project_root / "code-role" / "OKR-STANDARD.md"}
 loop_contract: {project_root / "code-role" / "LOOP.md"}
 active_role_root: {project_root / "code-role" / "role-instance-prompts"}
 active_roles:
@@ -174,16 +175,18 @@ valid_assignment_starts_immediately: true
 startup_acknowledgement_required: false
 format_only_rework_allowed: false
 role_self_routing_allowed: false
-fixed_role_chain: false
+fixed_role_chain: true
+mandatory_delivery_order: product-strategy -> engineering -> independent-evaluation
 completion_model: binary-outcome-key-results
-default_iteration_limit_per_kr: 3
+default_engineering_evaluation_attempt_limit: 3
 external_research_allowed_default: true
 
 ## Boundary
 
 - `code-role/` is local-only assistance, not product runtime content.
 - `milestone-board.md` is the only active control state.
-- Delivery KRs describe user, business, product, or runtime outcomes; process artifacts are methods or evidence.
+- Project Manager owns complete MKRs, Product Strategy owns complete PKRs, and Engineering owns phased EKRs.
+- Independent Evaluation starts only after a complete runnable candidate exists.
 - Full Profile packets and state indexes may remain as history, but they do not control a project while the Minimal Profile is active.
 - Product attachments carry professional content; Project Manager references them instead of rewriting them.
 - Code-role does not own the target project's Git or release process.
@@ -200,9 +203,9 @@ Exactly four prompts are active:
 - `engineering.md`
 - `independent-evaluation.md`
 
-The Project Manager is always the controller. The other three workstations are called dynamically for one selected `KR=0`; they are not a fixed chain.
+The Project Manager is always the controller. Software delivery then follows Product Strategy -> Engineering -> Independent Evaluation.
 
-项目经理始终是控制器。其他三个工位围绕一个被选中的 `KR=0` 动态调用，不构成固定链路。
+项目经理始终是控制器。软件交付依次经过完整产品定义、工程实现和完整独立评估。
 
 Full Profile prompt filenames are archived under `code-role/archive/` during sync so the active prompt directory contains exactly four Minimal Profile workstations.
 """
@@ -219,10 +222,9 @@ Recommended filenames:
 
 - Product Strategy: `product-decision-<assignment-id>.md`
 - Engineering: `engineering-report-<assignment-id>.md`
-- Independent Evaluation baseline: `evaluation-sop-<assignment-id>.md`
 - Independent Evaluation result: `evaluation-report-<assignment-id>.md`
 
-Each work unit has one primary professional artifact. Optional evidence annexes exist only when needed for reproduction. Artifacts do not route work or update KR status; Project Manager accepts evidence and routes the remaining failed KR evidence.
+Product Strategy carries the complete Product OKR. Engineering carries the EKR plan and complete candidate. Independent Evaluation carries the complete MKR/PKR result. Optional annexes exist only when needed for reproduction.
 """
 
 
@@ -244,6 +246,7 @@ def initialize(project_root: Path, project_name: str, sync: bool) -> list[Path]:
         code_role / "START-HERE.md": render_start_here(project_name),
         code_role / "project-config.md": render_project_config(project_name, project_root),
         code_role / "DIALOGUE-CONTROL.md": render(ROOT / "docs" / "dialogue-control.md", project_name, project_root),
+        code_role / "OKR-STANDARD.md": render(ROOT / "docs" / "okr-standard.md", project_name, project_root),
         code_role / "LOOP.md": render(SOURCE / "LOOP.md", project_name, project_root),
         code_role / "role-instance-prompts" / "README.md": render_role_readme(),
         code_role / "work" / "README.md": render_work_readme(),
@@ -279,6 +282,7 @@ def validate(project_root: Path) -> list[str]:
     required = [
         code_role / "LOOP.md",
         code_role / "DIALOGUE-CONTROL.md",
+        code_role / "OKR-STANDARD.md",
         code_role / "milestone-board.md",
         code_role / "templates" / "product-assignment.md",
         code_role / "templates" / "engineering-assignment.md",
@@ -295,11 +299,12 @@ def validate(project_root: Path) -> list[str]:
 
     loop = (code_role / "LOOP.md").read_text(encoding="utf-8")
     required_loop_markers = (
-        "One Primary KR Per Iteration",
-        "Valid Assignment Starts Work",
-        "Evaluation Before Pass",
+        "Three OKR Layers",
+        "Mandatory Delivery Stages",
+        "Engineering Execution Loop",
+        "Independent Evaluation",
         "three failed Engineering-to-Evaluation attempts",
-        "There is no `partial_pass`",
+        "must not start before a complete runnable candidate exists",
     )
     for marker in required_loop_markers:
         if marker not in loop:
@@ -326,31 +331,43 @@ def validate(project_root: Path) -> list[str]:
         if marker in combined_roles:
             errors.append(f"active Minimal Profile prompts contain packet-profile marker: {marker}")
 
-    for filename in (
-        "product-assignment.md",
-        "engineering-assignment.md",
-        "evaluation-assignment.md",
-    ):
-        assignment = (code_role / "templates" / filename).read_text(encoding="utf-8")
-        for marker in (
-            "objective:",
-            "target_kr:",
+    assignment_markers = {
+        "product-assignment.md": (
+            "delivery_stage: product_definition",
+            "milestone_okr_scope: all_accepted_mkrs",
             "role_prompt_path:",
-            "current_failed_evidence:",
-            "role_deliverable:",
             "acceptance_checks:",
             "required_artifact_path:",
-        ):
+        ),
+        "engineering-assignment.md": (
+            "delivery_stage: engineering_delivery",
+            "product_okr_accepted: 1",
+            "engineering_objective: produce_the_complete_runnable_candidate",
+            "acceptance_checks:",
+            "required_artifact_path:",
+        ),
+        "evaluation-assignment.md": (
+            "delivery_stage: independent_evaluation",
+            "candidate_ready_for_independent_evaluation: 1",
+            "evaluation_scope: complete_mkr_and_pkr_contract",
+            "acceptance_checks:",
+            "required_artifact_path:",
+        ),
+    }
+    for filename, markers in assignment_markers.items():
+        assignment = (code_role / "templates" / filename).read_text(encoding="utf-8")
+        for marker in markers:
             if marker not in assignment:
                 errors.append(f"{filename} missing marker: {marker}")
 
     board = (code_role / "milestone-board.md").read_text(encoding="utf-8")
-    board_uses_v3_schema = "Do not append chronological workflow history" in board
-    if board_uses_v3_schema:
+    board_uses_v4_schema = "Do not append process history" in board
+    if board_uses_v4_schema:
         for marker in (
-            "Current failed evidence",
-            "Accepted evidence path",
-            "Target KR",
+            "Delivery stage",
+            "Milestone OKR accepted",
+            "Product OKR accepted",
+            "Runnable candidate",
             "Milestone pass",
         ):
             if marker not in board:
@@ -364,7 +381,9 @@ def validate(project_root: Path) -> list[str]:
     for marker in (
         "manual transport",
         "Do not claim automatic dispatch",
-        "exactly one primary accepted `KR=0` per iteration",
+        "Do not send Product Strategy one MKR at a time",
+        "After Product OKR acceptance, route Engineering",
+        "candidate_ready_for_independent_evaluation=1",
         "Missing return fields or field order are not blockers",
     ):
         if marker not in project_manager:
@@ -374,12 +393,11 @@ def validate(project_root: Path) -> list[str]:
         encoding="utf-8"
     )
     for marker in (
-        "baseline_freeze",
-        "full_evaluation",
-        "Required missing, inferred, unsupported, or unrun checks are `0`",
-        "not the latest diff",
-        "Do not use `partial_pass` or `pass_with_residual_risk`",
-        "Any SOP change after candidate evidence requires explicit user approval",
+        "candidate_ready_for_independent_evaluation=1",
+        "Do not evaluate before a runnable candidate exists",
+        "Required missing, inferred, unsupported, contradictory, or unrun checks are `0`",
+        "latest diff",
+        "milestone_observed_pass=1",
     ):
         if marker not in evaluator:
             errors.append(f"evaluator prompt missing marker: {marker}")
@@ -416,7 +434,7 @@ def main() -> int:
         board = (project_root / "code-role" / "milestone-board.md").read_text(
             encoding="utf-8"
         )
-        if "Do not append chronological workflow history" not in board:
+        if "Do not append process history" not in board:
             print(
                 "goal-loop validation passed with preserved legacy milestone board; "
                 "Project Manager will compact it on the next substantive decision: "

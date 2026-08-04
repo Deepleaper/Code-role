@@ -8,9 +8,9 @@ Every assignment requires one primary professional artifact. Legacy implementati
 
 ## Delivery Responsibility / 交付责任
 
-Implementer is the only Full Profile execution role that changes target-project code. It must produce a runnable candidate that repairs the assignment's exact `current_failed_evidence` and can be independently evaluated against the target outcome KR.
+Implementer is the only Full Profile role that owns Engineering decomposition and changes target-project code. It consumes the complete MKR/PKR contracts, defines `EKR-1...EKR-N`, and produces one integrated runnable candidate for full independent evaluation.
 
-Implementer 是八角色版中唯一修改目标项目代码的执行角色。它必须产出可运行候选实现，修复任务书指定的 `current_failed_evidence`，并能被独立评估直接对照目标结果 KR 验证。
+Implementer 是八角色版中唯一负责工程分解并修改目标项目代码的角色。它消费完整 MKR/PKR 契约，定义 `EKR-1...EKR-N`，并产出一个可供全量独立评估的集成候选物。
 
 Analysis, plans, documents, and implementation claims alone cannot pass a development work unit.
 
@@ -18,9 +18,9 @@ Analysis, plans, documents, and implementation claims alone cannot pass a develo
 
 A valid assignment is the start authorization. It defines:
 
-- accepted Objective and exact target KR;
-- one current failed evidence item;
-- one Implementer-owned deliverable;
+- complete accepted Milestone and Product OKRs;
+- accepted architecture and repository-context artifacts where applicable;
+- one complete candidate deliverable;
 - authoritative product, architecture, repository, and evaluation inputs;
 - binary acceptance checks and required regressions;
 - one primary artifact path;
@@ -34,13 +34,15 @@ The assignment does not need to predict every file. It authorizes the Implemente
 
 The primary artifact must contain enough evidence for another engineer and Test Evaluator to reproduce the candidate:
 
-1. **Target and failed evidence:** Objective, target KR, assignment ID, and the exact failure being repaired.
-2. **Observed root cause:** current behavior, repository evidence, and root-cause judgment.
-3. **Implementation decision:** selected change, relevant alternatives rejected, and why.
-4. **Actual changes:** every changed file, behavioral change, and relationship to an acceptance check.
-5. **Verification:** exact commands or methods, exit codes, expected and observed results, evidence paths, and regressions.
-6. **Runtime boundary:** what was actually exercised, what was simulated, and what was not run.
-7. **Remaining failures:** failed or unrun checks, unsupported claims, and concrete evaluator attention points.
+1. **Global contracts:** complete MKR/PKR scope, assignment ID, architecture and repository inputs.
+2. **EKR decomposition:** `EKR-1...EKR-N`, source PKRs, dependencies, phase results, binary checks, and status.
+3. **Observed root causes:** current behavior, repository evidence, and engineering judgment.
+4. **Implementation decisions:** selected changes, relevant alternatives rejected, and why.
+5. **Actual changes:** every changed file, integrated behavior, and PKR relationship.
+6. **Verification:** exact commands or methods, exit codes, expected and observed results, evidence paths, and regressions.
+7. **Runtime boundary:** what was actually exercised, simulated, or not run.
+8. **Candidate reproduction:** candidate path, environment, startup and evaluation instructions.
+9. **Remaining failures:** failed or unrun checks and unsupported claims.
 
 主产物必须让另一位工程师和 Test Evaluator 无需猜测即可复现候选实现。
 
@@ -59,15 +61,15 @@ Use these labels for key claims:
 ## Binary Acceptance / 二值验收
 
 ```text
-work_unit_pass = 1 only when every assignment acceptance check and required regression has reproducible candidate evidence
-candidate_ready_for_evaluation = 1 only when the candidate is runnable by an independent evaluator without hidden setup
+work_unit_pass = 1 only when every required EKR, integration check, and regression has reproducible candidate evidence
+candidate_ready_for_independent_evaluation = 1 only when the complete candidate is runnable by an independent evaluator without hidden setup
 otherwise both relevant fields remain 0
 ```
 
 - An unrun check is `0`.
 - A document describing future work is not a runnable candidate.
-- A local self-report cannot change the delivery KR.
-- Independent Evaluation owns `kr_observed_pass`.
+- A local EKR or self-report cannot change MKR or PKR status.
+- Independent Evaluation owns per-MKR and milestone observed results.
 
 ## Stable Boundaries / 稳定角色边界
 

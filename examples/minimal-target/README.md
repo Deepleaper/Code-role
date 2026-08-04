@@ -21,6 +21,8 @@ python scripts/init_loop_workflow.py "/path/to/Target Project" \
 code-role/
   README.md
   START-HERE.md
+  DIALOGUE-CONTROL.md
+  OKR-STANDARD.md
   LOOP.md
   milestone-board.md
   project-config.md
@@ -30,7 +32,9 @@ code-role/
     engineering.md
     independent-evaluation.md
   templates/
-    assignment.md
+    product-assignment.md
+    engineering-assignment.md
+    evaluation-assignment.md
     product-return.md
     engineering-return.md
     evaluation-return.md
@@ -65,6 +69,6 @@ Open a Project Manager conversation and use:
 然后根据 code-role/milestone-board.md 定义或恢复当前里程碑 OKR。
 ```
 
-After the user accepts the OKR, Project Manager selects one exact failed evidence item keeping a KR at `0` and prints one copy-ready assignment. Paste that assignment into the selected workstation conversation. A valid assignment starts immediately.
+After the user accepts the complete Milestone OKR, Project Manager sends the complete MKR set to Product Strategy. Product Strategy returns one complete Product OKR covering every MKR. Project Manager then sends the accepted MKR/PKR contracts to Engineering. Engineering alone decomposes them into EKR stages and produces the complete runnable candidate. Independent Evaluation starts only after that candidate gate passes.
 
-用户确认 OKR 后，项目经理选择一个导致 KR 仍为 `0` 的精确失败证据，并输出一份可复制任务书。把任务书贴入对应工位对话，完整任务书即直接启动。
+用户确认完整里程碑 OKR 后，项目经理先把全部 MKR 交给产品策略；产品策略返回覆盖所有 MKR 的完整产品 OKR；项目经理再把已接受的 MKR/PKR 契约交给工程；只有工程可以拆分 EKR 并产出完整可运行候选物。候选物门禁通过后才能启动独立评估。

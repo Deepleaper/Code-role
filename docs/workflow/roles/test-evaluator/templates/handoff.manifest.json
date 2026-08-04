@@ -6,7 +6,7 @@
   "status": "draft",
   "created_at": "YYYY-MM-DD",
   "updated_at": "YYYY-MM-DD",
-  "summary": "Template manifest for a Test Evaluator packet. Test Evaluator confirms evaluation mechanism and baseline, then evaluates implementation evidence.",
+  "summary": "Template manifest for a post-candidate Test Evaluator artifact covering the complete Milestone and Product OKRs.",
   "artifact_policy": {"primary_artifact_from_assignment": true, "required_primary_artifact_count": 1, "documents_are_optional_annexes": true},
   "documents": [
     {"path": "evaluation-sop.md", "type": "evaluation_sop", "required": false, "description": "Consumption record for the active milestone evaluation SOP."},
@@ -36,8 +36,11 @@
   },
   "return_to": "workflow-orchestrator",
   "quality_gate": {
+    "candidate_gate_valid": 0,
     "evaluation_executed": 0,
-    "kr_observed_pass": 0,
+    "product_contract_pass": 0,
+    "milestone_observed_pass": 0,
+    "mkr_results": [],
     "required_check_results": [],
     "failed_check_ids": [],
     "allowed_values": [0, 1]

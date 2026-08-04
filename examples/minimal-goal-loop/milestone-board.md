@@ -9,31 +9,35 @@
 | Project | `Reporter CLI` |
 | Milestone | `deterministic-json-export` |
 | Objective accepted | `1` |
+| Delivery stage | `milestone_decision` |
+| Milestone OKR accepted | `1` |
+| Product OKR accepted | `1` |
+| Runnable candidate ready | `1` |
+| Independent evaluation executed | `1` |
 | Milestone pass | `1` |
 
 ## Objective / 目标
 
 Users can export a report as stable JSON without changing the existing text-output contract.
 
-## Key Results / 关键结果
+## Milestone Key Results / 里程碑关键结果
 
-| KR | Observable delivered outcome | Binary threshold | Required independent evidence | Accepted evidence path | Pass |
-| --- | --- | --- | --- | --- | ---: |
-| KR-1 | Users can run JSON export for fixtures A, B, and C while existing text export remains unchanged. | 3/3 schema-valid and deterministic JSON fixtures; 12/12 text regressions unchanged. | Fresh evaluator command logs, JSON artifacts, schema checks, SHA-256 pairs, and regression output. | `attachments/independent-evaluation-report.md` | 1 |
+| MKR | Observable delivered outcome | Binary threshold | Measurement | Required independent evidence | Accepted evidence path | Pass |
+| --- | --- | --- | --- | --- | --- | ---: |
+| MKR-1 | Users can export fixtures A, B, and C as valid deterministic JSON. | 3/3 fixtures pass schema and repeated-run SHA-256 equality. | Fresh evaluator run against the candidate. | Raw JSON, schema output, and hash pairs. | `08-independent-evaluation-report.md` | 1 |
+| MKR-2 | Existing text-output users observe no contract change. | 12/12 frozen text regressions are byte-identical. | Fresh evaluator regression run against the candidate. | Command log and fixture diff output. | `08-independent-evaluation-report.md` | 1 |
 
-## Current Delivery Loop / 当前交付闭环
+## Accepted Global Artifacts / 已接受全局产物
 
 | Field | Value |
 | --- | --- |
-| Target KR | `KR-1` |
-| Current failed evidence | `none` |
 | Current owner | `project-manager` |
-| Assignment ID | `json-export-eval-001` |
-| Work unit | `full_evaluation` |
-| Iteration | `1 / 3` |
-| Primary artifact path | `attachments/independent-evaluation-report.md` |
-| Evaluation contract path | `01-pm-engineering-assignment.md#acceptance_checks` |
-| Latest independent evidence | `JSON-1=1, JSON-2=1, REG-1=1` |
+| Milestone contract | `milestone-board.md#milestone-key-results--里程碑关键结果` |
+| Product contract | `02-product-contract.md` |
+| Engineering delivery | `05-engineering-delivery.md` |
+| Runnable candidate | `dist/reporter-cli-candidate` |
+| Independent evidence | `08-independent-evaluation-report.md` |
+| Current blocking contract | `none` |
 | Human decision required | `release decision` |
 
 ## Non-Goals / 非目标

@@ -4,7 +4,7 @@ Use the Full Profile when a milestone benefits from separate research, product, 
 
 当复杂或高风险 milestone 需要独立的研究、产品、架构、上下文、实现、评估和最终审计责任时，使用八角色完整版。
 
-The Full Profile follows the shared [Dialogue Control Contract](../dialogue-control.md). It keeps separate professional ownership without turning role sequence or packet production into the delivery goal.
+The Full Profile follows the shared [Dialogue Control Contract](../dialogue-control.md) and [OKR Standard](../okr-standard.md). It keeps separate professional ownership while enforcing the dependency order from complete product definition to code to independent evaluation.
 
 八角色遵守共享[对话控制契约](../dialogue-control.md)：保留独立专业责任，但不把角色顺序或 packet 生产当成交付目标。
 
@@ -12,13 +12,13 @@ The Full Profile follows the shared [Dialogue Control Contract](../dialogue-cont
 
 | Role | Professional ownership |
 | --- | --- |
-| Workflow Orchestrator / 项目经理 | Objective, binary KRs, artifact acceptance, blocker ownership, routing, closure |
-| Researcher / 研究员 | Current-project evidence, frontier research, evidence map, risks, unknowns |
-| Product / PRD / 产品经理 | User value, behavior, scope, non-goals, binary acceptance, claim boundary |
-| Architect / 架构师 | Contracts, boundaries, interfaces, data/state flow, test strategy, architecture risks |
-| Code Context / 上下文工程师 | Exact file/function/field/test/artifact seams and implementation constraints |
-| Implementer / 实现工程师 | Project changes, tests, verification, candidate evidence |
-| Test Evaluator / 测试评估师 | Frozen evaluation baseline and complete independent evaluation |
+| Workflow Orchestrator / 项目经理 | Complete Milestone OKR (`MKR`), stage acceptance, routing, closure |
+| Researcher / 研究员 | Complete milestone evidence base, frontier research, risks, unknowns |
+| Product / PRD / 产品经理 | Complete Product OKR (`PKR`) covering every MKR |
+| Architect / 架构师 | Whole-product contracts, boundaries, interfaces, data/state flow, risks |
+| Code Context / 上下文工程师 | Complete PKR-to-repository mapping and implementation facts |
+| Implementer / 实现工程师 | Engineering `EKR` decomposition, code, integration, regressions, complete candidate |
+| Test Evaluator / 测试评估师 | Post-candidate complete MKR/PKR independent evaluation |
 | Reviewer / 复核审计 | Orchestrator and role-by-role drift audit against the original milestone |
 
 Each role uses a separate configured conversation. Every professional role returns to Workflow Orchestrator. There is no role-to-role self-routing.
@@ -29,8 +29,8 @@ All non-Implementer roles produce governance or professional documents only. Imp
 
 ## Active Control / 活跃控制
 
-- `milestone-contract.md` anchors Objective, KRs, evidence, non-goals, and claim boundaries.
-- Orchestrator state records the current target, accepted artifact pointers, and blocker owner.
+- `milestone-contract.md` anchors the complete Objective, MKRs, evidence, non-goals, and claim boundaries.
+- Orchestrator state records the current global stage and accepted artifact pointers, not Implementer EKR detail.
 - One assignment-named primary professional artifact is the substantive handoff; annexes are optional.
 - `handoff.manifest.json` is packet index and provenance metadata, not a completion gate.
 - `ready_for_next_role` and `packet.lock.json` are optional strict-audit controls only when explicitly requested.
@@ -40,22 +40,29 @@ All non-Implementer roles produce governance or professional documents only. Imp
 
 ```mermaid
 flowchart LR
-    U["User accepts Objective and KRs"] --> PM["Workflow Orchestrator"]
-    PM --> R["Selected professional role"]
-    R --> PM
-    PM --> D{"Substantive evidence gap"}
-    D --> R
-    PM --> X["All KRs = 1 and required audit = 1"]
+    U["User accepts complete MKRs"] --> PM["Workflow Orchestrator"]
+    PM --> P["Research and complete Product OKR"]
+    P --> PM
+    PM --> A["Architecture and Code Context"]
+    A --> PM
+    PM --> I["Implementer: EKR stages and candidate"]
+    I --> PM
+    PM --> T["Test Evaluator: complete MKR and PKR scope"]
+    T --> PM
+    PM --> V["Reviewer when required"]
+    V --> PM
+    PM --> X["All MKRs = 1 and required audit = 1"]
 ```
 
-Workflow Orchestrator chooses the owner of one exact failed evidence item. A complete role-specific assignment starts immediately. The role writes one primary professional artifact, sends one short return, and does not choose the next role.
+Workflow Orchestrator accepts one complete global stage at a time. Product / PRD is global, Implementer owns EKR decomposition, Test Evaluator starts only after candidate readiness, and every professional role returns to Workflow Orchestrator.
 
 ## Binary Rules / 二值规则
 
-- Every accepted KR is `0` or `1`.
+- Every accepted MKR is `0` or `1`.
 - Required unrun, missing, inferred, or qualitative evidence is `0`.
-- `work_unit_pass=1` means the current role's assigned checks passed; it does not pass the KR.
-- `evaluation_executed=1` requires the complete assigned evaluation to run; `kr_observed_pass=1` separately requires every frozen target-KR check to pass independently.
+- `work_unit_pass=1` means a global professional stage passed; it does not pass an MKR.
+- `candidate_ready_for_independent_evaluation=1` requires every required EKR, integration check, and regression to pass.
+- `evaluation_executed=1` requires the complete MKR/PKR evaluation to run; `milestone_observed_pass=1` requires every MKR to pass independently.
 - `review_gate_pass=1` requires every assigned final-audit check to pass.
 - `partial_pass`, `pass_with_residual_risk`, and similar gate states are invalid.
 
@@ -94,6 +101,7 @@ See [Project Bootstrap](project-bootstrap.md) and [Role Configuration Guide](rol
 ## Protocols / 协议
 
 - [Dialogue Control](../dialogue-control.md)
+- [OKR Definition And Decomposition Standard](../okr-standard.md)
 - [Discussion-First Protocol](discussion-first-protocol.md)
 - [Role Completion Contract](role-completion-contract.md)
 - [Milestone Contract](milestone-contract.md)

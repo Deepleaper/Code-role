@@ -23,11 +23,14 @@ A role is not complete because it wrote a document, changed code, or ran a comma
 
 Shared rules:
 
-- Project Manager owns the milestone.
-- Professional roles own professional conclusions.
+- Project Manager owns one complete milestone OKR: one Objective and the full `MKR-1...MKR-N` outcome set.
+- Product owns one complete Product OKR: one Product Objective and the full `PKR-1...PKR-N` contract covering every MKR.
+- Engineering alone decomposes the accepted product contract into staged `EKR-1...EKR-N` execution units.
+- Professional roles own their professional conclusions; an EKR cannot redefine or pass an MKR or PKR.
 - Required completion conditions are explicit before work is accepted.
 - Missing required evidence equals failure, not partial success.
 - Implementation cannot approve itself.
+- Software delivery follows Product -> Engineering -> Independent Evaluation. Evaluation cannot start before a complete runnable candidate exists.
 - Chat is an interaction surface, not the authoritative project state.
 - Generated target-project `code-role/` content is local assistance, not product runtime or release content.
 
@@ -71,21 +74,21 @@ Workstations:
 
 | Workstation | Owns |
 | --- | --- |
-| Project Manager | Objective, binary outcome KRs, current failed evidence, routing, iteration budget, evidence acceptance, milestone closure |
-| Product Strategy | User value, product behavior, scope, thresholds, non-goals, claim boundaries |
-| Engineering | Engineering research, architecture when needed, code-context mapping when needed, implementation, tests, candidate evidence |
-| Independent Evaluation | Evaluation baseline, datasets, graders, commands, thresholds, targeted checks, regression checks, observed binary results |
+| Project Manager | Complete milestone Objective and `MKR-*` set, global stage control, iteration budget, evidence acceptance, milestone closure |
+| Product Strategy | Complete Product Objective and `PKR-*` set covering all MKRs, user value, product behavior, scope, thresholds, non-goals, claim boundaries |
+| Engineering | `EKR-*` stage decomposition, engineering research, architecture and code context when needed, implementation, tests, complete runnable candidate evidence |
+| Independent Evaluation | Post-candidate executable SOP, datasets, graders, commands, thresholds, complete MKR/PKR evaluation, observed binary results |
 
 The Minimal Profile uses:
 
 - one authoritative `milestone-board.md`;
 - one role-specific assignment template for each professional workstation;
 - one short return template per professional workstation;
-- one required primary professional artifact per work unit under `code-role/work/<milestone>/`;
+- one required primary professional artifact per global delivery stage under `code-role/work/<milestone>/`;
 - optional evidence annexes;
-- dynamic routing for one exact failed evidence item at a time.
+- one mandatory software-delivery order: complete Product OKR -> Engineering candidate -> Independent Evaluation -> Project Manager decision.
 
-It does not require packets, manifests, readiness transitions, locks, or a fixed role chain.
+It does not require packets, manifests, readiness transitions, or locks.
 
 ### 5.2 Full Profile: Eight Roles
 
@@ -111,11 +114,11 @@ The Full Profile uses:
 - one assignment-named primary professional artifact per work unit;
 - optional role-specific versioned packets and `handoff.manifest.json` provenance;
 - binary role completion contracts;
-- a frozen evaluation SOP;
+- a post-candidate executable evaluation SOP derived from accepted MKR/PKR thresholds;
 - optional strict packet locking when immutable evidence is required;
 - final Reviewer audit of Orchestrator and every role's current final output.
 
-The Full Profile supports `full-chain`, `mini-chain`, `patch-chain`, `docs-only-chain`, and `research-only`, but every professional role returns to Orchestrator before another role is started.
+The Full Profile supports `full-chain`, `mini-chain`, `patch-chain`, `docs-only-chain`, and `research-only`. For software-delivery milestones, those profiles may vary optional Research, Architecture, Code Context, or Reviewer depth, but they cannot skip Product / PRD, Implementer, or post-candidate Test Evaluator. Every professional role returns to Orchestrator before another role is started.
 
 ## 6. Profile Selection
 
@@ -149,51 +152,60 @@ Do not switch profiles silently during a milestone. A change requires:
 ### FR-1: Binary Milestone Definition
 
 - Project Manager defines one Objective.
-- A milestone has no more than five observable user, business, product, or runtime Key Results by default.
-- Every KR has a pass condition and required independent evidence.
-- Each KR is `0` or `1`.
+- Project Manager defines the complete milestone outcome set as `MKR-1...MKR-N`; a milestone has no more than five by default.
+- Every MKR has an observable outcome, binary pass threshold, measurement method, evidence requirement, and claim boundary.
+- Each MKR is `0` or `1`.
 - Process artifacts are methods or evidence, not KRs, unless the user explicitly accepts the artifact itself as the milestone deliverable.
 
-### FR-2: One Current Failed Evidence Item
+### FR-2: Complete Product OKR
 
-- Each iteration targets exactly one failed or missing evidence item keeping an accepted KR at `0`.
-- Regression checks may cover other KRs, but they cannot become hidden delivery targets.
-- Project Manager records the failed evidence, its owner, the current work unit, accepted primary artifact, and iteration count.
+- Product Strategy or Product / PRD defines one Product Objective and the complete `PKR-1...PKR-N` set for the milestone.
+- The Product OKR maps every MKR to users, scenarios, product behavior, scope, acceptance rules, and claim boundaries.
+- Product cannot send one MKR at a time to Engineering and cannot define Engineering execution stages.
+- Product completion remains `0` while any accepted MKR lacks product coverage.
 
-### FR-3: Professional Ownership
+### FR-3: Engineering Execution KRs
+
+- Engineering consumes the complete accepted MKR and PKR contracts.
+- Engineering alone decomposes delivery into ordered `EKR-1...EKR-N` stages with dependencies, artifacts, verification, and stop conditions.
+- Each EKR is `0` or `1`, but EKR pass does not imply PKR or MKR pass.
+- Engineering must deliver one complete runnable candidate before Independent Evaluation can start.
+
+### FR-4: Professional Ownership
 
 - Project Manager does not invent or rewrite professional conclusions.
 - Every professional role has a role-specific assignment and short return contract.
-- Every work unit has one required primary professional artifact; annexes and packet metadata are optional.
+- Every global stage has one required primary professional artifact; Engineering may add EKR evidence annexes and packet metadata is optional.
 - Detailed professional reasoning is stored in that role-owned primary artifact.
 - Missing required professional evidence makes the assignment fail; imperfect chat formatting does not erase evidence already present in the artifact.
 
-### FR-4: Independent Evaluation
+### FR-5: Independent Evaluation
 
-- Evaluation criteria, data, graders, environment, commands, and thresholds are frozen before optimization.
-- Evaluation covers the complete required milestone scope, not only the latest diff.
+- Independent Evaluation starts only when the complete runnable candidate and reproducible Engineering evidence exist.
+- The evaluator records an executable SOP from already accepted MKR/PKR thresholds before inspecting candidate results; it does not redesign the product contract.
+- Evaluation covers every MKR and PKR, not one EKR or only the latest diff.
 - Targeted and regression checks are both required when specified.
 - Unrun required checks equal `0`.
 - Engineering or Implementer cannot self-pass.
 
-### FR-5: Failure Loop
+### FR-6: Failure Loop
 
-- Evaluation failure must include observed evidence and an actionable owner when known.
-- Project Manager routes the failure to Product Strategy/Product, Engineering/Implementer, or evaluation-definition repair.
-- The Minimal Profile defaults to three failed Engineering-to-Evaluation attempts per KR before stop and reframe.
-- The Full Profile records current failed evidence in compact Orchestrator state; optional packet provenance may preserve audit history.
+- Evaluation failure must include the failed MKR/PKR IDs, observed evidence, and correction owner when known.
+- Project Manager decides whether the complete product contract needs correction, Engineering needs a new EKR repair plan, or the evaluation execution itself is invalid.
+- The Minimal Profile defaults to three failed Engineering-to-Evaluation candidate attempts before stop and reframe.
+- The Full Profile records the current global delivery stage and unmet contract in compact Orchestrator state; optional packet provenance may preserve audit history.
 
-### FR-6: Local Initialization
+### FR-7: Local Initialization
 
 - `scripts/init_loop_workflow.py` initializes the four-workstation Minimal Profile.
 - `scripts/init_project_workflow.py` initializes the eight-role Full Profile.
 - Both generate local role-control material without changing product source files.
 - Both exclude generated `code-role/` through local `.git/info/exclude` when the target is already a Git repository.
 
-### FR-7: Profile Validation
+### FR-8: Profile Validation
 
-- Minimal validation confirms exactly four active prompts, required templates, the binary loop contract, and the independent evaluation contract.
-- Full validation tests role prompts, outcome-KR rules, single-artifact work units, workflow protocol, optional packet metadata, and role completion gates.
+- Minimal validation confirms exactly four active prompts, complete MKR/PKR contracts, Engineering-owned EKR decomposition, candidate gating, and post-candidate independent evaluation.
+- Full validation tests role prompts, MKR/PKR/EKR authority, mandatory stage order, global-stage artifacts, workflow protocol, optional packet metadata, and role completion gates.
 - Repository tests prevent documentation and generated prompt contracts from drifting.
 
 ## 8. Non-Goals
@@ -216,9 +228,9 @@ The product succeeds when:
 
 1. A user can choose the correct profile without guessing which one is "current."
 2. A new target project can be initialized with one documented command.
-3. Every active role knows its exact failed evidence target, professional deliverable, binary acceptance checks, authoritative inputs, and primary artifact path.
+3. Every active role knows its complete global-stage contract, professional deliverable, binary acceptance checks, authoritative inputs, and primary artifact path.
 4. Project Manager can determine milestone status from objective evidence.
-5. Independent Evaluation can reproduce the required checks without relying on Implementer judgment.
+5. Engineering can stage execution with EKR plans without changing global outcomes, and Independent Evaluation can reproduce all MKR/PKR checks without relying on Implementer judgment.
 6. The next role has less ambiguity than the previous role.
 7. Small milestones can use the Minimal Profile without packet overhead.
 8. Complex milestones can use the Full Profile without losing professional or audit traceability.

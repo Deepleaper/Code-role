@@ -1,7 +1,9 @@
 # Quality Gate / 质量门禁
 
 - evaluation_executed: 0 | 1
-- kr_observed_pass: 0 | 1
+- product_contract_pass: 0 | 1
+- milestone_observed_pass: 0 | 1
+- mkr_results: <MKR id -> 0|1>
 - required_checks_total:
 - required_checks_passed:
 - failed_check_ids:
@@ -13,4 +15,4 @@
 - evaluation_baseline_status: confirmed / unconfirmed / blocked
 - failed_check_owner: product-prd / architect / code-context / implementer / test-evaluator / workflow-orchestrator / user / none
 
-`evaluation_executed=1` requires the complete assigned evaluation mode to run with evaluator-owned evidence. `kr_observed_pass=1` is allowed only in `full_evaluation` when every frozen target-KR check passes. Any required unrun, missing, inferred, or unsupported check keeps the relevant value at `0`.
+`evaluation_executed=1` requires a valid runnable-candidate gate and the complete MKR/PKR evaluation to run with evaluator-owned evidence. `milestone_observed_pass=1` is allowed only when every accepted MKR passes. Any required unrun, missing, inferred, contradictory, or unsupported check keeps the relevant value at `0`.

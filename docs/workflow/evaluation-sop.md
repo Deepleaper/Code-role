@@ -1,46 +1,35 @@
 # Evaluation SOP / 评估 SOP
 
-The milestone evaluation SOP is frozen before candidate optimization and remains the stable acceptance anchor.
+Independent Evaluation records this SOP only after a complete runnable candidate exists and before candidate results are inspected. The accepted MKR/PKR contracts already freeze product outcomes, thresholds, measurement conditions, and claim boundaries.
 
-评估 SOP 必须在候选优化前冻结，并作为稳定验收锚点。
+独立评估只在完整可运行候选物存在后、查看候选结果之前记录本 SOP。产品结果、阈值、测量条件和 claim boundary 已由 MKR/PKR 契约提前冻结。
 
 ```text
 milestone:
 sop_version:
 sop_confirmed: 0 | 1
 confirmed_by:
-confirmed_at:
 
+candidate_gate:
+  candidate_ready_for_independent_evaluation: 0 | 1
+  engineering_artifact_path:
+  candidate_artifact_path:
+
+milestone_okr_path:
+product_okr_path:
 evaluation_subject:
 evaluation_objective:
-
 datasets:
-- id:
-  version_or_hash:
-  inclusion_rule:
-  exclusion_rule:
-
 graders:
-- id:
-  deterministic: 0 | 1
-  calibration_reference:
-
 environment:
-- field:
-  value:
 
 required_checks:
-| Check ID | Expected observation | Command or method | Required evidence | Pass threshold |
-| --- | --- | --- | --- | --- |
+| Check ID | MKR/PKR mapping | Expected observation | Command or method | Required evidence | Pass threshold |
+| --- | --- | --- | --- | --- | --- |
 
 required_regressions:
-- check_id:
-
 positive_cases:
-- case_id:
-
 negative_cases:
-- case_id:
 
 claim_boundary:
 - allowed:
@@ -49,36 +38,50 @@ claim_boundary:
 accepted_time_or_cost_budget:
 ```
 
-## Binary Evaluation / 二值评估
+## Candidate Gate / 候选物门禁
+
+Formal evaluation is invalid unless:
 
 ```text
-check_pass = 1 only when expected observation and evidence satisfy the frozen threshold
-check_pass = 0 otherwise
-evaluation_executed = 1 only when every required check was run under this frozen SOP with evaluator-owned evidence
-evaluation_executed = 0 otherwise
-kr_observed_pass = 1 only when evaluation_executed = 1 and every target-KR check_pass = 1
-kr_observed_pass = 0 otherwise
+candidate_ready_for_independent_evaluation = 1
+candidate_artifact_exists = 1
+complete_mkr_contract_exists = 1
+complete_pkr_contract_exists = 1
 ```
 
-Required `not_run`, missing, inferred, unsupported, or environment-invalid checks are `0`. Risks and blocker codes are recorded separately and never create a third gate status.
+If any condition is `0`, set `evaluation_executed=0` and return the missing gate. Do not evaluate product documents, architecture, EKR activity, or unfinished code.
 
-## Independence / 独立性
+## SOP Recording Rule / SOP 记录规则
 
-- Implementer reports are leads, not evaluator-observed evidence.
-- Evaluate the complete frozen scope, not only the latest diff.
-- Prefer deterministic outcome checks.
-- Calibrate model graders with human-reviewed reference cases.
-- Record exact commands, inputs, versions, outputs, and artifact paths.
-- Test both required and forbidden behavior.
+The evaluator derives executable methods from accepted MKR/PKR contracts. Before inspecting candidate results, record datasets, graders, commands, environment, thresholds, positive and negative cases, regressions, budgets, and claim boundaries.
 
-## SOP Change / SOP 变更
+The evaluator may not invent or loosen product thresholds. If accepted MKR/PKR meaning is not executable, report a product-contract blocker instead of changing it.
 
-Before candidate results, the user may accept a clarified SOP version. After candidate results exist, any SOP change requires:
+## Execution Evidence / 执行证据
+
+Record exact inputs, versions, commands, environment, outputs, raw artifact paths, and evaluator identity. Keep Implementer-reported verification separate from evaluator-observed evidence.
+
+Required checks not run are `0`. Scope may not be narrowed to one EKR, latest diff, or convenient subset.
+
+## Binary Result / 二值结果
+
+```text
+evaluation_executed: 0 | 1
+product_contract_pass: 0 | 1
+MKR-1...MKR-N: 0 | 1
+milestone_observed_pass: 0 | 1
+```
+
+`milestone_observed_pass=1` only when every required check ran and every accepted MKR passed.
+
+## Change Rule / 变更规则
+
+After candidate results are observed, any SOP method change requires:
 
 ```text
 user_approved_change = 1
 new_sop_version_created = 1
-affected_evidence_rerun = 1
+all_affected_evidence_rerun = 1
 ```
 
-Until all three are true, affected evaluation evidence is invalid for the new SOP version, so `evaluation_executed=0` and `kr_observed_pass=0`.
+Until all three are true, affected evaluation evidence is invalid.

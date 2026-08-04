@@ -83,11 +83,11 @@ May also write its own packet under:
 docs/workflow/roles/implementer/reports/<milestone>/packet-vNNN/
 ```
 
-Must not change Objective, KR, frozen evaluation inputs, public claim boundaries, task-specific exclusions, or upstream packets.
+Must not change the accepted Objective, MKRs, PKRs, product acceptance inputs, public claim boundaries, task-specific exclusions, or upstream artifacts. It may revise only its own EKR decomposition when repository facts require it.
 
 ## Test Evaluator / 测试评估师
 
-May read and execute everything required by the frozen evaluation SOP, including repository code, tests, datasets, candidate artifacts, and runtime outputs.
+May read and execute everything required by the post-candidate evaluation assignment and recorded executable SOP, including repository code, tests, datasets, candidate artifacts, and runtime outputs.
 
 Writes only:
 
@@ -95,11 +95,11 @@ Writes only:
 docs/workflow/roles/test-evaluator/reports/<milestone>/packet-vNNN/
 ```
 
-Must not repair the candidate, alter the frozen SOP after seeing results, or turn Implementer self-report into independent evidence.
+Must not repair the candidate, alter the recorded SOP after seeing results without user approval and rerun, or turn Implementer self-report into independent evidence.
 
 ## Reviewer / 复核审计
 
-May read the original milestone anchor, Workflow Orchestrator outputs, every accepted final role artifact, frozen evaluation SOP, evaluator evidence, relevant source/test evidence, and Git diff needed for the assigned full-flow audit.
+May read the original milestone anchor, Workflow Orchestrator outputs, every accepted final role artifact, recorded evaluation SOP, evaluator evidence, relevant source/test evidence, and Git diff needed for the assigned full-flow audit.
 
 Writes only:
 

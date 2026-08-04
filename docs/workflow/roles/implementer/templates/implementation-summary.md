@@ -4,8 +4,10 @@
 
 - milestone:
 - objective:
-- target KR:
-- current failed evidence:
+- complete Milestone OKR path:
+- complete Product OKR path:
+- EKR decomposition:
+- candidate readiness:
 - role deliverable:
 - required primary artifact:
 

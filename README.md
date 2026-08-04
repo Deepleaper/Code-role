@@ -43,9 +43,9 @@ python3 scripts/init_loop_workflow.py "/absolute/path/to/your-project" \
 python3 scripts/init_loop_workflow.py "/absolute/path/to/your-project" --check
 ```
 
-Then open the generated `code-role/role-instance-prompts/project-manager.md`, define one Objective with binary outcome Key Results, and let the Project Manager route the owner of the first failed or missing evidence item.
+Then open the generated `code-role/role-instance-prompts/project-manager.md` and define one complete Milestone OKR. Product Strategy defines the complete Product OKR, Engineering decomposes execution into EKR stages and builds the candidate, and Independent Evaluation evaluates only the complete runnable result.
 
-然后打开生成的 `code-role/role-instance-prompts/project-manager.md`，定义一个 Objective 和可二值验收的结果型 Key Results，由项目经理调度第一个失败或缺失证据的责任工位。
+然后打开生成的 `code-role/role-instance-prompts/project-manager.md`，定义完整里程碑 OKR。产品策略完成全局 Product OKR，工程自行拆分 EKR 并完成代码，独立评估只验收完整可运行候选物。
 
 See the [complete four-workstation walkthrough](examples/minimal-goal-loop/README.md) to inspect one milestone from PM Assignment through independent evaluation and closure.
 
@@ -57,7 +57,8 @@ See the [complete four-workstation walkthrough](examples/minimal-goal-loop/READM
 | --- | --- |
 | One accountable outcome | The Project Manager owns one accepted Objective and its binary KRs. |
 | Outcome KRs only | Delivery KRs describe observable user, business, product, or runtime outcomes; process artifacts are methods or evidence. |
-| One failed evidence item at a time | Every assignment targets one exact reason a current KR remains `0`, not an open-ended role agenda. |
+| Three explicit OKR layers | Project Manager owns complete MKRs, Product owns complete PKRs, and Engineering alone decomposes EKR stages. |
+| Mandatory software order | Complete product contract -> complete engineering candidate -> independent evaluation. |
 | Evidence before status | Unrun checks, missing evidence, and partial results remain `0`. |
 | Independent acceptance | Engineering produces candidate evidence; Independent Evaluation decides observed pass/fail. |
 | One primary artifact | Every role has one required professional deliverable; annexes and packet metadata are optional. |
@@ -72,7 +73,7 @@ Code-role 来自两个真实的私有 AI 工程项目。这两个案例的价值
 | Case | Evidence that looked strong | What still remained `0` | Control value |
 | --- | --- | --- | --- |
 | [DeepBrain memory runtime](docs/case-studies/deepbrain.md) | 1,750 unit tests, 142 frontend/runtime tests, S50 `50/50`, LongMemEval-S `499/500`, and `100/100` grounded source joins | Fair comparator, representative raw benchmark reruns, repair proof, clean reproducibility, and production cost/SLO evidence | Independent Evaluation held the milestone and Reviewer route at `0` instead of turning a `73/100` partial result into “production ready.” |
-| [Leaper Agent enterprise runtime](docs/case-studies/leaper-agent.md) | A detailed Hermes comparison plan and a professional-looking evaluation baseline | Real task artifacts, isolated holdout, committed grader mechanism, concrete same-condition runtime, and canonical integrity evidence | The Project Manager rejected the first baseline and kept Engineering blocked until evaluation became executable rather than declarative. |
+| [Leaper Agent enterprise runtime](docs/case-studies/leaper-agent.md) | A historical pre-code Hermes comparison baseline that looked professional but was not executable | Real task artifacts, isolated holdout, committed grader mechanism, concrete same-condition runtime, and canonical integrity evidence | The case exposed both an evidence defect and a role-order defect; the current model keeps acceptance requirements in Product, then routes Engineering, then post-candidate Evaluation. |
 
 Read the complete [two-case launch story](docs/promotion/TWO-CASE-LAUNCH-STORY.md).
 
@@ -120,10 +121,10 @@ Do not switch profiles silently in the middle of a milestone. A profile change r
 
 | Workstation | Responsibility |
 | --- | --- |
-| Project Manager / 项目经理 | Defines Objective and binary KRs, selects one current `KR=0`, routes work, accepts evidence, and closes the milestone |
-| Product Strategy / 产品策略 | Resolves user value, behavior, scope, thresholds, and claim boundaries |
-| Engineering / 工程 | Performs engineering research, architecture and context work when needed, implementation, tests, and candidate evidence |
-| Independent Evaluation / 独立评估 | Freezes the evaluation baseline and independently runs the complete required evaluation |
+| Project Manager / 项目经理 | Defines the complete Milestone Objective and `MKR-*` set, controls global stages, accepts independent evidence, and closes the milestone |
+| Product Strategy / 产品策略 | Defines one complete Product Objective and `PKR-*` set covering every MKR, including behavior, scope, thresholds, non-goals, and claim boundaries |
+| Engineering / 工程 | Alone decomposes `EKR-*` stages, performs necessary research/architecture/context work, implements and verifies the complete runnable candidate |
+| Independent Evaluation / 独立评估 | After candidate readiness, records the executable SOP from accepted MKR/PKR thresholds and independently runs the complete evaluation |
 
 Research is a capability inside Product Strategy and Engineering. Architecture and code-context mapping are Engineering modes. They are not mandatory stages.
 
@@ -131,22 +132,21 @@ Research is a capability inside Product Strategy and Engineering. Architecture a
 
 ```mermaid
 flowchart LR
-    U["User accepts Objective and KRs"] --> PM["Project Manager selects one KR=0"]
-    PM --> D{"What evidence is missing?"}
-    D -- "Product definition" --> P["Product Strategy"]
-    D -- "Evaluation baseline" --> V0["Independent Evaluation: baseline freeze"]
-    D -- "Candidate implementation" --> E["Engineering"]
-    E --> V["Independent Evaluation: full evaluation"]
+    U["User accepts complete MKR set"] --> PM["Project Manager"]
+    PM --> P["Product Strategy: complete PKR set"]
     P --> PM
-    V0 --> PM
+    PM --> E["Engineering: EKR stages and complete candidate"]
+    E --> PM
+    PM --> V["Independent Evaluation: complete MKR and PKR scope"]
     V --> PM
-    PM -- "Any KR=0" --> D
-    PM -- "All KRs=1" --> H["Human close or release gate"]
+    PM -- "All MKRs=1" --> H["Human close or release gate"]
+    PM -- "Contract or candidate failed" --> P
+    PM -- "Engineering defect" --> E
 ```
 
-There is no fixed role chain. Each assignment targets one exact failed or missing evidence item keeping an accepted outcome KR at `0`. A complete PM Assignment starts the selected workstation immediately.
+Software delivery uses a fixed dependency order: complete Product OKR, complete Engineering candidate, then Independent Evaluation. Project Manager and Product Strategy remain global; only Engineering decomposes `EKR-1...EKR-N` execution stages.
 
-不存在固定角色链。每份任务书只针对一个主要 `KR=0` 及其同一组必要检查。工位收到完整 PM Assignment 后直接开始工作。
+软件交付采用固定依赖顺序：完整 Product OKR、完整工程候选物、独立评估。项目经理和产品策略保持全局视角，只有工程拆分 `EKR-1...EKR-N` 执行阶段。
 
 ### Initialize Minimal Profile / 初始化四角色最小版
 
@@ -182,16 +182,16 @@ Minimal Profile documentation:
 
 | Role | Responsibility |
 | --- | --- |
-| Workflow Orchestrator / 项目经理 | Owns milestone alignment, authoritative state, role routing, and final closure |
-| Researcher / 研究员 | Produces repository research, external research, evidence maps, risks, and unknowns |
-| Product / PRD / 产品经理 | Defines product value, scope, non-goals, acceptance criteria, and claim boundaries |
-| Architect / 架构师 | Defines architecture contracts, boundaries, interfaces, data flow, and technical risks |
-| Code Context / 上下文工程师 | Maps architecture to exact files, functions, fields, tests, artifacts, and implementation constraints |
-| Implementer / 实现工程师 | Changes approved project files and produces implementation and verification evidence |
-| Test Evaluator / 测试评估师 | Freezes or consumes the evaluation SOP and independently evaluates the complete required scope |
-| Reviewer / 复核审计 | Audits Orchestrator and every final role output against the original milestone and evaluation baseline |
+| Workflow Orchestrator / 项目经理 | Owns the complete MKR contract, authoritative global stage, repair routing, evidence acceptance, and final closure |
+| Researcher / 研究员 | Produces the complete repository/frontier evidence base and MKR coverage needed for the Product OKR |
+| Product / PRD / 产品经理 | Defines one complete Product Objective and `PKR-*` contract covering every MKR |
+| Architect / 架构师 | Defines whole-product architecture contracts, boundaries, interfaces, data flow, and technical risks |
+| Code Context / 上下文工程师 | Maps the complete product/architecture contract to exact files, functions, fields, tests, artifacts, and implementation constraints |
+| Implementer / 实现工程师 | Alone decomposes `EKR-*`, changes project files, and produces the complete reproducible runnable candidate |
+| Test Evaluator / 测试评估师 | Starts after candidate readiness, records the executable SOP, and independently evaluates every MKR/PKR |
+| Reviewer / 复核审计 | Audits MKR/PKR/EKR traceability, mandatory stage order, evidence, and claims across all final role outputs |
 
-The Full Profile is outcome-first and evidence-based. Each professional role has one configured conversation, starts from one complete role-specific assignment, consumes explicit authoritative inputs, and writes one required primary professional artifact for Project Manager review. Versioned packet metadata and annexes remain optional audit support.
+The Full Profile uses the same MKR/PKR/EKR hierarchy and stage order while separating research, architecture, code context, implementation, evaluation, and audit ownership. Versioned packet metadata and annexes remain optional audit support.
 
 八角色完整版以结果和证据为核心。每个专业角色使用独立对话，消费明确的权威输入，并产出一份必需的主交付物交由项目经理审阅。版本化 packet 元数据和附件只是可选的审计支持。
 
@@ -201,7 +201,7 @@ Use one configured Codex role instance per role. Do not run the Full Profile by 
 
 ```mermaid
 flowchart LR
-    PM["Workflow Orchestrator"]
+    PM0["PM: MKR gate"]
     R["Researcher"]
     P["Product / PRD"]
     A["Architect"]
@@ -209,18 +209,19 @@ flowchart LR
     I["Implementer"]
     T["Test Evaluator"]
     V["Reviewer"]
-    PM --> R --> PM
-    PM --> P --> PM
-    PM --> A --> PM
-    PM --> C --> PM
-    PM --> I --> PM
-    PM --> T --> PM
-    PM --> V --> PM
+    PM1["PM: research gate"]
+    PM2["PM: PKR gate"]
+    PM3["PM: architecture gate"]
+    PM4["PM: context gate"]
+    PM5["PM: candidate gate"]
+    PM6["PM: evaluation gate"]
+    PM7["PM: closure gate"]
+    PM0 --> R --> PM1 --> P --> PM2 --> A --> PM3 --> C --> PM4 --> I --> PM5 --> T --> PM6 --> V --> PM7
 ```
 
-The diagram shows control returning to Project Manager after every professional role. Named chains remain planning presets; evidence and blocker ownership determine the actual next role.
+The diagram shows control returning to Project Manager after every professional role. Supporting roles may be skipped when a complete accepted artifact already exists, but Test Evaluator can never precede the Implementer candidate and Reviewer can never precede independent evaluation.
 
-流程图表示每个专业角色完成后都返回项目经理检查。实际可按任务选择 `full-chain`、`mini-chain`、`patch-chain`、`docs-only-chain` 或 `research-only`。
+流程图表示每个专业角色完成后都返回项目经理检查。完整软件交付不能跳过 Product / PRD、Implementer 或候选物完成后的 Test Evaluator；Researcher、Architect、Code Context、Reviewer 只有在已有完整已接受产物或里程碑不需要时才可省略。
 
 ### Initialize Full Profile / 初始化八角色完整版
 
@@ -285,6 +286,7 @@ Both initializers add `code-role/` to the target repository's local `.git/info/e
 
 - [English PRD](docs/product/prd.md)
 - [中文产品需求对齐稿](docs/product/prd.zh-CN.md)
+- [OKR definition and decomposition standard / OKR 定义与分解规范](docs/okr-standard.md)
 - [中文 HTML 说明与初始化指南](docs/product/code-role-workflow-guide.zh-CN.html)
 - [v0.4.0 release: less process, stronger outcomes / v0.4.0 发布说明](docs/promotion/V0.4.0-RELEASE.md)
 - [Minimal target example](examples/minimal-target/README.md)

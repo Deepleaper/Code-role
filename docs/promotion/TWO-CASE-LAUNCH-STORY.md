@@ -108,14 +108,14 @@ Code-role emerged from two private projects.
 
 In DeepBrain, the evidence looked excellent: 1,750 unit tests, 142 frontend/runtime tests, S50 at 50/50, LongMemEval-S at 499/500, and 100/100 grounded business source joins. Independent Evaluation still held the milestone at `0` because the fair comparator, representative raw benchmark reruns, repair proof, clean reproducibility, and production cost/SLO evidence were incomplete.
 
-In Leaper Agent, the first evaluation baseline looked rigorous but referenced missing task artifacts, exposed holdout content, used placeholder runtime conditions, and did not commit an executable grader mechanism. The Project Manager rejected it before Engineering started. The correction replaced declarations with 60 primary tasks, 24 reserve tasks, a physically separated holdout, a visible-only Engineering extract, concrete runtime conditions, calibration artifacts, and an integrity index.
+In Leaper Agent, a historical pre-code evaluation baseline looked rigorous but referenced missing task artifacts, exposed holdout content, used placeholder runtime conditions, and did not commit an executable grader mechanism. The Project Manager rejected it. The correction replaced declarations with 60 primary tasks, 24 reserve tasks, a physically separated holdout, a visible-only Engineering extract, concrete runtime conditions, calibration artifacts, and an integrity index. That run also revealed that evaluation ownership had been placed too early; the current model keeps these acceptance requirements in Product, then routes Engineering, then post-candidate Evaluation.
 
 The two projects exposed the same control problem at different times:
 
 - DeepBrain: strong partial evidence must not become a complete product claim.
 - Leaper Agent: a professional plan must not become executable work until its inputs are real.
 
-That is why the minimal Code-role profile has four workstations: Project Manager, Product Strategy, Engineering, and Independent Evaluation. Each assignment targets one exact failed evidence item keeping an outcome KR at `0`. Engineering cannot approve itself. Missing independent evidence remains `0`.
+That is why the minimal Code-role profile has four workstations: Project Manager, Product Strategy, Engineering, and Independent Evaluation. Project Manager defines the complete milestone MKRs, Product Strategy defines complete PKRs covering every MKR, Engineering alone decomposes EKR stages and builds the candidate, and Independent Evaluation runs only after candidate readiness. Engineering cannot approve itself. Missing independent evidence remains `0`.
 
 It is less theatrical than autonomous multi-agent orchestration, but it answers the question that matters: **is the software milestone actually complete?**
 
@@ -123,6 +123,6 @@ It is less theatrical than autonomous multi-agent orchestration, but it answers 
 
 Real use exposed a second failure mode: when every role must acknowledge startup, convert readiness, maintain packet locks, and narrate routing state, the workflow itself displaces the failed evidence keeping the KR at `0`.
 
-v0.4.0 keeps binary KRs, independent evaluation, and Project Manager accountability while removing startup acknowledgements, readiness-only turns, and mandatory packet metadata from the default path. Each assignment now targets one exact failed evidence item, and each role owes one primary professional artifact. The loop is shorter without weakening completion.
+The current workflow keeps binary MKRs, independent evaluation, and Project Manager accountability while removing startup acknowledgements, readiness-only turns, and mandatory packet metadata from the default path. Global MKR and PKR contracts remain complete; only Engineering decomposes execution into EKR stages. Each role owes one primary professional artifact, so the loop stays short without weakening completion.
 
 Code-role: https://github.com/Deepleaper/Code-role

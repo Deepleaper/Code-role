@@ -6,6 +6,8 @@ This contract applies to both the four-workstation Minimal Profile and the eight
 
 ## 1. OKR Means Delivered Outcome / OKR 表示交付结果
 
+Both profiles follow [OKR Definition And Decomposition Standard](okr-standard.md). `MKR`, `PKR`, and `EKR` are separate namespaces with separate owners.
+
 A delivery KR must describe an observable user, business, product, or runtime outcome.
 
 Research, PRD, architecture, evaluation SOP, tests, reports, packets, and reviews are delivery methods or evidence, not delivery KRs.
@@ -20,20 +22,19 @@ Every accepted KR is binary:
 - `KR=0`: at least one condition is missing, unrun, inferred, contradictory, or failed.
 - There is no qualitative completion state between `0` and `1`.
 
-## 2. Work Units Serve One KR / 工作单元服务一个 KR
+## 2. Complete Contracts, Engineering Decomposition / 完整契约与工程分解
 
-A professional assignment is a work unit, not a new goal. It must name:
+Project Manager and Product Strategy are global roles:
 
-- the accepted Objective;
-- one exact target `KR=0`;
-- the current failed or missing evidence blocking that KR;
-- one role-owned deliverable that removes that blocker;
-- binary acceptance checks;
-- authoritative inputs and one required artifact path.
+- Project Manager defines one complete Milestone OKR with `MKR-1...MKR-N`.
+- Product Strategy defines one complete Product OKR with `PKR-1...PKR-N`, covering every MKR.
+- Neither role repeatedly routes or designs one isolated KR at a time.
 
-A work unit may pass while the target KR remains `0`; these are two separate binary facts. The return must name both facts clearly and must never describe document production as milestone progress.
+Engineering is the decomposition owner. It consumes the complete MKR and PKR contracts, then defines `EKR-1...EKR-N` for ordered implementation phases. EKR completion is candidate evidence only; it never passes an MKR or PKR.
 
-专业任务可以完成，但 KR 仍然保持 `0`。这是两个独立的二值事实，不得用“部分完成”或“更接近完成”混淆。
+Independent Evaluation consumes the complete runnable candidate and evaluates the full accepted MKR and PKR scope. It does not evaluate an unfinished implementation, one EKR, or the latest diff.
+
+项目经理和产品策略负责完整全局契约，只有工程负责按实际依赖拆分执行 EKR。任何 EKR 完成均不等于产品或里程碑通过。
 
 ## 3. Valid Assignment Starts Work / 有效任务直接启动
 
@@ -65,7 +66,7 @@ A professional return carries navigation and binary facts only:
 
 ```text
 assignment_id
-target_kr
+delivery_stage
 work_unit_pass: 0 | 1
 check_results: <check id -> 0|1>
 artifact_path
@@ -74,7 +75,7 @@ blocking_check_ids
 return_to: project-manager | workflow-orchestrator
 ```
 
-Engineering additionally reports whether a runnable candidate is ready. Evaluation additionally reports whether the complete evaluation ran and whether the KR was independently observed as `0|1`.
+Product additionally reports whether the complete Product OKR covers every MKR. Engineering reports EKR status and whether the complete runnable candidate is ready. Evaluation reports whether the complete evaluation ran, every MKR result, and whether the milestone was independently observed as `0|1`.
 
 The role does not choose or recommend the next role.
 
@@ -84,27 +85,31 @@ After reading the artifact and evidence, Project Manager emits one decision:
 
 ```text
 accepted_deliverable: 0 | 1
-target_kr
-kr_pass: 0 | 1
+delivery_stage
+milestone_okr_accepted: 0 | 1
+product_okr_accepted: 0 | 1
+candidate_ready: 0 | 1
+evaluation_executed: 0 | 1
+milestone_observed_pass: 0 | 1
 accepted_evidence_path
-failed_evidence
-blocker_owner
 route
 next_assignment_or_user_decision
 ```
 
-Only independent evidence can change a KR from `0` to `1`. Research, product decisions, architecture, implementation, self-tests, reports, packet status, and review prose cannot change it by themselves.
+For software delivery, routing order is mandatory: complete Milestone OKR, complete Product OKR, Engineering candidate, Independent Evaluation, then closure. Only independent evidence can change an MKR from `0` to `1`. Research, product decisions, architecture, implementation, EKR self-tests, reports, packet status, and review prose cannot change it by themselves.
 
 Project Manager must complete assignment preflight internally. If user input is required, ask once for the complete decision set.
 
 ## 8. Evaluation Integrity / 评估完整性
 
 - Evaluation design is an acceptance mechanism, not a delivery KR.
-- Freeze datasets, graders, commands, environment, thresholds, positive cases, negative cases, regression scope, and claim boundaries before candidate optimization.
+- Independent Evaluation starts only after Engineering provides a complete runnable candidate and `candidate_ready_for_independent_evaluation=1`.
+- The evaluator derives the executable SOP from accepted MKRs and PKRs, records it before inspecting candidate results, then runs the full evaluation.
+- Product acceptance thresholds and claim boundaries are frozen before Engineering; the evaluator cannot invent or loosen them.
 - Required checks that are not run are `0`.
 - Evaluation and review gates are binary: `0|1`.
 - Any SOP change after candidate results requires explicit user approval, a new SOP version, and rerun of affected evidence.
-- Full evaluation checks the accepted KR outcome, not only the latest diff or the Implementer's report.
+- Full evaluation checks every accepted MKR and PKR, not one EKR, the latest diff, or the Implementer's report.
 
 ## 9. Human Gates / 人工闸门
 
@@ -121,7 +126,7 @@ Routine routing, local file reads, ordinary implementation, local tests, public-
 
 - startup acknowledgement messages: `0`;
 - process-narration messages: `0`, unless a blocker or user decision occurs;
-- one assignment and one return per work unit;
+- one assignment and one return per professional delivery stage;
 - format-only rework: `0`;
 - one required primary professional artifact per role work unit;
 - optional evidence annexes only when the result needs them.
@@ -132,12 +137,14 @@ Professional artifacts may be detailed. Their contents must not be duplicated in
 
 Both profiles must pass these cases:
 
-1. A delivery milestone proposes “research completed” or “SOP frozen” as a KR: reject the KR and rewrite it as an observable delivered outcome.
+1. A delivery milestone proposes “research completed” or “SOP frozen” as an MKR: reject it and rewrite it as an observable delivered outcome.
 2. A role receives a complete assignment: start work with no acknowledgement turn.
 3. A role narrates routine research, reads, edits, or tests: suppress narration and continue to the artifact.
 4. An artifact satisfies checks but the return summary is incomplete: inspect and accept the artifact; do not request format repair.
 5. An evaluator artifact proves failure but its chat fields are incomplete: accept the failure evidence and route the substantive blocker owner.
 6. Project Manager omitted prerequisites: ask once for the complete decision set.
-7. Engineering provides only analysis, a plan, or documents for a development KR: keep the work unit and KR at `0`.
-8. An evaluator changes SOP after seeing candidate results: invalidate affected evidence until the user approves a versioned SOP change and rerun.
-9. A Project Manager consumption check needs several internal reads: emit one final decision, not narrated progress checkpoints.
+7. Project Manager or Product Strategy attempts to route one isolated MKR: reject the slice and complete the global contract.
+8. Engineering provides only analysis, a plan, or documents: keep candidate readiness at `0`.
+9. Independent Evaluation is assigned before a runnable candidate exists: reject the assignment and route Engineering.
+10. An evaluator changes SOP after seeing candidate results: invalidate affected evidence until the user approves a versioned SOP change and rerun.
+11. A Project Manager consumption check needs several internal reads: emit one final decision, not narrated progress checkpoints.

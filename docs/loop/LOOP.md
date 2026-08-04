@@ -1,101 +1,139 @@
 # OKR Delivery Loop / OKR 交付闭环
 
-This profile follows [Dialogue Control Contract](../dialogue-control.md). If an older prompt, chat instruction, packet, or memory conflicts with that contract, the current local contract wins.
+This profile follows [Dialogue Control Contract](../dialogue-control.md) and [OKR Definition And Decomposition Standard](../okr-standard.md). If an older prompt, chat instruction, packet, or memory conflicts, the current local contracts win.
 
-本配置遵守[对话控制契约](../dialogue-control.md)。旧提示词、旧对话指令、packet 或记忆与其冲突时，以当前本地契约为准。
+本配置遵守[对话控制契约](../dialogue-control.md)和[OKR 定义与分解规范](../okr-standard.md)。旧提示词、旧对话、packet 或记忆与其冲突时，以当前本地规范为准。
 
 ## 1. One Authority / 唯一权威
 
-`code-role/milestone-board.md` is the only active control record. It contains the current Objective, binary KRs, current failed evidence, current owner, and accepted evidence paths.
+`code-role/milestone-board.md` is the only active control record. It contains the complete Milestone OKR, current delivery stage, accepted global artifact paths, candidate status, and independent evidence.
 
-Chat summaries, role self-reports, old packets, manifests, indexes, scores, and process history cannot update milestone status by themselves.
+Chat summaries, role self-reports, old packets, manifests, indexes, EKR status, scores, and process history cannot update MKR or milestone status by themselves.
 
-## 2. Outcome KR Only / KR 只写结果
+## 2. Three OKR Layers / 三层 OKR
 
-A delivery KR must be observable at a user, business, product, or runtime boundary.
+1. **Milestone OKR (`MKR`)**: Project Manager and user define the complete delivered result.
+2. **Product OKR (`PKR`)**: Product Strategy defines the complete observable product contract covering every MKR.
+3. **Engineering Execution KRs (`EKR`)**: Engineering decomposes the accepted product contract into implementation phases.
 
-Research, PRD, architecture, evaluation SOP, code written, tests written, reports, packets, and reviews cannot be KRs unless the accepted Objective explicitly makes that artifact the delivered product.
+Project Manager and Product Strategy are global roles. They do not work one MKR at a time. Engineering is the only role allowed to split execution into staged EKR items.
 
-There is no `partial_pass`, `pass_with_residual_risk`, progress percentage, or “closer to completion”. A KR is `0` or `1`.
+MKR and PKR require independent outcome evidence. EKR is internal candidate evidence and cannot pass the milestone.
 
-## 3. One Primary KR Per Iteration / 每轮一个主要 KR
+## 3. Mandatory Delivery Stages / 强制交付阶段
 
-Project Manager selects one decisive failed or missing evidence item keeping exactly one primary accepted KR at `0`.
+For software delivery, the order is fixed:
 
-Each assignment must remove that evidence blocker. It may include coherent supporting checks and regressions, but it cannot create a second product outcome or a parallel process objective.
+```text
+milestone_definition
+    -> product_definition
+    -> engineering_delivery
+    -> independent_evaluation
+    -> closure
+```
 
-## 4. Dynamic Workstations / 动态工位
+Stage gates:
 
-Project Manager chooses the owner of the current failed evidence:
+| Stage | Owner | Required result | Next-stage gate |
+| --- | --- | --- | --- |
+| `milestone_definition` | Project Manager + user | Complete Objective and `MKR-1...MKR-N` | `milestone_okr_accepted=1` |
+| `product_definition` | Product Strategy | Complete `PKR-1...PKR-N` and MKR traceability | `product_okr_accepted=1` |
+| `engineering_delivery` | Engineering | EKR decomposition, implementation, integration, self-verification | `candidate_ready_for_independent_evaluation=1` |
+| `independent_evaluation` | Independent Evaluation | Full MKR/PKR evaluation with evaluator-owned evidence | `evaluation_executed=1` |
+| `closure` | Project Manager | Accept all independent results or return the failed contract owner | every MKR is `1` |
 
-1. Product behavior, user value, scope, threshold, or claim ambiguity: Product Strategy.
-2. Missing runnable product or technical defect: Engineering.
-3. Missing evaluation contract before optimization: Independent Evaluation in `baseline_freeze`.
-4. Runnable candidate awaiting independent evidence: Independent Evaluation in `full_evaluation`.
-5. Failed evaluation caused by implementation: Engineering.
-6. Failed evaluation caused by ambiguous product meaning: Product Strategy.
-7. Invalid dataset, grader, environment, or SOP: Independent Evaluation.
-8. Objective, KR, threshold, claim, budget, or irreversible action: user decision.
+Independent Evaluation must not start before a complete runnable candidate exists. Reviewer is not part of the Minimal Profile.
 
-There is no fixed role chain. Research, architecture, context mapping, design, implementation, and testing are methods used inside the owning workstation unless the Full Profile is explicitly active.
+## 4. Complete Milestone OKR / 完整里程碑 OKR
 
-## 5. Valid Assignment Starts Work / 有效任务直接开始
+Project Manager defines one Objective and two to five MKRs with the user. Every MKR must name:
 
-A complete assignment contains the accepted Objective, exact target KR, current failed evidence, one role deliverable, binary acceptance checks, authoritative inputs, and one artifact path.
+- observable outcome, subject, and scenario;
+- exact binary threshold and measurement conditions;
+- independent evidence;
+- claim boundary.
 
-The workstation starts immediately. It does not ask for `开始`, restate boundaries, or narrate progress. It returns only a consolidated user-owned blocker or the final short return.
+Research, PRD, architecture, code activity, tests written, evaluation SOPs, reports, and reviews are methods or evidence, not MKRs.
 
-This profile uses manual transport between separate conversations. Project Manager prints one copy-ready assignment; the user pastes it into the selected workstation. The workstation rereads `role_prompt_path`, performs the work, and returns one short result. Do not claim automatic dispatch.
+Project Manager hands the complete accepted Milestone OKR to Product Strategy once. It does not issue separate Product assignments for individual MKRs.
 
-## 6. One Professional Artifact / 一个主专业产物
+## 5. Complete Product OKR / 完整产品 OKR
 
-Each work unit has one required primary professional artifact under `code-role/work/<milestone>/`.
+Product Strategy consumes all accepted MKRs and produces one complete Product OKR:
 
-Optional evidence files are allowed only when required to reproduce the result. They are referenced from the primary artifact. Project Manager reads the artifact directly and does not require format-only repair.
+- `PKR-1...PKR-N`;
+- user flows and state transitions;
+- input, output, error, timeout, permission, and recovery behavior;
+- binary product acceptance;
+- MKR-to-PKR traceability with no uncovered MKR;
+- scope, non-goals, and claim boundaries;
+- exact fields Engineering and Independent Evaluation must consume.
 
-## 7. Engineering Candidate / 工程候选结果
+Product Strategy does not split work by one MKR, select implementation stages, or send work to Evaluation. After the complete product contract is accepted, Project Manager routes Engineering.
 
-Engineering owns the runnable candidate for the target KR:
+## 6. Engineering Execution Loop / 工程执行闭环
 
-- inspect current behavior and root cause;
-- make necessary design, code, configuration, test, example, or documentation changes;
-- run target checks and relevant regressions;
-- record reproducible candidate evidence.
+Engineering receives the complete MKR and PKR contracts, inspects the actual repository, and creates `EKR-1...EKR-N` according to technical dependencies and delivery phases.
 
-Analysis, plans, documents, or implementation claims alone cannot pass a development work unit. Candidate readiness is `1` only when every assigned engineering check passes and the result is ready for independent rerun.
+Engineering owns the full candidate:
 
-## 8. Evaluation Before Pass / 通过前独立评估
+- repository research and root-cause analysis;
+- architecture and context mapping when needed;
+- EKR sequencing and dependency management;
+- code, configuration, migration, fixtures, and tests;
+- integration and relevant regression verification;
+- reproducible candidate evidence.
 
-Evaluation design is not a KR. It is the mechanism used to decide the KR.
+Engineering may update EKR structure when code facts require it, but may not change MKR or PKR meaning. Analysis, plans, architecture, documents, partial EKR completion, or self-tests alone cannot make the candidate ready.
 
-- Freeze evaluation inputs and thresholds before Engineering optimizes against them.
-- Independent Evaluation assesses the complete target KR, not only the latest diff.
-- Target capability and regression checks are both required.
-- Required unrun checks are `0`.
-- Engineering cannot self-pass a KR.
-- Prefer deterministic graders; calibrate model graders where deterministic judgment is insufficient.
+`candidate_ready_for_independent_evaluation=1` only when every required EKR is `1`, the integrated product is runnable, required regressions pass, and Independent Evaluation can reproduce it from named artifacts and commands.
 
-## 9. Project Manager Decision / 项目经理决策
+## 7. Independent Evaluation / 独立评估
 
-After each return, Project Manager:
+Independent Evaluation receives the complete runnable candidate only after Engineering readiness equals `1`.
 
-1. reads the primary artifact and evidence;
-2. accepts or rejects the role deliverable;
-3. keeps the KR at `0` unless complete independent evidence supports `1`;
-4. records the exact remaining failed evidence;
-5. routes that evidence blocker to its owner;
-6. updates the compact current-state board without appending workflow history.
+Before inspecting candidate results, the evaluator records the executable SOP derived from accepted MKRs and PKRs: datasets, graders, commands, environment, thresholds, positive and negative cases, regressions, budgets, and claim boundaries. It then runs the complete evaluation.
 
-## 10. Iteration Budget And Stop Rule / 迭代预算与停止条件
+The evaluator reports:
 
-Default maximum: three failed Engineering-to-Evaluation attempts for the same KR.
+- `evaluation_executed: 0|1`;
+- each `MKR-1...MKR-N: 0|1`;
+- `product_contract_pass: 0|1`;
+- `milestone_observed_pass: 0|1`.
 
-默认上限：同一 KR 最多进行 three failed Engineering-to-Evaluation attempts。
+It does not evaluate one EKR, one diff, or Engineering's self-report. Any required missing or unrun check is `0`.
 
-After the limit, Project Manager stops implementation and requests one decision: revise the product definition, repair the evaluation mechanism, split the KR, change scope, or increase the accepted budget.
+There is no `partial_pass` or qualitative completion state. Each required result is `0` or `1`.
+
+## 8. Project Manager Decision / 项目经理决策
+
+After each global stage, Project Manager reads the primary artifact and evidence, then either accepts the stage or returns the owning role.
+
+- Product defect or ambiguity: return the complete Product OKR to Product Strategy, then rerun affected Engineering work.
+- Engineering defect: return the complete candidate assignment to Engineering, which revises affected EKR items.
+- Invalid evaluation execution: return Independent Evaluation without changing product thresholds.
+- Objective, MKR, PKR scope, threshold, claim, budget, or irreversible action: user decision.
+
+Project Manager does not micromanage EKR items. It updates MKRs only from complete independent evidence.
+
+## 9. One Professional Artifact Per Stage / 每阶段一个主专业产物
+
+Each professional stage has one required primary artifact under `code-role/work/<milestone>/`:
+
+- Product Strategy: complete Product OKR and product contract;
+- Engineering: EKR plan, implementation record, integrated candidate, and reproducibility evidence;
+- Independent Evaluation: complete evaluation report and evidence pointers.
+
+Optional annexes exist only when needed for reproduction. Return formatting, packet status, readiness conversion, and locks are not completion gates.
+
+## 10. Iteration Budget / 迭代预算
+
+Default maximum: three failed Engineering-to-Evaluation attempts for one complete candidate contract.
+
+After the limit, Project Manager stops implementation and asks the user to choose one: revise the global product contract, change milestone scope or budget, repair the evaluation method, or terminate the milestone.
 
 ## 11. Human Gates / 人工闸门
 
-Human confirmation is required for Objective/KR/threshold/dataset/grader/claim changes, budget expansion, private-data external transfer, and irreversible external actions.
+Human confirmation is required for Objective, MKR, PKR threshold or claim changes, accepted budget expansion, private-data external transfer, and irreversible external actions.
 
-Routine role routing, local work, public research, local tests, artifact writing, and normal project Git practice do not require an extra Code-role confirmation.
+Routine Product-to-Engineering routing, Engineering EKR decomposition, local implementation, tests, public research, artifact writing, and post-candidate Evaluation do not require another workflow confirmation.

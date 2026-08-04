@@ -99,15 +99,17 @@ This directory is local-only role-control assistance. It is not product runtime 
 ## Use / 使用
 
 1. Configure the eight conversations once from `role-instance-prompts/`.
-2. Open `workflow-orchestrator` and accept one Objective with binary KRs.
-3. Paste its complete role-specific assignment to the selected role.
-4. A complete assignment starts immediately; no startup acknowledgement or separate `开始`.
-5. Paste the role's short return back to Workflow Orchestrator.
-6. Workflow Orchestrator reads the primary professional artifact and routes the exact failed KR evidence owner.
+2. Open `workflow-orchestrator` and accept one complete Objective with `MKR-1...MKR-N` under `OKR-STANDARD.md`.
+3. Product / PRD creates one complete `PKR-1...PKR-N` contract covering every MKR.
+4. Architecture and Code Context cover the complete Product OKR when needed.
+5. Implementer alone defines `EKR-1...EKR-N` and produces the complete runnable candidate.
+6. Test Evaluator starts only after candidate readiness and evaluates the full MKR/PKR contract.
+7. Reviewer, when required, audits the complete final chain before closure.
 
 ## Active Control / 活跃控制
 
 - `DIALOGUE-CONTROL.md`
+- `OKR-STANDARD.md`
 - `workflow/orchestrator/milestone-contract.md`
 - `workflow/orchestrator/workflow-state.md`
 - `workflow/evaluation/evaluation-sop.md`
@@ -128,7 +130,7 @@ def render_project_config(config: Config) -> str:
 project_name: {config.project_name}
 target_project_path: {config.target}
 control_profile: full-eight-role
-control_model: okr-delivery-v3
+control_model: okr-delivery-v4
 tracking_policy: local-only
 initial_milestone: {config.initial_milestone}
 initial_chain_hint: {config.initial_chain}
@@ -138,6 +140,7 @@ startup_acknowledgement_required: false
 format_only_rework_allowed: false
 role_self_routing_allowed: false
 completion_model: binary
+mandatory_delivery_order: complete-milestone-okr -> complete-product-okr -> engineering-candidate -> independent-evaluation -> review-when-required
 
 authoritative_control:
 - {config.workflow / 'orchestrator' / 'milestone-contract.md'}
@@ -148,6 +151,8 @@ boundary:
 - code-role is local workflow assistance, not product runtime or release content
 - one primary professional artifact carries each role result; short returns are transport summaries
 - delivery KRs are user, business, product, or runtime outcomes; process artifacts are methods or evidence
+- Workflow Orchestrator owns complete MKRs, Product / PRD owns complete PKRs, and Implementer owns EKR decomposition
+- Test Evaluator cannot start before a complete runnable candidate exists
 - target-project Git follows its normal process
 """
 
@@ -159,24 +164,31 @@ project: {config.project_name}
 active_milestone: {config.initial_milestone}
 objective_accepted: 0
 objective: unconfirmed
-target_kr: none
-target_kr_pass: 0
-current_failed_evidence: objective and outcome KRs are not accepted
+delivery_stage: milestone_definition
+milestone_okr_accepted: 0
+product_okr_accepted: 0
+candidate_ready_for_independent_evaluation: 0
+evaluation_executed: 0
 current_evidence_owner: user
-current_work_unit: none
-accepted_primary_artifact: none
+current_stage_assignment: none
+accepted_product_okr_artifact: none
+accepted_architecture_artifact: none
+accepted_code_context_artifact: none
+accepted_engineering_artifact: none
+runnable_candidate_artifact: none
 latest_independent_evidence: none
 current_iteration: 0
 iteration_limit: 3
 milestone_pass: 0
 
-pending_human_decision: accept one Objective and binary outcome KRs
+pending_human_decision: accept one complete Objective and two to five MKRs
 
 rules:
 - record current accepted state only; do not append chronological workflow history
-- route the owner of current_failed_evidence
+- preserve complete global contracts and mandatory stage order
+- do not store Implementer EKR detail in Orchestrator state
 - packet status, manifest readiness, and locks do not control routine routing
-- only independent outcome evidence can change a delivery KR from 0 to 1
+- only complete independent outcome evidence can change an MKR from 0 to 1
 """
 
 
@@ -187,9 +199,9 @@ milestone: {config.initial_milestone}
 objective: unconfirmed
 objective_accepted: 0
 
-key_results:
-| KR | Observable user/business/product/runtime outcome | Numeric threshold | Required independent evidence | Pass (0/1) |
-| --- | --- | --- | --- | ---: |
+milestone_key_results:
+| MKR | Observable outcome | Subject and scenario | Binary threshold and conditions | Required independent evidence | Claim boundary | Pass (0/1) |
+| --- | --- | --- | --- | --- | --- | ---: |
 
 non_goals:
 - unconfirmed
@@ -200,13 +212,17 @@ claim_boundary:
 
 outcome_rule: delivery KRs describe observable user, business, product, or runtime outcomes
 method_rule: research, PRD, architecture, evaluation SOP, tests, reports, packets, and reviews are methods or evidence, not delivery KRs
+product_okr_required_before_engineering: 1
+product_okr_path: none
+candidate_required_before_evaluation: 1
+runnable_candidate_path: none
 
-evaluation_sop_required_for_closure: 1
+evaluation_sop_required_for_evaluation: 1
 evaluation_sop_path: {config.workflow / 'evaluation' / 'evaluation-sop.md'}
-iteration_limit_per_kr: 3
+engineering_to_evaluation_attempt_limit: 3
 accepted_time_or_cost_budget: unconfirmed
 
-closure_rule: all accepted KRs are 1, required evaluation passes, and required review gate passes
+closure_rule: all accepted MKRs are 1, complete independent evaluation passes, and required review gate passes
 """
 
 
@@ -214,9 +230,13 @@ def render_evaluation_sop(config: Config) -> str:
     return f"""# Evaluation SOP / 评估 SOP
 
 milestone: {config.initial_milestone}
-sop_version: v001
+sop_version: unassigned_until_candidate_ready
 sop_confirmed: 0
 confirmed_by: none
+
+candidate_gate_required: 1
+candidate_ready_for_independent_evaluation: 0
+candidate_artifact_path: none
 
 evaluation_subject: unconfirmed
 evaluation_objective: unconfirmed
@@ -238,8 +258,8 @@ claim_boundary:
 
 accepted_time_or_cost_budget: unconfirmed
 
-purpose_rule: this SOP is an acceptance mechanism and evidence source, not a delivery KR
-binary_rule: evaluation_executed is 1 only when the complete assigned evaluation ran; kr_observed_pass is 1 only when every target-KR check independently passes
+purpose_rule: this SOP is recorded after candidate readiness and before candidate results are inspected; it is not a delivery KR
+binary_rule: evaluation_executed is 1 only when the complete MKR/PKR evaluation ran; milestone_observed_pass is 1 only when every MKR independently passes
 sop_change_rule: post-candidate change requires user approval, new SOP version, and affected-evidence rerun
 """
 
@@ -264,6 +284,7 @@ This is a pointer table, not a completion gate. Workflow Orchestrator updates it
 def render_role_prompt(config: Config, role_id: str) -> str:
     role = ROLE_CONFIG[role_id]
     dialogue = config.code_role / "DIALOGUE-CONTROL.md"
+    okr_standard = config.code_role / "OKR-STANDARD.md"
     contract = role["contract"]
     standard = role["output_standard"]
     state = config.workflow / "orchestrator" / "workflow-state.md"
@@ -278,6 +299,7 @@ You are the Workflow Orchestrator for `{config.project_name}`.
 Read silently on every turn:
 
 - {dialogue}
+- {okr_standard}
 - {contract}
 - {standard}
 - {milestone}
@@ -287,7 +309,7 @@ Read silently on every turn:
 
 Respond to the user's actual request with exactly one OKR proposal, role-specific assignment, artifact decision, consolidated user-decision request, or milestone-closure decision.
 
-Do not send a startup acknowledgement or recovery report. Do not narrate reads or consumption checks. Do not write professional role conclusions. Read primary artifacts directly; return formatting, draft status, and optional locks are not substantive gates. Every professional role returns here, and you route the exact failed KR evidence owner.
+Do not send a startup acknowledgement or recovery report. Do not narrate reads or consumption checks. Do not write professional role conclusions. Read primary artifacts directly; return formatting, draft status, and optional locks are not substantive gates. Every professional role returns here, and you advance or repair the current global delivery stage.
 
 Use Chinese by default.
 """
@@ -301,6 +323,7 @@ You are the `{role_id}` role for `{config.project_name}`.
 Read once when configured or refreshed:
 
 - {dialogue}
+- {okr_standard}
 - {contract}
 - {standard}
 - {milestone}
@@ -338,6 +361,7 @@ def planned_files(config: Config) -> dict[Path, str]:
     files = {
         config.code_role / "README.md": render_project_readme(config),
         config.code_role / "DIALOGUE-CONTROL.md": source_text(ROOT / "docs" / "dialogue-control.md", config),
+        config.code_role / "OKR-STANDARD.md": source_text(ROOT / "docs" / "okr-standard.md", config),
         config.code_role / "project-config.md": render_project_config(config),
         config.workflow / "orchestrator" / "workflow-state.md": render_workflow_state(config),
         config.workflow / "orchestrator" / "milestone-contract.md": render_milestone_contract(config),

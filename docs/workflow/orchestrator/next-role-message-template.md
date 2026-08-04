@@ -1,29 +1,36 @@
-# Role Assignment Template / 分角色任务书模板
+# Global Stage Assignment Template / 全局阶段任务书模板
 
-This is one KR-delivery work unit, not a workflow tutorial. Workflow Orchestrator fills the selected role's exact `templates/assignment.md` from accepted evidence.
+This is one complete professional delivery stage, not a single-MKR task or workflow tutorial. Workflow Orchestrator fills the selected role's exact `templates/assignment.md` from accepted global contracts.
 
-Do not issue a generic workflow essay. Do not restate stable role rules.
-
-## Required Content / 必填内容
+## Required Core / 必填核心
 
 ```text
 assignment_id:
 milestone:
-objective:
-target_kr: <one exact outcome KR=0 or full-milestone audit>
-current_kr_state: 0
-current_failed_evidence:
+delivery_stage:
+milestone_okr_path:
 role_deliverable:
 authoritative_inputs:
 - path:
 acceptance_checks:
-| check_id | observable result | required evidence |
+| check_id | complete stage result | required evidence |
 | --- | --- | --- |
 required_artifact_path:
 irreversible_actions: none
 ```
 
-Use the role-specific template:
+Role-specific additions:
+
+- Researcher and Product / PRD: `milestone_okr_scope: all_accepted_mkrs`.
+- Product / PRD: complete Product OKR and MKR-to-PKR traceability.
+- Architect and Code Context: complete `product_okr_path` and whole-product coverage.
+- Implementer: complete MKR/PKR contracts, Engineering objective, and EKR/candidate requirements.
+- Test Evaluator: candidate artifact plus `candidate_ready_for_independent_evaluation: 1`.
+- Reviewer: complete accepted final outputs and independent evaluation artifact.
+
+Use the role-specific template under `roles/<role>/templates/assignment.md`.
+
+Exact templates:
 
 - `roles/researcher/templates/assignment.md`
 - `roles/product-prd/templates/assignment.md`
@@ -35,12 +42,13 @@ Use the role-specific template:
 
 ## Rules / 规则
 
-- Copy the exact Objective, KR, failed evidence, and accepted upstream fields.
-- Assign one role-owned deliverable that removes the named failed evidence.
-- Freeze acceptance checks before work starts.
-- Require one primary professional artifact; optional annexes exist only for necessary evidence.
-- Include task-specific exclusions only when genuinely necessary.
+- Project Manager and Product / PRD assignments cover the complete global OKR, not one isolated MKR.
+- Implementer alone defines and manages `EKR-1...EKR-N`.
+- Test Evaluator cannot be assigned before a complete runnable candidate exists.
+- Reviewer cannot be assigned before independent evaluation.
+- Freeze stage acceptance checks before work starts.
+- Require one primary professional artifact; annexes are optional evidence.
 - A complete assignment starts immediately.
 - Do not ask for startup acknowledgement, `开始`, readiness conversion, packet lock, or next-role recommendation.
 
-If the target KR, current failed evidence, deliverable, inputs, acceptance checks, or artifact path is missing, do not issue the assignment. Ask once for the complete missing user-decision set.
+If the prior stage gate, complete upstream contract, deliverable, inputs, acceptance checks, or artifact path is missing, do not issue the assignment. Ask once for the complete missing user-decision set.

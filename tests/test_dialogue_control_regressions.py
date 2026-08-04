@@ -28,7 +28,7 @@ def test_historical_failure_artifact_passes_even_when_chat_return_is_imperfect()
 
     assert "A missing or imperfect chat return is not a substantive blocker" in shared
     assert "Missing return fields or field order are not blockers" in minimal_pm
-    assert "Missing return fields, field order" in full_pm
+    assert "Return formatting, draft status" in full_pm
     assert "format-only rework: `0`" in shared
 
 
@@ -40,8 +40,8 @@ def test_historical_failure_evaluator_failure_evidence_is_routed_by_substance() 
     )
 
     assert "accept the failure evidence and route the substantive blocker owner" in shared
-    assert "An incomplete assignment does not automatically return to the same role" in full_contract
-    assert "failed_check_owner:" in evaluator_return
+    assert "An incomplete stage returns to the substantive contract owner" in full_contract
+    assert "failed_contract_owner:" in evaluator_return
     assert "return_to: workflow-orchestrator" in evaluator_return
 
 
@@ -115,7 +115,8 @@ def test_evaluation_and_review_gates_are_binary_in_both_profiles() -> None:
     )
 
     assert "evaluation_executed: 0 | 1" in minimal_evaluation
-    assert "kr_observed_pass: 0 | 1" in minimal_evaluation
+    assert "mkr_results:" in minimal_evaluation
+    assert "milestone_observed_pass: 0 | 1" in minimal_evaluation
     assert full_evaluation["quality_gate"]["allowed_values"] == [0, 1]
     assert full_review["quality_gate"]["allowed_values"] == [0, 1]
     assert "final_acceptance" not in full_review["quality_gate"]

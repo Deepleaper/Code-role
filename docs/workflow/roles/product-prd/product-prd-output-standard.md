@@ -14,6 +14,10 @@ The Product / PRD role turns accepted research input, user goals, and current pr
 
 Product / PRD owns product commitment, not product imagination.
 
+The commitment is global: one complete Product Objective and `PKR-1...PKR-N` covering every accepted `MKR-1...MKR-N`. A Product / PRD artifact that resolves only one MKR is incomplete.
+
+产品承诺必须是全局的：一个完整产品 Objective 和覆盖全部 `MKR-1...MKR-N` 的 `PKR-1...PKR-N`。只解决一个 MKR 的产品文档不合格。
+
 ## 核心质量标准 / Core Quality Bar
 
 每份 Product / PRD 主交付物必须回答：
@@ -29,7 +33,7 @@ Every Product / PRD primary artifact must answer:
 7. 哪些结论来自证据，哪些是产品判断 / which conclusions come from evidence and which are product judgment
 8. 哪些需求已经用户确认，哪些只是建议或假设 / which requirements are user-confirmed and which are proposed or assumed
 9. 如何验收 / how success will be verified
-10. 这个 packet 是否足够交给 Architect / whether this packet is ready for Architect
+10. MKR-to-PKR 是否完整且足够交给全局工程阶段 / whether MKR-to-PKR coverage is complete and ready for the global engineering stage
 
 如果一个需求没有验收标准，不能进入 committed scope。
 

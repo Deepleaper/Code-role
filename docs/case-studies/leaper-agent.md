@@ -1,6 +1,10 @@
-# Leaper Agent Case: A Plan Is Not A Frozen Baseline
+# Leaper Agent Case: Why Pre-Code Evaluation Was Removed
 
-# Leaper Agent 案例：评估方案不等于可执行基线
+# Leaper Agent 案例：为什么取消工程前评估
+
+> Historical workflow note: this snapshot was produced by the older pre-code `baseline_freeze` route. The current Code-role standard does not route Test Evaluator before a runnable candidate. Product owns outcome thresholds and evidence requirements; Engineering builds the candidate; Test Evaluator then records and executes the SOP. The evidence below is preserved because it directly motivated that redesign.
+>
+> 历史流程说明：本快照来自旧版“工程前冻结评估基线”路线。当前 Code-role 不允许在可运行候选物产生前启动 Test Evaluator。产品负责结果阈值和证据要求，工程完成候选物后，评估师再记录并执行 SOP。保留以下证据，是因为它直接推动了本次流程修正。
 
 ## Snapshot / 案例快照
 
@@ -9,17 +13,17 @@
 | Snapshot date | 2026-07-31 |
 | Project type | Private enterprise AI Employee runtime |
 | Milestone | Hermes-plus enterprise runtime productization |
-| Current KR | Enterprise business outcomes exceed Hermes under frozen same-condition evaluation |
-| Current KR pass | `0` |
-| Project Manager control state | `evaluation_sop_frozen = 0` pending acceptance of the corrected evaluator return |
-| Engineering route allowed | `0` until the Project Manager accepts an executable baseline |
+| Historical target | Enterprise business outcomes exceed Hermes under same-condition evaluation |
+| Historical target pass | `0` |
+| Historical control state | pre-code evaluator baseline not accepted |
+| Current-model interpretation | Product evidence contract incomplete; Test Evaluator route would be rejected until candidate readiness |
 | Public evidence level | Sanitized aggregate workflow evidence from private project records |
 
 ## The Objective / 目标
 
 The accepted Objective was deliberately stronger than “build an agent runtime.” Leaper Agent had to demonstrate better enterprise task outcomes and repeatability than Hermes under the same model/provider, tools, budget, environment, and scoring conditions.
 
-The complete milestone used five non-compensating hard KRs:
+The complete milestone used five non-compensating hard KRs, now represented as `MKR-1...MKR-5`:
 
 1. Enterprise business outcomes exceed Hermes.
 2. Repeat reliability and efficiency meet frozen thresholds.
@@ -31,7 +35,7 @@ A high score in one KR cannot compensate for missing evidence in another.
 
 ## The First Baseline Looked Professional / 第一版为什么看起来像完成了
 
-The Independent Evaluation workstation returned a detailed baseline-freeze document with task rules, holdout language, grader roles, same-condition requirements, and evidence manifests.
+Under the historical workflow, the Independent Evaluation workstation returned a detailed pre-code baseline document with task rules, holdout language, grader roles, same-condition requirements, and evidence manifests.
 
 It was structurally professional, but the Project Manager checked whether the referenced objects actually existed and found six blocking failures:
 
@@ -56,7 +60,7 @@ It did not:
 - reinterpret a polished Markdown plan as executable evidence;
 - change KR1 from `0`.
 
-Instead, it returned a precise correction assignment to Independent Evaluation.
+Instead, it returned a precise correction assignment under the historical ownership model.
 
 ## What The Correction Produced / 打回后产生了什么
 
@@ -73,7 +77,7 @@ The corrected candidate baseline produced concrete artifacts rather than declara
 - `198` files in the integrity index;
 - explicit schemas, command contracts, hashes, and failure behavior.
 
-The evaluator reported the corrected baseline as frozen. However, the Project Manager control board still remains `evaluation_sop_frozen=0` until it independently accepts the return. This distinction is intentional: professional roles own professional conclusions, but only the Project Manager changes milestone control state.
+The historical evaluator reported the corrected baseline as frozen, while Project Manager kept the milestone outcome at `0`. Under the current model, these artifacts would be accepted as Product/evidence inputs, not as a Test Evaluator pass and not as authorization to skip Engineering.
 
 评估工位已经提交修正版并自报基线完成，但项目经理尚未验收，因此项目控制状态仍然是 `0`。这正是角色专业判断和里程碑控制权的边界。
 
@@ -89,8 +93,8 @@ The correction transformed:
 - same-condition prose into frozen runtime fields;
 - summary hashes into a reproducible integrity index.
 
-Engineering was protected from starting against an invalid test contract, and the eventual comparison was protected from implementation leakage.
+The case exposed a real integrity problem, but it also exposed a role-order problem: evaluation design work had become a pre-code evaluator stage. Current Code-role keeps product thresholds and evidence requirements in the complete Product OKR, lets Engineering build the complete candidate, and starts independent evaluation only afterward.
 
 ## Claim Boundary / 宣传边界
 
-This case supports the claim that Code-role detected and corrected a non-executable evaluation baseline before Engineering started. It does not claim that Leaper Agent already beats Hermes, that KR1 has passed, or that the product milestone is complete.
+This historical case supports two bounded claims: Code-role detected a non-executable evidence contract, and that experience justified removing pre-code Test Evaluator routing. It does not claim that Leaper Agent already beats Hermes, that any MKR passed, or that the product milestone is complete.

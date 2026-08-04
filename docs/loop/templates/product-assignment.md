@@ -2,16 +2,20 @@
 
 assignment_id:
 milestone:
-objective:
-target_kr:
-current_kr_state: 0
+delivery_stage: product_definition
 role_prompt_path:
-current_failed_evidence:
-role_deliverable:
+milestone_objective:
+milestone_okr_path:
+milestone_okr_scope: all_accepted_mkrs
+role_deliverable: complete_product_okr_and_product_contract
 authoritative_inputs:
 - path:
 acceptance_checks:
-| check_id | observable decision/result | required evidence |
+| check_id | complete product-contract result | required evidence |
 | --- | --- | --- |
+| PRODUCT-OKR | `PKR-1...PKR-N` defines the complete product result | complete PKR table |
+| MKR-COVERAGE | every accepted MKR maps to one or more PKRs | MKR-to-PKR traceability matrix |
+| ENGINEERING-READY | Engineering can implement without inventing product meaning | complete behavior, state, failure, scope, and acceptance contract |
+| EVALUATION-READY | every PKR has independently observable evidence requirements | product acceptance matrix |
 required_artifact_path:
 irreversible_actions: none

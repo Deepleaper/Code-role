@@ -2,18 +2,19 @@
 
 assignment_id:
 milestone:
-objective:
-target_kr: full-milestone-audit
-current_kr_state: 0
-current_failed_evidence:
-role_deliverable:
-original_milestone_anchor:
+delivery_stage: review
+milestone_okr_path:
+product_okr_path:
 accepted_final_outputs:
 - role:
   path:
-frozen_sop_path:
+independent_evaluation_artifact_path:
+role_deliverable: complete_flow_wide_milestone_audit
 acceptance_checks:
-| check_id | audit question | required evidence |
+| check_id | complete audit question | required evidence |
 | --- | --- | --- |
+| OKR-TRACE | MKR, PKR, EKR, evaluation, and claims preserve their authority boundaries | full traceability audit |
+| STAGE-ORDER | Product, Engineering, Evaluation, and Review gates were not reversed | accepted artifact sequence |
+| EVIDENCE | every accepted MKR result is backed by independent evidence | MKR evidence audit |
 required_artifact_path:
 irreversible_actions: none

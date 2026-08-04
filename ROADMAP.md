@@ -4,23 +4,25 @@ Code-role evolves around one question: does the workflow make a real software mi
 
 Code-role 只围绕一个问题迭代：这套机制能否在不增加无效流程的前提下，让真实软件里程碑更可预测？
 
-## Current: v0.3 / 当前版本
+## Current: v0.4 / 当前版本
 
 - Four-workstation Minimal Profile for normal delivery.
 - Eight-role Full Profile for complex or audit-heavy work.
-- Binary Objective/KR control and independent evaluation.
+- Binary outcome control and independent evaluation.
 - Local-first project initialization and validation.
 - Bilingual role rules, templates, PRD, and operating guide.
 
-## Next: v0.4 / 下一版本
+## Next Release / 下一版本
 
+- Three explicit OKR layers: Project Manager MKRs, Product PKRs, and Engineering EKRs.
+- Mandatory Product -> Engineering candidate -> Independent Evaluation order.
+- Candidate-readiness rejection for pre-code evaluation assignments.
 - More evidence-complete worked examples from real project patterns.
-- A shorter profile-selection diagnostic.
-- Stronger validation for assignment, role return, and milestone-board consistency.
+- Stronger validation for global contract coverage, assignment, role return, and milestone-board consistency.
 - Clear migration guidance between Minimal and Full Profiles.
 - Community feedback loop through Discussions and reproducible Issues.
 
-## Later: v0.5 Candidates / 后续候选
+## Later Candidates / 后续候选
 
 These are candidates, not commitments:
 

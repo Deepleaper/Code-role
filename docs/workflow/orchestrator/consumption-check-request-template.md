@@ -4,7 +4,7 @@ Use the selected role's `templates/return.md`. Common transport fields are:
 
 ```text
 assignment_id:
-target_kr:
+delivery_stage:
 work_unit_pass: 0 | 1
 check_results: <check_id -> 0|1>
 artifact_path:
@@ -13,7 +13,7 @@ blocking_check_ids: none | <check ids>
 return_to: workflow-orchestrator
 ```
 
-Implementer additionally reports candidate readiness. Test Evaluator separately reports `evaluation_executed` and `kr_observed_pass`. Reviewer reports `review_executed` and `review_gate_pass`.
+Product / PRD additionally reports complete MKR coverage. Implementer reports EKR status and candidate readiness. Test Evaluator reports `evaluation_executed`, per-MKR results, `product_contract_pass`, and `milestone_observed_pass`. Reviewer reports `review_executed` and `review_gate_pass`.
 
 This return is a pointer. Workflow Orchestrator reads the primary artifact and evidence before deciding.
 

@@ -2,18 +2,25 @@
 
 assignment_id:
 milestone:
-objective:
-target_kr:
-current_kr_state: 0
+delivery_stage: independent_evaluation
 role_prompt_path:
-assignment_mode: baseline_freeze | full_evaluation
-current_failed_evidence:
-role_deliverable:
+milestone_objective:
+milestone_okr_path:
+product_okr_path:
+engineering_artifact_path:
+candidate_artifact_path:
+candidate_ready_for_independent_evaluation: 1
+evaluation_scope: complete_mkr_and_pkr_contract
 authoritative_inputs:
 - path:
-frozen_sop_path: none | <path>
+evaluation_inputs:
+- path_or_environment:
 acceptance_checks:
-| check_id | expected independent observation | required evidence |
+| check_id | complete independent observation | required evidence |
 | --- | --- | --- |
+| SOP-RECORDED | executable SOP is recorded from accepted MKRs/PKRs before candidate results are inspected | versioned SOP in evaluation artifact |
+| FULL-RUN | every required capability and regression check runs | evaluator-owned raw evidence |
+| MKR-RESULTS | every MKR receives a binary result | per-MKR evidence matrix |
+| CLAIM-BOUNDARY | conclusions do not exceed accepted claims | explicit allowed and forbidden claims |
 required_artifact_path:
 irreversible_actions: none

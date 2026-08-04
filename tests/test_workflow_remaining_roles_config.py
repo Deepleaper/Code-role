@@ -134,14 +134,15 @@ def test_implementer_uses_sufficient_scope_and_reproducible_evidence() -> None:
     assert "required_artifact_path:" in assignment
     assert "writable_scope:" not in assignment
     assert "task_specific_exclusions:" in assignment
-    assert "current failed evidence" in combined
+    assert "EKR-1...EKR-N" in standard
+    assert "complete MKR/PKR contracts" in standard
     assert "repo_evidence" in combined
     assert "actual_file_change" in combined
     assert "verification_evidence" in combined
     assert "Do not mark an unrun command or test as pass" in combined
 
 
-def test_test_evaluator_freezes_sop_and_reports_binary_gate() -> None:
+def test_test_evaluator_records_sop_after_candidate_gate_and_reports_binary_gate() -> None:
     standard = read(ROLES / "test-evaluator" / "test-evaluator-output-standard.md")
     role = read(ROLES / "test-evaluator" / "ROLE.md")
     data = manifest("test-evaluator")
@@ -153,13 +154,16 @@ def test_test_evaluator_freezes_sop_and_reports_binary_gate() -> None:
     assert "Evaluator-Observed Evidence" in standard
     assert "Active Milestone Evaluation SOP" in standard
     assert "SOP Calibration Standard" in standard
-    assert "evaluate the complete frozen scope" in role
-    assert "Any SOP change after candidate evidence" in role
+    assert "candidate_ready_for_independent_evaluation=1" in role
+    assert "complete runnable candidate" in role
+    assert "Before inspecting candidate results" in role
     assert "evaluation_executed: 0 | 1" in combined
-    assert "kr_observed_pass: 0 | 1" in combined
-    assert "Any required unrun, missing, inferred, or unsupported check" in combined
+    assert "milestone_observed_pass: 0 | 1" in combined
+    assert "mkr_results:" in combined
     assert data["quality_gate"]["evaluation_executed"] == 0
-    assert data["quality_gate"]["kr_observed_pass"] == 0
+    assert data["quality_gate"]["candidate_gate_valid"] == 0
+    assert data["quality_gate"]["milestone_observed_pass"] == 0
+    assert data["quality_gate"]["mkr_results"] == []
     assert data["quality_gate"]["allowed_values"] == [0, 1]
 
 

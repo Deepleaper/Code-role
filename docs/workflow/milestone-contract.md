@@ -1,97 +1,95 @@
 # Milestone Contract / 里程碑合同
 
-Workflow Orchestrator maintains one accepted milestone contract. This contract defines the result to deliver; it does not prescribe a fixed role chain.
+Workflow Orchestrator maintains one complete accepted Milestone OKR under [OKR Definition And Decomposition Standard](../okr-standard.md).
 
-项目经理维护一份已确认的里程碑合同。它定义要交付的结果，不规定固定的角色链。
+项目经理按照 [OKR 定义与分解规范](../okr-standard.md)维护一份完整、已确认的里程碑 OKR。
 
 ```text
 milestone:
 objective:
 objective_accepted: 0 | 1
 
-key_results:
-| KR | Observable user/business/product/runtime outcome | Numeric threshold | Required independent evidence | Pass (0/1) |
-| --- | --- | --- | --- | ---: |
+milestone_key_results:
+| MKR | Observable outcome | Subject and scenario | Binary threshold and conditions | Required independent evidence | Claim boundary | Pass (0/1) |
+| --- | --- | --- | --- | --- | --- | ---: |
 
 non_goals:
 - item:
 
-claim_boundary:
-- allowed:
-- forbidden:
-
-iteration_limit_per_kr: 3
+product_okr_required_before_engineering: 1
+product_okr_path:
+candidate_required_before_evaluation: 1
+runnable_candidate_path:
+engineering_to_evaluation_attempt_limit: 3
 accepted_time_or_cost_budget:
 ```
 
-## Outcome Rule / 结果规则
+## Complete Global Contract / 完整全局契约
 
-**A delivery KR must describe an observable user, business, product, or runtime outcome.**
+- Project Manager defines one complete Objective and two to five `MKR-1...MKR-N` with the user.
+- Product / PRD later defines one complete `PKR-1...PKR-N` contract covering every MKR.
+- Workflow Orchestrator and Product / PRD do not issue one assignment per MKR.
+- Implementer alone defines `EKR-1...EKR-N` for engineering phases.
+- EKR completion cannot pass an MKR.
 
-**Research, PRD, architecture, evaluation SOP, tests, reports, packets, and reviews are delivery methods or evidence, not delivery KRs.**
+## MKR Quality Gate / MKR 质量门禁
 
-交付 KR 必须描述可观测的用户、业务、产品或运行时结果。调研、PRD、架构、评估 SOP、测试、报告、packet 和 review 只是达成结果的方法或证据，不是交付 KR。
+Every MKR names an observable user, business, product, or runtime outcome; subject and scenario; exact threshold and measurement conditions; independent evidence; and claim boundary.
 
-Only one exception exists: an artifact may be a KR when the user explicitly accepts that artifact itself as the milestone's external deliverable.
+Research, PRD, architecture, code, tests, evaluation SOP, reports, packets, and reviews are methods or evidence, not delivery MKRs unless the user explicitly accepts that artifact as the external product.
 
-唯一例外：用户明确确认某份文档或工件本身就是里程碑对外交付物。
+Vague terms such as usable, stable, fast, high quality, better, complete, or production ready are invalid without an exact threshold and measurement context.
+
+## Mandatory Stage Gates / 强制阶段门禁
+
+```text
+complete Milestone OKR
+    -> complete Product OKR
+    -> Architecture and Code Context when required
+    -> Implementer EKR execution and complete runnable candidate
+    -> Test Evaluator complete independent evaluation
+    -> Reviewer when required
+    -> closure
+```
+
+Test Evaluator must not start before `candidate_ready_for_independent_evaluation=1` and a runnable candidate artifact exists.
 
 ## Binary Rules / 二值规则
 
-- Objective, KR definitions, thresholds, datasets, graders, and claim boundaries require user acceptance.
-- Every KR remains `0` until every required observation is independently evidenced.
-- Missing, unrun, inferred, stale, or qualitative required evidence is `0`.
-- A role work unit can pass while the target KR remains `0`; work-unit completion never substitutes for outcome evidence.
-- Residual work becomes a new accepted KR, an explicit non-goal, or remains failed. There is no partial KR state.
+- Objective, MKR definitions, PKR scope or thresholds, datasets, graders, and claim boundaries require user acceptance.
+- Every MKR remains `0` until every required observation is independently evidenced.
+- Missing, unrun, inferred, stale, contradictory, or qualitative required evidence is `0`.
+- Product, architecture, EKR, implementation, self-tests, or review activity never substitutes for outcome evidence.
+- There is no partial MKR or milestone state.
 
-## Work Unit Assignment / 工作单元任务
+## Stage Acceptance / 阶段接受
 
-Workflow Orchestrator routes the owner of one exact failed or missing evidence item. The assignment contains only:
-
-项目经理只路由一个精确的失败或缺失证据项，任务书只包含：
+Workflow Orchestrator reads the complete stage artifact and evidence, then chooses one:
 
 ```text
-objective
-target_kr
-current_failed_evidence
-role_deliverable
-acceptance_checks
-authoritative_inputs
-required_artifact_path
-```
-
-- `current_failed_evidence` must identify one observed failure, not a broad topic.
-- `role_deliverable` describes what this role must produce to repair or decide that failure.
-- `acceptance_checks` are binary and observable.
-- `required_artifact_path` names one primary professional artifact. Annexes are optional.
-- A complete assignment starts the role immediately. Routine startup acknowledgements and permission loops are invalid.
-
-## Acceptance / 接受与路由
-
-Workflow Orchestrator reads the primary artifact and its evidence, then makes one decision:
-
-```text
-accept
-return_to_same_role
-route_failed_evidence_owner
+accept_stage_and_advance
+return_complete_stage_to_owner
 request_user_decision
+close_milestone
 ```
 
-Formatting, packet metadata, manifest status, lock files, or a short chat-summary defect cannot overturn substantively sufficient evidence. They may be corrected in place without starting another role loop.
+- Product stage acceptance requires every MKR to map to PKRs.
+- Architecture and Code Context acceptance require complete Product OKR coverage.
+- Engineering acceptance requires all required EKRs, integration checks, and regressions plus a reproducible candidate.
+- Evaluation acceptance requires complete MKR/PKR execution with evaluator-owned evidence.
+- Formatting, packet metadata, manifest status, or optional locks are not substantive gates.
 
 ## Drift Check / 漂移检查
 
 For every submitted artifact:
 
-- Does it address the accepted Objective and exact `target_kr`?
-- Does it repair or decide `current_failed_evidence`?
-- Does it satisfy every binary `acceptance_check` with cited evidence?
-- Does it preserve non-goals and claim boundaries?
-- Does it distinguish observed evidence, professional judgment, inference, and unknown?
-- If the KR remains `0`, does the next failed evidence item identify a concrete owner?
+- Does it cover the complete accepted global contract for its stage?
+- Does it preserve MKR and PKR meaning, thresholds, and claims?
+- Are all stage acceptance checks evidenced?
+- Does Implementer keep EKR decomposition separate from higher OKRs?
+- Does Evaluation cover the complete runnable candidate and every MKR/PKR?
+- Are observed evidence, professional judgment, inference, and unknown separated?
 
 ## Closure / 关闭
 
-Milestone pass is `1` only when every accepted KR is `1`, all required independent outcome evidence exists, any required final audit passes, and irreversible release actions follow the target project's normal human approval process.
-
-里程碑只在所有已确认 KR 都为 `1`、必需的独立结果证据齐全、必需的最终审计通过，且不可逆发布动作遵守目标项目原有人工审批流程时才为 `1`。
+Milestone pass is `1` only when every accepted MKR is `1`, complete independent evaluation exists, any required final audit passes, and irreversible release actions follow the target project's normal human approval process.

@@ -14,39 +14,41 @@ Use these as starting points. Adapt each post to the community and answer techni
 
 **English**
 
-AI coding agents are good at producing activity, but activity is not delivery. Code-role is a local, open-source role-control system that gives the Project Manager one accepted Objective, routes one missing KR at a time, and requires independent evidence before completion. Use the four-workstation Minimal Profile for normal work or the eight-role Full Profile when research, architecture, and audit need separate ownership.
+AI coding agents are good at producing activity, but activity is not delivery. Code-role is a local, open-source role-control system with three explicit layers: Project Manager owns the complete milestone OKR, Product owns the complete product OKR, and Engineering alone decomposes execution KRs and builds the candidate. Independent Evaluation starts only after the complete runnable candidate exists. Use the four-workstation Minimal Profile for normal work or the eight-role Full Profile when research, architecture, and audit need separate ownership.
 
 **中文**
 
-AI 编程 Agent 很擅长“做很多事”，但活动量不等于交付。Code-role 是一套本地、开源的角色控制机制：项目经理维护一个已确认的 Objective，每次只处理一个未完成 KR，任何完成结论都必须经过独立证据验证。普通任务使用四工位最小版；研究、架构和审计需要独立负责时，使用八角色完整版。
+AI 编程 Agent 很擅长“做很多事”，但活动量不等于交付。Code-role 是一套本地、开源的角色控制机制：项目经理负责完整里程碑 OKR，产品负责覆盖整个里程碑的完整产品 OKR，只有工程可以拆分执行 KR 并交付可运行候选物。完整候选物产生后才进入独立评估。普通任务使用四工位最小版；研究、架构和审计需要独立负责时，使用八角色完整版。
 
-## v0.4.0 Release Post / v0.4.0 发布文案
+## Current Release Post / 当前发布文案
 
 **English**
 
-Code-role v0.4.0 removes workflow ceremony from AI coding without weakening milestone control.
+Code-role gives AI coding a global OKR contract without turning the Project Manager into an engineering task scheduler.
 
-- Delivery KRs must describe observable user, product, business, or runtime outcomes.
-- Every assignment targets one exact failed evidence item.
+- Project Manager defines the complete `MKR-*` milestone outcome set.
+- Product defines the complete `PKR-*` product contract covering every MKR.
+- Engineering alone decomposes `EKR-*` implementation stages and produces the runnable candidate.
+- Independent Evaluation cannot start before candidate readiness and evaluates the complete MKR/PKR contract.
 - A complete assignment starts the role immediately; no startup acknowledgement or readiness-only turn.
 - Every role owes one primary professional artifact; packet metadata is optional.
-- Engineering submits candidate evidence. Independent Evaluation separately reports whether evaluation ran and whether the KR actually passed.
 
-The result is a smaller loop with a harder completion boundary: less narration, fewer routing turns, and no self-approved delivery.
+The result is a smaller loop with clear authority: global goals stay global, execution detail stays with Engineering, and no implementation approves itself.
 
 Repository: https://github.com/Deepleaper/Code-role
 
 **中文**
 
-Code-role v0.4.0 在不削弱里程碑控制的前提下，删除了 AI 编程中的流程表演：
+Code-role 用全局 OKR 契约控制 AI 编程，同时不把项目经理变成工程任务调度器：
 
-- 交付 KR 只能描述可观测的用户、产品、业务或运行时结果；
-- 每份任务只处理一个明确的失败证据；
+- 项目经理定义完整 `MKR-*` 里程碑结果；
+- 产品定义覆盖全部 MKR 的完整 `PKR-*` 产品契约；
+- 只有工程可以拆分 `EKR-*` 实现阶段并产出可运行候选物；
+- 候选物门禁通过后才能独立评估，且评估必须覆盖完整 MKR/PKR；
 - 完整任务书直接启动角色，不再等待启动确认或 readiness 回合；
 - 每个角色只强制交付一份主专业产物，packet 元数据降为可选；
-- 工程只提交候选证据，独立评估分别报告“是否真的执行评估”和“KR 是否实际通过”。
 
-结果是一套更短、但完成边界更硬的闭环：少说流程、少做路由、不能自我验收。
+结果是一套权责更清楚的闭环：全局目标保持全局，执行细节归工程，任何实现都不能自我验收。
 
 项目地址：https://github.com/Deepleaper/Code-role
 
@@ -62,10 +64,10 @@ I built Code-role after repeatedly seeing coding agents produce plausible docume
 
 The core idea is intentionally small:
 
-- one Project Manager owns one accepted Objective and binary KRs;
-- each assignment targets one exact failed evidence item keeping an outcome KR at `0`;
-- engineering produces candidate evidence but cannot approve itself;
-- an independent evaluator must run the complete frozen checks;
+- one Project Manager owns the complete milestone Objective and binary MKRs;
+- Product owns one complete PKR contract covering every MKR;
+- Engineering alone decomposes EKR stages and produces candidate evidence but cannot approve itself;
+- an independent evaluator starts after candidate readiness and runs the complete MKR/PKR checks;
 - only the Project Manager updates milestone state.
 
 There are two profiles: a four-workstation goal loop for normal delivery and an eight-role packet workflow for higher-risk work. It is local-first, bilingual, MIT licensed, and it does not try to auto-run an entire project.
@@ -92,7 +94,7 @@ Code-role now has two operating profiles. The Minimal Profile is the default: Pr
 
 This is not an autonomous coding runner. It is a local control layer for human-discussed, evidence-driven delivery. I would especially value feedback from people running multi-agent or multi-conversation coding workflows.
 
-The workflow came from two private projects. In DeepBrain, Independent Evaluation kept a strong `73/100` partial result from becoming an unsupported production claim. In Leaper Agent, the Project Manager rejected a professional-looking evaluation baseline because its task data, holdout isolation, grader mechanism, and runtime conditions were not executable yet.
+The workflow came from two private projects. In DeepBrain, Independent Evaluation kept a strong `73/100` partial result from becoming an unsupported production claim. In Leaper Agent, a historical pre-code evaluation route exposed missing task data, holdout isolation, grader mechanics, and runtime conditions. That case helped establish the current Product -> Engineering -> post-candidate Evaluation order.
 
 ## X / Twitter
 
@@ -102,9 +104,10 @@ AI coding agents often confuse activity with delivery.
 
 I open-sourced Code-role: a local milestone-control workflow for Codex with:
 
-- one PM-owned Objective
-- binary KRs
-- one missing result per assignment
+- complete PM-owned milestone MKRs
+- complete Product-owned PKRs
+- Engineering-owned EKR stages
+- post-candidate evaluation
 - independent evaluation
 - 4-role minimal and 8-role full profiles
 
@@ -116,9 +119,10 @@ AI 编程最常见的问题，不是不会写代码，而是把“做了很多�
 
 我开源了 Code-role：
 
-- 项目经理负责一个 Objective
-- KR 只按 0/1 判断
-- 每次只处理一个未完成结果
+- 项目经理负责完整里程碑 MKR
+- 产品负责完整产品 PKR
+- 工程负责分阶段执行 EKR
+- 完整候选物后再独立评估
 - 实现不能自我验收
 - 四工位最小版 + 八角色完整版
 
