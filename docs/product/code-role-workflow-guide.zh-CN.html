@@ -382,7 +382,7 @@
         Code-role 不把更多流程当成目标。它只保留能够提高交付确定性的控制点：谁负责目标、谁负责专业结论、怎样证明完成、谁独立评估。
       </p>
       <div class="success">
-        共同原则：项目经理定义完整里程碑 OKR，产品定义覆盖整个里程碑的完整产品 OKR，只有工程可以拆分执行 EKR；实现不能自我验收，必需证据未获得就是未完成。
+        共同原则：项目经理定义完整项目 OKR，产品定义覆盖整个里程碑的完整产品契约，只有工程可以拆分执行 STEP；实现不能自我验收，必需证据未获得就是未完成。
       </div>
       <div class="warning">
         交付 KR 必须是可观测的用户、业务、产品或运行时结果。调研、PRD、架构、评估 SOP、测试、报告、packet 和 review 只是方法或证据，不是交付 KR。
@@ -399,7 +399,7 @@
           <p>完整控制一个软件 milestone 所需的最小责任单元。</p>
           <ul>
             <li>一份里程碑作战板作为唯一权威。</li>
-            <li>项目经理维护完整 <code>MKR-*</code>，产品维护完整 <code>PKR-*</code>，工程内部拆分 <code>EKR-*</code>。</li>
+            <li>项目经理维护完整 <code>KR-*</code>，产品维护完整 <code>KR-*</code>，工程内部拆分 <code>STEP-*</code>。</li>
             <li>项目经理、产品策略、工程、独立评估。</li>
             <li>产品、工程、评估各有角色专属任务书、一份必需主交付物与短回报，不使用 packet 链。</li>
             <li>适合产品方向较清楚、范围可控的持续迭代。</li>
@@ -471,19 +471,19 @@
     <section id="minimal">
       <h2>4. 四角色最小版</h2>
       <div class="role-grid">
-        <div class="role"><strong>项目经理</strong>定义完整 Milestone Objective 与 <code>MKR-1...MKR-N</code>，控制全局交付阶段，并依据独立证据关闭里程碑。</div>
-        <div class="role"><strong>产品策略</strong>定义覆盖所有 MKR 的完整 Product Objective 与 <code>PKR-1...PKR-N</code>，明确用户价值、产品行为、范围、阈值、非目标和 claim boundary。</div>
-        <div class="role"><strong>工程</strong>消费完整 MKR/PKR，自主拆成 <code>EKR-1...EKR-N</code>，完成必要研究、架构、实现、测试和完整可运行候选物。</div>
-        <div class="role"><strong>独立评估</strong>只在完整候选物产生后启动，记录可执行 SOP，并独立验证所有 MKR/PKR。</div>
+        <div class="role"><strong>项目经理</strong>与用户定义唯一的 Project Objective 与 <code>KR-1...KR-N</code>，控制全局交付阶段，并依据独立证据关闭里程碑。</div>
+        <div class="role"><strong>产品策略</strong>在同一组 KR 下补全 Product Contract，明确用户价值、产品行为、范围、阈值、非目标和 claim boundary，不创建第二套 OKR。</div>
+        <div class="role"><strong>工程</strong>消费项目 OKR 与 Product Contract，自主拆成 <code>STEP-1...STEP-N</code>，完成必要研究、架构、实现、测试和完整可运行候选物。</div>
+        <div class="role"><strong>独立评估</strong>只在完整候选物产生后启动，记录可执行 SOP，并独立验证所有 KR。</div>
       </div>
       <div class="flow" aria-label="四角色最小版流程">
-        <div class="flow-step"><strong>完整里程碑 OKR</strong>用户确认一个 Objective 和完整二值 <code>MKR-*</code> 集合。</div>
-        <div class="flow-step"><strong>完整产品 OKR</strong>产品一次性覆盖全部 MKR，不把 MKR 一个个派给工程。</div>
-        <div class="flow-step"><strong>工程候选物</strong>工程自主拆分 EKR，直到完整可运行候选物与可复现证据都存在。</div>
-        <div class="flow-step"><strong>独立证据</strong>评估师验证完整 MKR/PKR，项目经理只依据独立证据更新 MKR。</div>
+        <div class="flow-step"><strong>完整项目 OKR</strong>用户确认一个 Objective 和完整二值 <code>KR-*</code> 集合。</div>
+        <div class="flow-step"><strong>完整产品契约</strong>产品一次性覆盖全部 KR，不把 KR 一个个派给工程。</div>
+        <div class="flow-step"><strong>工程候选物</strong>工程自主拆分 STEP，直到完整可运行候选物与可复现证据都存在。</div>
+        <div class="flow-step"><strong>独立证据</strong>评估师验证完整 KR，项目经理只依据独立证据更新 KR。</div>
       </div>
       <p>
-        软件交付的顺序固定为“项目经理完整 MKR -> 产品完整 PKR -> 工程 EKR 与候选物 -> 独立评估 -> 项目经理决策”。评估不能出现在产品之后、工程之前。
+        软件交付始终围绕同一套 KR，顺序固定为“项目 OKR -> 产品契约 -> 工程 STEP 与候选物 -> 独立评估 -> 项目经理决策”。评估不能出现在产品之后、工程之前。
       </p>
     </section>
 
@@ -500,7 +500,7 @@
         <div class="role"><strong>Reviewer</strong>从 Orchestrator 开始审计所有最终角色产物是否偏离原始 milestone。</div>
       </div>
       <p>
-        每个专业角色完成后先返回 Orchestrator。Orchestrator 检查完整 MKR 覆盖、完整 PKR 覆盖、工程候选物门禁、任务书验收检查与客观证据，再推进全局交付阶段。专业结论来自角色主交付物，不由 Orchestrator 自行改写；聊天格式、packet 状态和 lock 不构成日常完成门禁。
+        每个专业角色完成后先返回 Orchestrator。Orchestrator 检查同一组 KR 的产品覆盖、工程候选物门禁、任务书验收检查与客观证据，再推进全局交付阶段。专业结论来自角色主交付物，不由 Orchestrator 自行改写；聊天格式、packet 状态和 lock 不构成日常完成门禁。
       </p>
       <pre><code>Workflow Orchestrator
   -> Researcher -> Workflow Orchestrator
@@ -552,18 +552,18 @@ cd Code-role</code></pre>
       <h2>7. 日常控制方法</h2>
       <h3>四角色最小版</h3>
       <ol>
-        <li>在项目经理对话中确认完整 Milestone Objective、<code>MKR-*</code>、非目标和独立证据。</li>
-        <li>项目经理向产品下发覆盖全部 MKR 的产品任务书，产品返回完整 Product Objective 与 <code>PKR-*</code>。</li>
-        <li>产品契约整体通过后，项目经理把完整 MKR/PKR 交给工程；工程自行拆分 EKR 并交付完整可运行候选物。</li>
-        <li>只有候选物门禁通过后，项目经理才向独立评估下发覆盖全部 MKR/PKR 的评估任务书。</li>
+        <li>在项目经理对话中确认唯一的 Project Objective、<code>KR-*</code>、非目标和独立证据。</li>
+        <li>项目经理把同一组 KR 交给产品，产品在这些 KR 下补全 Product Contract，不创建第二套 OKR。</li>
+        <li>产品契约整体通过后，项目经理把项目 OKR 与 Product Contract 交给工程；工程自行拆分 STEP 并交付完整可运行候选物。</li>
+        <li>只有候选物门禁通过后，项目经理才向独立评估下发覆盖全部 KR 的评估任务书。</li>
         <li>评估师返回独立结果；项目经理据此关闭里程碑，或把失败契约退回产品/工程修正。</li>
       </ol>
       <h3>八角色完整版</h3>
       <ol>
-        <li>Orchestrator 确认完整 Milestone Objective、<code>MKR-*</code> 与权威输入。</li>
-        <li>Researcher、Product / PRD、Architect、Code Context 分别围绕完整里程碑契约工作；Product / PRD 必须交付覆盖所有 MKR 的完整 PKR。</li>
-        <li>Implementer 消费完整全局契约，自行拆分 EKR，产出完整可运行候选物与可复现证据。</li>
-        <li>候选物门禁通过后，Test Evaluator 才独立评估所有 MKR/PKR；Reviewer 最终审计完整链路与阶段顺序。</li>
+        <li>Orchestrator 与用户确认唯一的 Project Objective、<code>KR-*</code> 与权威输入。</li>
+        <li>Researcher、Product / PRD、Architect、Code Context 分别围绕同一项目 OKR 工作；Product / PRD 必须在现有 KR 下补全 Product Contract。</li>
+        <li>Implementer 消费完整全局契约，自行拆分 STEP，产出完整可运行候选物与可复现证据。</li>
+        <li>候选物门禁通过后，Test Evaluator 才独立评估所有 KR；Reviewer 最终审计完整链路与阶段顺序。</li>
         <li>每个角色用专属短回报返回 Orchestrator，不选择下一角色；Orchestrator 只推进全局阶段，不改写专业结论。</li>
       </ol>
       <p>当前两套配置都使用人工可复制传递，不声称已自动跨对话派发。</p>

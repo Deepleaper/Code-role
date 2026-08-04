@@ -7,17 +7,17 @@ Validation checks whether Full Profile is controlling delivered outcomes. It is 
 ### Milestone Contract
 
 - Objective is user-accepted.
-- Project Manager defines the complete milestone KR set as `MKR-1...MKR-N`; no accepted milestone outcome is omitted or deferred to an unnamed future task.
-- Every MKR describes an observable user, business, product, or runtime outcome.
-- Every MKR has a binary threshold, measurement method, evidence requirement, and claim boundary.
+- Project Manager defines the complete milestone KR set as `KR-1...KR-N`; no accepted milestone outcome is omitted or deferred to an unnamed future task.
+- Every KR describes an observable user, business, product, or runtime outcome.
+- Every KR has a binary threshold, measurement method, evidence requirement, and claim boundary.
 - Research, PRD, architecture, SOPs, tests, reports, packets, and reviews are not delivery KRs unless the user explicitly accepted the artifact itself as the external deliverable.
 
 ### Product Contract
 
-- Product Strategy or Product / PRD defines one complete Product OKR for the whole milestone.
-- `PKR-1...PKR-N` collectively map every accepted MKR to user behavior, product behavior, scope, acceptance rules, and product claim boundaries.
-- Product does not choose one MKR for implementation, create Engineering execution stages, or route directly to evaluation.
-- Missing MKR coverage keeps `product_okr_accepted=0`.
+- Product Strategy or Product / PRD defines one complete Product Contract for the whole milestone.
+- For every existing `KR-1...KR-N`, the Product Contract adds user behavior, product behavior, scope, acceptance rules, and product claim boundaries without creating another KR set.
+- Product does not choose one KR for implementation, create Engineering execution stages, or route directly to evaluation.
+- Missing KR coverage keeps `product_contract_accepted=0`.
 
 ### Current State
 
@@ -48,8 +48,8 @@ required_artifact_path
 - The assignment does not require a precomputed per-file writable whitelist.
 - A complete assignment starts work immediately.
 - Research, Product, Architecture, and Code Context assignments cover the complete milestone contract.
-- Engineering may define `EKR-1...EKR-N` inside its execution plan; no upstream role pre-slices those EKR stages.
-- Evaluation assignments contain the complete candidate path and all accepted MKR/PKR checks.
+- Engineering may define `STEP-1...STEP-N` inside its execution plan; no upstream role pre-slices those STEP stages.
+- Evaluation assignments contain the complete candidate path and all accepted KR checks.
 
 ### Primary Artifact
 
@@ -61,12 +61,12 @@ required_artifact_path
 ### Implementation And Evaluation
 
 - Implementer produces a runnable candidate and reproducible candidate evidence.
-- Engineering reports every EKR as `0|1`, but EKR completion cannot set any MKR or PKR to `1`.
+- Engineering reports every STEP as `0|1`, but STEP completion cannot set any KR to `1`.
 - Analysis, plans, documents, and implementation claims alone cannot pass Engineering delivery unless the accepted external deliverable is itself documentation.
-- Test Evaluator starts only after the complete candidate gate passes and independently evaluates every accepted MKR/PKR contract.
-- Test Evaluator reports `evaluation_executed=0|1` and one `mkr_observed_pass=0|1` result per MKR.
+- Test Evaluator starts only after the complete candidate gate passes and independently evaluates every accepted KR using the accepted Product Contract.
+- Test Evaluator reports `evaluation_executed=0|1` and one `kr_observed_pass=0|1` result per KR.
 - Required unrun, missing, inferred, unsupported, or environment-invalid evidence is `0`.
-- Reviewer, when required, audits the complete current artifact chain, MKR/PKR coverage, EKR traceability, stage order, evidence integrity, and final claims against the original milestone.
+- Reviewer, when required, audits the complete current artifact chain, KR coverage, STEP traceability, stage order, evidence integrity, and final claims against the original milestone.
 
 ## Optional Strict Audit / 可选严格审计
 

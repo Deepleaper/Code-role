@@ -11,7 +11,7 @@ Read these sources directly:
 1. accepted milestone contract;
 2. compact Orchestrator workflow state;
 3. assignment-named accepted primary professional artifacts;
-4. accepted MKR/PKR evaluation requirements, post-candidate executable SOP, and latest independent evidence;
+4. accepted KR evaluation requirements, post-candidate executable SOP, and latest independent evidence;
 5. optional strict packet manifest and lock only when immutable audit was explicitly requested.
 
 If the index conflicts with any authoritative source, ignore the index.
@@ -41,8 +41,8 @@ Keep only current navigation fields:
 milestone
 objective
 delivery_stage
-milestone_okr_accepted
-product_okr_accepted
+project_okr_accepted
+product_contract_accepted
 candidate_ready_for_independent_evaluation
 evaluation_executed
 current_assignment_path
@@ -70,7 +70,7 @@ A role index may list only:
 - task-specific exclusions, if any;
 - the authoritative milestone and workflow-state paths.
 
-It must not restate the full role prompt, create a startup confirmation gate, choose a successor, infer acceptance, or duplicate Engineering's internal `EKR-*` execution plan.
+It must not restate the full role prompt, create a startup confirmation gate, choose a successor, infer acceptance, or duplicate Engineering's internal `STEP-*` execution plan.
 
 ## Refresh / 刷新
 

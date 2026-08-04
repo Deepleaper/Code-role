@@ -45,7 +45,7 @@ def test_goal_loop_initializes_exactly_four_active_roles(tmp_path: Path) -> None
         "project-manager.md",
     ]
     project_config = read(target / "code-role" / "project-config.md")
-    assert "control_model: okr-delivery-v4" in project_config
+    assert "control_model: single-project-okr-v5" in project_config
     assert "default_engineering_evaluation_attempt_limit: 3" in project_config
     assert "default_iteration_limit_per_kr" not in project_config
     assert "active_roles:" in project_config
@@ -53,7 +53,7 @@ def test_goal_loop_initializes_exactly_four_active_roles(tmp_path: Path) -> None
     assert "code-role/" in read(target / ".git" / "info" / "exclude")
 
 
-def test_goal_loop_has_three_layer_okr_and_mandatory_stage_contract(tmp_path: Path) -> None:
+def test_goal_loop_has_one_project_okr_and_mandatory_stage_contract(tmp_path: Path) -> None:
     target = tmp_path / "target"
     target.mkdir()
     assert run_init(target).returncode == 0
@@ -77,28 +77,29 @@ def test_goal_loop_has_three_layer_okr_and_mandatory_stage_contract(tmp_path: Pa
 
     okr_standard = read(target / "code-role" / "OKR-STANDARD.md")
 
-    assert "Three OKR Layers" in loop
+    assert "One Project OKR" in loop
     assert "Mandatory Delivery Stages" in loop
     assert "Engineering Execution Loop" in loop
     assert "There is no `partial_pass`" in loop
     assert "three failed Engineering-to-Evaluation attempts" in loop
-    assert "Milestone OKR | Project Manager + user" in okr_standard
-    assert "Product OKR | Product Strategy / Product PRD" in okr_standard
-    assert "Engineering Execution KRs | Engineering / Implementer" in okr_standard
+    assert "Define and govern the Project OKR | Project Manager + user" in okr_standard
+    assert "Make every KR product-complete | Product Strategy / Product PRD" in okr_standard
+    assert "Build the complete candidate | Engineering / Implementer" in okr_standard
+    assert "No role may create a second Objective or KR set" in okr_standard
 
     for assignment in (engineering_assignment, product_assignment, evaluation_assignment):
         assert "role_prompt_path:" in assignment
         assert "acceptance_checks:" in assignment
         assert "required_artifact_path:" in assignment
-    assert "milestone_okr_scope: all_accepted_mkrs" in product_assignment
-    assert "product_okr_accepted: 1" in engineering_assignment
+    assert "project_okr_scope: all_accepted_krs" in product_assignment
+    assert "product_contract_accepted: 1" in engineering_assignment
     assert "engineering_objective: produce_the_complete_runnable_candidate" in engineering_assignment
     assert "task_specific_exclusions:" in engineering_assignment
     assert "candidate_ready_for_independent_evaluation: 1" in evaluation_assignment
-    assert "evaluation_scope: complete_mkr_and_pkr_contract" in evaluation_assignment
+    assert "evaluation_scope: complete_project_okr" in evaluation_assignment
     board = read(target / "code-role" / "milestone-board.md")
     assert "Delivery stage" in board
-    assert "Product OKR accepted" in board
+    assert "Product Contract accepted" in board
     assert "Candidate ready for independent evaluation" in board
     assert "Decision Log" not in board
     assert "Do not evaluate before a runnable candidate exists" in evaluator
@@ -171,3 +172,25 @@ def test_check_mode_accepts_generated_project(tmp_path: Path) -> None:
 
     assert result.returncode == 0, result.stderr
     assert "goal-loop validation passed" in result.stdout
+
+
+def test_check_mode_rejects_obsolete_multi_okr_board_terms(tmp_path: Path) -> None:
+    target = tmp_path / "target"
+    target.mkdir()
+    assert run_init(target).returncode == 0
+
+    board = target / "code-role" / "milestone-board.md"
+    board.write_text(
+        read(board) + "\nProduct OKR accepted: 0\n",
+        encoding="utf-8",
+    )
+
+    result = subprocess.run(
+        [sys.executable, str(SCRIPT), str(target), "--check"],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 1
+    assert "obsolete multi-OKR marker: Product OKR" in result.stderr

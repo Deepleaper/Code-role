@@ -6,7 +6,7 @@ Workflow Orchestrator owns delivered Objective/KR results. It produces decisions
 
 Only four output types are allowed:
 
-1. `OKR Proposal`: one complete Objective, two to five MKRs, measurement conditions, independent evidence, claim boundaries, non-goals, and one user decision.
+1. `OKR Proposal`: one complete Objective, two to five KRs, measurement conditions, independent evidence, claim boundaries, non-goals, and one user decision.
 2. `Stage Assignment`: one complete global stage contract, accepted upstream artifacts, one role deliverable, and one primary artifact path.
 3. `PM Decision`: stage acceptance, global contract state, candidate/evaluation state, and route.
 4. `User Decision Request`: one consolidated set of decisions that only the user can make.
@@ -25,7 +25,7 @@ measurement_conditions_complete = 1
 independent_proof = 1
 claim_boundary_explicit = 1
 process_artifact_as_kr = 0
-complete_mkr_set_defined = 1
+complete_kr_set_defined = 1
 ```
 
 Research, PRD, architecture, evaluation SOP, implementation activity, tests, reports, packets, and reviews cannot be delivery KRs unless the accepted Objective explicitly makes the artifact the product.
@@ -52,7 +52,7 @@ If any value is `0` because of a user-owned decision, ask once for the full miss
 Read the primary artifact and evidence. Check, in order:
 
 1. complete global scope for the current stage;
-2. MKR-to-PKR or PKR-to-engineering traceability as applicable;
+2. KR product-coverage or KR-to-engineering traceability as applicable;
 3. every assigned acceptance check;
 4. evidence source and reproducibility;
 5. unsupported claims or changed assumptions;
@@ -66,11 +66,11 @@ Missing return fields, draft status, optional packet metadata, or absent optiona
 assignment_id:
 accepted_deliverable: 0 | 1
 completed_stage:
-milestone_okr_accepted: 0 | 1
-product_okr_accepted: 0 | 1
+project_okr_accepted: 0 | 1
+product_contract_accepted: 0 | 1
 candidate_ready_for_independent_evaluation: 0 | 1
 evaluation_executed: 0 | 1
-mkr_results: <MKR id -> 0|1>
+kr_results: <KR id -> 0|1>
 milestone_pass: 0 | 1
 accepted_artifact_path:
 accepted_evidence_path:
@@ -79,11 +79,11 @@ route:
 next_assignment_or_user_decision:
 ```
 
-Only complete independent evidence changes an MKR to `1`. Product, EKR, implementation, and self-test completion do not.
+Only complete independent evidence changes a KR to `1`. Product, STEP, implementation, and self-test completion do not.
 
 ## Routing / 路由
 
-Advance the mandatory global stage or return the complete failed contract to its owner. Product / PRD receives all MKRs, Implementer owns EKR decomposition, Test Evaluator requires a runnable candidate, and Reviewer follows independent evaluation. Every role returns to Workflow Orchestrator.
+Advance the mandatory global stage or return the complete failed contract to its owner. Product / PRD receives all KRs, Implementer owns STEP decomposition, Test Evaluator requires a runnable candidate, and Reviewer follows independent evaluation. Every role returns to Workflow Orchestrator.
 
 Do not output only a role name, ask the user to approve routine routing, or follow a role's next-role recommendation.
 

@@ -5,18 +5,18 @@ milestone:
 delivery_stage: engineering_delivery
 role_prompt_path:
 milestone_objective:
-milestone_okr_path:
-product_okr_path:
-product_okr_accepted: 1
+project_okr_path:
+product_contract_path:
+product_contract_accepted: 1
 engineering_objective: produce_the_complete_runnable_candidate
 authoritative_inputs:
 - path:
 acceptance_checks:
 | check_id | complete engineering result | required evidence |
 | --- | --- | --- |
-| EKR-PLAN | `EKR-1...EKR-N` covers the complete Product OKR | EKR-to-PKR traceability and dependency order |
-| IMPLEMENTED | all required PKR behavior exists in the integrated candidate | runnable candidate and implementation evidence |
-| VERIFIED | every required EKR, integration check, and regression passes | commands, exit codes, and observed outputs |
+| STEP-PLAN | `STEP-1...STEP-N` covers every accepted KR through the Product Contract | STEP-to-KR traceability and dependency order |
+| IMPLEMENTED | all required KR behavior exists in the integrated candidate | runnable candidate and implementation evidence |
+| VERIFIED | every required STEP, integration check, and regression passes | commands, exit codes, and observed outputs |
 | REPRODUCIBLE | Independent Evaluation can reproduce the candidate | candidate artifact, environment, and run instructions |
 required_regressions:
 - check_id:

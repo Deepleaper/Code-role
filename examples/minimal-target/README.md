@@ -66,9 +66,9 @@ Open a Project Manager conversation and use:
 
 ```text
 请读取 code-role/role-instance-prompts/project-manager.md，
-然后根据 code-role/milestone-board.md 定义或恢复当前里程碑 OKR。
+然后根据 code-role/milestone-board.md 定义或恢复当前项目 OKR。
 ```
 
-After the user accepts the complete Milestone OKR, Project Manager sends the complete MKR set to Product Strategy. Product Strategy returns one complete Product OKR covering every MKR. Project Manager then sends the accepted MKR/PKR contracts to Engineering. Engineering alone decomposes them into EKR stages and produces the complete runnable candidate. Independent Evaluation starts only after that candidate gate passes.
+After the user accepts the complete Project OKR, Project Manager sends the same KR set to Product Strategy. Product Strategy adds one complete Product Contract under those KRs without creating another OKR. Project Manager then sends the accepted Project OKR and Product Contract to Engineering. Engineering alone decomposes implementation into STEP stages and produces the complete runnable candidate. Independent Evaluation starts only after that candidate gate passes.
 
-用户确认完整里程碑 OKR 后，项目经理先把全部 MKR 交给产品策略；产品策略返回覆盖所有 MKR 的完整产品 OKR；项目经理再把已接受的 MKR/PKR 契约交给工程；只有工程可以拆分 EKR 并产出完整可运行候选物。候选物门禁通过后才能启动独立评估。
+用户确认完整项目 OKR 后，项目经理把同一组 KR 交给产品策略；产品策略在这些 KR 下补全产品契约，不创建第二套 OKR；项目经理再把已接受的项目 OKR 与 Product Contract 交给工程；只有工程可以拆分 STEP 并产出完整可运行候选物。候选物门禁通过后才能启动独立评估。

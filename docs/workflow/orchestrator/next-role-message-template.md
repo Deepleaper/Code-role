@@ -1,6 +1,6 @@
 # Global Stage Assignment Template / 全局阶段任务书模板
 
-This is one complete professional delivery stage, not a single-MKR task or workflow tutorial. Workflow Orchestrator fills the selected role's exact `templates/assignment.md` from accepted global contracts.
+This is one complete professional delivery stage, not a single-KR task or workflow tutorial. Workflow Orchestrator fills the selected role's exact `templates/assignment.md` from accepted global contracts.
 
 ## Required Core / 必填核心
 
@@ -8,7 +8,7 @@ This is one complete professional delivery stage, not a single-MKR task or workf
 assignment_id:
 milestone:
 delivery_stage:
-milestone_okr_path:
+project_okr_path:
 role_deliverable:
 authoritative_inputs:
 - path:
@@ -21,10 +21,10 @@ irreversible_actions: none
 
 Role-specific additions:
 
-- Researcher and Product / PRD: `milestone_okr_scope: all_accepted_mkrs`.
-- Product / PRD: complete Product OKR and MKR-to-PKR traceability.
-- Architect and Code Context: complete `product_okr_path` and whole-product coverage.
-- Implementer: complete MKR/PKR contracts, Engineering objective, and EKR/candidate requirements.
+- Researcher and Product / PRD: `project_okr_scope: all_accepted_krs`.
+- Product / PRD: complete Product Contract and KR product-coverage traceability.
+- Architect and Code Context: complete `product_contract_path` and whole-product coverage.
+- Implementer: accepted Project OKR and Product Contract, Engineering objective, and STEP/candidate requirements.
 - Test Evaluator: candidate artifact plus `candidate_ready_for_independent_evaluation: 1`.
 - Reviewer: complete accepted final outputs and independent evaluation artifact.
 
@@ -42,8 +42,8 @@ Exact templates:
 
 ## Rules / 规则
 
-- Project Manager and Product / PRD assignments cover the complete global OKR, not one isolated MKR.
-- Implementer alone defines and manages `EKR-1...EKR-N`.
+- Project Manager and Product / PRD assignments cover the complete global OKR, not one isolated KR.
+- Implementer alone defines and manages `STEP-1...STEP-N`.
 - Test Evaluator cannot be assigned before a complete runnable candidate exists.
 - Reviewer cannot be assigned before independent evaluation.
 - Freeze stage acceptance checks before work starts.

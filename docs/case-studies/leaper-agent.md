@@ -23,7 +23,7 @@
 
 The accepted Objective was deliberately stronger than “build an agent runtime.” Leaper Agent had to demonstrate better enterprise task outcomes and repeatability than Hermes under the same model/provider, tools, budget, environment, and scoring conditions.
 
-The complete milestone used five non-compensating hard KRs, now represented as `MKR-1...MKR-5`:
+The complete milestone used five non-compensating hard KRs, now represented as `KR-1...KR-5`:
 
 1. Enterprise business outcomes exceed Hermes.
 2. Repeat reliability and efficiency meet frozen thresholds.
@@ -93,8 +93,8 @@ The correction transformed:
 - same-condition prose into frozen runtime fields;
 - summary hashes into a reproducible integrity index.
 
-The case exposed a real integrity problem, but it also exposed a role-order problem: evaluation design work had become a pre-code evaluator stage. Current Code-role keeps product thresholds and evidence requirements in the complete Product OKR, lets Engineering build the complete candidate, and starts independent evaluation only afterward.
+The case exposed a real integrity problem, but it also exposed a role-order problem: evaluation design work had become a pre-code evaluator stage. Current Code-role keeps product thresholds and evidence requirements in the complete Product Contract, lets Engineering build the complete candidate, and starts independent evaluation only afterward.
 
 ## Claim Boundary / 宣传边界
 
-This historical case supports two bounded claims: Code-role detected a non-executable evidence contract, and that experience justified removing pre-code Test Evaluator routing. It does not claim that Leaper Agent already beats Hermes, that any MKR passed, or that the product milestone is complete.
+This historical case supports two bounded claims: Code-role detected a non-executable evidence contract, and that experience justified removing pre-code Test Evaluator routing. It does not claim that Leaper Agent already beats Hermes, that any KR passed, or that the product milestone is complete.

@@ -107,7 +107,7 @@ One Project Manager controls three callable professional workstations around one
 - [Engineering / 工程](role-instance-prompts/engineering.md)
 - [Independent Evaluation / 独立评估](role-instance-prompts/independent-evaluation.md)
 
-`milestone-board.md` is the only active state. `OKR-STANDARD.md` defines the three OKR layers and `LOOP.md` defines the delivery stages.
+`milestone-board.md` is the only active state. `OKR-STANDARD.md` defines the one Project OKR and `LOOP.md` defines the delivery stages.
 
 `milestone-board.md` 是唯一活跃状态，`LOOP.md` 定义闭环协议。
 
@@ -115,10 +115,10 @@ One Project Manager controls three callable professional workstations around one
 
 1. Open the Project Manager conversation.
 2. Give it `role-instance-prompts/project-manager.md`.
-3. Confirm one complete Milestone Objective and `MKR-1...MKR-N` under `OKR-STANDARD.md`.
-4. Product Strategy defines the complete `PKR-1...PKR-N` contract for every MKR.
-5. Engineering defines `EKR-1...EKR-N`, implements the complete candidate, and verifies integration and regressions.
-6. Independent Evaluation evaluates the complete runnable candidate against every MKR and PKR.
+3. Confirm one complete Project Objective and `KR-1...KR-N` under `OKR-STANDARD.md`.
+4. Product Strategy completes the Product Contract under those same KRs; it creates no second OKR.
+5. Engineering defines `STEP-1...STEP-N`, implements the complete candidate, and verifies integration and regressions.
+6. Independent Evaluation evaluates the complete runnable candidate against every KR.
 7. Project Manager closes the milestone only from complete independent evidence.
 
 Software delivery follows the mandatory Product -> Engineering -> Independent Evaluation stage order.
@@ -142,10 +142,10 @@ Project: `{project_name}`
 
 1. Start or refresh the Project Manager conversation with `role-instance-prompts/project-manager.md`.
 2. The Project Manager reads `OKR-STANDARD.md`, `LOOP.md`, and `milestone-board.md`.
-3. Confirm one complete Milestone Objective and two to five `MKR` results.
-4. Product Strategy creates one complete Product OKR covering every MKR.
-5. Engineering decomposes execution into `EKR-1...EKR-N` and produces the complete runnable candidate.
-6. Independent Evaluation starts only after candidate readiness is `1` and evaluates the full MKR/PKR contract.
+3. Confirm one complete Project Objective and two to five `KR` results.
+4. Product Strategy completes one Product Contract under the same KRs without creating another OKR.
+5. Engineering decomposes execution into `STEP-1...STEP-N` and produces the complete runnable candidate.
+6. Independent Evaluation starts only after candidate readiness is `1` and evaluates the full KR contract.
 7. Project Manager closes or returns the failed contract owner from independent evidence.
 
 Only Objective/KR changes, evaluation-threshold changes, budget expansion, and irreversible external actions require an additional human gate.
@@ -160,7 +160,7 @@ def render_project_config(project_name: str, project_root: Path) -> str:
 project_name: {project_name}
 target_project_path: {project_root}
 tracking_policy: local-only
-control_model: okr-delivery-v4
+control_model: single-project-okr-v5
 authoritative_control_record: {project_root / "code-role" / "milestone-board.md"}
 okr_standard: {project_root / "code-role" / "OKR-STANDARD.md"}
 loop_contract: {project_root / "code-role" / "LOOP.md"}
@@ -185,7 +185,7 @@ external_research_allowed_default: true
 
 - `code-role/` is local-only assistance, not product runtime content.
 - `milestone-board.md` is the only active control state.
-- Project Manager owns complete MKRs, Product Strategy owns complete PKRs, and Engineering owns phased EKRs.
+- Project Manager and user own the single Project OKR; Product Strategy completes its Product Contract; Engineering owns phased STEPs mapped to the same KRs.
 - Independent Evaluation starts only after a complete runnable candidate exists.
 - Full Profile packets and state indexes may remain as history, but they do not control a project while the Minimal Profile is active.
 - Product attachments carry professional content; Project Manager references them instead of rewriting them.
@@ -224,7 +224,7 @@ Recommended filenames:
 - Engineering: `engineering-report-<assignment-id>.md`
 - Independent Evaluation result: `evaluation-report-<assignment-id>.md`
 
-Product Strategy carries the complete Product OKR. Engineering carries the EKR plan and complete candidate. Independent Evaluation carries the complete MKR/PKR result. Optional annexes exist only when needed for reproduction.
+Product Strategy carries the complete Product Contract. Engineering carries the STEP plan and complete candidate. Independent Evaluation carries the complete KR result. Optional annexes exist only when needed for reproduction.
 """
 
 
@@ -299,7 +299,7 @@ def validate(project_root: Path) -> list[str]:
 
     loop = (code_role / "LOOP.md").read_text(encoding="utf-8")
     required_loop_markers = (
-        "Three OKR Layers",
+        "One Project OKR",
         "Mandatory Delivery Stages",
         "Engineering Execution Loop",
         "Independent Evaluation",
@@ -334,14 +334,14 @@ def validate(project_root: Path) -> list[str]:
     assignment_markers = {
         "product-assignment.md": (
             "delivery_stage: product_definition",
-            "milestone_okr_scope: all_accepted_mkrs",
+            "project_okr_scope: all_accepted_krs",
             "role_prompt_path:",
             "acceptance_checks:",
             "required_artifact_path:",
         ),
         "engineering-assignment.md": (
             "delivery_stage: engineering_delivery",
-            "product_okr_accepted: 1",
+            "product_contract_accepted: 1",
             "engineering_objective: produce_the_complete_runnable_candidate",
             "acceptance_checks:",
             "required_artifact_path:",
@@ -349,7 +349,7 @@ def validate(project_root: Path) -> list[str]:
         "evaluation-assignment.md": (
             "delivery_stage: independent_evaluation",
             "candidate_ready_for_independent_evaluation: 1",
-            "evaluation_scope: complete_mkr_and_pkr_contract",
+            "evaluation_scope: complete_project_okr",
             "acceptance_checks:",
             "required_artifact_path:",
         ),
@@ -361,12 +361,18 @@ def validate(project_root: Path) -> list[str]:
                 errors.append(f"{filename} missing marker: {marker}")
 
     board = (code_role / "milestone-board.md").read_text(encoding="utf-8")
+    obsolete_role_kr_markers = tuple(f"{prefix}KR" for prefix in ("M", "P", "E"))
+    for marker in (*obsolete_role_kr_markers, "Product OKR", "product_okr"):
+        if marker in board:
+            errors.append(
+                f"milestone board contains obsolete multi-OKR marker: {marker}"
+            )
     board_uses_v4_schema = "Do not append process history" in board
     if board_uses_v4_schema:
         for marker in (
             "Delivery stage",
-            "Milestone OKR accepted",
-            "Product OKR accepted",
+            "Project OKR accepted",
+            "Product Contract accepted",
             "Runnable candidate",
             "Milestone pass",
         ):
@@ -381,8 +387,8 @@ def validate(project_root: Path) -> list[str]:
     for marker in (
         "manual transport",
         "Do not claim automatic dispatch",
-        "Do not send Product Strategy one MKR at a time",
-        "After Product OKR acceptance, route Engineering",
+        "Do not send Product Strategy one KR at a time",
+        "After Product Contract acceptance, route Engineering",
         "candidate_ready_for_independent_evaluation=1",
         "Missing return fields or field order are not blockers",
     ):
@@ -436,8 +442,7 @@ def main() -> int:
         )
         if "Do not append process history" not in board:
             print(
-                "goal-loop validation passed with preserved legacy milestone board; "
-                "Project Manager will compact it on the next substantive decision: "
+                "goal-loop validation passed with preserved project-specific milestone board: "
                 f"{project_root}"
             )
             return 0

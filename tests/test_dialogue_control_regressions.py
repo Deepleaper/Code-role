@@ -115,7 +115,7 @@ def test_evaluation_and_review_gates_are_binary_in_both_profiles() -> None:
     )
 
     assert "evaluation_executed: 0 | 1" in minimal_evaluation
-    assert "mkr_results:" in minimal_evaluation
+    assert "kr_results:" in minimal_evaluation
     assert "milestone_observed_pass: 0 | 1" in minimal_evaluation
     assert full_evaluation["quality_gate"]["allowed_values"] == [0, 1]
     assert full_review["quality_gate"]["allowed_values"] == [0, 1]

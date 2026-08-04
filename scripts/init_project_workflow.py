@@ -99,11 +99,11 @@ This directory is local-only role-control assistance. It is not product runtime 
 ## Use / 使用
 
 1. Configure the eight conversations once from `role-instance-prompts/`.
-2. Open `workflow-orchestrator` and accept one complete Objective with `MKR-1...MKR-N` under `OKR-STANDARD.md`.
-3. Product / PRD creates one complete `PKR-1...PKR-N` contract covering every MKR.
-4. Architecture and Code Context cover the complete Product OKR when needed.
-5. Implementer alone defines `EKR-1...EKR-N` and produces the complete runnable candidate.
-6. Test Evaluator starts only after candidate readiness and evaluates the full MKR/PKR contract.
+2. Open `workflow-orchestrator` and accept one complete Objective with `KR-1...KR-N` under `OKR-STANDARD.md`.
+3. Product / PRD creates one complete Product Contract for every existing `KR-1...KR-N`.
+4. Architecture and Code Context cover the complete Product Contract when needed.
+5. Implementer alone defines `STEP-1...STEP-N` and produces the complete runnable candidate.
+6. Test Evaluator starts only after candidate readiness and evaluates the full KR contract.
 7. Reviewer, when required, audits the complete final chain before closure.
 
 ## Active Control / 活跃控制
@@ -130,7 +130,7 @@ def render_project_config(config: Config) -> str:
 project_name: {config.project_name}
 target_project_path: {config.target}
 control_profile: full-eight-role
-control_model: okr-delivery-v4
+control_model: single-project-okr-v5
 tracking_policy: local-only
 initial_milestone: {config.initial_milestone}
 initial_chain_hint: {config.initial_chain}
@@ -140,7 +140,7 @@ startup_acknowledgement_required: false
 format_only_rework_allowed: false
 role_self_routing_allowed: false
 completion_model: binary
-mandatory_delivery_order: complete-milestone-okr -> complete-product-okr -> engineering-candidate -> independent-evaluation -> review-when-required
+mandatory_delivery_order: project-okr -> product-contract -> engineering-candidate -> independent-evaluation -> review-when-required
 
 authoritative_control:
 - {config.workflow / 'orchestrator' / 'milestone-contract.md'}
@@ -151,7 +151,7 @@ boundary:
 - code-role is local workflow assistance, not product runtime or release content
 - one primary professional artifact carries each role result; short returns are transport summaries
 - delivery KRs are user, business, product, or runtime outcomes; process artifacts are methods or evidence
-- Workflow Orchestrator owns complete MKRs, Product / PRD owns complete PKRs, and Implementer owns EKR decomposition
+- Workflow Orchestrator and user own the single Project OKR; Product / PRD completes its Product Contract; Implementer owns STEP decomposition mapped to the same KRs
 - Test Evaluator cannot start before a complete runnable candidate exists
 - target-project Git follows its normal process
 """
@@ -165,13 +165,13 @@ active_milestone: {config.initial_milestone}
 objective_accepted: 0
 objective: unconfirmed
 delivery_stage: milestone_definition
-milestone_okr_accepted: 0
-product_okr_accepted: 0
+project_okr_accepted: 0
+product_contract_accepted: 0
 candidate_ready_for_independent_evaluation: 0
 evaluation_executed: 0
 current_evidence_owner: user
 current_stage_assignment: none
-accepted_product_okr_artifact: none
+accepted_product_contract_artifact: none
 accepted_architecture_artifact: none
 accepted_code_context_artifact: none
 accepted_engineering_artifact: none
@@ -181,14 +181,14 @@ current_iteration: 0
 iteration_limit: 3
 milestone_pass: 0
 
-pending_human_decision: accept one complete Objective and two to five MKRs
+pending_human_decision: accept one complete Objective and two to five KRs
 
 rules:
 - record current accepted state only; do not append chronological workflow history
 - preserve complete global contracts and mandatory stage order
-- do not store Implementer EKR detail in Orchestrator state
+- do not store Implementer STEP detail in Orchestrator state
 - packet status, manifest readiness, and locks do not control routine routing
-- only complete independent outcome evidence can change an MKR from 0 to 1
+- only complete independent outcome evidence can change a KR from 0 to 1
 """
 
 
@@ -200,7 +200,7 @@ objective: unconfirmed
 objective_accepted: 0
 
 milestone_key_results:
-| MKR | Observable outcome | Subject and scenario | Binary threshold and conditions | Required independent evidence | Claim boundary | Pass (0/1) |
+| KR | Observable outcome | Subject and scenario | Binary threshold and conditions | Required independent evidence | Claim boundary | Pass (0/1) |
 | --- | --- | --- | --- | --- | --- | ---: |
 
 non_goals:
@@ -212,8 +212,8 @@ claim_boundary:
 
 outcome_rule: delivery KRs describe observable user, business, product, or runtime outcomes
 method_rule: research, PRD, architecture, evaluation SOP, tests, reports, packets, and reviews are methods or evidence, not delivery KRs
-product_okr_required_before_engineering: 1
-product_okr_path: none
+product_contract_required_before_engineering: 1
+product_contract_path: none
 candidate_required_before_evaluation: 1
 runnable_candidate_path: none
 
@@ -222,7 +222,7 @@ evaluation_sop_path: {config.workflow / 'evaluation' / 'evaluation-sop.md'}
 engineering_to_evaluation_attempt_limit: 3
 accepted_time_or_cost_budget: unconfirmed
 
-closure_rule: all accepted MKRs are 1, complete independent evaluation passes, and required review gate passes
+closure_rule: all accepted KRs are 1, complete independent evaluation passes, and required review gate passes
 """
 
 
@@ -259,7 +259,7 @@ claim_boundary:
 accepted_time_or_cost_budget: unconfirmed
 
 purpose_rule: this SOP is recorded after candidate readiness and before candidate results are inspected; it is not a delivery KR
-binary_rule: evaluation_executed is 1 only when the complete MKR/PKR evaluation ran; milestone_observed_pass is 1 only when every MKR independently passes
+binary_rule: evaluation_executed is 1 only when the complete KR evaluation ran; milestone_observed_pass is 1 only when every KR independently passes
 sop_change_rule: post-candidate change requires user approval, new SOP version, and affected-evidence rerun
 """
 

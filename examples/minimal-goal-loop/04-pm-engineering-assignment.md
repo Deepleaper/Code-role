@@ -5,9 +5,9 @@ milestone: deterministic-json-export
 delivery_stage: engineering_delivery
 role_prompt_path: code-role/roles/engineering.md
 milestone_objective: Users can export a report as stable JSON without changing the existing text-output contract.
-milestone_okr_path: milestone-board.md#milestone-key-results--里程碑关键结果
-product_okr_path: 02-product-contract.md
-product_okr_accepted: 1
+project_okr_path: milestone-board.md#milestone-key-results--里程碑关键结果
+product_contract_path: 02-product-contract.md
+product_contract_accepted: 1
 engineering_objective: produce_the_complete_runnable_candidate
 authoritative_inputs:
 - path: milestone-board.md
@@ -15,9 +15,9 @@ authoritative_inputs:
 acceptance_checks:
 | check_id | complete engineering result | required evidence |
 | --- | --- | --- |
-| EKR-PLAN | EKR stages cover PKR-1 through PKR-3 | traceability and dependency order |
+| STEP-PLAN | STEP stages cover KR-1 and KR-2 without creating new KRs | traceability and dependency order |
 | IMPLEMENTED | integrated candidate contains all required behavior | runnable candidate and implementation evidence |
-| VERIFIED | EKR checks and 12 text regressions pass | commands, exit codes, observed output |
+| VERIFIED | STEP checks and 12 text regressions pass | commands, exit codes, observed output |
 | REPRODUCIBLE | evaluator can run the candidate independently | artifact path, environment, run instructions |
 required_regressions:
 - check_id: TEXT-12

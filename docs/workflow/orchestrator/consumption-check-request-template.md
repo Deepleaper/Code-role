@@ -13,7 +13,7 @@ blocking_check_ids: none | <check ids>
 return_to: workflow-orchestrator
 ```
 
-Product / PRD additionally reports complete MKR coverage. Implementer reports EKR status and candidate readiness. Test Evaluator reports `evaluation_executed`, per-MKR results, `product_contract_pass`, and `milestone_observed_pass`. Reviewer reports `review_executed` and `review_gate_pass`.
+Product / PRD additionally reports complete KR coverage. Implementer reports STEP status and candidate readiness. Test Evaluator reports `evaluation_executed`, per-KR results, `product_contract_pass`, and `milestone_observed_pass`. Reviewer reports `review_executed` and `review_gate_pass`.
 
 This return is a pointer. Workflow Orchestrator reads the primary artifact and evidence before deciding.
 

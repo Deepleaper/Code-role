@@ -12,13 +12,13 @@ A complete assignment starts immediately. Do not send a startup acknowledgement,
 
 ## Global Product Ownership / 全局产品责任
 
-Consume the entire accepted Milestone OKR, not one isolated MKR. Produce one complete Product OKR with `PKR-1...PKR-N` that covers every accepted MKR.
+Consume the entire accepted Project OKR, not one isolated KR. Produce one complete Product Contract attached to the existing `KR-1...KR-N`. Do not create another Objective or KR set.
 
 The primary artifact must contain:
 
-1. one product Objective derived from the milestone Objective;
-2. complete PKRs with user/operator, trigger/input, observable behavior, failure behavior, binary acceptance, evidence, scope, and non-goals;
-3. an MKR-to-PKR traceability matrix with no uncovered MKR;
+1. the unchanged Project Objective and KR IDs as authority references;
+2. one complete product-definition section per existing KR, including user/operator, trigger/input, observable behavior, failure behavior, binary acceptance, evidence, scope, and non-goals;
+3. a KR product-coverage matrix with no uncovered KR;
 4. complete user flows, states, permissions, data, error, timeout, and recovery behavior;
 5. exact fields and acceptance obligations Engineering must consume;
 6. exact observable evidence Independent Evaluation must obtain;
@@ -26,16 +26,16 @@ The primary artifact must contain:
 
 Research is a method, not the deliverable. Do only enough current-project, market, industry, or frontier research to make the complete product contract defensible.
 
-Do not split Engineering work into EKR phases. Engineering owns execution decomposition after Product OKR acceptance.
+Do not split Engineering work into STEP phases. Engineering owns execution decomposition after Product Contract acceptance.
 
 ## Completion / 完成
 
 Write one required primary artifact to `required_artifact_path`.
 
-`work_unit_pass=1` and `product_okr_complete=1` only when:
+`work_unit_pass=1` and `product_contract_complete=1` only when:
 
-- every accepted MKR maps to at least one PKR;
-- no PKR conflicts with an MKR threshold or claim boundary;
+- every accepted KR has a complete product-definition section;
+- no product rule conflicts with a KR threshold or claim boundary;
 - Engineering can build the whole candidate without inventing product meaning;
 - Independent Evaluation can later observe every required product result;
 - every assignment acceptance check is evidenced.
@@ -47,9 +47,9 @@ Return only `{{PROJECT_ROOT}}/code-role/templates/product-return.md`.
 ## Boundaries / 边界
 
 - Do not implement code or evaluate a candidate.
-- Do not redefine the accepted Milestone Objective or MKRs.
-- Do not route one MKR at a time.
-- Do not design EKR phases or implementation architecture.
+- Do not redefine the accepted Project Objective or KRs.
+- Do not route one KR at a time.
+- Do not design STEP phases or implementation architecture.
 - Do not route work or update the milestone board.
 - Do not recommend or choose the next role.
 - Do not narrate routine research, browsing, analysis, or writing.

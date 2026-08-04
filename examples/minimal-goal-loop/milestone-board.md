@@ -10,8 +10,8 @@
 | Milestone | `deterministic-json-export` |
 | Objective accepted | `1` |
 | Delivery stage | `milestone_decision` |
-| Milestone OKR accepted | `1` |
-| Product OKR accepted | `1` |
+| Project OKR accepted | `1` |
+| Product Contract accepted | `1` |
 | Runnable candidate ready | `1` |
 | Independent evaluation executed | `1` |
 | Milestone pass | `1` |
@@ -22,10 +22,10 @@ Users can export a report as stable JSON without changing the existing text-outp
 
 ## Milestone Key Results / 里程碑关键结果
 
-| MKR | Observable delivered outcome | Binary threshold | Measurement | Required independent evidence | Accepted evidence path | Pass |
+| KR | Observable delivered outcome | Binary threshold | Measurement | Required independent evidence | Accepted evidence path | Pass |
 | --- | --- | --- | --- | --- | --- | ---: |
-| MKR-1 | Users can export fixtures A, B, and C as valid deterministic JSON. | 3/3 fixtures pass schema and repeated-run SHA-256 equality. | Fresh evaluator run against the candidate. | Raw JSON, schema output, and hash pairs. | `08-independent-evaluation-report.md` | 1 |
-| MKR-2 | Existing text-output users observe no contract change. | 12/12 frozen text regressions are byte-identical. | Fresh evaluator regression run against the candidate. | Command log and fixture diff output. | `08-independent-evaluation-report.md` | 1 |
+| KR-1 | Users can export fixtures A, B, and C as valid deterministic JSON. | 3/3 fixtures pass schema and repeated-run SHA-256 equality. | Fresh evaluator run against the candidate. | Raw JSON, schema output, and hash pairs. | `08-independent-evaluation-report.md` | 1 |
+| KR-2 | Existing text-output users observe no contract change. | 12/12 frozen text regressions are byte-identical. | Fresh evaluator regression run against the candidate. | Command log and fixture diff output. | `08-independent-evaluation-report.md` | 1 |
 
 ## Accepted Global Artifacts / 已接受全局产物
 

@@ -48,7 +48,7 @@ def test_researcher_read_write_boundaries_are_documented() -> None:
     role = read(RESEARCHER / "ROLE.md")
     source_map = read(WORKFLOW / "source-map.md")
 
-    assert "Product OKR, architecture commitments, code, tests, evaluation verdicts" in role
+    assert "Product Contract, architecture commitments, code, tests, evaluation verdicts" in role
     assert "Public-source network research is allowed by default" in role
     assert "private or paid resources require authorization" in role
     assert "Researcher Output Standard" in role

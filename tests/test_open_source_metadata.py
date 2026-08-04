@@ -103,9 +103,9 @@ def test_readme_exposes_both_supported_profiles() -> None:
     assert "Neither profile is deprecated" in readme
     assert "scripts/init_loop_workflow.py" in readme
     assert "scripts/init_project_workflow.py" in readme
-    assert "Project Manager owns complete MKRs" in readme
-    assert "Product owns complete PKRs" in readme
-    assert "Engineering alone decomposes EKR stages" in readme
+    assert "one Objective and one KR set" in readme
+    assert "Product Contract for every existing KR" in readme
+    assert "only Engineering decomposes `STEP-1...STEP-N` execution stages" in readme
     assert "Product Strategy" in readme
     assert "Engineering" in readme
     assert "Independent Evaluation" in readme
@@ -121,8 +121,8 @@ def test_readme_exposes_both_supported_profiles() -> None:
     assert "Minimal target example" in readme
     assert "examples/minimal-target/README.md" in readme
     assert "Do not commit target-project `code-role/` output by default." in example
-    assert "完整里程碑 OKR" in example
-    assert "只有工程可以拆分 EKR" in example
+    assert "完整项目 OKR" in example
+    assert "只有工程可以拆分 STEP" in example
 
 
 def test_product_docs_define_minimal_and_full_profiles() -> None:

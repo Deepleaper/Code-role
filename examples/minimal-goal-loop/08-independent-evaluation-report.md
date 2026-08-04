@@ -8,17 +8,17 @@ Recorded before candidate outputs were inspected: run frozen valid and invalid C
 
 | Check | Observed | Evidence | Pass |
 | --- | --- | --- | ---: |
-| PKR-1 CLI contract | valid JSON mode 3/3; invalid format 3/3 returned exit 2 and accepted message | `evidence/cli-contract.log` | 1 |
-| PKR-2 schema | fixture A/B/C schema-valid | `evidence/schema-results.json` | 1 |
-| PKR-2 determinism | repeated SHA-256 equal for A/B/C | `evidence/hash-pairs.txt` | 1 |
-| PKR-3 compatibility | 12/12 text outputs byte-identical | `evidence/text-regression.diff` | 1 |
+| EV-1 / KR-1 CLI contract | valid JSON mode 3/3; invalid format 3/3 returned exit 2 and accepted message | `evidence/cli-contract.log` | 1 |
+| EV-2 / KR-1 schema | fixture A/B/C schema-valid | `evidence/schema-results.json` | 1 |
+| EV-3 / KR-1 determinism | repeated SHA-256 equal for A/B/C | `evidence/hash-pairs.txt` | 1 |
+| EV-4 / KR-2 compatibility | 12/12 text outputs byte-identical | `evidence/text-regression.diff` | 1 |
 
-## MKR Results / MKR 结果
+## KR Results / KR 结果
 
-| MKR | Observed result | Pass |
+| KR | Observed result | Pass |
 | --- | --- | ---: |
-| MKR-1 | All JSON behavior, schema, and determinism thresholds passed. | 1 |
-| MKR-2 | All frozen text compatibility thresholds passed. | 1 |
+| KR-1 | All JSON behavior, schema, and determinism thresholds passed. | 1 |
+| KR-2 | All frozen text compatibility thresholds passed. | 1 |
 
 evaluation_executed: 1
 product_contract_pass: 1

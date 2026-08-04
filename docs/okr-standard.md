@@ -1,26 +1,27 @@
-# OKR Definition And Decomposition Standard / OKR 定义与分解规范
+# One Project OKR Standard / 单一项目 OKR 规范
 
-This standard is authoritative for both Code-role profiles. It prevents milestone control, product design, engineering execution, and independent evaluation from using the same ambiguous `KR1...KRn` namespace.
+This standard is authoritative for both Code-role profiles. One milestone has exactly one Project OKR: one Objective and one shared set of `KR-1...KR-N`. Every role works against that same OKR. Product, Engineering, and Evaluation do not create their own Objectives or KRs.
 
-本规范同时适用于四角色最小版和八角色完整版。它防止里程碑控制、产品设计、工程执行和独立评估混用同一组含义不清的 `KR1...KRn`。
+本规范同时适用于四角色最小版和八角色完整版。一个里程碑只能有一套项目 OKR：一个 Objective 和一组共享的 `KR-1...KR-N`。所有角色都围绕这套 OKR 工作；产品、工程和评估不得再创建自己的 Objective 或 KR。
 
-## 1. Three OKR Layers / 三层 OKR
+## 1. One OKR, Four Responsibilities / 一套 OKR，四种职责
 
-| Layer | Owner | Purpose | IDs | Completion authority |
+| Responsibility | Owner | Required artifact | Allowed IDs | Completion authority |
 | --- | --- | --- | --- | --- |
-| Milestone OKR | Project Manager + user | Defines the complete delivered business, user, product, or runtime result | `MKR-1...MKR-N` | Project Manager, using independent evidence |
-| Product OKR | Product Strategy / Product PRD | Defines the complete observable product behavior and acceptance contract that realizes every MKR | `PKR-1...PKR-N` | Project Manager accepts the product contract; it does not pass the milestone |
-| Engineering Execution KRs | Engineering / Implementer | Decomposes the complete product contract into ordered implementation phases | `EKR-1...EKR-N` | Engineering verifies EKR completion; it does not pass MKRs or PKRs |
+| Define and govern the Project OKR | Project Manager + user | Objective, complete KR table, non-goals, claim boundaries | `KR-1...KR-N` | Project Manager records user acceptance and final independent results |
+| Make every KR product-complete | Product Strategy / Product PRD | Product Contract attached to the existing KRs | Existing `KR-*` only | Project Manager accepts product-definition completeness; Product does not pass KRs |
+| Build the complete candidate | Engineering / Implementer | Engineering Execution Plan and runnable candidate | `STEP-1...STEP-N`, each mapped to `KR-*` | Engineering verifies steps and candidate readiness; steps do not pass KRs |
+| Independently test the outcome | Independent Evaluation / Test Evaluator | Recorded SOP, raw evidence, and one `0|1` result per existing KR | Existing `KR-*` and evaluator check IDs | Independent Evaluation observes KR results; Project Manager decides closure |
 
-Rules:
+Hard rules:
 
-1. Project Manager defines the complete milestone OKR once. It does not assign one MKR at a time to Product.
-2. Product defines one complete Product OKR covering every accepted MKR. It does not return a sequence of isolated product decisions.
-3. Engineering owns the only execution decomposition. It may create, order, revise, and complete EKR stages while preserving the accepted MKR and PKR contracts.
-4. Independent Evaluation evaluates the complete runnable candidate against MKRs and PKRs. It does not evaluate EKR activity or the latest diff.
-5. `MKR`, `PKR`, and `EKR` are separate namespaces. A passed EKR never implies a passed PKR or MKR.
+1. No role may create a second Objective or KR set.
+2. Product elaborates the existing KRs into observable behavior and acceptance rules without renaming, splitting, replacing, or adding KRs.
+3. Engineering may create implementation steps because steps describe work order, not outcomes. A passed step never implies a passed KR.
+4. Independent Evaluation evaluates the complete runnable candidate against every accepted KR, not against role activity or the latest diff.
+5. Only the user and Project Manager may accept a changed Objective, KR, threshold, measurement condition, non-goal, or claim boundary.
 
-## 2. Milestone Objective Standard / 里程碑 Objective 规范
+## 2. Objective Standard / Objective 规范
 
 One milestone has one Objective. It must state:
 
@@ -37,24 +38,24 @@ For <subject> in <scenario>, change <current problem> into <observable end state
 within <scope/time boundary>, without claiming <explicit exclusions>.
 ```
 
-An Objective must not prescribe implementation steps, role activity, documents, or tools unless the accepted product itself is that artifact or tool.
+An Objective must not prescribe role activity, documents, tools, or implementation steps unless the accepted product itself is that artifact or tool.
 
-## 3. Milestone KR Standard / 里程碑 MKR 规范
+## 3. Shared KR Standard / 共享 KR 规范
 
-Use two to five non-duplicative MKRs. Every MKR must include:
+Use two to five non-duplicative KRs. Every role must preserve these IDs and meanings.
 
 | Field | Requirement |
 | --- | --- |
-| `mkr_id` | Stable ID: `MKR-1...MKR-N` |
+| `kr_id` | Stable ID: `KR-1...KR-N` |
 | `observable_outcome` | A user, business, product, or runtime result, not work performed |
 | `subject_and_scenario` | Who or what exhibits the result, under which conditions |
 | `binary_threshold` | Exact numerator, denominator, sample size, time window, tolerance, and non-compensable failures |
 | `measurement_conditions` | Fixed environment, inputs, comparator, budget, and required regressions where applicable |
 | `independent_evidence` | Evidence an evaluator can obtain without trusting Engineering self-report |
-| `claim_boundary` | The strongest statement this MKR permits and explicit statements it does not permit |
+| `claim_boundary` | The strongest statement this KR permits and explicit statements it does not permit |
 | `pass` | `0` or `1`; missing, inferred, unrun, contradictory, or failed evidence is `0` |
 
-Reject an MKR when any answer is unclear:
+Reject a KR when any answer is unclear:
 
 1. Who or what changes?
 2. What can an external observer see?
@@ -63,139 +64,115 @@ Reject an MKR when any answer is unclear:
 5. Which independent artifact or run proves it?
 6. Which broader claim remains forbidden?
 
-Forbidden delivery MKRs include:
+Research, PRD, architecture, code, tests, SOPs, reports, packets, and reviews are methods or evidence. They are not delivery KRs unless the user explicitly accepts that artifact as the external product.
 
-- finish research;
-- write a PRD or architecture;
-- implement code;
-- write or run tests;
-- freeze an evaluation SOP;
-- produce a report, packet, review, or release note.
+Words such as “usable”, “stable”, “high quality”, “fast”, “complete”, “better”, or “production ready” are invalid without explicit conditions and thresholds.
 
-Words such as “usable”, “stable”, “high quality”, “fast”, “complete”, “better”, or “production ready” are invalid without explicit measurement conditions and thresholds.
+## 4. Product Contract Standard / 产品契约规范
 
-## 4. Product OKR Standard / 产品 PKR 规范
+Product consumes the entire accepted Project OKR and makes every existing KR product-complete. It does not define another Objective or KR set.
 
-Product Strategy consumes the entire accepted Milestone OKR and produces one complete Product OKR. The Product OKR must cover every MKR before Engineering starts.
-
-Each PKR must include:
+For every existing `KR-*`, the Product Contract adds:
 
 | Field | Requirement |
 | --- | --- |
-| `pkr_id` | Stable ID: `PKR-1...PKR-N` |
-| `source_mkrs` | One or more MKRs this product result realizes |
+| `kr_id` | The unchanged Project OKR ID |
 | `user_or_operator` | Named actor |
 | `trigger_and_inputs` | Observable starting condition and valid inputs |
-| `observable_behavior` | Exact product behavior or output |
+| `observable_behavior` | Exact product behavior or output required to realize the KR |
 | `failure_behavior` | Observable invalid-input, error, timeout, and recovery behavior |
-| `binary_acceptance` | Exact product-level pass/fail rule |
-| `evidence_required` | What Engineering must expose and Independent Evaluation must observe |
+| `binary_acceptance` | Product-level acceptance detail consistent with the KR threshold |
+| `evidence_required` | What Engineering must expose and Evaluation must observe |
 | `scope_and_non_goals` | Included behavior and explicit exclusions |
 
-Product Strategy must also provide:
+The Product Contract must also provide complete user flows, states, permissions, data boundaries, failure handling, and unresolved decisions. Optional requirement or scenario labels may organize detail, but they do not create another goal hierarchy.
 
-- an MKR-to-PKR traceability matrix with no uncovered MKR;
-- complete user flows and state transitions;
-- data, permission, safety, and failure boundaries;
-- acceptance criteria that do not require Engineering or Evaluation to invent product meaning.
+`product_contract_accepted=1` requires every accepted KR to be fully specified without changing its outcome, threshold, evidence requirement, or claim boundary.
 
-Product Strategy does not choose implementation architecture, split engineering phases, or pass any MKR.
+## 5. Engineering Execution Plan / 工程执行计划
 
-## 5. Engineering EKR Standard / 工程 EKR 规范
+Engineering consumes the accepted Project OKR and Product Contract, inspects the real repository, and creates only the implementation decomposition needed to build the candidate.
 
-Engineering consumes the complete accepted MKR and PKR contracts, inspects the repository, and creates an execution decomposition appropriate to the actual system.
-
-Each EKR must include:
+Each step includes:
 
 | Field | Requirement |
 | --- | --- |
-| `ekr_id` | Stable ID: `EKR-1...EKR-N` |
-| `source_pkrs` | PKRs enabled by this engineering result |
+| `step_id` | Stable execution ID: `STEP-1...STEP-N` |
+| `source_krs` | One or more existing KRs enabled by this step |
 | `phase_result` | Concrete integrated behavior or engineering artifact that becomes true |
-| `dependencies` | Earlier EKR, external dependency, credential, environment, or decision required |
+| `dependencies` | Earlier steps, external dependencies, credentials, environments, or decisions |
 | `implementation_scope` | Expected code, configuration, migration, fixture, or test areas |
 | `binary_verification` | Commands and observable results proving the phase result |
 | `regression_scope` | Existing behavior that must remain true |
 | `status` | `0` or `1` |
 
-Engineering may revise EKR decomposition when repository facts require it, provided MKRs and PKRs do not change. A change to product behavior, threshold, scope, or claim boundary must return to Project Manager and Product Strategy.
+Engineering may revise steps when repository facts require it. Any requested change to product behavior, KR threshold, scope, or claim boundary returns to Project Manager and Product.
 
 `candidate_ready_for_independent_evaluation=1` requires:
 
-1. every required EKR is `1`;
+1. every required step is `1`;
 2. the complete integrated candidate is runnable;
 3. target checks and required regressions pass;
-4. evaluation can reproduce the candidate from named artifacts, commands, and environment;
+4. Evaluation can reproduce the candidate from named artifacts, commands, and environment;
 5. remaining unsupported claims are explicit.
+
+Candidate readiness is an engineering gate. It does not set any KR to `1`.
 
 ## 6. Mandatory Software Delivery Order / 软件交付强制顺序
 
 ```text
-Project Manager: complete Milestone OKR accepted
-    -> Product Strategy: complete Product OKR accepted
-    -> Engineering: EKR decomposition, implementation, integration, self-verification
-    -> Independent Evaluation: complete MKR/PKR evaluation
-    -> Project Manager: close or return the failed contract owner
+Project Manager + user: accept one complete Project OKR
+    -> Product: complete the Product Contract for every existing KR
+    -> Engineering: plan steps, implement, integrate, and self-verify
+    -> Independent Evaluation: evaluate every existing KR on the runnable candidate
+    -> Project Manager: close or return the failed responsibility
 ```
 
-For a software-delivery milestone:
-
-- Product acceptance must be complete before Engineering starts.
-- A runnable candidate must exist before Independent Evaluation starts.
-- Independent Evaluation must reject an assignment when `candidate_ready_for_independent_evaluation != 1` or the candidate artifact is missing.
-- Evaluation design, datasets, graders, and commands are acceptance mechanisms, not a pre-code role route. Product defines required outcomes and constraints; the evaluator records the executable SOP before inspecting candidate results, then runs it against the candidate.
+- Product Contract acceptance is required before Engineering starts.
+- A complete runnable candidate is required before Independent Evaluation starts.
+- Independent Evaluation rejects an assignment when candidate readiness is not `1` or the candidate artifact is missing.
+- Product defines required outcomes and constraints. Evaluation records the executable SOP before inspecting candidate results, then runs it against the candidate.
 - Reviewer, when used, runs only after independent evaluation.
 
 ## 7. Independent Evaluation Standard / 独立评估规范
 
-Independent Evaluation consumes:
+Independent Evaluation consumes the accepted Project OKR, Product Contract, runnable candidate, reproducibility evidence, required datasets, graders, environments, budgets, regressions, and claim boundaries.
 
-- the accepted Milestone OKR;
-- the complete Product OKR and traceability matrix;
-- the runnable candidate and reproducibility evidence;
-- required datasets, graders, environments, budgets, regressions, and claim boundaries.
-
-It reports separately:
+It reports:
 
 ```text
 evaluation_executed: 0 | 1
-MKR-1...MKR-N: 0 | 1
+KR-1...KR-N: 0 | 1
 product_contract_pass: 0 | 1
 milestone_observed_pass: 0 | 1
 ```
 
-`milestone_observed_pass=1` only when the complete required evaluation ran and every accepted MKR passed. Engineering EKR status is context, not acceptance evidence.
+`evaluation_executed=1` requires the complete recorded SOP to run. `milestone_observed_pass=1` requires every accepted KR to pass with evaluator-owned evidence. Engineering step status is context, never independent acceptance evidence.
 
 ## 8. Change Control / 变更控制
 
-- Changing the Objective, MKR, threshold, measurement condition, or claim boundary requires user acceptance.
-- Changing a PKR requires Product Strategy to update the complete Product OKR and traceability matrix, then Engineering must assess affected EKR and rerun affected work.
-- Changing an EKR does not require redefining higher OKRs when product behavior remains unchanged.
+- Changing the Objective, any KR, threshold, measurement condition, non-goal, or claim boundary requires user acceptance.
+- A KR change invalidates affected Product Contract sections, Engineering steps, and evaluation checks until each is updated and rerun.
+- Changing an engineering step does not change the Project OKR when observable product behavior remains unchanged.
 - Changing an evaluation method after candidate results are observed requires explicit user approval and rerun of every affected check.
-- No layer may silently reuse an existing ID after changing its meaning.
+- No role may silently reuse an existing ID after changing its meaning.
 
 ## 9. Example / 示例
 
-Invalid milestone KR:
+Invalid KR:
 
 ```text
-KR1: Complete the Telegram-Hermes-Codex implementation and tests.
+KR-1: Complete the Telegram-Hermes-Codex implementation and tests.
 ```
 
-Valid Milestone KR:
+Valid shared KR:
 
 ```text
-MKR-1: In five independent Telegram-triggered runs, role_id, profile_version,
+KR-1: In five independent Telegram-triggered runs, role_id, profile_version,
 session_id, and task_id remain identical across Telegram, Hermes, and Codex;
 all five runs pass with no missing boundary evidence.
 ```
 
-Derived Product KR:
+Product adds the trigger, valid and invalid inputs, visible states, timeout behavior, and evidence obligations directly under `KR-1`. It does not create a second KR.
 
-```text
-PKR-1: After Telegram accepts a valid CPO task, the user sees one canonical
-identity tuple, and every processing, completion, or failure state returns the
-same tuple in the original conversation.
-```
-
-Engineering may then define `EKR-1` for canonical identity creation, `EKR-2` for Hermes propagation, `EKR-3` for Codex propagation, and `EKR-4` for Telegram return and integrated regression. Those EKR stages organize implementation; only independent five-run evidence can pass `MKR-1`.
+Engineering may define `STEP-1` for canonical identity creation, `STEP-2` for Hermes propagation, `STEP-3` for Codex propagation, and `STEP-4` for Telegram return and integrated regression. These steps organize implementation; only independent five-run evidence can pass `KR-1`.

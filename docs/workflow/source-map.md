@@ -83,7 +83,7 @@ May also write its own packet under:
 docs/workflow/roles/implementer/reports/<milestone>/packet-vNNN/
 ```
 
-Must not change the accepted Objective, MKRs, PKRs, product acceptance inputs, public claim boundaries, task-specific exclusions, or upstream artifacts. It may revise only its own EKR decomposition when repository facts require it.
+Must not change the accepted Objective, KRs, KRs, product acceptance inputs, public claim boundaries, task-specific exclusions, or upstream artifacts. It may revise only its own STEP decomposition when repository facts require it.
 
 ## Test Evaluator / 测试评估师
 

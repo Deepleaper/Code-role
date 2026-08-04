@@ -10,8 +10,8 @@ This optional pointer table records each role's current accepted primary artifac
 | --- | --- |
 | Milestone | TBD |
 | Objective | TBD |
-| Complete MKR set | TBD |
-| Complete PKR set | TBD |
+| Complete KR set | TBD |
+| Complete KR set | TBD |
 | Non-goals | TBD |
 | Claim boundary | TBD |
 | Anchor source | user_input / milestone_contract / unknown |
@@ -35,6 +35,6 @@ This optional pointer table records each role's current accepted primary artifac
 - Replace the pointer when a newer artifact is accepted; do not append chronology.
 - A role not needed for the milestone remains `none`; no chain status is required.
 - Missing chat fields, manifest readiness, or packet locks do not invalidate sufficient evidence.
-- This index cannot change an MKR, PKR, delivery stage, or milestone status.
+- This index cannot change a KR, delivery stage, or milestone status.
 
-Reviewer, when required, audits the current accepted artifacts listed here, MKR-to-PKR-to-EKR traceability, mandatory stage order, and the compact Orchestrator state against the original milestone contract.
+Reviewer, when required, audits the current accepted artifacts listed here, KR-to-STEP traceability, mandatory stage order, and the compact Orchestrator state against the original milestone contract.

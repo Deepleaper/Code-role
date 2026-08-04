@@ -1,8 +1,8 @@
 # Complete Minimal Goal Loop / 四工位完整闭环示例
 
-This worked example shows one small milestone moving through complete Milestone OKR, complete Product OKR, Engineering-owned execution KRs, a runnable candidate, and independent verification.
+This worked example shows one small milestone moving through one Project OKR, a Product Contract attached to the same KRs, Engineering-owned execution steps, a runnable candidate, and independent verification.
 
-本示例展示一个小型 milestone 如何依次完成完整里程碑 OKR、完整产品 OKR、工程自主管理的执行 KR、可运行候选物和独立验证。
+本示例展示一个小型 milestone 如何围绕同一套项目 OKR，依次完成产品契约、工程执行步骤、可运行候选物和独立验证。
 
 ## Scenario / 场景
 
@@ -16,23 +16,23 @@ This is an illustrative, internally consistent artifact set. Its command observa
 
 ## Read In This Order / 阅读顺序
 
-1. [`milestone-board.md`](milestone-board.md): the accepted complete MKR set and final control state.
+1. [`milestone-board.md`](milestone-board.md): the accepted complete KR set and final control state.
 2. [`01-pm-product-assignment.md`](01-pm-product-assignment.md): Project Manager assigns the complete milestone to Product Strategy.
-3. [`02-product-contract.md`](02-product-contract.md): the complete Product OKR and MKR-to-PKR contract.
+3. [`02-product-contract.md`](02-product-contract.md): the complete Product Contract and KR product-coverage contract.
 4. [`03-product-return.md`](03-product-return.md): Product Strategy returns the accepted artifact pointer.
-5. [`04-pm-engineering-assignment.md`](04-pm-engineering-assignment.md): Project Manager hands the complete MKR/PKR contracts to Engineering.
-6. [`05-engineering-delivery.md`](05-engineering-delivery.md): Engineering defines EKR stages and records the complete candidate evidence.
-7. [`06-engineering-return.md`](06-engineering-return.md): Engineering reports candidate readiness without self-passing MKRs.
+5. [`04-pm-engineering-assignment.md`](04-pm-engineering-assignment.md): Project Manager hands the accepted Project OKR and Product Contract to Engineering.
+6. [`05-engineering-delivery.md`](05-engineering-delivery.md): Engineering defines STEP stages and records the complete candidate evidence.
+7. [`06-engineering-return.md`](06-engineering-return.md): Engineering reports candidate readiness without self-passing KRs.
 8. [`07-pm-evaluation-assignment.md`](07-pm-evaluation-assignment.md): evaluation starts only after the candidate gate passes.
-9. [`08-independent-evaluation-report.md`](08-independent-evaluation-report.md): a fresh independent run of every MKR/PKR check.
+9. [`08-independent-evaluation-report.md`](08-independent-evaluation-report.md): a fresh independent run of every KR check.
 10. [`09-independent-evaluation-return.md`](09-independent-evaluation-return.md): the evaluator returns binary observed results.
 11. [`10-pm-decision.md`](10-pm-decision.md): Project Manager makes the final milestone decision.
 
 ## What This Demonstrates / 这个示例证明什么
 
-- Project Manager defines the complete `MKR-*` outcome set rather than dispatching one MKR at a time.
-- Product Strategy defines one complete `PKR-*` product contract covering every MKR.
-- Engineering alone decomposes work into `EKR-*` stages and can report a candidate but cannot pass MKRs.
-- Independent Evaluation starts only after the complete candidate gate and evaluates every MKR/PKR rather than only changed files.
+- Project Manager defines the complete `KR-*` outcome set rather than dispatching one KR at a time.
+- Product Strategy completes the Product Contract under the existing `KR-*` IDs without creating another Objective or KR set.
+- Engineering alone decomposes work into `STEP-*` stages and can report a candidate but cannot pass KRs.
+- Independent Evaluation starts only after the complete candidate gate and evaluates every KR rather than only changed files.
 - The Project Manager accepts evidence and owns the final status update.
 - Every completion claim can be traced to a check, observation, and evidence path.

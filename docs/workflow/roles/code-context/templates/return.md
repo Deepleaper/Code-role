@@ -3,7 +3,7 @@
 assignment_id:
 delivery_stage: architecture_and_code_context
 work_unit_pass: 0 | 1
-all_pkrs_mapped_to_repository: 0 | 1
+all_krs_mapped_to_repository: 0 | 1
 check_results: <check_id -> 0|1>
 artifact_path:
 evidence_paths:

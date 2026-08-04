@@ -3,8 +3,8 @@
 assignment_id:
 milestone:
 delivery_stage: architecture_and_code_context
-milestone_okr_path:
-product_okr_path:
+project_okr_path:
+product_contract_path:
 architecture_artifact_path:
 role_deliverable: complete_repository_context_contract
 authoritative_inputs:
@@ -14,7 +14,7 @@ repository_areas_to_verify:
 acceptance_checks:
 | check_id | complete repository-context result | required evidence |
 | --- | --- | --- |
-| PKR-COVERAGE | every PKR maps to verified repository seams | PKR-to-repository matrix |
+| KR-COVERAGE | every KR maps to verified repository seams | KR-to-repository matrix |
 | IMPLEMENTER-READY | source, tests, commands, dependencies, artifacts, and regressions are evidenced | complete code-context contract |
 required_artifact_path:
 irreversible_actions: none

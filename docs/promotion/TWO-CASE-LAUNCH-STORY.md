@@ -115,7 +115,7 @@ The two projects exposed the same control problem at different times:
 - DeepBrain: strong partial evidence must not become a complete product claim.
 - Leaper Agent: a professional plan must not become executable work until its inputs are real.
 
-That is why the minimal Code-role profile has four workstations: Project Manager, Product Strategy, Engineering, and Independent Evaluation. Project Manager defines the complete milestone MKRs, Product Strategy defines complete PKRs covering every MKR, Engineering alone decomposes EKR stages and builds the candidate, and Independent Evaluation runs only after candidate readiness. Engineering cannot approve itself. Missing independent evidence remains `0`.
+That is why the minimal Code-role profile has four workstations: Project Manager, Product Strategy, Engineering, and Independent Evaluation. Project Manager and user define one Project Objective and KR set, Product Strategy completes the Product Contract under those same KRs, Engineering alone decomposes STEP stages and builds the candidate, and Independent Evaluation runs only after candidate readiness. Engineering cannot approve itself. Missing independent evidence remains `0`.
 
 It is less theatrical than autonomous multi-agent orchestration, but it answers the question that matters: **is the software milestone actually complete?**
 
@@ -123,6 +123,6 @@ It is less theatrical than autonomous multi-agent orchestration, but it answers 
 
 Real use exposed a second failure mode: when every role must acknowledge startup, convert readiness, maintain packet locks, and narrate routing state, the workflow itself displaces the failed evidence keeping the KR at `0`.
 
-The current workflow keeps binary MKRs, independent evaluation, and Project Manager accountability while removing startup acknowledgements, readiness-only turns, and mandatory packet metadata from the default path. Global MKR and PKR contracts remain complete; only Engineering decomposes execution into EKR stages. Each role owes one primary professional artifact, so the loop stays short without weakening completion.
+The current workflow keeps binary KRs, independent evaluation, and Project Manager accountability while removing startup acknowledgements, readiness-only turns, and mandatory packet metadata from the default path. Global KR contracts remain complete; only Engineering decomposes execution into STEP stages. Each role owes one primary professional artifact, so the loop stays short without weakening completion.
 
 Code-role: https://github.com/Deepleaper/Code-role

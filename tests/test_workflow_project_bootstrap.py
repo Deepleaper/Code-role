@@ -106,7 +106,7 @@ def test_full_profile_initializer_creates_eight_prompts_and_role_templates(
 
     config = read(code_role / "project-config.md")
     assert "control_profile: full-eight-role" in config
-    assert "control_model: okr-delivery-v4" in config
+    assert "control_model: single-project-okr-v5" in config
     assert "mandatory_delivery_order:" in config
     assert "valid_assignment_starts_immediately: true" in config
     assert "format_only_rework_allowed: false" in config

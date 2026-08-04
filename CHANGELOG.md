@@ -8,16 +8,16 @@ Code-role 的重要公开变更记录在这里。
 
 ### Added
 
-- A shared three-layer OKR standard: complete Milestone KRs (`MKR-*`), complete Product KRs (`PKR-*`), and Engineering-owned execution KRs (`EKR-*`).
+- A shared single-OKR standard: one Project Objective and `KR-*` set, Product Contract detail attached to those KRs, and Engineering-owned execution steps (`STEP-*`).
 - Candidate-readiness gates that prevent Independent Evaluation from starting before a complete runnable implementation exists.
-- Regression coverage for complete MKR/PKR scope, Engineering-only EKR decomposition, mandatory Product -> Engineering -> Evaluation order, and pre-candidate evaluation rejection.
+- Regression coverage for complete KR scope, Engineering-only STEP decomposition, mandatory Product -> Engineering -> Evaluation order, and pre-candidate evaluation rejection.
 
 ### Changed
 
-- Project Manager now owns the complete milestone OKR and drives global delivery stages instead of dispatching one MKR at a time.
-- Product Strategy and Product / PRD now deliver one complete Product OKR covering every accepted MKR.
-- Engineering and Implementer now own staged EKR decomposition and must deliver one complete reproducible candidate.
-- Independent Evaluation and Test Evaluator now run only after candidate readiness and evaluate the complete MKR/PKR contract.
+- Project Manager now owns the complete project OKR and drives global delivery stages instead of dispatching one KR at a time.
+- Product Strategy and Product / PRD now deliver one complete Product Contract covering every accepted KR.
+- Engineering and Implementer now own staged STEP decomposition and must deliver one complete reproducible candidate.
+- Independent Evaluation and Test Evaluator now run only after candidate readiness and evaluate the complete Project OKR.
 - Minimal and Full initializers, role prompts, state templates, examples, PRDs, and public guidance now use the same mandatory software-delivery order.
 
 ## [0.4.0] - 2026-08-02

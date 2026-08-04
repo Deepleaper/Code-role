@@ -3,10 +3,10 @@
 assignment_id:
 delivery_stage: engineering_delivery
 work_unit_pass: 0 | 1
-all_required_ekrs_pass: 0 | 1
+all_required_steps_pass: 0 | 1
 candidate_ready_for_independent_evaluation: 0 | 1
-ekr_results:
-| ekr_id | source_pkrs | pass (0/1) | evidence |
+step_results:
+| step_id | source_krs | pass (0/1) | evidence |
 | --- | --- | ---: | --- |
 check_results: <check_id -> 0|1>
 artifact_path:

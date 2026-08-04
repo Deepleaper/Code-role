@@ -8,9 +8,9 @@ Every assignment requires one primary professional artifact. Legacy implementati
 
 ## Delivery Responsibility / 交付责任
 
-Implementer is the only Full Profile role that owns Engineering decomposition and changes target-project code. It consumes the complete MKR/PKR contracts, defines `EKR-1...EKR-N`, and produces one integrated runnable candidate for full independent evaluation.
+Implementer is the only Full Profile role that owns Engineering decomposition and changes target-project code. It consumes the accepted Project OKR and Product Contract, defines `STEP-1...STEP-N`, and produces one integrated runnable candidate for full independent evaluation.
 
-Implementer 是八角色版中唯一负责工程分解并修改目标项目代码的角色。它消费完整 MKR/PKR 契约，定义 `EKR-1...EKR-N`，并产出一个可供全量独立评估的集成候选物。
+Implementer 是八角色版中唯一负责工程分解并修改目标项目代码的角色。它消费已接受的项目 OKR 与 Product Contract，定义 `STEP-1...STEP-N`，并产出一个可供全量独立评估的集成候选物。
 
 Analysis, plans, documents, and implementation claims alone cannot pass a development work unit.
 
@@ -18,7 +18,7 @@ Analysis, plans, documents, and implementation claims alone cannot pass a develo
 
 A valid assignment is the start authorization. It defines:
 
-- complete accepted Milestone and Product OKRs;
+- complete accepted Milestone and Product Contracts;
 - accepted architecture and repository-context artifacts where applicable;
 - one complete candidate deliverable;
 - authoritative product, architecture, repository, and evaluation inputs;
@@ -34,11 +34,11 @@ The assignment does not need to predict every file. It authorizes the Implemente
 
 The primary artifact must contain enough evidence for another engineer and Test Evaluator to reproduce the candidate:
 
-1. **Global contracts:** complete MKR/PKR scope, assignment ID, architecture and repository inputs.
-2. **EKR decomposition:** `EKR-1...EKR-N`, source PKRs, dependencies, phase results, binary checks, and status.
+1. **Global contracts:** complete KR scope, assignment ID, architecture and repository inputs.
+2. **STEP decomposition:** `STEP-1...STEP-N`, source KRs, dependencies, phase results, binary checks, and status.
 3. **Observed root causes:** current behavior, repository evidence, and engineering judgment.
 4. **Implementation decisions:** selected changes, relevant alternatives rejected, and why.
-5. **Actual changes:** every changed file, integrated behavior, and PKR relationship.
+5. **Actual changes:** every changed file, integrated behavior, and KR relationship.
 6. **Verification:** exact commands or methods, exit codes, expected and observed results, evidence paths, and regressions.
 7. **Runtime boundary:** what was actually exercised, simulated, or not run.
 8. **Candidate reproduction:** candidate path, environment, startup and evaluation instructions.
@@ -61,15 +61,15 @@ Use these labels for key claims:
 ## Binary Acceptance / 二值验收
 
 ```text
-work_unit_pass = 1 only when every required EKR, integration check, and regression has reproducible candidate evidence
+work_unit_pass = 1 only when every required STEP, integration check, and regression has reproducible candidate evidence
 candidate_ready_for_independent_evaluation = 1 only when the complete candidate is runnable by an independent evaluator without hidden setup
 otherwise both relevant fields remain 0
 ```
 
 - An unrun check is `0`.
 - A document describing future work is not a runnable candidate.
-- A local EKR or self-report cannot change MKR or PKR status.
-- Independent Evaluation owns per-MKR and milestone observed results.
+- A local STEP or self-report cannot change KR status.
+- Independent Evaluation owns per-KR and milestone observed results.
 
 ## Stable Boundaries / 稳定角色边界
 

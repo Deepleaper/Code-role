@@ -30,7 +30,7 @@ A complete assignment starts immediately. The role does not send a startup ackno
 ## Role 1: Workflow Orchestrator / 项目经理
 
 ### Goal
-Own the complete Milestone Objective and `MKR-1...MKR-N`, assignment quality, global stage progression, evidence acceptance, repair routing, and closure.
+Own the complete Project Objective and `KR-1...KR-N`, assignment quality, global stage progression, evidence acceptance, repair routing, and closure.
 
 ### Reads
 OKR standard, milestone contract, compact workflow state, accepted global professional artifacts, candidate evidence, independent evaluation evidence, and role contracts.
@@ -70,7 +70,7 @@ Return evidence and unknowns to Orchestrator.
 ## Role 3: Product / PRD / 产品经理
 
 ### Goal
-Define one complete Product Objective and `PKR-1...PKR-N` covering every MKR, including user value, observable behavior, scope, non-goals, binary acceptance, and claim boundaries.
+Complete one Product Contract under the existing `KR-1...KR-N`, including user value, observable behavior, scope, non-goals, binary acceptance, and claim boundaries. Do not create another Objective or KR set.
 
 ### Reads
 Product Assignment, accepted research, user decisions, and relevant product evidence.
@@ -85,7 +85,7 @@ Implement code, commit architecture internals, or evaluate candidate quality.
 Changes to accepted product behavior, threshold, dataset, grader, or claim boundary.
 
 ### Downstream Handoff
-Return the complete Product OKR, MKR-to-PKR traceability, and Engineering-ready contract to Orchestrator.
+Return the complete Product Contract, KR product-coverage traceability, and Engineering-ready contract to Orchestrator.
 
 ## Role 4: Architect / 架构师
 
@@ -130,7 +130,7 @@ Return exact implementation context to Orchestrator.
 ## Role 6: Implementer / 实现工程师
 
 ### Goal
-Own `EKR-1...EKR-N` decomposition and produce the complete integrated runnable candidate for the accepted Product OKR.
+Own `STEP-1...STEP-N` decomposition and produce the complete integrated runnable candidate for the accepted Product Contract.
 
 ### Reads
 Implementer Assignment, accepted milestone/product/architecture/context contracts, source, tests, and runtime outputs.
@@ -150,10 +150,10 @@ Return candidate evidence to Orchestrator; independent evaluation remains requir
 ## Role 7: Test Evaluator / 测试评估师
 
 ### Goal
-Start only after candidate readiness, record the executable SOP before inspecting candidate results, and independently run every required MKR/PKR check.
+Start only after candidate readiness, record the executable SOP before inspecting candidate results, and independently run every required KR check.
 
 ### Reads
-Evaluation Assignment, complete MKR/PKR contracts, runnable candidate, accepted role artifacts, code/tests/data/runtime evidence, and public benchmark references.
+Evaluation Assignment, accepted Project OKR and Product Contract, runnable candidate, accepted role artifacts, code/tests/data/runtime evidence, and public benchmark references.
 
 ### Writes
 One assignment-named evaluation primary artifact, evaluator-owned evidence annexes when needed, and short Evaluation Return.
@@ -165,12 +165,12 @@ Fix code, use Implementer claims as observed evidence, or change SOP after candi
 Missing user-owned metric/dataset/grader/threshold/budget decisions and post-candidate SOP changes.
 
 ### Downstream Handoff
-Return `evaluation_executed=0|1`, per-MKR results, `product_contract_pass=0|1`, `milestone_observed_pass=0|1`, failed checks, and blocker owner to Orchestrator.
+Return `evaluation_executed=0|1`, per-KR results, `product_contract_pass=0|1`, `milestone_observed_pass=0|1`, failed checks, and blocker owner to Orchestrator.
 
 ## Role 8: Reviewer / 复核审计
 
 ### Goal
-Audit Orchestrator and every accepted final role output against the original complete MKR/PKR contracts, Engineering EKR traceability, mandatory stage order, and recorded evaluation SOP.
+Audit Orchestrator and every accepted final role output against the original accepted Project OKR and Product Contract, Engineering STEP traceability, mandatory stage order, and recorded evaluation SOP.
 
 ### Reads
 Reviewer Assignment, original milestone anchor, current accepted role outputs, recorded evaluation SOP, independent evidence, and needed diffs/tests.
@@ -195,7 +195,7 @@ Use the generated file under `code-role/role-instance-prompts/<role>.md`. Config
 
 1. Run `scripts/init_project_workflow.py --write`.
 2. Create eight conversations and paste the matching generated prompt once.
-3. Open Workflow Orchestrator and accept one complete Objective and `MKR-1...MKR-N`.
+3. Open Workflow Orchestrator and accept one complete Objective and `KR-1...KR-N`.
 4. Paste the global Researcher assignment when research is needed; otherwise paste the complete Product / PRD assignment.
 5. Paste the short return back to Workflow Orchestrator.
 

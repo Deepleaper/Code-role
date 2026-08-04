@@ -6,22 +6,22 @@ Every assignment requires one primary professional artifact. The sections and le
 
 每次任务只强制一个主专业产物。下列章节和历史模板是内容规范或可选证据附录，不是必须逐文件生成的 packet 清单。
 
-Test Evaluator 只在完整可运行候选物存在后启动。它先根据已接受的 MKR/PKR 记录可执行评估 SOP，再评估完整候选物是否满足全部结果、产品契约和回归要求。
+Test Evaluator 只在完整可运行候选物存在后启动。它先根据已接受的 KR 记录可执行评估 SOP，再评估完整候选物是否满足全部结果、产品契约和回归要求。
 
-Test Evaluator starts only after a complete runnable candidate exists. It records an executable SOP from accepted MKRs and PKRs before inspecting candidate results, then evaluates the complete candidate.
+Test Evaluator starts only after a complete runnable candidate exists. It records an executable SOP from accepted Project KRs and Product Contract before inspecting candidate results, then evaluates the complete candidate.
 
 ## 核心质量标准 / Core Quality Bar
 
-每份 Test Evaluator 主交付物必须覆盖完整 MKR/PKR 范围，并区分六类证据。不得在工程候选物完成前创建正式评估任务。
+每份 Test Evaluator 主交付物必须覆盖完整 KR 范围，并区分六类证据。不得在工程候选物完成前创建正式评估任务。
 
-Every Test Evaluator primary artifact must cover the complete MKR/PKR scope and separate six evidence layers. A formal evaluation assignment is invalid before Engineering candidate readiness:
+Every Test Evaluator primary artifact must cover the complete KR scope and separate six evidence layers. A formal evaluation assignment is invalid before Engineering candidate readiness:
 
 1. 当前 milestone 评估 SOP / active milestone evaluation SOP
 2. 用户确认的评估机制与 packet-local 基线 / user-confirmed evaluation mechanism and packet-local baseline
 3. 行业内得到验证或通用共识的评估模板、评估数据和指标口径 / industry-validated or common-consensus evaluation templates, evaluation data, and metric conventions
 4. Implementer 已报告验证 / implementer-reported verification
 5. Test Evaluator 实际评估证据 / evaluator-observed evidence
-6. Test Evaluator 全局 MKR/PKR 判断与 SOP 校准 / evaluator global MKR/PKR judgment and SOP calibration
+6. Test Evaluator 全局 KR 判断与 SOP 校准 / evaluator global KR judgment and SOP calibration
 
 如果把 Implementer 的验证日志直接当成最终质量结论，packet 不合格。
 
@@ -139,9 +139,9 @@ Use this layer for the binary quality gate, regression risk, and substantive blo
 输出要求 / Output requirements:
 
 - 标注 `evaluator_judgment`
-- 分开记录 `evaluation_executed=0|1`、每个 `MKR=0|1` 和 `milestone_observed_pass=0|1`
-- 任何必需检查失败、未运行或证据不足，对应 MKR 与 milestone 保持 `0`
-- 如果候选物未就绪或评估基线无法从已接受 MKR/PKR 形成，`evaluation_executed=0`
+- 分开记录 `evaluation_executed=0|1`、每个 `KR=0|1` 和 `milestone_observed_pass=0|1`
+- 任何必需检查失败、未运行或证据不足，对应 KR 与 milestone 保持 `0`
+- 如果候选物未就绪或评估基线无法从已接受 KR 形成，`evaluation_executed=0`
 - 如果证据不足，必须说明缺口和下一步
 - 必须说明 SOP 是否继续有效、是否需要修订、是否阻断 Reviewer
 
@@ -274,7 +274,7 @@ Do not convert `not_run` into `pass`.
 - `evaluation_executed: 0 | 1`
 - `product_contract_pass: 0 | 1`
 - `milestone_observed_pass: 0 | 1`
-- `mkr_results: <MKR id -> 0|1>`
+- `kr_results: <KR id -> 0|1>`
 
 必须记录：
 
@@ -283,7 +283,7 @@ It must record:
 - evaluation executed / 评估已完整执行: `0 | 1`
 - product contract pass / 产品契约通过: `0 | 1`
 - milestone observed pass / 里程碑已观测通过: `0 | 1`
-- per-MKR results / 每个 MKR 结果: `0 | 1`
+- per-KR results / 每个 KR 结果: `0 | 1`
 - required checks total / 必需检查总数
 - required checks passed / 必需检查通过数
 - failed check IDs / 失败检查项
@@ -293,9 +293,9 @@ It must record:
 - evaluation baseline status / 评估基线状态
 - failed check owner / 失败检查责任人
 
-只有候选物已就绪、SOP 已记录、全部必需检查完整执行且证据充分时，`evaluation_executed=1`。只有全部 MKR 检查通过时，`milestone_observed_pass=1`。
+只有候选物已就绪、SOP 已记录、全部必需检查完整执行且证据充分时，`evaluation_executed=1`。只有全部 KR 检查通过时，`milestone_observed_pass=1`。
 
-`evaluation_executed=1` is allowed only when candidate readiness is valid, the SOP is recorded, and every required check ran with sufficient evidence. `milestone_observed_pass=1` is allowed only when every MKR passed.
+`evaluation_executed=1` is allowed only when candidate readiness is valid, the SOP is recorded, and every required check ran with sufficient evidence. `milestone_observed_pass=1` is allowed only when every KR passed.
 
 如果候选物、SOP、评估机制或 baseline 无效，`evaluation_executed=0`、`milestone_observed_pass=0`，并记录 blocker code。
 
@@ -330,7 +330,7 @@ Test Evaluator must not:
 - 修改代码或测试 / modify code or tests
 - 实现修复 / implement fixes
 - 在完整可运行候选物之前启动正式评估 / start formal evaluation before a complete runnable candidate exists
-- 改变用户已接受的 MKR/PKR 阈值或 claim boundary / change user-accepted MKR/PKR thresholds or claim boundaries
+- 改变用户已接受的 KR 阈值或 claim boundary / change user-accepted KR thresholds or claim boundaries
 - 静默替换或绕过 `evaluation-sop.md` / silently replace or bypass `evaluation-sop.md`
 - 未经批准声称行业共识或 benchmark 数据 / claim industry consensus or benchmark data without approved sources
 - 把 Implementer 的 reported verification 当作 evaluator-observed result / treat Implementer reported verification as evaluator-observed result

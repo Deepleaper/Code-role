@@ -3,16 +3,16 @@
 assignment_id:
 milestone:
 delivery_stage: product_definition
-milestone_okr_path:
-milestone_okr_scope: all_accepted_mkrs
-role_deliverable: complete_product_okr_and_product_contract
+project_okr_path:
+project_okr_scope: all_accepted_krs
+role_deliverable: complete_product_contract_for_existing_krs
 authoritative_inputs:
 - path:
 acceptance_checks:
 | check_id | complete product-contract result | required evidence |
 | --- | --- | --- |
-| PRODUCT-OKR | complete `PKR-1...PKR-N` contract | PKR table and product Objective |
-| MKR-COVERAGE | every MKR maps to one or more PKRs | MKR-to-PKR traceability matrix |
+| PRODUCT-CONTRACT | every existing `KR-1...KR-N` has a complete product definition | Product Contract organized by unchanged KR IDs |
+| KR-COVERAGE | every accepted KR is fully specified | KR product-coverage matrix |
 | ENGINEERING-READY | downstream technical roles can act without inventing product meaning | complete behavior, state, failure, scope, and acceptance contract |
 required_artifact_path:
 irreversible_actions: none

@@ -134,8 +134,8 @@ def test_implementer_uses_sufficient_scope_and_reproducible_evidence() -> None:
     assert "required_artifact_path:" in assignment
     assert "writable_scope:" not in assignment
     assert "task_specific_exclusions:" in assignment
-    assert "EKR-1...EKR-N" in standard
-    assert "complete MKR/PKR contracts" in standard
+    assert "STEP-1...STEP-N" in standard
+    assert "accepted Project OKR and Product Contract" in standard
     assert "repo_evidence" in combined
     assert "actual_file_change" in combined
     assert "verification_evidence" in combined
@@ -159,11 +159,11 @@ def test_test_evaluator_records_sop_after_candidate_gate_and_reports_binary_gate
     assert "Before inspecting candidate results" in role
     assert "evaluation_executed: 0 | 1" in combined
     assert "milestone_observed_pass: 0 | 1" in combined
-    assert "mkr_results:" in combined
+    assert "kr_results:" in combined
     assert data["quality_gate"]["evaluation_executed"] == 0
     assert data["quality_gate"]["candidate_gate_valid"] == 0
     assert data["quality_gate"]["milestone_observed_pass"] == 0
-    assert data["quality_gate"]["mkr_results"] == []
+    assert data["quality_gate"]["kr_results"] == []
     assert data["quality_gate"]["allowed_values"] == [0, 1]
 
 

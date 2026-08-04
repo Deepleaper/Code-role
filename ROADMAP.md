@@ -14,7 +14,7 @@ Code-role 只围绕一个问题迭代：这套机制能否在不增加无效流�
 
 ## Next Release / 下一版本
 
-- Three explicit OKR layers: Project Manager MKRs, Product PKRs, and Engineering EKRs.
+- One canonical Project OKR: one shared KR set, Product Contract detail attached to those KRs, and Engineering STEPs mapped back to them.
 - Mandatory Product -> Engineering candidate -> Independent Evaluation order.
 - Candidate-readiness rejection for pre-code evaluation assignments.
 - More evidence-complete worked examples from real project patterns.

@@ -45,7 +45,7 @@ def test_product_prd_boundaries_are_documented() -> None:
     role = read(PRODUCT / "ROLE.md")
     source_map = read(WORKFLOW / "source-map.md")
 
-    assert "implementation architecture, EKR phases, code, tests, evaluation verdicts" in role
+    assert "implementation architecture, STEP phases, code, tests, evaluation verdicts" in role
     assert "Do not invent implementation details as product facts" in role
     assert "Do not silently change an accepted Objective" in role
     assert "docs/workflow/roles/product-prd/reports/<milestone>/packet-vNNN/" in source_map

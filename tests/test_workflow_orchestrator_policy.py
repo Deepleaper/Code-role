@@ -31,9 +31,9 @@ def test_orchestrator_owns_result_control_not_professional_execution() -> None:
     role = read(ORCH / "ROLE.md")
     assert "owns the complete accepted milestone result" in role
     assert "It is not an execution role" in role
-    assert "complete Milestone OKR" in role
-    assert "complete Product OKR" in role
-    assert "Implementer alone creates and manages `EKR-1...EKR-N`" in role
+    assert "complete Project OKR" in role
+    assert "completes one Product Contract" in role
+    assert "Implementer alone creates and manages `STEP-1...STEP-N`" in role
     assert "Test Evaluator starts only when" in role
     assert "Read the primary professional artifact and evidence directly" in role
     assert "only you choose the next role" not in role
@@ -52,7 +52,7 @@ def test_chain_names_preserve_mandatory_software_stage_order() -> None:
     ):
         assert f"`{chain}`" in policy
     assert "Mandatory Stage Order" in policy
-    assert "complete `PKR-1...PKR-N` covering every MKR" in policy
+    assert "complete Product Contract for every existing `KR-1...KR-N`" in policy
     assert "Test Evaluator must not start before a complete runnable candidate exists" in policy
     assert "Every selected role returns to Workflow Orchestrator" in policy
 
@@ -65,7 +65,7 @@ def test_assignment_acceptance_is_binary_and_artifact_first() -> None:
     assert "Missing return fields" in contract
     assert "Only missing or failed professional checks justify rework" in contract
     assert "evaluation_executed: 0|1" in contract
-    assert "one binary result for every `MKR-*`" in contract
+    assert "one binary result for every `KR-*`" in contract
     assert "milestone_observed_pass: 0|1" in contract
     assert "review_gate_pass: 0|1" in contract
 
@@ -88,7 +88,7 @@ def test_orchestrator_uses_role_specific_assignments_and_short_returns() -> None
     for field in (
         "milestone:",
         "delivery_stage:",
-        "milestone_okr_path:",
+        "project_okr_path:",
         "role_deliverable:",
         "acceptance_checks:",
         "required_artifact_path:",

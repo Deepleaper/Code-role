@@ -6,9 +6,9 @@ Every assignment requires one primary professional artifact. The sections and le
 
 每次任务只强制一个主专业产物。下列章节和历史模板是内容规范或可选证据附录，不是必须逐文件生成的 packet 清单。
 
-The context artifact maps the complete Product OKR to repository evidence. It prepares facts for Implementer but does not create Engineering EKR phases.
+The context artifact maps the complete Product Contract to repository evidence. It prepares facts for Implementer but does not create Engineering STEP phases.
 
-上下文主产物必须把完整 Product OKR 映射到仓库证据；它为 Implementer 准备事实，但不代替 Implementer 设计 EKR 阶段。
+上下文主产物必须把完整 Product Contract 映射到仓库证据；它为 Implementer 准备事实，但不代替 Implementer 设计 STEP 阶段。
 
 Code Context / Context Engineer 负责把 Architect packet 转成当前项目可执行上下文。
 

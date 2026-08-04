@@ -10,26 +10,26 @@ Code-role controls one software milestone through a bounded evidence loop:
 
 Code-role 通过一个有边界的证据闭环控制一个软件里程碑：
 
-1. Project Manager and user accept one complete Objective and `MKR-1...MKR-N`.
-2. Product Strategy defines one complete Product OKR, `PKR-1...PKR-N`, covering every MKR.
-3. Engineering decomposes the complete product contract into `EKR-1...EKR-N`, implements, integrates, and self-verifies the runnable candidate.
-4. Independent Evaluation starts only after candidate readiness and evaluates the complete MKR/PKR contract.
+1. Project Manager and user accept one complete Objective and `KR-1...KR-N`.
+2. Product Strategy completes one Product Contract under the existing `KR-1...KR-N`, without creating another OKR.
+3. Engineering decomposes the complete product contract into `STEP-1...STEP-N`, implements, integrates, and self-verifies the runnable candidate.
+4. Independent Evaluation starts only after candidate readiness and evaluates the complete Project OKR.
 5. Project Manager closes the milestone or returns the failed global contract owner.
 
-1. 项目经理与用户确认一个完整 Objective 和 `MKR-1...MKR-N`。
-2. 产品策略定义覆盖全部 MKR 的完整 Product OKR：`PKR-1...PKR-N`。
-3. 工程把完整产品契约拆成 `EKR-1...EKR-N`，完成设计、编码、集成和自测。
-4. 独立评估只在候选物就绪后启动，并评估完整 MKR/PKR 契约。
+1. 项目经理与用户确认一个完整 Objective 和 `KR-1...KR-N`。
+2. 产品策略在现有 `KR-1...KR-N` 下补全一份 Product Contract，不创建第二套 OKR。
+3. 工程把完整产品契约拆成 `STEP-1...STEP-N`，完成设计、编码、集成和自测。
+4. 独立评估只在候选物就绪后启动，并评估完整 KR 契约。
 5. 项目经理关闭里程碑，或把完整失败契约退回责任角色。
 
 ## Active Workstations / 活跃工位
 
 | Workstation | Responsibility |
 | --- | --- |
-| Project Manager / 项目经理 | Owns the complete Milestone OKR, stage gates, iteration budget, and closure. |
-| Product Strategy / 产品策略 | Owns the complete Product OKR and MKR-to-PKR product contract. |
-| Engineering / 工程 | Owns EKR decomposition, architecture/context methods, implementation, integration, tests, and the complete candidate. |
-| Independent Evaluation / 独立评估 | Starts after candidate readiness and independently evaluates every MKR and PKR. |
+| Project Manager / 项目经理 | Owns the complete Project OKR, stage gates, iteration budget, and closure. |
+| Product Strategy / 产品策略 | Owns the complete Product Contract and product coverage for every existing KR. |
+| Engineering / 工程 | Owns STEP decomposition, architecture/context methods, implementation, integration, tests, and the complete candidate. |
+| Independent Evaluation / 独立评估 | Starts after candidate readiness and independently evaluates every KR. |
 
 Research is a capability inside Product Strategy and Engineering. Architecture and context engineering are modes inside Engineering. They are not mandatory routing stages.
 
@@ -43,7 +43,7 @@ A delivery KR must describe an observable user, business, product, or runtime ou
 
 - `code-role/milestone-board.md`: the only active milestone state.
 - `code-role/DIALOGUE-CONTROL.md`: shared conversation and artifact-first acceptance contract.
-- `code-role/OKR-STANDARD.md`: authoritative MKR/PKR/EKR definition and decomposition standard.
+- `code-role/OKR-STANDARD.md`: authoritative KR/STEP definition and decomposition standard.
 - `code-role/LOOP.md`: the operating contract.
 - Role-specific assignment templates under `code-role/templates/`.
 - Role-specific return templates under `code-role/templates/`.

@@ -4,9 +4,9 @@
 
 - milestone:
 - objective:
-- complete Milestone OKR path:
-- complete Product OKR path:
-- EKR decomposition:
+- complete Project OKR path:
+- complete Product Contract path:
+- STEP decomposition:
 - candidate readiness:
 - role deliverable:
 - required primary artifact:
